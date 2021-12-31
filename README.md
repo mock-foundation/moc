@@ -1,2 +1,2 @@
 # Moc
-A (really) native macOS Telegram client. 
+A (really) native and powerful macOS Telegram client, optimized for moderating large communities and for personal use. 
