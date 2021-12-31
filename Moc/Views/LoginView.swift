@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import Resolver
 
 private enum OpenedScreen {
 	case phoneNumber
@@ -30,10 +31,10 @@ struct LoginView: View {
 	}
 
 	@State private var phoneNumber: String = ""
-	@Environment(\.tdApi) private var tdApi: TdApi
 	@Environment(\.presentationMode) private var presentationMode
 	@State private var code = ""
 	@State private var openedScreen = OpenedScreen.phoneNumber
+    @Injected private var tdApi: TdApi
 
 	//			VStack(spacing: 12) {
 	//				Text("Fast login using a QR code")
