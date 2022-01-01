@@ -13,14 +13,6 @@ struct ContentView: View {
 	@State private var selectedFolder: Int = 0
 	@State private var selectedChat: Int? = -1
     @InjectedObject private var mainViewModel: MainViewModel
-
-	private var chats: [ChatItem] = [
-		ChatItem(id: UUID(), name: "Telegraph lol", messagePreview: "Hey we have something good for you", sender: "No", showSender: false, type: .channel, chatIcon: Image("MockChatLogo"), isPinned: true, time: Date(timeIntervalSinceNow: 349), seen: false),
-		ChatItem(id: UUID(), name: "Chatb", messagePreview: "We wrote some shit here", sender: "No", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: true, time: Date(timeIntervalSinceNow: 200), seen: true),
-		ChatItem(id: UUID(), name: "Kingsong KS-14MDS (KS14M, KS-14D, KS-14S)", messagePreview: "gotway is bad", sender: "taras", showSender: true, type: .superGroup, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 155), seen: true),
-		ChatItem(id: UUID(), name: "Normal group yee", messagePreview: "hey", sender: "who lol", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 90), seen: false),
-		ChatItem(id: UUID(), name: "Lisa", messagePreview: "yee iloveu", sender: "rustacean", showSender: false, type: .privateChat, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 100), seen: true)
-	]
 	
 	@Injected private var tdApi: TdApi
 	
@@ -40,7 +32,7 @@ struct ContentView: View {
 						SearchField()
 							.padding([.leading, .bottom, .trailing], 10.0)
 						GeometryReader { proxy in
-							List(0..<chats.count, selection: $selectedChat) { index in
+                            List(0..<mainViewModel.chatList.count, selection: $selectedChat) { index in
 								NavigationLink(destination: {
 									GeometryReader { proxy in
 										ChatView()
@@ -55,7 +47,7 @@ struct ContentView: View {
 												}
 												ToolbarItem(placement: .navigation) {
 													VStack(alignment: .leading) {
-														Text(chats[index].name)
+                                                        Text(mainViewModel.chatList[index].name)
 															.font(.headline)
 														Text("Some users were here lol")
 															.font(.subheadline)
@@ -85,7 +77,7 @@ struct ContentView: View {
 											}
 									}
 								}) {
-									ChatItemView(chat: chats[index])
+                                    ChatItemView(chat: mainViewModel.chatList[index])
 										.frame(height: 56)
 								}
 							}
