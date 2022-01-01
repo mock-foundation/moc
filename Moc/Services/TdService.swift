@@ -14,6 +14,7 @@ import Foundation
 /// sometimes it can handle the update **and** post a notification about it.
 class TdService {
     @Injected private var tdApi: TdApi
+    @Injected private var mainViewModel: MainViewModel
 
     public func initHandler() {
         tdApi.client.run {
@@ -68,6 +69,9 @@ class TdService {
                             case .authorizationStateClosed:
                                 self.post(notification: .authorizationStateClosed)
                         }
+                        // MARK: - Chat position
+                    case .updateChatPosition(let state):
+                        self.post(notification: .updateChatPosition, withObject: state)
                     default:
                         NSLog("Unhandled TDLib update \(update)")
                 }
