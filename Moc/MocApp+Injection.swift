@@ -17,7 +17,6 @@ extension Resolver {
     public static func registerTd() {
         register { TdApi(client: TdClientImpl()) }
         register { TdService() }
-        NSLog("td registration successful")
     }
 }
 
