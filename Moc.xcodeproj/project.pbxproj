@@ -12,6 +12,7 @@
 		43654D3F277FF8830047F36F /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3E277FF8830047F36F /* ChatViewModel.swift */; };
 		43654D4227807AD20047F36F /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4127807AD20047F36F /* Algorithms */; };
 		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
+		43654D482780A7950047F36F /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D472780A7950047F36F /* SwiftUIUtils */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
 		43DD9576277E50C3000CE509 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9575277E50C3000CE509 /* MocTests.swift */; };
@@ -95,6 +96,7 @@
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				43654D4227807AD20047F36F /* Algorithms in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
+				43654D482780A7950047F36F /* SwiftUIUtils in Frameworks */,
 				43654D4527809CE50047F36F /* TDLibKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +269,7 @@
 				43DD9642277E7558000CE509 /* Resolver */,
 				43654D4127807AD20047F36F /* Algorithms */,
 				43654D4427809CE50047F36F /* TDLibKit */,
+				43654D472780A7950047F36F /* SwiftUIUtils */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -344,6 +347,7 @@
 				43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43654D4027807AD20047F36F /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */,
+				43654D462780A7950047F36F /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -742,6 +746,14 @@
 				revision = 69ccad0e2674c3b21dc55f736c6e24232d6ad4d4;
 			};
 		};
+		43654D462780A7950047F36F /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ggoraa/SwiftUIUtils.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
 		43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -762,6 +774,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */;
 			productName = TDLibKit;
+		};
+		43654D472780A7950047F36F /* SwiftUIUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43654D462780A7950047F36F /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
+			productName = SwiftUIUtils;
 		};
 		43DD9642277E7558000CE509 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
