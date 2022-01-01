@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Shared
+//  Moc
 //
 //  Created by Егор Яковенко on 24.12.2021.
 //
@@ -12,6 +12,8 @@ import Resolver
 struct ContentView: View {
 	@State private var selectedFolder: Int = 0
 	@State private var selectedChat: Int? = -1
+    @InjectedObject private var mainViewModel: MainViewModel
+
 	private var chats: [ChatItem] = [
 		ChatItem(id: UUID(), name: "Telegraph lol", messagePreview: "Hey we have something good for you", sender: "No", showSender: false, type: .channel, chatIcon: Image("MockChatLogo"), isPinned: true, time: Date(timeIntervalSinceNow: 349), seen: false),
 		ChatItem(id: UUID(), name: "Chatb", messagePreview: "We wrote some shit here", sender: "No", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: true, time: Date(timeIntervalSinceNow: 200), seen: true),
@@ -19,13 +21,6 @@ struct ContentView: View {
 		ChatItem(id: UUID(), name: "Normal group yee", messagePreview: "hey", sender: "who lol", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 90), seen: false),
 		ChatItem(id: UUID(), name: "Lisa", messagePreview: "yee iloveu", sender: "rustacean", showSender: false, type: .privateChat, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 100), seen: true)
 	]
-	
-	private var chatHeaderIcon: some View {
-		Image("MockChatLogo")
-			.resizable()
-			.frame(width: 32, height: 32)
-			.clipShape(Circle())
-	}
 	
 	@Injected private var tdApi: TdApi
 	
@@ -44,11 +39,6 @@ struct ContentView: View {
 					VStack {
 						SearchField()
 							.padding([.leading, .bottom, .trailing], 10.0)
-							.onAppear {
-								try? tdApi.getChats(chatList: nil, limit: 100, completion: { result in
-									print(result)
-								})
-							}
 						GeometryReader { proxy in
 							List(0..<chats.count, selection: $selectedChat) { index in
 								NavigationLink(destination: {
@@ -58,7 +48,10 @@ struct ContentView: View {
 											.navigationTitle("")
 											.toolbar {
 												ToolbarItem(placement: .navigation) {
-													chatHeaderIcon
+                                                    Image("MockChatLogo")
+                                                        .resizable()
+                                                        .frame(width: 32, height: 32)
+                                                        .clipShape(Circle())
 												}
 												ToolbarItem(placement: .navigation) {
 													VStack(alignment: .leading) {
@@ -93,9 +86,6 @@ struct ContentView: View {
 									}
 								}) {
 									ChatItemView(chat: chats[index])
-										.onAppear {
-											print("chatSelected \(selectedChat!) \(index)")
-										}
 										.frame(height: 56)
 								}
 							}
