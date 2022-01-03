@@ -10,9 +10,10 @@
 		4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */; };
 		43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3C277FF85F0047F36F /* MainViewModel.swift */; };
 		43654D3F277FF8830047F36F /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3E277FF8830047F36F /* ChatViewModel.swift */; };
-		43654D4227807AD20047F36F /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4127807AD20047F36F /* Algorithms */; };
 		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
-		43654D482780A7950047F36F /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D472780A7950047F36F /* SwiftUIUtils */; };
+		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
+		4386E4652783399D0084F809 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E4642783399D0084F809 /* Lottie */; };
+		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
 		43DD9576277E50C3000CE509 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9575277E50C3000CE509 /* MocTests.swift */; };
@@ -55,10 +56,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4386E45F2782FFEF0084F809 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKeys.swift; sourceTree = "<group>"; };
 		43654D3C277FF85F0047F36F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		43654D3E277FF8830047F36F /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		4386E46627833B040084F809 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		43DD9560277E50C0000CE509 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43DD9567277E50C3000CE509 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43DD956A277E50C3000CE509 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -94,9 +109,9 @@
 			files = (
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
-				43654D4227807AD20047F36F /* Algorithms in Frameworks */,
+				4386E4652783399D0084F809 /* Lottie in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
-				43654D482780A7950047F36F /* SwiftUIUtils in Frameworks */,
+				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 				43654D4527809CE50047F36F /* TDLibKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,6 +242,7 @@
 				43DD961E277E717C000CE509 /* SearchField.swift */,
 				43DD961F277E717C000CE509 /* FolderItemView.swift */,
 				43DD9621277E717C000CE509 /* ContentView.swift */,
+				4386E46627833B040084F809 /* LottieView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +275,7 @@
 				43DD955C277E50C0000CE509 /* Sources */,
 				43DD955D277E50C0000CE509 /* Frameworks */,
 				43DD955E277E50C0000CE509 /* Resources */,
+				4386E45F2782FFEF0084F809 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -267,9 +284,9 @@
 			name = Moc;
 			packageProductDependencies = (
 				43DD9642277E7558000CE509 /* Resolver */,
-				43654D4127807AD20047F36F /* Algorithms */,
 				43654D4427809CE50047F36F /* TDLibKit */,
-				43654D472780A7950047F36F /* SwiftUIUtils */,
+				4386E45A2782FFEB0084F809 /* Resolver-Static */,
+				4386E4642783399D0084F809 /* Lottie */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -345,9 +362,8 @@
 			mainGroup = 43DD9557277E50C0000CE509;
 			packageReferences = (
 				43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */,
-				43654D4027807AD20047F36F /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */,
-				43654D462780A7950047F36F /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
+				4386E4632783399D0084F809 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -403,6 +419,7 @@
 				43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */,
 				43DD962A277E717C000CE509 /* Chat.swift in Sources */,
 				43DD963A277E717C000CE509 /* ChatView.swift in Sources */,
+				4386E46727833B040084F809 /* LottieView.swift in Sources */,
 				43DD962C277E717C000CE509 /* Folder.swift in Sources */,
 				43DD9637277E717C000CE509 /* ChatItemView.swift in Sources */,
 				43DD9636277E717C000CE509 /* LoginView.swift in Sources */,
@@ -730,28 +747,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		43654D4027807AD20047F36F /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-algorithms.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
 			requirement = {
 				kind = revision;
-				revision = 69ccad0e2674c3b21dc55f736c6e24232d6ad4d4;
+				revision = e39cf70f69c12362e860794ef94a10eafe15d6be;
 			};
 		};
-		43654D462780A7950047F36F /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
+		4386E4632783399D0084F809 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ggoraa/SwiftUIUtils.git";
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.0.1;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
 			};
 		};
 		43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */ = {
@@ -765,20 +774,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		43654D4127807AD20047F36F /* Algorithms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43654D4027807AD20047F36F /* XCRemoteSwiftPackageReference "swift-algorithms" */;
-			productName = Algorithms;
-		};
 		43654D4427809CE50047F36F /* TDLibKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */;
 			productName = TDLibKit;
 		};
-		43654D472780A7950047F36F /* SwiftUIUtils */ = {
+		4386E45A2782FFEB0084F809 /* Resolver-Static */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 43654D462780A7950047F36F /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
-			productName = SwiftUIUtils;
+			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = "Resolver-Static";
+		};
+		4386E4642783399D0084F809 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4386E4632783399D0084F809 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		43DD9642277E7558000CE509 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
