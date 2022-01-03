@@ -6,13 +6,11 @@
 //
 
 import Resolver
-import Foundation
+import SwiftUI
 import TDLibKit
 
 class MainViewModel: ObservableObject {
     @Published var chatList: [ChatItem] = []
-
-    @Injected private var tdApi: TdApi
 
     func update(chats: [ChatItem]) {
         self.chatList = chats
