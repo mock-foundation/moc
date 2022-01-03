@@ -14,6 +14,9 @@
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E4652783399D0084F809 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E4642783399D0084F809 /* Lottie */; };
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
+		4386E46A27837A290084F809 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46927837A290084F809 /* AlertToast */; };
+		4386E46D27837A620084F809 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46C27837A620084F809 /* Algorithms */; };
+		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
 		43DD9576277E50C3000CE509 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9575277E50C3000CE509 /* MocTests.swift */; };
@@ -106,8 +109,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
+				4386E46A27837A290084F809 /* AlertToast in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E4652783399D0084F809 /* Lottie in Frameworks */,
+				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
+				4386E46D27837A620084F809 /* Algorithms in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 				43654D4527809CE50047F36F /* TDLibKit in Frameworks */,
@@ -276,6 +282,9 @@
 				43654D4427809CE50047F36F /* TDLibKit */,
 				4386E45A2782FFEB0084F809 /* Resolver-Static */,
 				4386E4642783399D0084F809 /* Lottie */,
+				4386E46927837A290084F809 /* AlertToast */,
+				4386E46C27837A620084F809 /* Algorithms */,
+				4386E46F27837A810084F809 /* SwiftUIUtils */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -353,6 +362,9 @@
 				43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				4386E4632783399D0084F809 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				4386E46827837A290084F809 /* XCRemoteSwiftPackageReference "AlertToast" */,
+				4386E46B27837A620084F809 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+				4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -751,6 +763,30 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		4386E46827837A290084F809 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4386E46B27837A620084F809 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ggoraa/SwiftUIUtils.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
 		43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -776,6 +812,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4386E4632783399D0084F809 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		4386E46927837A290084F809 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4386E46827837A290084F809 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+		4386E46C27837A620084F809 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4386E46B27837A620084F809 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+		4386E46F27837A810084F809 /* SwiftUIUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
+			productName = SwiftUIUtils;
 		};
 		43DD9642277E7558000CE509 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
