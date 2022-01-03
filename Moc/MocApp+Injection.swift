@@ -79,7 +79,6 @@ extension Resolver {
             }
         }
         register { tdApi }
-        register { TdService() }
     }
 
     static func post(notification: NSNotification.Name) {
@@ -129,7 +128,6 @@ struct MocApp: App {
     init() {
         Resolver.registerViewModels()
         Resolver.registerTd()
-        @Injected var tdService: TdService
     }
 
     var body: some Scene {

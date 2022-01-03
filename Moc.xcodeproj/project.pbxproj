@@ -24,7 +24,6 @@
 		43DD962A277E717C000CE509 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9608277E717B000CE509 /* Chat.swift */; };
 		43DD962B277E717C000CE509 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9609277E717B000CE509 /* Message.swift */; };
 		43DD962C277E717C000CE509 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD960A277E717B000CE509 /* Folder.swift */; };
-		43DD962D277E717C000CE509 /* TdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD960C277E717B000CE509 /* TdService.swift */; };
 		43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9611277E717C000CE509 /* Moc.xcdatamodeld */; };
 		43DD9631277E717C000CE509 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9613277E717C000CE509 /* Persistence.swift */; };
 		43DD9635277E717C000CE509 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD961B277E717C000CE509 /* MessageBubbleView.swift */; };
@@ -88,7 +87,6 @@
 		43DD9608277E717B000CE509 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		43DD9609277E717B000CE509 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		43DD960A277E717B000CE509 /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
-		43DD960C277E717B000CE509 /* TdService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TdService.swift; sourceTree = "<group>"; };
 		43DD9612277E717C000CE509 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		43DD9613277E717C000CE509 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		43DD961B277E717C000CE509 /* MessageBubbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			children = (
 				43DD9610277E717B000CE509 /* Persistence */,
 				43DD9607277E717B000CE509 /* Models */,
-				43DD960B277E717B000CE509 /* Services */,
 				43654D3B277FF84C0047F36F /* ViewModels */,
 				43DD9616277E717C000CE509 /* Views */,
 				4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */,
@@ -214,14 +211,6 @@
 				43DD960A277E717B000CE509 /* Folder.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		43DD960B277E717B000CE509 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				43DD960C277E717B000CE509 /* TdService.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		43DD9610277E717B000CE509 /* Persistence */ = {
@@ -413,7 +402,6 @@
 				43DD9631277E717C000CE509 /* Persistence.swift in Sources */,
 				4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */,
 				43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */,
-				43DD962D277E717C000CE509 /* TdService.swift in Sources */,
 				43DD962B277E717C000CE509 /* Message.swift in Sources */,
 				43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */,
 				43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */,
