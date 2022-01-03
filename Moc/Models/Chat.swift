@@ -15,7 +15,7 @@ enum ChatType {
 }
 
 struct ChatItem: Identifiable {
-	var id: UUID
+	var id: Int64
 	
 	let name: String
 	let messagePreview: String
