@@ -56,6 +56,10 @@ extension NSNotification.Name {
 
     // MARK: - Chat position
     static var updateChatPosition: Notification.Name {
-        return .init(rawValue: "ChatPositionUpdate")
+        return .init(rawValue: "UpdateChatPosition")
+    }
+
+    static var updateNewMessage: Notification.Name {
+        return .init("UpdateNewMessage")
     }
 }
