@@ -12,7 +12,7 @@ import Resolver
 struct ContentView: View {
 	@State private var selectedFolder: Int = 0
 	@State private var selectedChat: Int? = -1
-    @InjectedObject private var mainViewModel: MainViewModel
+    @StateObject private var mainViewModel = MainViewModel()
 	
 	@Injected private var tdApi: TdApi
 	
@@ -32,7 +32,7 @@ struct ContentView: View {
 						SearchField()
 							.padding([.leading, .bottom, .trailing], 10.0)
 						GeometryReader { proxy in
-                            List(0..<mainViewModel.chatList.count, selection: $selectedChat) { index in
+                            List(mainViewModel.chatList, selection: $selectedChat) { chat in
 								NavigationLink(destination: {
 									GeometryReader { proxy in
 										ChatView()
@@ -47,13 +47,14 @@ struct ContentView: View {
 												}
 												ToolbarItem(placement: .navigation) {
 													VStack(alignment: .leading) {
-                                                        Text(mainViewModel.chatList[index].name)
+                                                        Text(chat.name)
 															.font(.headline)
 														Text("Some users were here lol")
 															.font(.subheadline)
 													}.onTapGesture(count: 2) {
-														print("hey")
-														//													print("selectedChat \(String(describing: selectedChat))")
+                                                        Task {
+                                                            try! await tdApi.sendMessage(chatId: 736211268, inputMessageContent: .inputMessageText(InputMessageText(clearDraft: true, disableWebPagePreview: true, text: FormattedText(entities: [], text: "Это сообщение было отправлено из Moc!"))), messageThreadId: nil, options: nil, replyMarkup: nil, replyToMessageId: nil)
+                                                        }
 														selectedChat = 2
 													}
 												}
@@ -77,7 +78,7 @@ struct ContentView: View {
 											}
 									}
 								}) {
-                                    ChatItemView(chat: mainViewModel.chatList[index])
+                                    ChatItemView(chat: chat)
 										.frame(height: 56)
 								}
 							}
@@ -100,7 +101,22 @@ struct ContentView: View {
 			LoginView()
 				.frame(width: 300, height: 400)
 		}
-		.onReceive(NotificationCenter.default.publisher(for: Notification.Name("AuthorizationPhoneNumberRequired"))){ data in
+        .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
+            NSLog("Received chat position update")
+            Task {
+                let chatIds = try! await tdApi.getChats(chatList: .chatListMain, limit: 30).chatIds
+                var chatList: [Chat] = []
+                var parsedChatList: [ChatItem] = []
+                for id in chatIds {
+                    chatList.append(try! await tdApi.getChat(chatId: id))
+                }
+                parsedChatList = chatList.map { chat in
+                    return ChatItem(id: chat.id, name: chat.title, messagePreview: "Message preview", sender: "Message sender", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 0), seen: false)
+                }
+                mainViewModel.update(chats: parsedChatList)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)){ data in
 			showingLoginScreen = true
 		}
 	}
