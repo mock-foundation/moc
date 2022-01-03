@@ -71,7 +71,7 @@ struct ChatItemView: View {
 
 struct ChatListView_Previews: PreviewProvider {
 	static var previews: some View {
-		ChatItemView(chat: ChatItem(id: UUID(), name: "Chat lol", messagePreview: "Something was written here", sender: "DirectName", showSender: true, type: .group, chatIcon: Image(systemName: "folder"), isPinned: true, time: Date(timeIntervalSinceNow: 100), seen: true))
+		ChatItemView(chat: ChatItem(id: 10319823648, name: "Chat lol", messagePreview: "Something was written here", sender: "DirectName", showSender: true, type: .group, chatIcon: Image(systemName: "folder"), isPinned: true, time: Date(timeIntervalSinceNow: 100), seen: true))
 			.frame(width: 300)
 	}
 }
