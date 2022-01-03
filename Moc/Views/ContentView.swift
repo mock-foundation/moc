@@ -12,15 +12,7 @@ import Resolver
 struct ContentView: View {
 	@State private var selectedFolder: Int = 0
 	@State private var selectedChat: Int? = -1
-    @InjectedObject private var mainViewModel: MainViewModel
-
-	private var chats: [ChatItem] = [
-		ChatItem(id: UUID(), name: "Telegraph lol", messagePreview: "Hey we have something good for you", sender: "No", showSender: false, type: .channel, chatIcon: Image("MockChatLogo"), isPinned: true, time: Date(timeIntervalSinceNow: 349), seen: false),
-		ChatItem(id: UUID(), name: "Chatb", messagePreview: "We wrote some shit here", sender: "No", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: true, time: Date(timeIntervalSinceNow: 200), seen: true),
-		ChatItem(id: UUID(), name: "Kingsong KS-14MDS (KS14M, KS-14D, KS-14S)", messagePreview: "gotway is bad", sender: "taras", showSender: true, type: .superGroup, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 155), seen: true),
-		ChatItem(id: UUID(), name: "Normal group yee", messagePreview: "hey", sender: "who lol", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 90), seen: false),
-		ChatItem(id: UUID(), name: "Lisa", messagePreview: "yee iloveu", sender: "rustacean", showSender: false, type: .privateChat, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 100), seen: true)
-	]
+    @StateObject private var mainViewModel = MainViewModel()
 	
 	@Injected private var tdApi: TdApi
 	
@@ -40,7 +32,7 @@ struct ContentView: View {
 						SearchField()
 							.padding([.leading, .bottom, .trailing], 10.0)
 						GeometryReader { proxy in
-							List(0..<chats.count, selection: $selectedChat) { index in
+                            List(mainViewModel.chatList, selection: $selectedChat) { chat in
 								NavigationLink(destination: {
 									GeometryReader { proxy in
 										ChatView()
@@ -55,13 +47,14 @@ struct ContentView: View {
 												}
 												ToolbarItem(placement: .navigation) {
 													VStack(alignment: .leading) {
-														Text(chats[index].name)
+                                                        Text(chat.name)
 															.font(.headline)
 														Text("Some users were here lol")
 															.font(.subheadline)
 													}.onTapGesture(count: 2) {
-														print("hey")
-														//													print("selectedChat \(String(describing: selectedChat))")
+                                                        Task {
+                                                            try! await tdApi.sendMessage(chatId: 736211268, inputMessageContent: .inputMessageText(InputMessageText(clearDraft: true, disableWebPagePreview: true, text: FormattedText(entities: [], text: "Это сообщение было отправлено из Moc!"))), messageThreadId: nil, options: nil, replyMarkup: nil, replyToMessageId: nil)
+                                                        }
 														selectedChat = 2
 													}
 												}
@@ -85,7 +78,7 @@ struct ContentView: View {
 											}
 									}
 								}) {
-									ChatItemView(chat: chats[index])
+                                    ChatItemView(chat: chat)
 										.frame(height: 56)
 								}
 							}
@@ -108,7 +101,22 @@ struct ContentView: View {
 			LoginView()
 				.frame(width: 300, height: 400)
 		}
-		.onReceive(NotificationCenter.default.publisher(for: Notification.Name("AuthorizationPhoneNumberRequired"))){ data in
+        .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
+            NSLog("Received chat position update")
+            Task {
+                let chatIds = try! await tdApi.getChats(chatList: .chatListMain, limit: 30).chatIds
+                var chatList: [Chat] = []
+                var parsedChatList: [ChatItem] = []
+                for id in chatIds {
+                    chatList.append(try! await tdApi.getChat(chatId: id))
+                }
+                parsedChatList = chatList.map { chat in
+                    return ChatItem(id: chat.id, name: chat.title, messagePreview: "Message preview", sender: "Message sender", showSender: false, type: .group, chatIcon: Image("MockChatLogo"), isPinned: false, time: Date(timeIntervalSinceNow: 0), seen: false)
+                }
+                mainViewModel.update(chats: parsedChatList)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)){ data in
 			showingLoginScreen = true
 		}
 	}
