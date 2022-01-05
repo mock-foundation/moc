@@ -31,7 +31,7 @@ extension Resolver {
                                         apiId: Bundle.main.infoDictionary?["TdApiId"] as! Int,
                                         applicationVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String,
                                         databaseDirectory: "",
-                                        deviceModel: self.getMacModel() ?? "Unknown",
+                                        deviceModel: self.getMacModel(),
                                         enableStorageOptimizer: true,
                                         filesDirectory: "",
                                         ignoreFileNames: false,
@@ -138,7 +138,6 @@ extension Resolver {
 
 @main
 struct MocApp: App {
-
     init() {
         Resolver.registerViewModels()
         Resolver.registerTd()
