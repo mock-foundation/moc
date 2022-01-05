@@ -54,7 +54,7 @@ extension NSNotification.Name {
         return .init("AuthorizationStateClosed")
     }
 
-    // MARK: - Chat position
+    // MARK: - Chat updates
     static var updateChatPosition: NSNotification.Name {
         return .init("UpdateChatPosition")
     }
