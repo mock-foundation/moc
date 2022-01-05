@@ -62,4 +62,12 @@ extension NSNotification.Name {
     static var updateNewMessage: Notification.Name {
         return .init("UpdateNewMessage")
     }
+
+    static var updateChatLastMessage: Notification.Name {
+        return .init("UpdateChatLastMessage")
+    }
+
+    static var updateNewChat: Notification.Name {
+        return .init("UpdateNewChat")
+    }
 }
