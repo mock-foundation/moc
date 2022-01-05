@@ -101,7 +101,7 @@ struct ContentView: View {
 			LoginView()
 				.frame(width: 300, height: 400)
 		}
-        .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
+        .onReceive(NotificationCenter.default.publisher(for: .updateChatLastMessage)) { data in
             NSLog("Received chat position update")
             Task {
                 let chatIds = try! await tdApi.getChats(chatList: .chatListMain, limit: 30).chatIds
