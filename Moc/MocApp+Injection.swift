@@ -94,7 +94,8 @@ extension Resolver {
     }
 
     // Thanks to https://www.reddit.com/r/swift/comments/gwf9fa/how_do_i_find_the_model_of_the_mac_in_swift/
-    static func getMacModel() -> String? {
+    static func getMacModel() -> String {
+        // Get device identifier
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
         var modelIdentifier: String?
 
@@ -105,7 +106,14 @@ extension Resolver {
         }
 
         IOObjectRelease(service)
-        return modelIdentifier
+
+        // And then find a corresponding marketing name using the identifier
+        let serverInfoBundle = Bundle(path: "/System/Library/PrivateFrameworks/ServerInformation.framework/")
+        let sysInfoFile = serverInfoBundle?.url(forResource: "SIMachineAttributes", withExtension: "plist")
+        let plist = NSDictionary(contentsOfFile: sysInfoFile!.path)
+
+        // TODO: Replace force-unwraps with something more safe
+        return ((plist![modelIdentifier!] as! NSDictionary)["_LOCALIZABLE_"] as! NSDictionary)["marketingModel"] as! String
     }
 
     static func getOSVersionString() -> String {
