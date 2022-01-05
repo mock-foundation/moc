@@ -11,52 +11,52 @@ import Foundation
 extension NSNotification.Name {
     // MARK: - Authorization states
     static var authorizationStateWaitTdlibParameters: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitTdlibParameters")
+        return .init("AuthorizationStateWaitTdlibParameters")
     }
 
     static var authorizationStateWaitEncryptionKey: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitEncryptionKey")
+        return .init("AuthorizationStateWaitEncryptionKey")
     }
 
     static var authorizationStateWaitPhoneNumber: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitPhoneNumber")
+        return .init("AuthorizationStateWaitPhoneNumber")
     }
 
     static var authorizationStateWaitCode: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitCode")
+        return .init("AuthorizationStateWaitCode")
     }
 
     static var authorizationStateWaitRegistration: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitRegistration")
+        return .init("AuthorizationStateWaitRegistration")
     }
 
     static var authorizationStateWaitPassword: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitPassword")
+        return .init("AuthorizationStateWaitPassword")
     }
 
     static var authorizationStateReady: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateReady")
+        return .init("AuthorizationStateReady")
     }
 
     static var authorizationStateWaitOtherDeviceConfirmation: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateWaitOtherDeviceConfirmation")
+        return .init("AuthorizationStateWaitOtherDeviceConfirmation")
     }
 
     static var authorizationStateLoggingOut: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateLoggingOut")
+        return .init("AuthorizationStateLoggingOut")
     }
 
     static var authorizationStateClosing: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateClosing")
+        return .init("AuthorizationStateClosing")
     }
 
     static var authorizationStateClosed: NSNotification.Name {
-        return .init(rawValue: "AuthorizationStateClosed")
+        return .init("AuthorizationStateClosed")
     }
 
     // MARK: - Chat position
     static var updateChatPosition: NSNotification.Name {
-        return .init(rawValue: "UpdateChatPosition")
+        return .init("UpdateChatPosition")
     }
 
     static var updateNewMessage: NSNotification.Name {
