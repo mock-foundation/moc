@@ -8,6 +8,7 @@
 import SwiftUI
 import TDLibKit
 import Resolver
+import UserNotifications
 
 private enum OpenedScreen {
     case phoneNumber
@@ -72,6 +73,14 @@ struct LoginView: View {
                             Task(priority: .medium) {
                                 do {
                                     try await tdApi.checkAuthenticationCode(code: code)
+                                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+
+                                        if let error = error {
+                                            // Handle the error here.
+                                        }
+
+                                        // Enable or disable features based on the authorization.
+                                    }
                                     openedScreen = .termsOfService
                                 } catch {
                                     fatalError("Failed to set authentication code.")
@@ -80,7 +89,6 @@ struct LoginView: View {
                         }
                 case .termsOfService:
                     Text("Accept the Terms of Service")
-
             }
 
         }
