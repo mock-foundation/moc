@@ -75,6 +75,8 @@ extension Resolver {
                         self.post(notification: .updateNewMessage, withObject: state)
                     case .updateChatLastMessage(let state):
                         self.post(notification: .updateChatLastMessage, withObject: state)
+                    case .updateNewChat(let state):
+                        self.post(notification: .updateNewChat, withObject: state)
                     default:
                         NSLog("Unhandled TDLib update \(update)")
                 }
