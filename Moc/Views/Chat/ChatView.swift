@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import TDLibKit
 
 struct ChatView: View {
+    @State var chat: Chat
 	@State private var inputMessage = ""
 	@Environment(\.colorScheme) var colorScheme
 	
@@ -49,8 +51,8 @@ struct ChatView: View {
 	}
 }
 
-struct ChatView_Previews: PreviewProvider {
-	static var previews: some View {
-		ChatView()
-	}
-}
+//struct ChatView_Previews: PreviewProvider {
+//	static var previews: some View {
+//		ChatView()
+//	}
+//}
