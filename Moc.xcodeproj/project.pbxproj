@@ -24,7 +24,6 @@
 		43DD9582277E50C3000CE509 /* MocUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9581277E50C3000CE509 /* MocUITestsLaunchTests.swift */; };
 		43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9603277E717B000CE509 /* MocApp+Injection.swift */; };
 		43DD9629277E717C000CE509 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9606277E717B000CE509 /* Info.plist */; };
-		43DD962A277E717C000CE509 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9608277E717B000CE509 /* Chat.swift */; };
 		43DD962B277E717C000CE509 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9609277E717B000CE509 /* Message.swift */; };
 		43DD962C277E717C000CE509 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD960A277E717B000CE509 /* Folder.swift */; };
 		43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9611277E717C000CE509 /* Moc.xcdatamodeld */; };
@@ -87,7 +86,6 @@
 		43DD9581277E50C3000CE509 /* MocUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		43DD9603277E717B000CE509 /* MocApp+Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MocApp+Injection.swift"; sourceTree = "<group>"; };
 		43DD9606277E717B000CE509 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		43DD9608277E717B000CE509 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		43DD9609277E717B000CE509 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		43DD960A277E717B000CE509 /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		43DD9612277E717C000CE509 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 		43DD9607277E717B000CE509 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				43DD9608277E717B000CE509 /* Chat.swift */,
 				43DD9609277E717B000CE509 /* Message.swift */,
 				43DD960A277E717B000CE509 /* Folder.swift */,
 			);
@@ -417,7 +414,6 @@
 				43DD962B277E717C000CE509 /* Message.swift in Sources */,
 				43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */,
 				43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */,
-				43DD962A277E717C000CE509 /* Chat.swift in Sources */,
 				43DD963A277E717C000CE509 /* ChatView.swift in Sources */,
 				4386E46727833B040084F809 /* LottieView.swift in Sources */,
 				43DD962C277E717C000CE509 /* Folder.swift in Sources */,
