@@ -8,17 +8,17 @@
         <!--Chat Split View Controller-->
         <scene sceneID="PEd-7d-5j0">
             <objects>
-                <viewController id="bU7-R8-ocO" customClass="ChatSplitViewController" customModule="Moc" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Root" id="bU7-R8-ocO" customClass="ChatSplitViewController" customModule="Moc" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="tOy-S4-hL0">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4R3-qr-L4C">
+                            <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4R3-qr-L4C">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <customView fixedFrame="YES" id="rpr-sH-0gM">
-                                        <rect key="frame" x="0.0" y="0.0" width="304" height="300"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ExI-CD-dFp">
@@ -31,7 +31,7 @@
                                         </subviews>
                                     </customView>
                                     <customView fixedFrame="YES" id="r6t-5d-Afd">
-                                        <rect key="frame" x="314" y="0.0" width="136" height="300"/>
+                                        <rect key="frame" x="311" y="0.0" width="139" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aVb-sR-Y1s">
@@ -51,6 +51,9 @@
                             </splitView>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="splitView" destination="4R3-qr-L4C" id="3iz-rJ-Tz9"/>
+                    </connections>
                 </viewController>
                 <customObject id="9uD-mB-xHs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -63,6 +66,17 @@
                     <view key="view" id="cQG-4x-Vdh">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vyr-Zf-1CH">
+                                <rect key="frame" x="195" y="159" width="37" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Yeee " id="oj1-yy-SRy">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
                     </view>
                 </viewController>
                 <customObject id="nw3-Uw-Kj5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -76,6 +90,17 @@
                     <view key="view" id="E6h-EB-bs6">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H9E-DH-X0h">
+                                <rect key="frame" x="124" y="186" width="33" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="yeee" id="ZdI-em-47r" userLabel="yeee">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
                     </view>
                 </viewController>
                 <customObject id="wWu-oQ-IWo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

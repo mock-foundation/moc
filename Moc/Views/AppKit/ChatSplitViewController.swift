@@ -8,10 +8,11 @@
 import AppKit
 
 final class ChatSplitViewController: NSViewController, NSSplitViewDelegate {
-    @IBOutlet weak var panelVisibilityChangedSegmentControl: NSSegmentedControl!
+//    @IBOutlet weak var panelVisibilityChangedSegmentControl: NSSegmentedControl!
     @IBOutlet weak var splitView: NSSplitView!
 
     override func viewDidLoad() {
+        NSLog("Ayyyy")
         super.viewDidLoad()
 
         splitView.delegate = self
@@ -19,8 +20,8 @@ final class ChatSplitViewController: NSViewController, NSSplitViewDelegate {
 
     @IBAction func panelVisibilityChanged(_ sender: NSSegmentedControl) {
         switch sender.selectedSegment {
-            case 0: break
-            case 1: break
+            case 0: changeLeftPanelVisibility(visible: sender.isSelected(forSegment: 0))
+            case 1: changeRightPanelVisibility(visible: sender.isSelected(forSegment: 1))
             default: break
         }
     }
@@ -66,6 +67,6 @@ final class ChatSplitViewController: NSViewController, NSSplitViewDelegate {
         let panel = resizedDivider == 0 ? splitView.subviews[0] : splitView.subviews[2]
         let visible = panel.frame.size.width != 0
 
-        panelVisibilityChangedSegmentControl.setSelected(visible, forSegment: resizedDivider)
+//        panelVisibilityChangedSegmentControl.setSelected(visible, forSegment: resizedDivider)
     }
 }
