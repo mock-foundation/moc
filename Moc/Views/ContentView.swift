@@ -14,116 +14,99 @@ extension Chat: Identifiable {
 }
 
 struct ContentView: View {
-	@State private var selectedFolder: Int = 0
-	@State private var selectedChat: Int? = -1
+    @State private var selectedFolder: Int = 0
+    @State private var selectedChat: Int? = 0
     @StateObject private var mainViewModel = MainViewModel()
-	
-	@Injected private var tdApi: TdApi
-	
-	@State private var showingLoginScreen = false
-	
-	var body: some View {
-		NavigationView {
-			VStack {
-				HStack {
-					ScrollView(showsIndicators: false) {
-						ForEach(0..<10, content: { index in
-							FolderItemView()
-						}).frame(alignment: .center)
-					}
-					.frame(minWidth: 70)
-					VStack {
-						SearchField()
-							.padding([.leading, .bottom, .trailing], 10.0)
-						GeometryReader { proxy in
-                            List(mainViewModel.chatList, selection: $selectedChat) { chat in
-								NavigationLink(destination: {
-									GeometryReader { proxy in
+
+    @Injected private var tdApi: TdApi
+
+    @State private var showingLoginScreen = false
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                HStack {
+                    ScrollView(showsIndicators: false) {
+                        ForEach(0..<10, content: { index in
+                            FolderItemView()
+                        }).frame(alignment: .center)
+                    }
+                    .frame(minWidth: 70)
+                    VStack {
+//                        SearchField()
+//                            .padding([.leading, .bottom, .trailing], 10.0)
+                        GeometryReader { proxy in
+                            List(mainViewModel.chatList) { chat in
+                                NavigationLink(tag: Int(chat.id), selection: $selectedChat) {
+                                    GeometryReader { proxy in
                                         ChatView(chat: chat)
-											.frame(width: proxy.size.width, height: proxy.size.height)
-											.navigationTitle("")
-											.toolbar {
-												ToolbarItem(placement: .navigation) {
-                                                    Image("MockChatPhoto")
-                                                        .resizable()
-                                                        .frame(width: 32, height: 32)
-                                                        .clipShape(Circle())
-												}
-												ToolbarItem(placement: .navigation) {
-													VStack(alignment: .leading) {
-                                                        Text(chat.title)
-															.font(.headline)
-														Text("Some users were here lol")
-															.font(.subheadline)
-													}.onTapGesture(count: 2) {
-//                                                        Task {
-//                                                            try! await tdApi.sendMessage(chatId: 736211268, inputMessageContent: .inputMessageText(InputMessageText(clearDraft: true, disableWebPagePreview: true, text: FormattedText(entities: [], text: "Это сообщение было отправлено из Moc!"))), messageThreadId: nil, options: nil, replyMarkup: nil, replyToMessageId: nil)
-//                                                        }
-														selectedChat = 2
-													}
-												}
-												ToolbarItemGroup {
-													Button(action: {
-														print("search")
-													}, label: {
-														Image(systemName: "magnifyingglass")
-													})
-													Button(action: {
-														print("sidebar")
-													}, label: {
-														Image(systemName: "sidebar.right")
-													})
-													Button(action: {
-														print("more")
-													}, label: {
-														Image(systemName: "ellipsis")
-													})
-												}
-											}
-									}
-								}) {
+                                            .frame(width: proxy.size.width, height: proxy.size.height)
+                                            .navigationTitle("")
+                                    }
+                                } label: {
                                     ChatItemView(chat: chat)
-										.frame(height: 56)
-								}
-							}
+                                        .frame(height: 56)
+                                }
+                                //								NavigationLink(destination: {
+                                //
+                                //								}) {
+                                //                                    ChatItemView(chat: chat)
+                                //										.frame(height: 56)
+                                //								}
+                            }
                             .swipeActions {
                                 Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
                                     Label("Delete chat", systemImage: "trash")
                                 }
                             }
-							.toolbar {
-								ToolbarItem(placement: .status) {
-									Button(action: {
-										
-									}) {
-										Image(systemName: "square.and.pencil")
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			.listStyle(.sidebar)
-		}
-		.sheet(isPresented: $showingLoginScreen) {
-			LoginView()
-				.frame(width: 300, height: 400)
-		}
+                            .toolbar {
+                                ToolbarItem(placement: .status) {
+                                    Button(action: {
+
+                                    }) {
+                                        Image(systemName: "square.and.pencil")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .listStyle(.sidebar)
+        }
+        .sheet(isPresented: $showingLoginScreen) {
+            LoginView()
+                .frame(width: 300, height: 400)
+        }
         .onReceive(NotificationCenter.default.publisher(for: .updateNewChat)) { data in
             NSLog("Received chat position update")
             let chat = (data.object as! UpdateNewChat).chat
-            mainViewModel.chatList.append(chat)
+            let hasChat = mainViewModel.chatList.contains(where: {
+                $0.id == chat.id
+            })
+
+            if !hasChat {
+                mainViewModel.chatList.append(chat)
+            }
+
+            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
+                if !$0.positions.isEmpty && !$1.positions.isEmpty {
+                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+                } else {
+                    return true
+                }
+            })
+
         }
         .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { data in
             NSLog("Phone number update lol")
-			showingLoginScreen = true
-		}
-	}
+            showingLoginScreen = true
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+    static var previews: some View {
+        ContentView()
+    }
 }
