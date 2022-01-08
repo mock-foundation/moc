@@ -55,7 +55,6 @@ struct ChatView: View {
 
     // MARK: - Chat inspector
     private var chatInspector: some View {
-        Text("Placeholder for the chat inspector")
     }
 
     var body: some View {
