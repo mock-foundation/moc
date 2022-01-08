@@ -120,6 +120,18 @@ struct ChatView: View {
                 }
                 .padding(.vertical)
                 .frame(minWidth: 0, idealWidth: nil)
+
+                // More info
+                Picker("", selection: $selectedInspectorTab) {
+                    Text("Users").tag(InspectorTab.users)
+                    Text("Media").tag(InspectorTab.media)
+                    Text("Links").tag(InspectorTab.links)
+                    Text("Files").tag(InspectorTab.files)
+                    Text("Voice").tag(InspectorTab.voice)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+                .frame(minWidth: 0, idealWidth: nil)
             }
             .padding(.top)
         }
