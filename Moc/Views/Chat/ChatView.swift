@@ -116,10 +116,10 @@ struct ChatView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }, rightView: {
             chatInspector
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
         }, isRightViewVisible: isInspectorShown)
             .navigationTitle("")
-            // MARK: - Toolbar
+        // MARK: - Toolbar
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     Image("MockChatPhoto")
@@ -132,8 +132,8 @@ struct ChatView: View {
                         Text(chat.title)
                         // Text("Chat title")
                             .font(.headline)
-//                        Text("Some users were here lol")
-//                            .font(.subheadline)
+                        //Text("Some users were here lol")
+                        //    .font(.subheadline)
                         ProgressView()
                             .progressViewStyle(.linear)
                     }
