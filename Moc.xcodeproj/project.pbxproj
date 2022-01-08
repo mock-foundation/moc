@@ -12,9 +12,7 @@
 		43654D3F277FF8830047F36F /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3E277FF8830047F36F /* ChatViewModel.swift */; };
 		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
 		438326FB27877346004B0E18 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438326FA27877346004B0E18 /* ViewRouter.swift */; };
-		4383270027886302004B0E18 /* ChatSplitView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 438326FF27886302004B0E18 /* ChatSplitView.storyboard */; };
-		438327022788645D004B0E18 /* ChatSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438327012788645D004B0E18 /* ChatSplitViewController.swift */; };
-		43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43832703278865CB004B0E18 /* ChatSplitView.swift */; };
+		43832704278865CB004B0E18 /* SplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43832703278865CB004B0E18 /* SplitView.swift */; };
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E4652783399D0084F809 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E4642783399D0084F809 /* Lottie */; };
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
@@ -79,9 +77,7 @@
 		43654D3C277FF85F0047F36F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		43654D3E277FF8830047F36F /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
-		438326FF27886302004B0E18 /* ChatSplitView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatSplitView.storyboard; sourceTree = "<group>"; };
-		438327012788645D004B0E18 /* ChatSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitViewController.swift; sourceTree = "<group>"; };
-		43832703278865CB004B0E18 /* ChatSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
+		43832703278865CB004B0E18 /* SplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitView.swift; sourceTree = "<group>"; };
 		4386E46627833B040084F809 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		43DD9560277E50C0000CE509 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43DD9567277E50C3000CE509 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,18 +152,9 @@
 			isa = PBXGroup;
 			children = (
 				43DD961E277E717C000CE509 /* SearchField.swift */,
-				43832703278865CB004B0E18 /* ChatSplitView.swift */,
+				43832703278865CB004B0E18 /* SplitView.swift */,
 			);
 			path = AppKitBindings;
-			sourceTree = "<group>";
-		};
-		438326FC2788629D004B0E18 /* AppKit */ = {
-			isa = PBXGroup;
-			children = (
-				438326FF27886302004B0E18 /* ChatSplitView.storyboard */,
-				438327012788645D004B0E18 /* ChatSplitViewController.swift */,
-			);
-			path = AppKit;
 			sourceTree = "<group>";
 		};
 		43DD9557277E50C0000CE509 = {
@@ -254,7 +241,6 @@
 		43DD9616277E717C000CE509 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				438326FC2788629D004B0E18 /* AppKit */,
 				438326F927872FC6004B0E18 /* AppKitBindings */,
 				43DD961A277E717C000CE509 /* Chat */,
 				43DD961C277E717C000CE509 /* LoginView.swift */,
@@ -409,7 +395,6 @@
 			files = (
 				43DD9629277E717C000CE509 /* Info.plist in Resources */,
 				43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */,
-				4383270027886302004B0E18 /* ChatSplitView.storyboard in Resources */,
 				43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,11 +430,10 @@
 				43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */,
 				43DD963A277E717C000CE509 /* ChatView.swift in Sources */,
 				4386E46727833B040084F809 /* LottieView.swift in Sources */,
-				43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */,
+				43832704278865CB004B0E18 /* SplitView.swift in Sources */,
 				43DD962C277E717C000CE509 /* Folder.swift in Sources */,
 				43DD9637277E717C000CE509 /* ChatItemView.swift in Sources */,
 				43DD9636277E717C000CE509 /* LoginView.swift in Sources */,
-				438327022788645D004B0E18 /* ChatSplitViewController.swift in Sources */,
 				438326FB27877346004B0E18 /* ViewRouter.swift in Sources */,
 				43DD9635277E717C000CE509 /* MessageBubbleView.swift in Sources */,
 				43654D3F277FF8830047F36F /* ChatViewModel.swift in Sources */,
