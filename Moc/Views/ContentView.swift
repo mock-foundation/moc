@@ -33,30 +33,21 @@ struct ContentView: View {
                     }
                     .frame(minWidth: 70)
                     VStack {
-//                        SearchField()
-//                            .padding([.leading, .bottom, .trailing], 10.0)
+                        SearchField()
+                            .padding([.leading, .bottom, .trailing], 10.0)
                         GeometryReader { proxy in
                             List(mainViewModel.chatList) { chat in
                                 NavigationLink(tag: Int(chat.id), selection: $selectedChat) {
-                                    GeometryReader { proxy in
                                         ChatView(chat: chat)
-                                            .frame(width: proxy.size.width, height: proxy.size.height)
-                                            .navigationTitle("")
-                                    }
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 } label: {
                                     ChatItemView(chat: chat)
                                         .frame(height: 56)
                                 }
-                                //								NavigationLink(destination: {
-                                //
-                                //								}) {
-                                //                                    ChatItemView(chat: chat)
-                                //										.frame(height: 56)
-                                //								}
-                            }
-                            .swipeActions {
-                                Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
-                                    Label("Delete chat", systemImage: "trash")
+                                .swipeActions {
+                                    Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
+                                        Label("Delete chat", systemImage: "trash")
+                                    }
                                 }
                             }
                             .toolbar {
@@ -89,13 +80,13 @@ struct ContentView: View {
                 mainViewModel.chatList.append(chat)
             }
 
-            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
-                if !$0.positions.isEmpty && !$1.positions.isEmpty {
-                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-                } else {
-                    return true
-                }
-            })
+//            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
+//                if !$0.positions.isEmpty && !$1.positions.isEmpty {
+//                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+//                } else {
+//                    return true
+//                }
+//            })
 
         }
         .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { data in
