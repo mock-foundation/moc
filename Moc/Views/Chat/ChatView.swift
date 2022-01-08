@@ -53,6 +53,18 @@ struct ChatView: View {
         }
     }
 
+    private func InspectorButton(action: @escaping () -> Void, imageName: String, text: String) -> some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: imageName)
+                    .font(.system(size: 24))
+                Text(text)
+            }
+        }
+        .frame(width: 56, height: 56)
+        .buttonStyle(.borderless)
+    }
+
     // MARK: - Chat inspector
     private var chatInspector: some View {
     }
