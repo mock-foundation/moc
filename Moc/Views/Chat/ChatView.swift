@@ -157,8 +157,8 @@ struct ChatView: View {
     }
 }
 
-//struct ChatView_Previews: PreviewProvider {
-//	static var previews: some View {
-//		ChatView()
-//	}
-//}
+struct ChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChatView(chat: Chat(actionBar: .none, canBeDeletedForAllUsers: true, canBeDeletedOnlyForSelf: true, canBeReported: true, clientData: "", defaultDisableNotification: true, draftMessage: nil, hasProtectedContent: false, hasScheduledMessages: false, id: 10294934 /* i just banged my head against the keyboard, so this number is completely random */, isBlocked: false, isMarkedAsUnread: false, lastMessage: nil, lastReadInboxMessageId: 102044379 /* the same */, lastReadOutboxMessageId: 39439379573 /* again */, messageSenderId: nil, messageTtl: 0, notificationSettings: ChatNotificationSettings(disableMentionNotifications: true, disablePinnedMessageNotifications: true, muteFor: 10, showPreview: false, sound: "", useDefaultDisableMentionNotifications: true, useDefaultDisablePinnedMessageNotifications: true, useDefaultMuteFor: true, useDefaultShowPreview: true, useDefaultSound: true), pendingJoinRequests: nil, permissions: ChatPermissions(canAddWebPagePreviews: true, canChangeInfo: true, canInviteUsers: true, canPinMessages: true, canSendMediaMessages: true, canSendMessages: true, canSendOtherMessages: true, canSendPolls: true), photo: nil, positions: [], replyMarkupMessageId: 1023948920349 /* my head hurts */, themeName: "", title: "Curry Club - Ninjas from the reeds", type: .chatTypeBasicGroup(.init(basicGroupId: 102343920 /* i really should use a proper random number generator instead of using my head as a random number generator */)), unreadCount: 0, unreadMentionCount: 0, videoChat: VideoChat(defaultParticipantId: nil, groupCallId: 0, hasParticipants: false)))
+    }
+}
