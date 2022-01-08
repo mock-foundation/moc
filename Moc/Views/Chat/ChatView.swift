@@ -65,6 +65,16 @@ struct ChatView: View {
         .buttonStyle(.borderless)
     }
 
+    private enum InspectorTab {
+        case users
+        case media
+        case links
+        case files
+        case voice
+    }
+
+    @State private var selectedInspectorTab: InspectorTab = .users
+
     // MARK: - Chat inspector
     private var chatInspector: some View {
         ScrollView {
