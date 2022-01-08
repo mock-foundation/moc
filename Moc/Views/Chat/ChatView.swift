@@ -67,6 +67,47 @@ struct ChatView: View {
 
     // MARK: - Chat inspector
     private var chatInspector: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                Image("MockChatPhoto")
+                    .resizable()
+                    .frame(minWidth: 0, maxWidth: 86, minHeight: 0, maxHeight: 86)
+                    .clipShape(Circle())
+                Text(chat.title)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                    .frame(minWidth: 0, idealWidth: nil)
+                Text("a ton of members")
+                // Button row
+                HStack(spacing: 24) {
+                    InspectorButton(
+                        action: {
+                            print("Ayy")
+                        },
+                        imageName: "person.crop.circle.badge.plus",
+                        text: "Add"
+                    )
+                    InspectorButton(
+                        action: {
+                            print("Ayy x2")
+                        },
+                        imageName: "bell.slash",
+                        text: "Mute"
+                    )
+                    InspectorButton(
+                        action: {
+                            print("Ayy x3")
+                        },
+                        imageName: "arrow.turn.up.right",
+                        text: "Leave"
+                    )
+                }
+                .padding(.vertical)
+                .frame(minWidth: 0, idealWidth: nil)
+            }
+            .padding(.top)
+        }
     }
 
     var body: some View {
