@@ -58,10 +58,11 @@ struct ChatView: View {
             VStack(spacing: 8) {
                 Image(systemName: imageName)
                     .font(.system(size: 24))
+                    .padding(4)
                 Text(text)
             }
         }
-        .frame(width: 56, height: 56)
+        .frame(width: 48, height: 48)
         .buttonStyle(.borderless)
     }
 
@@ -79,6 +80,7 @@ struct ChatView: View {
     private var chatInspector: some View {
         ScrollView {
             VStack(spacing: 16) {
+                // Header
                 Image("MockChatPhoto")
                     .resizable()
                     .frame(minWidth: 0, maxWidth: 86, minHeight: 0, maxHeight: 86)
@@ -89,7 +91,8 @@ struct ChatView: View {
                     .padding(.horizontal)
                     .frame(minWidth: 0, idealWidth: nil)
                 Text("a ton of members")
-                // Button row
+
+                // Quick actions
                 HStack(spacing: 24) {
                     InspectorButton(
                         action: {
@@ -98,6 +101,7 @@ struct ChatView: View {
                         imageName: "person.crop.circle.badge.plus",
                         text: "Add"
                     )
+                    Divider()
                     InspectorButton(
                         action: {
                             print("Ayy x2")
@@ -105,6 +109,7 @@ struct ChatView: View {
                         imageName: "bell.slash",
                         text: "Mute"
                     )
+                    Divider()
                     InspectorButton(
                         action: {
                             print("Ayy x3")
