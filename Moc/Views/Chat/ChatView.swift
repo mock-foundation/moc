@@ -11,8 +11,10 @@ import TDLibKit
 struct ChatView: View {
     let chat: Chat
     @State private var inputMessage = ""
+    @State private var isInspectorShown = true
     @Environment(\.colorScheme) var colorScheme
 
+    // MARK: - Input field
     private var inputField: some View {
         HStack(spacing: 16) {
             Image(systemName: "paperclip")
@@ -29,7 +31,8 @@ struct ChatView: View {
         }
     }
 
-    var body: some View {
+    // MARK: - Chat view
+    private var chatView: some View {
         VStack {
             ScrollViewReader { proxy in
                 ScrollView {
@@ -48,40 +51,57 @@ struct ChatView: View {
             inputField
                 .padding()
         }
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                Image("MockChatPhoto")
-                    .resizable()
-                    .frame(width: 32, height: 32)
-                    .clipShape(Circle())
-            }
-            ToolbarItem(placement: .navigation) {
-                VStack(alignment: .leading) {
-                    Text(chat.title)
-                    //                    Text("Chat title")
-                        .font(.headline)
-                    Text("Some users were here lol")
-                        .font(.subheadline)
+    }
+
+    // MARK: - Chat inspector
+    private var chatInspector: some View {
+        Text("Placeholder for the chat inspector")
+    }
+
+    var body: some View {
+        SplitView(leftView: {
+            chatView
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }, rightView: {
+            chatInspector
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }, isRightViewVisible: isInspectorShown)
+            .navigationTitle("")
+            // MARK: - Toolbar
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    Image("MockChatPhoto")
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
+                }
+                ToolbarItem(placement: .navigation) {
+                    VStack(alignment: .leading) {
+                        Text(chat.title)
+                        // Text("Chat title")
+                            .font(.headline)
+//                        Text("Some users were here lol")
+//                            .font(.subheadline)
+                        ProgressView()
+                            .progressViewStyle(.linear)
+                    }
+                }
+                ToolbarItemGroup {
+                    Button(action: {
+                        print("search")
+                    }, label: {
+                        Image(systemName: "magnifyingglass")
+                    })
+                    Button(action: { isInspectorShown.toggle() }, label: {
+                        Image(systemName: "sidebar.right")
+                    })
+                    Button(action: {
+                        print("more")
+                    }, label: {
+                        Image(systemName: "ellipsis")
+                    })
                 }
             }
-            ToolbarItemGroup {
-                Button(action: {
-                    print("search")
-                }, label: {
-                    Image(systemName: "magnifyingglass")
-                })
-                Button(action: {
-                    print("sidebar")
-                }, label: {
-                    Image(systemName: "sidebar.right")
-                })
-                Button(action: {
-                    print("more")
-                }, label: {
-                    Image(systemName: "ellipsis")
-                })
-            }
-        }
     }
 }
 
