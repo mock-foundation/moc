@@ -49,7 +49,7 @@ struct ChatItemView: View {
 						.fontWeight(.bold)
 					Spacer()
 //					Image(chat.seen ? "MessageSeenIcon" : "MessageSentIcon")
-                    Text(Date(timeIntervalSince1970: TimeInterval(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
+                    Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
 						.foregroundColor(.secondary)
 				}
 				HStack {
