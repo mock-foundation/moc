@@ -48,12 +48,11 @@ struct ContentView: View {
                                     Label("Delete chat", systemImage: "trash")
                                 }
                             }
-                            .toolbar {
-                                ToolbarItem(placement: .status) {
-                                    Button(action: { print("add chat") }) {
-                                        Image(systemName: "square.and.pencil")
-                                    }
-                                }
+                        }
+                    }.toolbar {
+                        ToolbarItem(placement: .status) {
+                            Button(action: { print("add chat") }) {
+                                Image(systemName: "square.and.pencil")
                             }
                         }
                     }
