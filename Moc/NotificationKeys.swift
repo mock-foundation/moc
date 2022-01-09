@@ -38,6 +38,7 @@ extension NSNotification.Name {
         return .init("AuthorizationStateReady")
     }
 
+    // swiftlint:disable identifier_name
     static var authorizationStateWaitOtherDeviceConfirmation: NSNotification.Name {
         return .init("AuthorizationStateWaitOtherDeviceConfirmation")
     }
@@ -54,7 +55,7 @@ extension NSNotification.Name {
         return .init("AuthorizationStateClosed")
     }
 
-    // MARK: - Chat position
+    // MARK: - Chat updates
     static var updateChatPosition: NSNotification.Name {
         return .init("UpdateChatPosition")
     }
