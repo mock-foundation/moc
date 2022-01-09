@@ -70,7 +70,7 @@ struct LoginView: View {
                 Text("Enter the code")
                 TextField("Code", text: $code)
                     .onSubmit {
-                        Task(priority: .medium) {
+                        Task {
                             do {
                                 try await tdApi.checkAuthenticationCode(code: code)
                                 openedScreen = .termsOfService

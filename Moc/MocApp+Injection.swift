@@ -49,7 +49,7 @@ extension Resolver {
                         }
                     case .authorizationStateWaitEncryptionKey(let info):
                         self.post(notification: .authorizationStateWaitEncryptionKey, withObject: info)
-                        Task(priority: .medium) {
+                        Task {
                             try? await tdApi.checkDatabaseEncryptionKey(encryptionKey: nil)
                         }
                     case .authorizationStateWaitPhoneNumber:
