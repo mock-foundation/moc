@@ -117,13 +117,11 @@ struct ChatView: View {
                         imageName: "person.crop.circle.badge.plus",
                         text: "Add"
                     )
-                    Divider()
                     inspectorButton(
                         action: {  },
                         imageName: "bell.slash",
                         text: "Mute"
                     )
-                    Divider()
                     inspectorButton(
                         action: {  },
                         imageName: "arrow.turn.up.right",
