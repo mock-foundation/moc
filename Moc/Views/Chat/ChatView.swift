@@ -150,6 +150,7 @@ struct ChatView: View {
                             ForEach(0..<10) { index in
                                 UserRow(name: "User \(index)", status: .userStatusRecently, photo: Image("MockChatPhoto"))
                                     .padding(.horizontal, 8)
+                                    .frame(minWidth: 0, idealWidth: nil)
                             }
                         case .media:
                             Text("Media")
