@@ -27,7 +27,7 @@ struct ContentView: View {
             VStack {
                 HStack {
                     ScrollView(showsIndicators: false) {
-                        ForEach(0..<10, content: { index in
+                        ForEach(0..<10, content: { _ in
                             FolderItemView()
                         }).frame(alignment: .center)
                     }
@@ -35,26 +35,22 @@ struct ContentView: View {
                     VStack {
                         SearchField()
                             .padding([.leading, .bottom, .trailing], 10.0)
-                        GeometryReader { proxy in
-                            List(mainViewModel.chatList) { chat in
-                                NavigationLink(tag: Int(chat.id), selection: $selectedChat) {
-                                        ChatView(chat: chat)
-                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                } label: {
-                                    ChatItemView(chat: chat)
-                                        .frame(height: 56)
-                                }
-                                .swipeActions {
-                                    Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
-                                        Label("Delete chat", systemImage: "trash")
-                                    }
+                        List(mainViewModel.chatList) { chat in
+                            NavigationLink(tag: Int(chat.id), selection: $selectedChat) {
+                                ChatView(chat: chat)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            } label: {
+                                ChatItemView(chat: chat)
+                                    .frame(height: 56)
+                            }
+                            .swipeActions {
+                                Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
+                                    Label("Delete chat", systemImage: "trash")
                                 }
                             }
                             .toolbar {
                                 ToolbarItem(placement: .status) {
-                                    Button(action: {
-
-                                    }) {
+                                    Button(action: { print("add chat") }) {
                                         Image(systemName: "square.and.pencil")
                                     }
                                 }

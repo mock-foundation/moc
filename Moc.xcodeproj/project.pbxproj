@@ -25,8 +25,6 @@
 		43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9603277E717B000CE509 /* MocApp+Injection.swift */; };
 		43DD9629277E717C000CE509 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9606277E717B000CE509 /* Info.plist */; };
 		43DD962C277E717C000CE509 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD960A277E717B000CE509 /* Folder.swift */; };
-		43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9611277E717C000CE509 /* Moc.xcdatamodeld */; };
-		43DD9631277E717C000CE509 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9613277E717C000CE509 /* Persistence.swift */; };
 		43DD9635277E717C000CE509 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD961B277E717C000CE509 /* MessageBubbleView.swift */; };
 		43DD9636277E717C000CE509 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD961C277E717C000CE509 /* LoginView.swift */; };
 		43DD9637277E717C000CE509 /* ChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD961D277E717C000CE509 /* ChatItemView.swift */; };
@@ -78,8 +76,6 @@
 		43DD9603277E717B000CE509 /* MocApp+Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MocApp+Injection.swift"; sourceTree = "<group>"; };
 		43DD9606277E717B000CE509 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43DD960A277E717B000CE509 /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
-		43DD9612277E717C000CE509 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		43DD9613277E717C000CE509 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		43DD961B277E717C000CE509 /* MessageBubbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
 		43DD961C277E717C000CE509 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		43DD961D277E717C000CE509 /* ChatItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatItemView.swift; sourceTree = "<group>"; };
@@ -157,7 +153,6 @@
 		43DD9562277E50C0000CE509 /* Moc */ = {
 			isa = PBXGroup;
 			children = (
-				43DD9610277E717B000CE509 /* Persistence */,
 				43DD9607277E717B000CE509 /* Models */,
 				43654D3B277FF84C0047F36F /* ViewModels */,
 				43DD9616277E717C000CE509 /* Views */,
@@ -195,15 +190,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		43DD9610277E717B000CE509 /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-				43DD9611277E717C000CE509 /* Moc.xcdatamodeld */,
-				43DD9613277E717C000CE509 /* Persistence.swift */,
-			);
-			path = Persistence;
-			sourceTree = "<group>";
-		};
 		43DD9616277E717C000CE509 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,9 +208,9 @@
 		43DD961A277E717C000CE509 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				43832703278865CB004B0E18 /* ChatSplitView.swift */,
 				43DD961B277E717C000CE509 /* MessageBubbleView.swift */,
 				43DD9620277E717C000CE509 /* ChatView.swift */,
+				43832703278865CB004B0E18 /* ChatSplitView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -381,11 +367,9 @@
 			files = (
 				43DD9638277E717C000CE509 /* SearchField.swift in Sources */,
 				43DD963B277E717C000CE509 /* ContentView.swift in Sources */,
-				43DD9631277E717C000CE509 /* Persistence.swift in Sources */,
 				4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */,
 				43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */,
 				43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */,
-				43DD9630277E717C000CE509 /* Moc.xcdatamodeld in Sources */,
 				43DD963A277E717C000CE509 /* ChatView.swift in Sources */,
 				4386E46727833B040084F809 /* LottieView.swift in Sources */,
 				43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */,
@@ -748,19 +732,6 @@
 			productName = Resolver;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		43DD9611277E717C000CE509 /* Moc.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				43DD9612277E717C000CE509 /* Model.xcdatamodel */,
-			);
-			currentVersion = 43DD9612277E717C000CE509 /* Model.xcdatamodel */;
-			path = Moc.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 43DD9558277E50C0000CE509 /* Project object */;
 }

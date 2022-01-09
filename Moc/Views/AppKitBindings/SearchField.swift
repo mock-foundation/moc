@@ -12,10 +12,10 @@ struct SearchField: NSViewRepresentable {
 		let view = NSSearchField()
 		return view
 	}
-	
+
 	func updateNSView(_ nsView: NSSearchField, context: Context) {
 		
 	}
-	
+
 	typealias NSViewType = NSSearchField
 }
