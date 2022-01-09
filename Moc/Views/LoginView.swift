@@ -25,6 +25,7 @@ struct LoginView: View {
                     .foregroundColor(.white)
             }
             .frame(width: 20, height: 20)
+            // swiftlint:disable force_try
             Text(try! AttributedString(markdown: text))
             Spacer()
         }
@@ -56,35 +57,35 @@ struct LoginView: View {
     var body: some View {
         VStack {
             switch openedScreen {
-                case .phoneNumber:
-                    Text("Enter your phone number")
-                    TextField("Phone number", text: $phoneNumber)
-                        .onSubmit {
-                            Task {
-                                _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
-                                openedScreen = .code
+            case .phoneNumber:
+                Text("Enter your phone number")
+                TextField("Phone number", text: $phoneNumber)
+                    .onSubmit {
+                        Task {
+                            _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
+                            openedScreen = .code
+                        }
+                    }
+            case .code:
+                Text("Enter the code")
+                TextField("Code", text: $code)
+                    .onSubmit {
+                        Task(priority: .medium) {
+                            do {
+                                try await tdApi.checkAuthenticationCode(code: code)
+                                openedScreen = .termsOfService
+                            } catch {
+                                fatalError("Failed to set authentication code.")
                             }
                         }
-                case .code:
-                    Text("Enter the code")
-                    TextField("Code", text: $code)
-                        .onSubmit {
-                            Task(priority: .medium) {
-                                do {
-                                    try await tdApi.checkAuthenticationCode(code: code)
-                                    openedScreen = .termsOfService
-                                } catch {
-                                    fatalError("Failed to set authentication code.")
-                                }
-                            }
-                        }
-                case .termsOfService:
-                    Text("Accept the Terms of Service")
+                    }
+            case .termsOfService:
+                Text("Accept the Terms of Service")
 
             }
 
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateReady, object: nil)) { output in
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateReady, object: nil)) { _ in
             presentationMode.wrappedValue.dismiss()
         }
     }
