@@ -36,7 +36,7 @@ struct ContentView: View {
                             .padding([.leading, .bottom, .trailing], 10.0)
                         List(mainViewModel.chatList) { chat in
                             ChatItemView(chat: chat)
-                                .frame(height: 56)
+                                .frame(height: 52)
                                 .swipeActions(edge: .trailing) {
                                     Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
                                         Label("Delete chat", systemImage: "trash")
@@ -46,14 +46,14 @@ struct ContentView: View {
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
                                 }
-                                .padding(8)
+                                .padding(6)
                                 .background(
                                     (viewRouter.currentView == .chat
                                      && viewRouter.openedChat! == chat)
-                                    ? Color.blue
+                                    ? Color.blue.opacity(0.8)
                                     : nil
                                 )
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                         }
                     }.toolbar {
                         ToolbarItem(placement: .status) {

@@ -24,7 +24,7 @@ struct ChatItemView: View {
 //				chat.chatIcon
             Image("MockChatPhoto")
 					.resizable()
-					.frame(width: 56, height: 56)
+					.frame(width: 52, height: 52)
 					.clipShape(Circle())
 					.fixedSize()
 			VStack(alignment: .leading) {
