@@ -6,29 +6,38 @@
 //
 
 import SwiftUI
+import SwiftUIUtils
 
 struct MessageBubbleView: View {
 	var body: some View {
-		ZStack {
-			// Background
-			Image("ChatMessageBubbleRecipient")
-				.resizable(capInsets: EdgeInsets(top: 18, leading: 18, bottom: 18, trailing: 18), resizingMode: .stretch)
-				.foregroundColor(Color("MessageFromRecepientColor"))
+        HStack {
+            Image("MockChatPhoto")
+                .resizable()
+                .frame(width: 36, height: 36)
+                .clipShape(Circle())
+                .padding(.leading, 8)
+                .vBottom()
+            ZStack {
+                // Background
+                Image("ChatMessageBubbleRecipient")
+                    .resizable(capInsets: EdgeInsets(
+                        top: 18,
+                        leading: 18,
+                        bottom: 18,
+                        trailing: 18
+                    ), resizingMode: .stretch)
+                    .foregroundColor(Color("MessageFromRecepientColor"))
 
-			// Content
-            HStack {
-                Image("MockChatPhoto")
-                    .frame(width: 24, height: 24)
                 VStack(alignment: .leading) {
                     Text("Sender")
                         .foregroundColor(.blue)
                     Text("Message content")
                         .lineLimit(50)
-                }
+                }.hLeading()
+                .padding(.leading)
+                .padding([.bottom, .top, .trailing], 6)
             }
-			.padding(.leading)
-			.padding([.bottom, .top, .trailing], 6)
-		}
+        }
 	}
 }
 
