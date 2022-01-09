@@ -71,7 +71,10 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .updateNewChat)) { data in
             NSLog("Received chat position update")
-            let chat = (data.object as! UpdateNewChat).chat
+            guard data.object != nil else {
+                return
+            }
+            let chat = (data.object as? UpdateNewChat)!.chat
             let hasChat = mainViewModel.chatList.contains(where: {
                 $0.id == chat.id
             })
@@ -89,7 +92,7 @@ struct ContentView: View {
 //            })
 
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { data in
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { _ in
             NSLog("Phone number update lol")
             showingLoginScreen = true
         }
