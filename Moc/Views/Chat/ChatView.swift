@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import SwiftUIUtils
 
 struct ChatView: View {
     let chat: Chat
@@ -37,11 +38,9 @@ struct ChatView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     ForEach(0..<50) { _ in
-                        HStack {
-                            MessageBubbleView()
-                                .frame(width: 300)
-                            Spacer()
-                        }
+                        MessageBubbleView()
+                            .frame(idealWidth: nil, maxWidth: 300)
+                            .hLeading()
                     }
                 }
                 .onAppear {

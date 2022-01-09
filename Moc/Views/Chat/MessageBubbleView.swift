@@ -16,17 +16,16 @@ struct MessageBubbleView: View {
 				.foregroundColor(Color("MessageFromRecepientColor"))
 
 			// Content
-			VStack(alignment: .leading) {
-				HStack {
-					Text("Sender")
-						.foregroundColor(.blue)
-					Spacer()
-				}
-				HStack {
-					Text("Message content")
-						.lineLimit(20)
-				}
-			}
+            HStack {
+                Image("MockChatPhoto")
+                    .frame(width: 24, height: 24)
+                VStack(alignment: .leading) {
+                    Text("Sender")
+                        .foregroundColor(.blue)
+                    Text("Message content")
+                        .lineLimit(50)
+                }
+            }
 			.padding(.leading)
 			.padding([.bottom, .top, .trailing], 6)
 		}
