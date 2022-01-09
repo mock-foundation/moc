@@ -9,6 +9,37 @@ import SwiftUI
 import TDLibKit
 import Resolver
 
+final class TdLogger: Logger {
+    func log(_ message: String, type: LoggerMessageType?) {
+        queue.async {
+            guard type != nil else {
+                NSLog("TDLibKit: \(message)")
+                return
+            }
+
+            var typeStr = ""
+            switch type! {
+            case .receive:
+                typeStr = "receive:"
+            case .send:
+                typeStr = "send:"
+            case .execute:
+                typeStr = "execute:"
+            case .custom(let data):
+                typeStr = "\(data):"
+            }
+
+            NSLog("TDLibKit: \(typeStr) \(message)")
+        }
+    }
+
+    let queue: DispatchQueue
+
+    init() {
+        queue = DispatchQueue(label: "TDLibKitLog", qos: .userInitiated)
+    }
+}
+
 extension Resolver {
     public static func registerViewModels() {
         register { MainViewModel() }
@@ -16,7 +47,7 @@ extension Resolver {
 
     // swiftlint:disable cyclomatic_complexity function_body_length
     public static func registerTd() {
-        let tdApi = TdApi(client: TdClientImpl())
+        let tdApi = TdApi(client: TdClientImpl(completionQueue: .main, logger: TdLogger()))
         tdApi.client.run {
             do {
                 let update = try tdApi.decoder.decode(Update.self, from: $0)
