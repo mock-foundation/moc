@@ -72,7 +72,7 @@ struct ContentView: View {
                 $0.id == chat.id
             })
 
-            if !hasChat {
+            if !hasChat && !chat.positions.isEmpty {
                 mainViewModel.chatList.append(chat)
             }
 
