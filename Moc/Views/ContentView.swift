@@ -14,11 +14,12 @@ extension Chat: Identifiable { }
 struct ContentView: View {
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
+    @State private var showingLoginScreen = false
+
     @StateObject private var mainViewModel = MainViewModel()
+    @StateObject private var viewRouter = ViewRouter()
 
     @Injected private var tdApi: TdApi
-
-    @State private var showingLoginScreen = false
 
     var body: some View {
         NavigationView {
@@ -34,18 +35,25 @@ struct ContentView: View {
                         SearchField()
                             .padding([.leading, .bottom, .trailing], 10.0)
                         List(mainViewModel.chatList) { chat in
-                            NavigationLink(tag: Int(chat.id), selection: $selectedChat) {
-                                ChatView(chat: chat)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            } label: {
-                                ChatItemView(chat: chat)
-                                    .frame(height: 56)
-                            }
-                            .swipeActions {
-                                Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
-                                    Label("Delete chat", systemImage: "trash")
+                            ChatItemView(chat: chat)
+                                .frame(height: 56)
+                                .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
+                                        Label("Delete chat", systemImage: "trash")
+                                    }
                                 }
-                            }
+                                .onTapGesture {
+                                    viewRouter.openedChat = chat
+                                    viewRouter.currentView = .chat
+                                }
+                                .padding(8)
+                                .background(
+                                    (viewRouter.currentView == .chat
+                                     && viewRouter.openedChat! == chat)
+                                    ? Color.blue
+                                    : nil
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                     }.toolbar {
                         ToolbarItem(placement: .status) {
@@ -57,6 +65,18 @@ struct ContentView: View {
                 }
             }
             .listStyle(.sidebar)
+
+            switch viewRouter.currentView {
+                case .selectChat:
+                    VStack {
+                        Text("Select chat")
+                    }
+                case .chat:
+                    VStack {
+                        ChatView(chat: viewRouter.openedChat!)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+            }
         }
         .sheet(isPresented: $showingLoginScreen) {
             LoginView()
@@ -72,7 +92,7 @@ struct ContentView: View {
                 $0.id == chat.id
             })
 
-            if !hasChat && !chat.positions.isEmpty {
+            if !hasChat {
                 mainViewModel.chatList.append(chat)
             }
 
@@ -82,12 +102,12 @@ struct ContentView: View {
                 } else {
                     return true
                 }
-//
-//                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-//                    return true
-//                } else {
-//                    return false
-//                }
+                //
+                //                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
+                //                    return true
+                //                } else {
+                //                    return false
+                //                }
             })
 
         }
