@@ -11,6 +11,7 @@ import Resolver
 
 private enum OpenedScreen {
     case phoneNumber
+    case qrCode
     case code
     case termsOfService
 }
@@ -36,23 +37,6 @@ struct LoginView: View {
     @State private var code = ""
     @State private var openedScreen = OpenedScreen.phoneNumber
     @Injected private var tdApi: TdApi
-
-    //			VStack(spacing: 12) {
-    //				Text("Fast login using a QR code")
-    //					.font(.title)
-    //					.padding(.top)
-    //				// QR Code
-    //				Rectangle()
-    //					.frame(width: 150, height: 150)
-    //					.clipShape(RoundedRectangle(cornerRadius: 20))
-    //				VStack {
-    //					stepView(number: 1, text: "Open Telegram from your phone")
-    //					stepView(number: 2, text: "Open **Settings** -> **Devices** -> **Connect device**.")
-    //					stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
-    //				}
-    //				.frame(width: 200)
-    //				.padding()
-    //			}.padding()
 
     var body: some View {
         VStack {
@@ -82,6 +66,23 @@ struct LoginView: View {
             case .termsOfService:
                 Text("Accept the Terms of Service")
 
+            case .qrCode:
+                VStack(spacing: 12) {
+                    Text("Fast login using a QR code")
+                        .font(.title)
+                        .padding(.top)
+                    // QR Code
+                    Rectangle()
+                        .frame(width: 150, height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    VStack {
+                        stepView(number: 1, text: "Open Telegram from your phone")
+                        stepView(number: 2, text: "Open **Settings** -> **Devices** -> **Connect device**.")
+                        stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
+                    }
+                    .frame(width: 200)
+                    .padding()
+                }.padding()
             }
 
         }
