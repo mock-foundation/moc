@@ -9,9 +9,7 @@ import SwiftUI
 import TDLibKit
 import Resolver
 
-extension Chat: Identifiable {
-
-}
+extension Chat: Identifiable { }
 
 struct ContentView: View {
     @State private var selectedFolder: Int = 0
@@ -78,13 +76,19 @@ struct ContentView: View {
                 mainViewModel.chatList.append(chat)
             }
 
-//            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
-//                if !$0.positions.isEmpty && !$1.positions.isEmpty {
-//                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-//                } else {
+            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
+                if !$0.positions.isEmpty && !$1.positions.isEmpty {
+                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+                } else {
+                    return true
+                }
+//
+//                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
 //                    return true
+//                } else {
+//                    return false
 //                }
-//            })
+            })
 
         }
         .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { _ in
