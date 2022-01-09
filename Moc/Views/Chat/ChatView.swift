@@ -53,6 +53,7 @@ struct ChatView: View {
         }
     }
 
+    // MARK: - Additional inspector stuff
     private func InspectorButton(action: @escaping () -> Void, imageName: String, text: String) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
@@ -64,6 +65,23 @@ struct ChatView: View {
         }
         .frame(width: 48, height: 48)
         .buttonStyle(.borderless)
+    }
+
+    private func UserRow(name: String, status: UserStatus, photo: Image? = nil) -> some View {
+        HStack {
+            if photo != nil {
+                photo!
+                    .resizable()
+                    .frame(width: 32, height: 32)
+                    .clipShape(Circle())
+                    .padding(8)
+            }
+            VStack(alignment: .leading) {
+                Text(name)
+                Text("User status")
+            }
+            Spacer()
+        }
     }
 
     private enum InspectorTab {
@@ -95,25 +113,19 @@ struct ChatView: View {
                 // Quick actions
                 HStack(spacing: 24) {
                     InspectorButton(
-                        action: {
-                            print("Ayy")
-                        },
+                        action: {  },
                         imageName: "person.crop.circle.badge.plus",
                         text: "Add"
                     )
                     Divider()
                     InspectorButton(
-                        action: {
-                            print("Ayy x2")
-                        },
+                        action: {  },
                         imageName: "bell.slash",
                         text: "Mute"
                     )
                     Divider()
                     InspectorButton(
-                        action: {
-                            print("Ayy x3")
-                        },
+                        action: {  },
                         imageName: "arrow.turn.up.right",
                         text: "Leave"
                     )
@@ -132,13 +144,30 @@ struct ChatView: View {
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
                 .frame(minWidth: 0, idealWidth: nil)
+                ScrollView {
+                    switch selectedInspectorTab {
+                        case .users:
+                            ForEach(0..<10) { index in
+                                UserRow(name: "User \(index)", status: .userStatusRecently, photo: Image("MockChatPhoto"))
+                                    .padding(.horizontal, 8)
+                            }
+                        case .media:
+                            Text("Media")
+                        case .links:
+                            Text("Links")
+                        case .files:
+                            Text("Files")
+                        case .voice:
+                            Text("Voice")
+                    }
+                }
             }
             .padding(.top)
         }
     }
 
     var body: some View {
-        SplitView(leftView: {
+        ChatSplitView(leftView: {
             chatView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }, rightView: {
@@ -157,12 +186,9 @@ struct ChatView: View {
                 ToolbarItem(placement: .navigation) {
                     VStack(alignment: .leading) {
                         Text(chat.title)
-                        // Text("Chat title")
                             .font(.headline)
-                        //Text("Some users were here lol")
-                        //    .font(.subheadline)
-                        ProgressView()
-                            .progressViewStyle(.linear)
+                        Text("Some users were here lol")
+                            .font(.subheadline)
                     }
                 }
                 ToolbarItemGroup {
