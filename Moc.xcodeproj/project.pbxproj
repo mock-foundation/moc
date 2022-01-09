@@ -193,6 +193,7 @@
 		43DD9616277E717C000CE509 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				438326FA27877346004B0E18 /* ViewRouter.swift */,
 				438326F927872FC6004B0E18 /* AppKitBindings */,
 				43DD961A277E717C000CE509 /* Chat */,
 				43DD961C277E717C000CE509 /* LoginView.swift */,
@@ -200,7 +201,6 @@
 				43DD961F277E717C000CE509 /* FolderItemView.swift */,
 				43DD9621277E717C000CE509 /* ContentView.swift */,
 				4386E46627833B040084F809 /* LottieView.swift */,
-				438326FA27877346004B0E18 /* ViewRouter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
