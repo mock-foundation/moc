@@ -116,14 +116,34 @@ extension Resolver {
         }
 
         IOObjectRelease(service)
+        if modelIdentifier == nil {
+            return "Unknown"
+        }
 
         // And then find a corresponding marketing name using the identifier
         let serverInfoBundle = Bundle(path: "/System/Library/PrivateFrameworks/ServerInformation.framework/")
         let sysInfoFile = serverInfoBundle?.url(forResource: "SIMachineAttributes", withExtension: "plist")
         let plist = NSDictionary(contentsOfFile: sysInfoFile!.path)
 
-        // TODO: Replace force-unwraps with something more safe
-        return ((plist![modelIdentifier!] as! NSDictionary)["_LOCALIZABLE_"] as! NSDictionary)["marketingModel"] as! String
+        let modelDict = plist![modelIdentifier!] as? NSDictionary
+
+        if modelDict == nil {
+            return modelIdentifier!
+        }
+
+        let modelInfo = modelDict!["_LOCALIZABLE"] as? NSDictionary
+
+        if modelInfo == nil {
+            return modelIdentifier!
+        }
+
+        let model = modelInfo!["marketingModel"] as? String
+
+        if model == nil {
+            return modelIdentifier!
+        }
+
+        return model!
     }
 
     static func getOSVersionString() -> String {
