@@ -101,7 +101,12 @@ extension Resolver {
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
         var modelIdentifier: String?
 
-        if let modelData = IORegistryEntryCreateCFProperty(service, "model" as CFString, kCFAllocatorDefault, 0).takeRetainedValue() as? Data {
+        if let modelData = IORegistryEntryCreateCFProperty(
+            service,
+            "model" as CFString,
+            kCFAllocatorDefault,
+            0
+        ).takeRetainedValue() as? Data {
             if let modelIdentifierCString = String(data: modelData, encoding: .utf8)?.cString(using: .utf8) {
                 modelIdentifier = String(cString: modelIdentifierCString)
             }
