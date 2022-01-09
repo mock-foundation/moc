@@ -1,5 +1,5 @@
 //
-//  SplitView.swift
+//  ChatSplitView.swift
 //  Moc
 //
 //  Created by Егор Яковенко on 07.01.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SplitView<Left, Right>: NSViewRepresentable where Left: View, Right: View {
+struct ChatSplitView<Left, Right>: NSViewRepresentable where Left: View, Right: View {
     typealias NSViewType = NSSplitView
     @ViewBuilder var leftView: () -> Left
     @ViewBuilder var rightView: () -> Right
@@ -46,9 +46,9 @@ struct SplitView<Left, Right>: NSViewRepresentable where Left: View, Right: View
     }
 }
 
-struct SplitView_Previews: PreviewProvider {
+struct ChatSplitView_Previews: PreviewProvider {
     static var previews: some View {
-        SplitView(leftView: {
+        ChatSplitView(leftView: {
             Text("Left")
         }, rightView: {
             Text("Right")
