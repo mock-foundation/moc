@@ -8,11 +8,14 @@
 import SwiftUI
 import TDLibKit
 
+/// A simple view router for managing open chat state. Is **not** designed for more.
 final class ViewRouter: ObservableObject {
+
     public enum Views: CaseIterable {
         case selectChat
         case chat
     }
-    @Published var viewParams: [Any?] = []
+
+    @Published var openedChat: Chat?
     @Published var currentView: Views = .selectChat
 }
