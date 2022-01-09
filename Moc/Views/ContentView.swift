@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var showingLoginScreen = false
 
     @StateObject private var mainViewModel = MainViewModel()
-    @StateObject private var viewRouter = ViewRouter()
+    @InjectedObject private var viewRouter: ViewRouter
 
     @Injected private var tdApi: TdApi
 
