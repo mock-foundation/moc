@@ -10,5 +10,9 @@ import SwiftUI
 import TDLibKit
 
 class MainViewModel: ObservableObject {
-    @Published var chatList: [Chat] = []
+    @Published var chatList: [ChatItem] = []
+
+    func update(chats: [ChatItem]) {
+        self.chatList = chats
+    }
 }
