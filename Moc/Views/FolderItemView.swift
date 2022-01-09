@@ -10,7 +10,7 @@ import SwiftUI
 struct FolderItemView: View {
 	@State private var backgroundColor: Color = Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0)
 	@State private var selected = false
-	private let selectedColor = Color("folderItemSelected")
+	private let selectedColor = Color("FolderItemSelectedColor")
 
 //	let onSelect: () -> Void
 
@@ -23,7 +23,7 @@ struct FolderItemView: View {
 		.padding(.vertical)
 		.onHover { isHovered in
 			if isHovered {
-				backgroundColor = Color("folderItemOnHover")
+				backgroundColor = Color("OnHoverColor")
 			} else {
 				backgroundColor = Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0)
 			}
