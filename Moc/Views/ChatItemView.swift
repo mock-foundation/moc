@@ -6,9 +6,8 @@
 //
 
 import SwiftUI
-import TDLibKit
 
-extension Foundation.Date {
+extension Date {
 	var hoursAndMinutes: String {
 		let formatter = DateFormatter()
 		formatter.timeStyle = .short
@@ -17,44 +16,38 @@ extension Foundation.Date {
 }
 
 struct ChatItemView: View {
-	@State var chat: Chat
-
+	@State var chat: ChatItem
+		
 	var body: some View {
 		HStack(alignment: .top) {
-//				chat.chatIcon
-            Image("MockChatPhoto")
+				chat.chatIcon
 					.resizable()
 					.frame(width: 56, height: 56)
 					.clipShape(Circle())
 					.fixedSize()
 			VStack(alignment: .leading) {
 				HStack {
-                    // swiftlint:disable empty_enum_arguments switch_case_alignment
 					switch chat.type {
-                    case .chatTypePrivate( _):
-                        EmptyView()
-                    case .chatTypeBasicGroup(_):
-                        Image(systemName: "person.2")
-                    case .chatTypeSupergroup(let info):
-                        if info.isChannel {
-                            Image(systemName: "megaphone")
-                        } else {
-                            Image(systemName: "person.2.fill")
-                        }
-                    case .chatTypeSecret(_):
-                        Image(systemName: "lock")
-                    }
-					Text(chat.title)
+						case .privateChat:
+							EmptyView()
+						case .group:
+							Image(systemName: "person.2")
+						case .superGroup:
+							Image(systemName: "person.2.fill")
+						case .channel:
+							Image(systemName: "megaphone")
+					}
+					Text(chat.name)
 						.font(.title3)
 						.fontWeight(.bold)
 					Spacer()
 //					Image(chat.seen ? "MessageSeenIcon" : "MessageSentIcon")
-                    Text(Date(timeIntervalSince1970: TimeInterval(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
+					Text(chat.time.hoursAndMinutes)
 						.foregroundColor(.secondary)
 				}
 				HStack {
 					VStack {
-                        Text("mock last message")
+						Text(chat.messagePreview)
 							.multilineTextAlignment(.leading)
 							.fixedSize(horizontal: false, vertical: true)
 							.lineLimit(2)
@@ -64,14 +57,21 @@ struct ChatItemView: View {
 					Spacer()
 					VStack {
 						Spacer()
-//						if chat.isPinned {
-//							Image(systemName: "pin")
-//								.rotationEffect(.degrees(15))
-//						}
+						if chat.isPinned {
+							Image(systemName: "pin")
+								.rotationEffect(.degrees(15))
+						}
 					}
 				}
 			}
 			Spacer()
 		}
+	}
+}
+
+struct ChatListView_Previews: PreviewProvider {
+	static var previews: some View {
+		ChatItemView(chat: ChatItem(id: 10319823648, name: "Chat lol", messagePreview: "Something was written here", sender: "DirectName", showSender: true, type: .group, chatIcon: Image(systemName: "folder"), isPinned: true, time: Date(timeIntervalSinceNow: 100), seen: true))
+			.frame(width: 300)
 	}
 }

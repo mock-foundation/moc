@@ -11,9 +11,9 @@ struct FolderItemView: View {
 	@State private var backgroundColor: Color = Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0)
 	@State private var selected = false
 	private let selectedColor = Color("folderItemSelected")
-
+	
 //	let onSelect: () -> Void
-
+	
 	func folderItem(item: FolderItem) -> some View {
 		VStack {
 			item.icon
@@ -28,17 +28,11 @@ struct FolderItemView: View {
 				backgroundColor = Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0)
 			}
 		}
-//		.onReceive(
-//        NotificationCenter.default.publisher(
-//        for: Notification.Name("FolderSelected")
-//        ), perform: { notification in
+//		.onReceive(NotificationCenter.default.publisher(for: Notification.Name("FolderSelected")), perform: { notification in
 //			print("hey lol")
 //			print(notification.object as! Int)
 //		})
-//		.onReceive(
-//        NotificationCenter.default.publisher(
-//        for: Notification.Name("FolderDeselected")
-//        ), perform: { notification in
+//		.onReceive(NotificationCenter.default.publisher(for: Notification.Name("FolderDeselected")), perform: { notification in
 //			print("hey lol")
 //			print(notification.object as! Int)
 //		})
@@ -46,7 +40,7 @@ struct FolderItemView: View {
 		.background(selected ? selectedColor : backgroundColor)
 		.clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 	}
-
+	
     var body: some View {
 		folderItem(item: FolderItem(name: "Name", icon: Image(systemName: "folder")))
     }

@@ -14,7 +14,7 @@ struct MessageBubbleView: View {
 			Image("ChatMessageBubbleRecipient")
 				.resizable(capInsets: EdgeInsets(top: 18, leading: 18, bottom: 18, trailing: 18), resizingMode: .stretch)
 				.foregroundColor(Color("MessageFromRecepientColor"))
-
+			
 			// Content
 			VStack(alignment: .leading) {
 				HStack {
@@ -23,7 +23,7 @@ struct MessageBubbleView: View {
 					Spacer()
 				}
 				HStack {
-					Text("Message content")
+					Text("lorem ipsum yee lorem ipsum yee lorem ipsum yee lorem ipsum yee lorem ipsum yee lorem ipsum yee lorem ipsum yee lor")
 						.lineLimit(20)
 				}
 			}
