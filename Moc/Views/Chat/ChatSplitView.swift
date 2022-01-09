@@ -14,7 +14,7 @@ struct ChatSplitView<Left, Right>: NSViewRepresentable where Left: View, Right: 
     var isRightViewVisible: Bool = true
     var orientation: Orientation = .horizontal
     var dividerStyle: NSSplitView.DividerStyle = .thin
-    
+
     enum Orientation {
         case vertical
         case horizontal

@@ -29,6 +29,7 @@ struct ChatItemView: View {
 					.fixedSize()
 			VStack(alignment: .leading) {
 				HStack {
+                    // swiftlint:disable empty_enum_arguments switch_case_alignment
 					switch chat.type {
                     case .chatTypePrivate( _):
                         EmptyView()

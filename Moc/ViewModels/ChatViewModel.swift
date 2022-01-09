@@ -19,6 +19,7 @@ class ChatViewModel: ObservableObject {
     init(chat: Chat) async {
         self.chatName = chat.title
         switch chat.type {
+            // swiftlint:disable empty_enum_arguments
         case .chatTypeBasicGroup(_):
             self.memberList = try? await tdApi.getBasicGroupFullInfo(basicGroupId: chat.id).members
         case .chatTypeSupergroup(_):

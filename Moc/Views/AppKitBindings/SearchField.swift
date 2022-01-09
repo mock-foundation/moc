@@ -14,7 +14,7 @@ struct SearchField: NSViewRepresentable {
 	}
 
 	func updateNSView(_ nsView: NSSearchField, context: Context) {
-		
+
 	}
 
 	typealias NSViewType = NSSearchField
