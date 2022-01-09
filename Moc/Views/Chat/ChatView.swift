@@ -146,20 +146,20 @@ struct ChatView: View {
                 .frame(minWidth: 0, idealWidth: nil)
                 ScrollView {
                     switch selectedInspectorTab {
-                        case .users:
-                            ForEach(0..<10) { index in
-                                userRow(name: "User \(index)", status: .userStatusRecently, photo: Image("MockChatPhoto"))
-                                    .padding(.horizontal, 8)
-                                    .frame(minWidth: 0, idealWidth: nil)
-                            }
-                        case .media:
-                            Text("Media")
-                        case .links:
-                            Text("Links")
-                        case .files:
-                            Text("Files")
-                        case .voice:
-                            Text("Voice")
+                    case .users:
+                        ForEach(0..<10) { index in
+                            userRow(name: "User \(index)", status: .userStatusRecently, photo: Image("MockChatPhoto"))
+                                .padding(.horizontal, 8)
+                                .frame(minWidth: 0, idealWidth: nil)
+                        }
+                    case .media:
+                        Text("Media")
+                    case .links:
+                        Text("Links")
+                    case .files:
+                        Text("Files")
+                    case .voice:
+                        Text("Voice")
                     }
                 }
             }
@@ -229,7 +229,48 @@ struct ChatView_Previews: PreviewProvider {
             lastMessage: nil,
             lastReadInboxMessageId: 102044379 /* the same */,
             lastReadOutboxMessageId: 39439379573 /* again */,
-            messageSenderId: nil, messageTtl: 0, notificationSettings: ChatNotificationSettings(disableMentionNotifications: true, disablePinnedMessageNotifications: true, muteFor: 10, showPreview: false, sound: "", useDefaultDisableMentionNotifications: true, useDefaultDisablePinnedMessageNotifications: true, useDefaultMuteFor: true, useDefaultShowPreview: true, useDefaultSound: true), pendingJoinRequests: nil, permissions: ChatPermissions(canAddWebPagePreviews: true, canChangeInfo: true, canInviteUsers: true, canPinMessages: true, canSendMediaMessages: true, canSendMessages: true, canSendOtherMessages: true, canSendPolls: true), photo: nil, positions: [], replyMarkupMessageId: 1023948920349 /* my head hurts */, themeName: "", title: "Curry Club - Ninjas from the reeds", type: .chatTypeBasicGroup(.init(basicGroupId: 102343920 /* i really should use a proper random number generator instead of using my head as a random number generator */)), unreadCount: 0, unreadMentionCount: 0, videoChat: VideoChat(defaultParticipantId: nil, groupCallId: 0, hasParticipants: false)))
+            messageSenderId: nil, messageTtl: 0,
+            notificationSettings: ChatNotificationSettings(
+                disableMentionNotifications: true,
+                disablePinnedMessageNotifications: true,
+                muteFor: 10,
+                showPreview: false,
+                sound: "",
+                useDefaultDisableMentionNotifications: true,
+                useDefaultDisablePinnedMessageNotifications: true,
+                useDefaultMuteFor: true,
+                useDefaultShowPreview: true,
+                useDefaultSound: true
+            ),
+            pendingJoinRequests: nil,
+            permissions: ChatPermissions(
+                canAddWebPagePreviews: true,
+                canChangeInfo: true,
+                canInviteUsers: true,
+                canPinMessages: true,
+                canSendMediaMessages: true,
+                canSendMessages: true,
+                canSendOtherMessages: true,
+                canSendPolls: true
+            ),
+            photo: nil,
+            positions: [],
+            replyMarkupMessageId: 1023948920349 /* my head hurts */,
+            themeName: "",
+            title: "Curry Club - Ninjas from the reeds",
+            type: .chatTypeBasicGroup(
+                .init(basicGroupId: 102343920
+                      // i really should use a proper random number generator
+                      // instead of using my head as a random number generator
+                )
+            ),
+            unreadCount: 0,
+            unreadMentionCount: 0,
+            videoChat: VideoChat(
+                defaultParticipantId: nil,
+                groupCallId: 0,
+                hasParticipants: false
+            )))
             .frame(width: 800, height: 600)
     }
 }

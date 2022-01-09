@@ -14,6 +14,7 @@ extension Resolver {
         register { MainViewModel() }
     }
 
+    // swiftlint:disable cyclomatic_complexity function_body_length
     public static func registerTd() {
         let tdApi = TdApi(client: TdClientImpl())
         tdApi.client.run {
@@ -29,7 +30,9 @@ extension Resolver {
                             try? await tdApi.setTdlibParameters(parameters: TdlibParameters(
                                 apiHash: (Bundle.main.infoDictionary?["TdApiHash"] as? String) ?? "Unknown",
                                 apiId: (Bundle.main.infoDictionary?["TdApiId"] as? Int) ?? 0,
-                                applicationVersion: (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "Unknown",
+                                applicationVersion: (
+                                    Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+                                ) ?? "Unknown",
                                 databaseDirectory: "",
                                 deviceModel: self.getMacModel(),
                                 enableStorageOptimizer: true,
@@ -44,10 +47,10 @@ extension Resolver {
                                 useTestDc: false
                             ))
                         }
-                    case .authorizationStateWaitEncryptionKey(_):
-                        self.post(notification: .authorizationStateWaitEncryptionKey)
+                    case .authorizationStateWaitEncryptionKey(let info):
+                        self.post(notification: .authorizationStateWaitEncryptionKey, withObject: info)
                         Task(priority: .medium) {
-                            let _ = try? await tdApi.checkDatabaseEncryptionKey(encryptionKey: nil)
+                            try? await tdApi.checkDatabaseEncryptionKey(encryptionKey: nil)
                         }
                     case .authorizationStateWaitPhoneNumber:
                         self.post(notification: .authorizationStateWaitPhoneNumber)

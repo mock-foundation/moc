@@ -38,6 +38,7 @@ extension NSNotification.Name {
         return .init("AuthorizationStateReady")
     }
 
+    // swiftlint:disable identifier_name
     static var authorizationStateWaitOtherDeviceConfirmation: NSNotification.Name {
         return .init("AuthorizationStateWaitOtherDeviceConfirmation")
     }

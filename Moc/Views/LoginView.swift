@@ -61,7 +61,7 @@ struct LoginView: View {
                     TextField("Phone number", text: $phoneNumber)
                         .onSubmit {
                             Task {
-                                let response = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
+                                _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
                                 openedScreen = .code
                             }
                         }

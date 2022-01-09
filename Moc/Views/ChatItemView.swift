@@ -18,7 +18,7 @@ extension Foundation.Date {
 
 struct ChatItemView: View {
 	@State var chat: Chat
-		
+
 	var body: some View {
 		HStack(alignment: .top) {
 //				chat.chatIcon
@@ -30,18 +30,18 @@ struct ChatItemView: View {
 			VStack(alignment: .leading) {
 				HStack {
 					switch chat.type {
-                        case .chatTypePrivate(_):
-							EmptyView()
-						case .chatTypeBasicGroup(_):
-							Image(systemName: "person.2")
-						case .chatTypeSupergroup(let info):
-                            if info.isChannel {
-                                Image(systemName: "megaphone")
-                            } else {
-                                Image(systemName: "person.2.fill")
-                            }
-                        case .chatTypeSecret(_):
-                            Image(systemName: "lock")
+                    case .chatTypePrivate( _):
+                        EmptyView()
+                    case .chatTypeBasicGroup(_):
+                        Image(systemName: "person.2")
+                    case .chatTypeSupergroup(let info):
+                        if info.isChannel {
+                            Image(systemName: "megaphone")
+                        } else {
+                            Image(systemName: "person.2.fill")
+                        }
+                    case .chatTypeSecret(_):
+                        Image(systemName: "lock")
                     }
 					Text(chat.title)
 						.font(.title3)
@@ -74,10 +74,3 @@ struct ChatItemView: View {
 		}
 	}
 }
-
-//struct ChatListView_Previews: PreviewProvider {
-//	static var previews: some View {
-//		ChatItemView(chat: ChatItem(id: 10319823648, name: "Chat lol", messagePreview: "Something was written here", sender: "DirectName", showSender: true, type: .group, chatIcon: Image(systemName: "folder"), isPinned: true, time: Date(timeIntervalSinceNow: 100), seen: true))
-//			.frame(width: 300)
-//	}
-//}
