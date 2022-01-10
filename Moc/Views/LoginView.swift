@@ -13,7 +13,8 @@ private enum OpenedScreen {
     case phoneNumber
     case qrCode
     case code
-    case termsOfService
+    case registration
+    case twoFACode
 }
 
 struct LoginView: View {
@@ -25,7 +26,7 @@ struct LoginView: View {
                 Text("\(number)")
                     .foregroundColor(.white)
             }
-            .frame(width: 20, height: 20)
+                .frame(width: 20, height: 20)
             // swiftlint:disable force_try
             Text(try! AttributedString(markdown: text))
             Spacer()
@@ -41,50 +42,64 @@ struct LoginView: View {
     var body: some View {
         VStack {
             switch openedScreen {
-            case .phoneNumber:
-                Text("Enter your phone number")
-                TextField("Phone number", text: $phoneNumber)
-                    .onSubmit {
+                case .phoneNumber:
+                    Text("Enter your phone number")
+                    TextField("Phone number", text: $phoneNumber)
+                        .onSubmit {
                         Task {
                             _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
-                            openedScreen = .code
                         }
                     }
-            case .code:
-                Text("Enter the code")
-                TextField("Code", text: $code)
-                    .onSubmit {
+                case .code:
+                    Text("Enter the code")
+                    TextField("Code", text: $code)
+                        .onSubmit {
                         Task {
                             do {
                                 try await tdApi.checkAuthenticationCode(code: code)
-                                openedScreen = .termsOfService
                             } catch {
                                 fatalError("Failed to set authentication code.")
                             }
                         }
                     }
-            case .termsOfService:
-                Text("Accept the Terms of Service")
-
-            case .qrCode:
-                VStack(spacing: 12) {
-                    Text("Fast login using a QR code")
-                        .font(.title)
-                        .padding(.top)
-                    // QR Code
-                    Rectangle()
-                        .frame(width: 150, height: 150)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                    VStack {
-                        stepView(number: 1, text: "Open Telegram from your phone")
-                        stepView(number: 2, text: "Open **Settings** -> **Devices** -> **Connect device**.")
-                        stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
-                    }
-                    .frame(width: 200)
-                    .padding()
-                }.padding()
+                case .qrCode:
+                    VStack(spacing: 12) {
+                        Text("Login using a QR code")
+                            .font(.title)
+                            .padding(.top)
+                        // QR Code
+                        Rectangle()
+                            .frame(width: 150, height: 150)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        VStack {
+                            stepView(number: 1, text: "Open Telegram from your phone")
+                            stepView(number: 2, text: "Open **Settings** -> **Devices** -> **Connect device**.")
+                            stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
+                        }
+                            .frame(width: 200)
+                            .padding()
+                    }.padding()
+                case .registration:
+                    Text("Registration (WIP)")
+                case .twoFACode:
+                    Text("Enter your 2-Factor authentication password")
             }
 
+        }
+        .onReceive(NotificationCenter.default.publisher(
+            for: .authorizationStateWaitOtherDeviceConfirmation,
+            object: nil
+        )) { _ in
+            openedScreen = .qrCode
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitRegistration, object: nil)) { _ in
+            openedScreen = .registration
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPassword, object: nil)) { _ in
+            openedScreen = .twoFACode
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitCode, object: nil)) { _ in
+            openedScreen = .code
         }
         .onReceive(NotificationCenter.default.publisher(for: .authorizationStateReady, object: nil)) { _ in
             presentationMode.wrappedValue.dismiss()
