@@ -80,7 +80,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingLoginScreen) {
             LoginView()
-                .frame(width: 300, height: 400)
+                .frame(width: 400, height: 500)
         }
         .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
             let message = (data.object as? UpdateNewMessage)!.message
@@ -121,7 +121,6 @@ struct ContentView: View {
 
         }
         .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { _ in
-            NSLog("Phone number update lol")
             showingLoginScreen = true
         }
     }
