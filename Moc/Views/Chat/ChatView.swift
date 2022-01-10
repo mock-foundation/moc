@@ -197,9 +197,13 @@ struct ChatView: View {
                         switch selectedInspectorTab {
                             case .users:
                                 ForEach(0..<10) { index in
-                                    userRow(name: "User \(index)", status: .userStatusRecently, photo: Image("MockChatPhoto"))
-                                        .padding(.horizontal, 8)
-                                        .frame(minWidth: 0, idealWidth: nil)
+                                    userRow(
+                                        name: "User \(index)",
+                                        status: .userStatusRecently,
+                                        photo: Image("MockChatPhoto")
+                                    )
+                                    .padding(.horizontal, 8)
+                                    .frame(minWidth: 0, idealWidth: nil)
                                 }
                             case .media:
                                 Text("Media")
@@ -223,7 +227,6 @@ struct ChatView: View {
                     .padding()
                     .frame(minWidth: 0, idealWidth: nil)
                     .background(.ultraThinMaterial, in: RoundedCorners(tl: 0, tr: 0, bl: 8, br: 8))
-
                 })
 
             }
