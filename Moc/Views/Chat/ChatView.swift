@@ -125,6 +125,7 @@ struct ChatView: View {
                     .fontWeight(.bold)
                     .padding(.horizontal)
                     .frame(minWidth: 0, idealWidth: nil)
+                    .multilineTextAlignment(.center)
                 Text("a ton of members")
 
                 // Quick actions
