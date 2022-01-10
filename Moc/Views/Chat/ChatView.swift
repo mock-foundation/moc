@@ -8,12 +8,30 @@
 import SwiftUI
 import TDLibKit
 import SwiftUIUtils
+import Resolver
+
+extension Message: Identifiable { }
+
+extension MessageContent {
+    public func toString() -> String {
+        switch self {
+            case .messageText(let data):
+                return data.text.text
+            case .messageUnsupported:
+                return "This message is unsupported, sorry."
+            default:
+                return "This message is unsupported, sorry."
+        }
+    }
+}
 
 struct ChatView: View {
     let chat: Chat
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
     @Environment(\.colorScheme) var colorScheme
+
+    @Injected private var tdApi: TdApi
 
     // MARK: - Input field
     private var inputField: some View {
@@ -37,11 +55,11 @@ struct ChatView: View {
         VStack {
             ScrollViewReader { proxy in
                 ScrollView {
-                    ForEach(0..<50) { _ in
-                        MessageBubbleView()
-                            .frame(idealWidth: nil, maxWidth: 300)
-                            .hLeading()
-                    }
+//                    ForEach(chatViewModel.messages!) { message in
+//                        MessageBubbleView(sender: "someone", content: message.content.toString())
+//                            .frame(idealWidth: nil, maxWidth: 300)
+//                            .hLeading()
+//                    }
                 }
                 .onAppear {
                     proxy.scrollTo(50 - 1)
@@ -205,69 +223,98 @@ struct ChatView: View {
                     })
                 }
             }
+            .task {
+                let history = try? await tdApi.getChatHistory(
+                    chatId: chat.id,
+                    fromMessageId: 0,
+                    limit: 50,
+                    offset: 0,
+                    onlyLocal: false
+                )
+
+                guard history != nil else {
+                    NSLog("edren baton")
+                    return
+                }
+
+                let messages = history!.messages
+
+                guard messages != nil else {
+                    NSLog("Pizdec")
+                    return
+                }
+
+                NSLog("Messages: \(messages)")
+
+//                chatViewModel.messages = messages!
+
+//                if self.messages == [] {
+//                    NSLog("Pizdec")
+//                }
+            }
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView(chat: Chat(
-            actionBar: .none,
-            canBeDeletedForAllUsers: true,
-            canBeDeletedOnlyForSelf: true,
-            canBeReported: true,
-            clientData: "",
-            defaultDisableNotification: true,
-            draftMessage: nil,
-            hasProtectedContent: false,
-            hasScheduledMessages: false,
-            id: 10294934 /* i just banged my head against the keyboard, so this number is completely random */,
-            isBlocked: false,
-            isMarkedAsUnread: false,
-            lastMessage: nil,
-            lastReadInboxMessageId: 102044379 /* the same */,
-            lastReadOutboxMessageId: 39439379573 /* again */,
-            messageSenderId: nil, messageTtl: 0,
-            notificationSettings: ChatNotificationSettings(
-                disableMentionNotifications: true,
-                disablePinnedMessageNotifications: true,
-                muteFor: 10,
-                showPreview: false,
-                sound: "",
-                useDefaultDisableMentionNotifications: true,
-                useDefaultDisablePinnedMessageNotifications: true,
-                useDefaultMuteFor: true,
-                useDefaultShowPreview: true,
-                useDefaultSound: true
-            ),
-            pendingJoinRequests: nil,
-            permissions: ChatPermissions(
-                canAddWebPagePreviews: true,
-                canChangeInfo: true,
-                canInviteUsers: true,
-                canPinMessages: true,
-                canSendMediaMessages: true,
-                canSendMessages: true,
-                canSendOtherMessages: true,
-                canSendPolls: true
-            ),
-            photo: nil,
-            positions: [],
-            replyMarkupMessageId: 1023948920349 /* my head hurts */,
-            themeName: "",
-            title: "Curry Club - Ninjas from the reeds",
-            type: .chatTypeBasicGroup(
-                .init(basicGroupId: 102343920
-                      // i really should use a proper random number generator
-                      // instead of using my head as a random number generator
-                )
-            ),
-            unreadCount: 0,
-            unreadMentionCount: 0,
-            videoChat: VideoChat(
-                defaultParticipantId: nil,
-                groupCallId: 0,
-                hasParticipants: false
-            )))
-            .frame(width: 800, height: 600)
-    }
-}
+//struct ChatView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatView(chat: Chat(
+//            actionBar: .none,
+//            canBeDeletedForAllUsers: true,
+//            canBeDeletedOnlyForSelf: true,
+//            canBeReported: true,
+//            clientData: "",
+//            defaultDisableNotification: true,
+//            draftMessage: nil,
+//            hasProtectedContent: false,
+//            hasScheduledMessages: false,
+//            id: 10294934 /* i just banged my head against the keyboard, so this number is completely random */,
+//            isBlocked: false,
+//            isMarkedAsUnread: false,
+//            lastMessage: nil,
+//            lastReadInboxMessageId: 102044379 /* the same */,
+//            lastReadOutboxMessageId: 39439379573 /* again */,
+//            messageSenderId: nil, messageTtl: 0,
+//            notificationSettings: ChatNotificationSettings(
+//                disableMentionNotifications: true,
+//                disablePinnedMessageNotifications: true,
+//                muteFor: 10,
+//                showPreview: false,
+//                sound: "",
+//                useDefaultDisableMentionNotifications: true,
+//                useDefaultDisablePinnedMessageNotifications: true,
+//                useDefaultMuteFor: true,
+//                useDefaultShowPreview: true,
+//                useDefaultSound: true
+//            ),
+//            pendingJoinRequests: nil,
+//            permissions: ChatPermissions(
+//                canAddWebPagePreviews: true,
+//                canChangeInfo: true,
+//                canInviteUsers: true,
+//                canPinMessages: true,
+//                canSendMediaMessages: true,
+//                canSendMessages: true,
+//                canSendOtherMessages: true,
+//                canSendPolls: true
+//            ),
+//            photo: nil,
+//            positions: [],
+//            replyMarkupMessageId: 1023948920349 /* my head hurts */,
+//            themeName: "",
+//            title: "Curry Club - Ninjas from the reeds",
+//            type: .chatTypeBasicGroup(
+//                .init(basicGroupId: 102343920
+//                      // i really should use a proper random number generator
+//                      // instead of using my head as a random number generator
+//                )
+//            ),
+//            unreadCount: 0,
+//            unreadMentionCount: 0,
+//            videoChat: VideoChat(
+//                defaultParticipantId: nil,
+//                groupCallId: 0,
+//                hasParticipants: false
+//            )))
+//            .frame(width: 800, height: 600)
+//    }
+//}
