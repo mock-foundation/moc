@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var showingLoginScreen = false
 
     @StateObject private var mainViewModel = MainViewModel()
-    @InjectedObject private var viewRouter: ViewRouter
+    @StateObject private var viewRouter = ViewRouter()
 
     @Injected private var tdApi: TdApi
 
@@ -81,6 +81,15 @@ struct ContentView: View {
         .sheet(isPresented: $showingLoginScreen) {
             LoginView()
                 .frame(width: 300, height: 400)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
+            let message = (data.object as? UpdateNewMessage)!.message
+
+            guard viewRouter.openedChat != nil else { return }
+
+//            if message.chatId == viewRouter.openedChat!.id {
+//                chatViewModel.messages?.append(message)
+//            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .updateNewChat)) { data in
             NSLog("Received chat position update")
