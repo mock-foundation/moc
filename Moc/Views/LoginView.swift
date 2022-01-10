@@ -8,6 +8,7 @@
 import SwiftUI
 import TDLibKit
 import Resolver
+import SwiftUIUtils
 
 private enum OpenedScreen {
     case phoneNumber
@@ -34,40 +35,68 @@ struct LoginView: View {
     }
 
     @State private var phoneNumber: String = ""
-    @Environment(\.presentationMode) private var presentationMode
     @State private var code = ""
     @State private var openedScreen = OpenedScreen.phoneNumber
+    @State private var showExitAlert = false
+
+    @Environment(\.presentationMode) private var presentationMode
+
     @Injected private var tdApi: TdApi
 
     var body: some View {
-        VStack {
+        // swiftlint:disable multiple_closures_with_trailing_closure
+        ZStack {
+            Button(action: {
+                showExitAlert = true
+            }) {
+                Image(systemName: "xmarkx")
+            }
+            .buttonStyle(.plain)
+            .keyboardShortcut(.escape, modifiers: [])
+            .hTrailing()
+            .vTop()
+
             switch openedScreen {
                 case .phoneNumber:
-                    Text("Enter your phone number")
-                        .font(.title3)
-                    TextField("Phone number", text: $phoneNumber)
-                        .onSubmit {
-                            Task {
-                                _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
-                            }
-                        }
-                        .textFieldStyle(.roundedBorder)
-                        .padding()
-
-                case .code:
-                    Text("Enter the code")
-                    TextField("Code", text: $code)
-                        .onSubmit {
-                            Task {
-                                do {
-                                    try await tdApi.checkAuthenticationCode(code: code)
-                                } catch {
-                                    fatalError("Failed to set authentication code.")
+                    VStack {
+                        Text("Enter your phone number")
+                            .font(.title)
+                        TextField("Phone number", text: $phoneNumber)
+                            .onSubmit {
+                                Task {
+                                    _ = try await tdApi.setAuthenticationPhoneNumber(
+                                        phoneNumber: phoneNumber,
+                                        settings: nil
+                                    )
                                 }
                             }
+                            .textFieldStyle(.roundedBorder)
+                            .padding()
+                        Button("Use QR Code") {
+                            Task {
+                                try? await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+                            }
                         }
-                        .textFieldStyle(.roundedBorder)
+                        .buttonStyle(.borderless)
+                    }.transition(.slide)
 
+                case .code:
+                    VStack {
+                        Text("Enter the code")
+                            .font(.title)
+                        TextField("Code", text: $code)
+                            .onSubmit {
+                                Task {
+                                    do {
+                                        try await tdApi.checkAuthenticationCode(code: code)
+                                    } catch {
+                                        fatalError("Failed to set authentication code.")
+                                    }
+                                }
+                            }
+                            .padding()
+                            .textFieldStyle(.roundedBorder)
+                    }.transition(.slide)
                 case .qrCode:
                     VStack(spacing: 12) {
                         Text("Login using a QR code")
@@ -84,14 +113,30 @@ struct LoginView: View {
                         }
                             .frame(width: 200)
                             .padding()
-                    }.padding()
-                    
+//                        Button("Use phone number") {
+//                            Task {
+//                                openedScreen = .phoneNumber
+//                            }
+//                        }
+//                        .buttonStyle(.borderless)
+                    }
+                    .transition(.slide)
+                    .padding()
+
                 case .registration:
-                    Text("Registration (WIP)")
+                    Text("Register a new Telegram account")
+                        .font(.title)
                 case .twoFACode:
                     Text("Enter your 2-Factor authentication password")
             }
 
+        }
+        .alert("You sure you want to exit?", isPresented: $showExitAlert) {
+            Button("Yea!") {
+                presentationMode.wrappedValue.dismiss()
+                NSApp.terminate(self)
+            }
+            Button("Not really") { }
         }
         .onReceive(NotificationCenter.default.publisher(
             for: .authorizationStateWaitOtherDeviceConfirmation,
