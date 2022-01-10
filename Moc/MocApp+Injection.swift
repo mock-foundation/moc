@@ -43,7 +43,6 @@ final class TdLogger: Logger {
 extension Resolver {
     public static func registerUI() {
         register { MainViewModel() }
-        register { ViewRouter() }
     }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
