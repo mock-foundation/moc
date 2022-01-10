@@ -44,24 +44,30 @@ struct LoginView: View {
             switch openedScreen {
                 case .phoneNumber:
                     Text("Enter your phone number")
+                        .font(.title3)
                     TextField("Phone number", text: $phoneNumber)
                         .onSubmit {
-                        Task {
-                            _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
+                            Task {
+                                _ = try await tdApi.setAuthenticationPhoneNumber(phoneNumber: phoneNumber, settings: nil)
+                            }
                         }
-                    }
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+
                 case .code:
                     Text("Enter the code")
                     TextField("Code", text: $code)
                         .onSubmit {
-                        Task {
-                            do {
-                                try await tdApi.checkAuthenticationCode(code: code)
-                            } catch {
-                                fatalError("Failed to set authentication code.")
+                            Task {
+                                do {
+                                    try await tdApi.checkAuthenticationCode(code: code)
+                                } catch {
+                                    fatalError("Failed to set authentication code.")
+                                }
                             }
                         }
-                    }
+                        .textFieldStyle(.roundedBorder)
+
                 case .qrCode:
                     VStack(spacing: 12) {
                         Text("Login using a QR code")
@@ -79,6 +85,7 @@ struct LoginView: View {
                             .frame(width: 200)
                             .padding()
                     }.padding()
+                    
                 case .registration:
                     Text("Registration (WIP)")
                 case .twoFACode:
