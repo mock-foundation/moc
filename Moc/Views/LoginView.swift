@@ -119,7 +119,7 @@ struct LoginView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                         VStack {
                             stepView(number: 1, text: "Open Telegram from your phone")
-                            stepView(number: 2, text: "Open **Settings** -> **Devices** -> **Connect device**.")
+                            stepView(number: 2, text: "Go to **Settings** -> **Devices** -> **Connect device**.")
                             stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
                         }
                             .frame(width: 200)
