@@ -16,7 +16,8 @@ private enum OpenedScreen {
     case code
     case registration
     case twoFACode
-//    case welcome
+    case welcome
+}
 }
 
 struct LoginView: View {
@@ -38,7 +39,7 @@ struct LoginView: View {
     @State private var phoneNumber: String = ""
     @State private var code = ""
     @State private var twoFactorAuthPassword = ""
-    @State private var openedScreen = OpenedScreen.phoneNumber
+    @State private var openedScreen = OpenedScreen.welcome
     @State private var showExitAlert = false
 
     @Environment(\.presentationMode) private var presentationMode
