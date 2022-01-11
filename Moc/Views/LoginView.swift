@@ -61,8 +61,15 @@ struct LoginView: View {
             switch openedScreen {
                 case .phoneNumber:
                     VStack {
-                        Text("Enter your phone number")
+                        Image("WelcomeScreenImage")
+                            .resizable()
+                            .frame(width: 156, height: 156)
+                            .padding(.top, 56)
+                        Text("Welcome to Moc!")
                             .font(.title)
+                            .padding(.bottom)
+                        Text("Enter your phone number")
+                            .font(.title3)
                         TextField("Phone number", text: $phoneNumber)
                             .onSubmit {
                                 Task {
