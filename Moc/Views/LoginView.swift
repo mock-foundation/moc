@@ -80,14 +80,16 @@ struct LoginView: View {
                                 }
                             }
                             .textFieldStyle(.roundedBorder)
-                            .padding()
+                            .frame(width: 156)
+                        Spacer()
                         Button("Use QR Code") {
                             Task {
                                 try? await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
                             }
                         }
+                        .padding()
                         .buttonStyle(.borderless)
-                    }.transition(.slide)
+                    }
 
                 case .code:
                     VStack {
