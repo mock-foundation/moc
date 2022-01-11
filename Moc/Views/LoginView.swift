@@ -16,6 +16,7 @@ private enum OpenedScreen {
     case code
     case registration
     case twoFACode
+//    case welcome
 }
 
 struct LoginView: View {
@@ -106,8 +107,9 @@ struct LoginView: View {
                                 }
                             }
                             .padding()
+                            .textContentType(.password)
                             .textFieldStyle(.roundedBorder)
-                    }.transition(.slide)
+                    }
                 case .qrCode:
                     VStack(spacing: 12) {
                         Text("Login using a QR code")
@@ -131,7 +133,6 @@ struct LoginView: View {
 //                        }
 //                        .buttonStyle(.borderless)
                     }
-                    .transition(.slide)
                     .padding()
 
                 case .registration:
