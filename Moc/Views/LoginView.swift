@@ -36,6 +36,7 @@ struct LoginView: View {
 
     @State private var phoneNumber: String = ""
     @State private var code = ""
+    @State private var twoFactorAuthPassword = ""
     @State private var openedScreen = OpenedScreen.phoneNumber
     @State private var showExitAlert = false
 
@@ -128,6 +129,14 @@ struct LoginView: View {
                         .font(.title)
                 case .twoFACode:
                     Text("Enter your 2-Factor authentication password")
+                    TextField("Password", text: $twoFactorAuthPassword)
+                        .onSubmit {
+                            Task {
+                                try? await tdApi.checkAuthenticationPassword(password: twoFactorAuthPassword)
+                            }
+                        }
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
             }
 
         }
