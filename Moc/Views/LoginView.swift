@@ -50,12 +50,13 @@ struct LoginView: View {
             Button(action: {
                 showExitAlert = true
             }) {
-                Image(systemName: "xmarkx")
+                Image(systemName: "xmark")
             }
             .buttonStyle(.plain)
             .keyboardShortcut(.escape, modifiers: [])
             .hTrailing()
             .vTop()
+            .padding()
 
             switch openedScreen {
                 case .phoneNumber:
