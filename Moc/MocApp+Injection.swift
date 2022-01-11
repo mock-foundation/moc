@@ -209,43 +209,43 @@ struct MocApp: App {
 
         Settings {
             TabView {
-                Text("General")
+                GeneralPrefView()
                     .tabItem {
                         Label("General", systemImage: "gear")
                     }
-                Text("Notifications and Sounds")
+                NotificationsAndSoundsPrefView()
                     .tabItem {
                         Label("Notifications and Sounds", systemImage: "bell")
                     }
-                Text("Privacy")
+                PrivacyView()
                     .tabItem {
                         Label("Privacy", systemImage: "lock")
                     }
-                Text("Data and Storage")
+                DataAndStoragePrefView()
                     .tabItem {
                         Label("Data and Storage", systemImage: "externaldrive")
                     }
-                Text("Devices")
+                DevicesPrefView()
                     .tabItem {
                         Label("Devices", systemImage: "laptopcomputer.and.iphone")
                     }
-                Text("Appearance")
+                AppearancePrefView()
                     .tabItem {
                         Label("Appearance", systemImage: "paintbrush")
                     }
-                Text("Language")
+                LanguagePrefView()
                     .tabItem {
                         Label("Language", systemImage: "globe")
                     }
-                Text("Stickers")
+                StickersPrefView()
                     .tabItem {
                         Label("Stickers", systemImage: "rectangle.3.group.bubble.left")
                     }
-                Text("Folders")
+                FoldersPrefView()
                     .tabItem {
                         Label("Folders", systemImage: "folder")
                     }
-                Text("Accounts")
+                AccountsPrefView()
                     .tabItem {
                         Label("Accounts", systemImage: "person.circle")
                     }

@@ -9,13 +9,23 @@
 /* Begin PBXBuildFile section */
 		430B983F278B680600420D75 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 430B983E278B680600420D75 /* Lottie */; };
 		4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */; };
+		4357F920278E35F700154012 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 4357F91F278E35F700154012 /* AlertToast */; };
+		4357F925278E39D700154012 /* GeneralPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F924278E39D700154012 /* GeneralPrefView.swift */; };
+		4357F927278E3A1200154012 /* NotificationsAndSoundsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F926278E3A1200154012 /* NotificationsAndSoundsPrefView.swift */; };
+		4357F929278E3A3900154012 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F928278E3A3900154012 /* PrivacyView.swift */; };
+		4357F92D278E3AC800154012 /* DataAndStoragePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F92C278E3AC800154012 /* DataAndStoragePrefView.swift */; };
+		4357F92F278E3ADC00154012 /* DevicesPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F92E278E3ADC00154012 /* DevicesPrefView.swift */; };
+		4357F931278E3AE900154012 /* AppearancePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F930278E3AE900154012 /* AppearancePrefView.swift */; };
+		4357F933278E3B1700154012 /* LanguagePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F932278E3B1700154012 /* LanguagePrefView.swift */; };
+		4357F935278E3B3C00154012 /* StickersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F934278E3B3C00154012 /* StickersPrefView.swift */; };
+		4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F936278E3B5B00154012 /* FoldersPrefView.swift */; };
+		4357F939278E3B7200154012 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F938278E3B7200154012 /* AccountsPrefView.swift */; };
 		43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3C277FF85F0047F36F /* MainViewModel.swift */; };
 		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
 		438326FB27877346004B0E18 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438326FA27877346004B0E18 /* ViewRouter.swift */; };
 		43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43832703278865CB004B0E18 /* ChatSplitView.swift */; };
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
-		4386E46A27837A290084F809 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46927837A290084F809 /* AlertToast */; };
 		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
@@ -60,6 +70,16 @@
 
 /* Begin PBXFileReference section */
 		4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKeys.swift; sourceTree = "<group>"; };
+		4357F924278E39D700154012 /* GeneralPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefView.swift; sourceTree = "<group>"; };
+		4357F926278E3A1200154012 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
+		4357F928278E3A3900154012 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		4357F92C278E3AC800154012 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStoragePrefView.swift; sourceTree = "<group>"; };
+		4357F92E278E3ADC00154012 /* DevicesPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefView.swift; sourceTree = "<group>"; };
+		4357F930278E3AE900154012 /* AppearancePrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePrefView.swift; sourceTree = "<group>"; };
+		4357F932278E3B1700154012 /* LanguagePrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePrefView.swift; sourceTree = "<group>"; };
+		4357F934278E3B3C00154012 /* StickersPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickersPrefView.swift; sourceTree = "<group>"; };
+		4357F936278E3B5B00154012 /* FoldersPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefView.swift; sourceTree = "<group>"; };
+		4357F938278E3B7200154012 /* AccountsPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
 		43654D3C277FF85F0047F36F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		43832703278865CB004B0E18 /* ChatSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
@@ -90,11 +110,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
-				4386E46A27837A290084F809 /* AlertToast in Frameworks */,
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
+				4357F920278E35F700154012 /* AlertToast in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 				43654D4527809CE50047F36F /* TDLibKit in Frameworks */,
 			);
@@ -110,6 +130,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4357F921278E399F00154012 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				4357F924278E39D700154012 /* GeneralPrefView.swift */,
+				4357F926278E3A1200154012 /* NotificationsAndSoundsPrefView.swift */,
+				4357F928278E3A3900154012 /* PrivacyView.swift */,
+				4357F92C278E3AC800154012 /* DataAndStoragePrefView.swift */,
+				4357F92E278E3ADC00154012 /* DevicesPrefView.swift */,
+				4357F930278E3AE900154012 /* AppearancePrefView.swift */,
+				4357F932278E3B1700154012 /* LanguagePrefView.swift */,
+				4357F934278E3B3C00154012 /* StickersPrefView.swift */,
+				4357F936278E3B5B00154012 /* FoldersPrefView.swift */,
+				4357F938278E3B7200154012 /* AccountsPrefView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		43654D3B277FF84C0047F36F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +228,7 @@
 				438326FA27877346004B0E18 /* ViewRouter.swift */,
 				438326F927872FC6004B0E18 /* AppKitBindings */,
 				43DD961A277E717C000CE509 /* Chat */,
+				4357F921278E399F00154012 /* Preferences */,
 				43DD961C277E717C000CE509 /* LoginView.swift */,
 				43DD961D277E717C000CE509 /* ChatItemView.swift */,
 				43DD961F277E717C000CE509 /* FolderItemView.swift */,
@@ -241,9 +279,9 @@
 				43DD9642277E7558000CE509 /* Resolver */,
 				43654D4427809CE50047F36F /* TDLibKit */,
 				4386E45A2782FFEB0084F809 /* Resolver-Static */,
-				4386E46927837A290084F809 /* AlertToast */,
 				4386E46F27837A810084F809 /* SwiftUIUtils */,
 				430B983E278B680600420D75 /* Lottie */,
+				4357F91F278E35F700154012 /* AlertToast */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -298,9 +336,9 @@
 			packageReferences = (
 				43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */,
-				4386E46827837A290084F809 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -359,13 +397,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				43DD9638277E717C000CE509 /* SearchField.swift in Sources */,
+				4357F925278E39D700154012 /* GeneralPrefView.swift in Sources */,
 				43DD963B277E717C000CE509 /* ContentView.swift in Sources */,
+				4357F92D278E3AC800154012 /* DataAndStoragePrefView.swift in Sources */,
+				4357F92F278E3ADC00154012 /* DevicesPrefView.swift in Sources */,
+				4357F935278E3B3C00154012 /* StickersPrefView.swift in Sources */,
 				4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */,
 				43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */,
+				4357F931278E3AE900154012 /* AppearancePrefView.swift in Sources */,
+				4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */,
+				4357F929278E3A3900154012 /* PrivacyView.swift in Sources */,
 				43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */,
+				4357F927278E3A1200154012 /* NotificationsAndSoundsPrefView.swift in Sources */,
 				43DD963A277E717C000CE509 /* ChatView.swift in Sources */,
 				4386E46727833B040084F809 /* LottieView.swift in Sources */,
+				4357F933278E3B1700154012 /* LanguagePrefView.swift in Sources */,
 				43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */,
+				4357F939278E3B7200154012 /* AccountsPrefView.swift in Sources */,
 				43DD962C277E717C000CE509 /* Folder.swift in Sources */,
 				43DD9637277E717C000CE509 /* ChatItemView.swift in Sources */,
 				43DD9636277E717C000CE509 /* LoginView.swift in Sources */,
@@ -644,20 +692,20 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
 			requirement = {
 				kind = revision;
 				revision = e78aef926cdd92323755bcb72309aa5afed1f02a;
-			};
-		};
-		4386E46827837A290084F809 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/elai950/AlertToast.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
 			};
 		};
 		4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
@@ -684,6 +732,11 @@
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
+		4357F91F278E35F700154012 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
 		43654D4427809CE50047F36F /* TDLibKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */;
@@ -693,11 +746,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = "Resolver-Static";
-		};
-		4386E46927837A290084F809 /* AlertToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4386E46827837A290084F809 /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
 		};
 		4386E46F27837A810084F809 /* SwiftUIUtils */ = {
 			isa = XCSwiftPackageProductDependency;
