@@ -167,6 +167,9 @@ struct LoginView: View {
     @State private var twoFactorAuthPassword = ""
     @State private var qrCodeLink = ""
 
+    @State private var phoneNumberCodes: [CountryInfo] = []
+    @State private var selectedNumberCode: Int = 0
+
     @State private var openedScreen = OpenedScreen.welcome
 
     @State private var showExitAlert = false
@@ -248,24 +251,33 @@ struct LoginView: View {
                     VStack {
                         Spacer()
                         Text("Enter your phone number")
-                            .font(.title3)
-                        TextField("Phone number", text: $phoneNumber)
-                            .onSubmit {
-                                Task {
-                                    withAnimation { showLoadingSpinner = true }
-                                    do {
-                                        try await tdApi.setAuthenticationPhoneNumber(
-                                            phoneNumber: phoneNumber,
-                                            settings: nil
-                                        )
-                                    } catch {
-                                        showErrorAlert = true
-                                    }
-                                    withAnimation { showLoadingSpinner = false }
+                            .font(.title)
+                        HStack {
+                            Picker("", selection: $selectedNumberCode) {
+                                ForEach(phoneNumberCodes, id: \.name) { info in
+                                    Text("\(info.countryCode) (+\(info.callingCodes[0]))")
+                                        .tag(Int(info.callingCodes[0])!)
                                 }
                             }
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: 156)
+                            .frame(width: 100)
+                            TextField("Phone number", text: $phoneNumber)
+                                .onSubmit {
+                                    Task {
+                                        withAnimation { showLoadingSpinner = true }
+                                        do {
+                                            try await tdApi.setAuthenticationPhoneNumber(
+                                                phoneNumber: "+\(selectedNumberCode)\(phoneNumber)",
+                                                settings: nil
+                                            )
+                                        } catch {
+                                            showErrorAlert = true
+                                        }
+                                        withAnimation { showLoadingSpinner = false }
+                                    }
+                                }
+                                .textFieldStyle(.roundedBorder)
+                                .frame(width: 156)
+                        }
                         if showLoadingSpinner {
                             ProgressView()
                                 .progressViewStyle(.circular)
@@ -309,7 +321,6 @@ struct LoginView: View {
                                     }
                                 }
                             }
-                            .padding()
                             .frame(width: 156)
                             .textContentType(.password)
                             .textFieldStyle(.roundedBorder)
@@ -357,7 +368,9 @@ struct LoginView: View {
                             .onSubmit {
                                 Task {
                                     withAnimation { showLoadingSpinner = true }
-                                    if (try? await tdApi.checkAuthenticationPassword(password: twoFactorAuthPassword)) == nil {
+                                    if (try? await tdApi.checkAuthenticationPassword(
+                                        password: twoFactorAuthPassword
+                                    )) == nil {
                                         showErrorAlert = true
                                     }
                                     withAnimation { showLoadingSpinner = false }
@@ -369,7 +382,25 @@ struct LoginView: View {
             }
 
         }
-        .alert("Error", isPresented: $showErrorAlert, actions: { }, message: { Text("You typed in wrong/bad data. Please try again!") })
+        .task {
+            let countries = try? await tdApi.getCountries().countries
+            guard countries != nil else {
+                return
+            }
+            self.phoneNumberCodes = countries!
+            let countryCode = (try? await tdApi.getCountryCode().text) ?? "EN"
+
+            for country in countries! where country.countryCode == countryCode {
+                self.selectedNumberCode = Int(country.callingCodes[0])!
+                NSLog("Country code: \(self.selectedNumberCode)")
+            }
+        }
+        .alert(
+            "Error",
+            isPresented: $showErrorAlert,
+            actions: { },
+            message: { Text("You typed in wrong/bad data. Please try again!") }
+        )
         .alert("You sure you want to exit?", isPresented: $showExitAlert) {
             Button("Yea!") {
                 presentationMode.wrappedValue.dismiss()
