@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Resolver
 import SwiftUIUtils
+import CoreImage.CIFilterBuiltins
 
 private enum OpenedScreen {
     case phoneNumber
@@ -18,6 +19,131 @@ private enum OpenedScreen {
     case twoFACode
     case welcome
 }
+
+private struct PasscodeField: View {
+
+    var maxDigits: Int = 4
+    var label = "Enter One Time Password"
+
+    @State private var pin: String = ""
+    @State private var showPin = true
+    @State private var isDisabled = false
+
+    var handler: (String, @escaping (Bool) -> Void) -> Void
+
+    public var body: some View {
+        VStack(spacing: 12) {
+            Text(label).font(.title)
+            ZStack {
+                pinDots
+                backgroundField
+            }
+            showPinStack
+        }
+
+    }
+
+    private var pinDots: some View {
+        HStack {
+            Spacer()
+            ForEach(0..<maxDigits) { index in
+                Image(systemName: self.getImageName(at: index))
+                Spacer()
+            }
+        }
+    }
+
+    private var backgroundField: some View {
+        let boundPin = Binding<String>(get: { self.pin }, set: { newValue in
+            self.pin = newValue
+            self.submitPin()
+        })
+
+        return TextField("", text: boundPin, onCommit: submitPin)
+            .textFieldStyle(.plain)
+            .accentColor(.clear)
+            .foregroundColor(.clear)
+            .disabled(isDisabled)
+    }
+
+    private var showPinStack: some View {
+        HStack {
+            Spacer()
+        }
+        .frame(height: 16)
+        .padding([.trailing])
+    }
+
+    private func submitPin() {
+        guard !pin.isEmpty else {
+            showPin = false
+            return
+        }
+
+        if pin.count == maxDigits {
+            isDisabled = true
+
+            handler(pin) { isSuccess in
+                if isSuccess {
+                    print("pin matched, go to next page, no action to perfrom here")
+                } else {
+                    pin = ""
+                    isDisabled = false
+                    print("this has to called after showing toast why is the failure")
+                }
+            }
+        }
+
+        // this code is never reached under normal circumstances. If the user pastes a text with count higher than the
+        // max digits, we remove the additional characters and make a recursive call.
+        if pin.count > maxDigits {
+            pin = String(pin.prefix(maxDigits))
+            submitPin()
+        }
+    }
+
+    private func getImageName(at index: Int) -> String {
+        if index >= self.pin.count {
+            return "circle"
+        }
+
+        if self.showPin {
+            return self.pin.digits[index].numberString + ".circle"
+        }
+
+        return "circle.fill"
+    }
+}
+
+private extension String {
+
+    var digits: [Int] {
+        var result = [Int]()
+
+        for char in self {
+            if let number = Int(String(char)) {
+                result.append(number)
+            }
+        }
+
+        return result
+    }
+
+    func isNumber() -> Bool {
+        let numberCharacters = NSCharacterSet.decimalDigits.inverted
+        return !self.isEmpty && (self.rangeOfCharacter(from: numberCharacters) != nil)
+    }
+
+}
+
+private extension Int {
+
+    var numberString: String {
+
+        guard self < 10 else { return "0" }
+
+        return String(self)
+    }
 }
 
 struct LoginView: View {
@@ -29,7 +155,7 @@ struct LoginView: View {
                 Text("\(number)")
                     .foregroundColor(.white)
             }
-                .frame(width: 20, height: 20)
+            .frame(width: 20, height: 20)
             // swiftlint:disable force_try
             Text(try! AttributedString(markdown: text))
             Spacer()
@@ -39,12 +165,45 @@ struct LoginView: View {
     @State private var phoneNumber: String = ""
     @State private var code = ""
     @State private var twoFactorAuthPassword = ""
+    @State private var qrCodeLink = ""
+
     @State private var openedScreen = OpenedScreen.welcome
+
     @State private var showExitAlert = false
+    @State private var showErrorAlert = false
+    @State private var showLoadingSpinner = false
 
     @Environment(\.presentationMode) private var presentationMode
 
     @Injected private var tdApi: TdApi
+
+    //    private func codeNumberCell(index: Int) -> some View {
+    //        @State var num: String = ""
+    //        return TextField("", text: $num)
+    //            .textFieldStyle(.plain)
+    //            .frame(width: 10, height: 16)
+    //            .border(Color.gray, width: 2)
+    //            .onReceive(num.publisher) { _ in
+    //                if !num.isNumber() {
+    //                    code[index] = nil
+    //                }
+    //                code[index] = Int(num)!
+    //            }
+    //    }
+    private let context = CIContext()
+    private let filter = CIFilter.qrCodeGenerator()
+
+    func generateQRCode(from string: String) -> NSImage {
+        filter.message = Data(string.utf8)
+
+        if let outputImage = filter.outputImage {
+            if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+                return NSImage(cgImage: cgimg, size: NSSize(width: 32, height: 32))
+            }
+        }
+
+        return NSImage(systemSymbolName: "xmark.circle", accessibilityDescription: nil) ?? NSImage()
+    }
 
     var body: some View {
         // swiftlint:disable multiple_closures_with_trailing_closure
@@ -61,32 +220,65 @@ struct LoginView: View {
             .padding()
 
             switch openedScreen {
-                case .phoneNumber:
+                case .welcome:
                     VStack {
                         Image("WelcomeScreenImage")
                             .resizable()
-                            .frame(width: 156, height: 156)
-                            .padding(.top, 56)
+                            .frame(width: 206, height: 206)
+                            .padding(.top)
                         Text("Welcome to Moc!")
-                            .font(.title)
-                            .padding(.bottom)
+                            .font(.largeTitle)
+                        Text("Choose your login method")
+                        Spacer()
+                        Button("Continue using phone number") {
+                            openedScreen = .phoneNumber
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .padding(.bottom, 8)
+                        Button("Continue using QR code") {
+                            Task {
+                                try? await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+                            }
+                        }
+                        .controlSize(.large)
+                        Spacer()
+                    }
+                case .phoneNumber:
+                    VStack {
+                        Spacer()
                         Text("Enter your phone number")
                             .font(.title3)
                         TextField("Phone number", text: $phoneNumber)
                             .onSubmit {
                                 Task {
-                                    _ = try await tdApi.setAuthenticationPhoneNumber(
-                                        phoneNumber: phoneNumber,
-                                        settings: nil
-                                    )
+                                    withAnimation { showLoadingSpinner = true }
+                                    do {
+                                        try await tdApi.setAuthenticationPhoneNumber(
+                                            phoneNumber: phoneNumber,
+                                            settings: nil
+                                        )
+                                    } catch {
+                                        showErrorAlert = true
+                                    }
+                                    withAnimation { showLoadingSpinner = false }
                                 }
                             }
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 156)
+                        if showLoadingSpinner {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                                .padding()
+                        }
                         Spacer()
                         Button("Use QR Code") {
                             Task {
-                                try? await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+                                do {
+                                    try await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+                                } catch {
+                                    showErrorAlert = true
+                                }
                             }
                         }
                         .padding()
@@ -97,19 +289,34 @@ struct LoginView: View {
                     VStack {
                         Text("Enter the code")
                             .font(.title)
+                        //                        PasscodeField(maxDigits: 5, label: "Enter the code") { code, done in
+                        //                            Task {
+                        //                                do {
+                        //                                    try await tdApi.checkAuthenticationCode(code: code)
+                        //                                    done(true)
+                        //                                }
+                        //                            }
+                        //                        }
                         TextField("Code", text: $code)
                             .onSubmit {
                                 Task {
                                     do {
+                                        withAnimation { showLoadingSpinner = true }
                                         try await tdApi.checkAuthenticationCode(code: code)
+                                        withAnimation { showLoadingSpinner = false }
                                     } catch {
-                                        fatalError("Failed to set authentication code.")
+                                        showErrorAlert = true
                                     }
                                 }
                             }
                             .padding()
+                            .frame(width: 156)
                             .textContentType(.password)
                             .textFieldStyle(.roundedBorder)
+                        if showLoadingSpinner {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        }
                     }
                 case .qrCode:
                     VStack(spacing: 12) {
@@ -117,7 +324,10 @@ struct LoginView: View {
                             .font(.title)
                             .padding(.top)
                         // QR Code
-                        Rectangle()
+                        Image(nsImage: generateQRCode(from: qrCodeLink))
+                            .resizable()
+                            .interpolation(.none)
+                            .scaledToFit()
                             .frame(width: 150, height: 150)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                         VStack {
@@ -125,14 +335,15 @@ struct LoginView: View {
                             stepView(number: 2, text: "Go to **Settings** -> **Devices** -> **Connect device**.")
                             stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
                         }
-                            .frame(width: 200)
-                            .padding()
+
 //                        Button("Use phone number") {
 //                            Task {
 //                                openedScreen = .phoneNumber
 //                            }
 //                        }
 //                        .buttonStyle(.borderless)
+                        .frame(width: 200)
+                        .padding()
                     }
                     .padding()
 
@@ -140,29 +351,40 @@ struct LoginView: View {
                     Text("Register a new Telegram account")
                         .font(.title)
                 case .twoFACode:
-                    Text("Enter your 2-Factor authentication password")
-                    TextField("Password", text: $twoFactorAuthPassword)
-                        .onSubmit {
-                            Task {
-                                try? await tdApi.checkAuthenticationPassword(password: twoFactorAuthPassword)
+                    VStack {
+                        Text("Enter your 2-Factor authentication password")
+                        SecureField("Password", text: $twoFactorAuthPassword)
+                            .onSubmit {
+                                Task {
+                                    withAnimation { showLoadingSpinner = true }
+                                    if (try? await tdApi.checkAuthenticationPassword(password: twoFactorAuthPassword)) == nil {
+                                        showErrorAlert = true
+                                    }
+                                    withAnimation { showLoadingSpinner = false }
+                                }
                             }
-                        }
-                        .textFieldStyle(.roundedBorder)
-                        .padding()
+                            .textFieldStyle(.roundedBorder)
+                            .padding()
+                    }
             }
 
         }
+        .alert("Error", isPresented: $showErrorAlert, actions: { }, message: { Text("You typed in wrong/bad data. Please try again!") })
         .alert("You sure you want to exit?", isPresented: $showExitAlert) {
             Button("Yea!") {
                 presentationMode.wrappedValue.dismiss()
-                NSApp.terminate(self)
+                Task {
+                    try? await Task.sleep(nanoseconds: UInt64(0.5 * Double(NSEC_PER_SEC)))
+                    NSApp.terminate(self)
+                }
             }
             Button("Not really") { }
         }
         .onReceive(NotificationCenter.default.publisher(
             for: .authorizationStateWaitOtherDeviceConfirmation,
-            object: nil
-        )) { _ in
+               object: nil
+        )) { notification in
+            self.qrCodeLink = (notification.object as? AuthorizationStateWaitOtherDeviceConfirmation)!.link
             openedScreen = .qrCode
         }
         .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitRegistration, object: nil)) { _ in
