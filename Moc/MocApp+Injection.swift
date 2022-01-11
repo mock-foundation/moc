@@ -206,5 +206,51 @@ struct MocApp: App {
         WindowGroup {
             ContentView()
         }
+
+        Settings {
+            TabView {
+                Text("General")
+                    .tabItem {
+                        Label("General", systemImage: "gear")
+                    }
+                Text("Notifications and Sounds")
+                    .tabItem {
+                        Label("Notifications and Sounds", systemImage: "bell")
+                    }
+                Text("Privacy")
+                    .tabItem {
+                        Label("Privacy", systemImage: "lock")
+                    }
+                Text("Data and Storage")
+                    .tabItem {
+                        Label("Data and Storage", systemImage: "externaldrive")
+                    }
+                Text("Devices")
+                    .tabItem {
+                        Label("Devices", systemImage: "laptopcomputer.and.iphone")
+                    }
+                Text("Appearance")
+                    .tabItem {
+                        Label("Appearance", systemImage: "paintbrush")
+                    }
+                Text("Language")
+                    .tabItem {
+                        Label("Language", systemImage: "globe")
+                    }
+                Text("Stickers")
+                    .tabItem {
+                        Label("Stickers", systemImage: "rectangle.3.group.bubble.left")
+                    }
+                Text("Folders")
+                    .tabItem {
+                        Label("Folders", systemImage: "folder")
+                    }
+                Text("Accounts")
+                    .tabItem {
+                        Label("Accounts", systemImage: "person.circle")
+                    }
+            }
+            .frame(width: 800, height: 400)
+        }
     }
 }
