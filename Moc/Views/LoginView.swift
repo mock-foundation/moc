@@ -193,10 +193,11 @@ struct LoginView: View {
     //                code[index] = Int(num)!
     //            }
     //    }
-    private let context = CIContext()
-    private let filter = CIFilter.qrCodeGenerator()
 
     func generateQRCode(from string: String) -> NSImage {
+        let context = CIContext()
+        let filter = CIFilter.qrCodeGenerator()
+
         filter.message = Data(string.utf8)
 
         if let outputImage = filter.outputImage {
@@ -363,7 +364,9 @@ struct LoginView: View {
                         .font(.title)
                 case .twoFACode:
                     VStack {
-                        Text("Enter your 2-Factor authentication password")
+                        Text("Enter your Two Factor Authentication (2FA) password")
+                            .font(.title)
+                            .multilineTextAlignment(.center)
                         SecureField("Password", text: $twoFactorAuthPassword)
                             .onSubmit {
                                 Task {
@@ -378,6 +381,10 @@ struct LoginView: View {
                             }
                             .textFieldStyle(.roundedBorder)
                             .padding()
+                        if showLoadingSpinner {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        }
                     }
             }
 
