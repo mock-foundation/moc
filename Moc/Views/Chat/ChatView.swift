@@ -25,6 +25,48 @@ extension MessageContent {
     }
 }
 
+// thx https://stackoverflow.com/a/56763282
+// swiftlint:disable identifier_name
+private struct RoundedCorners: Shape {
+    var tl: CGFloat = 0.0
+    var tr: CGFloat = 0.0
+    var bl: CGFloat = 0.0
+    var br: CGFloat = 0.0
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        let width = rect.size.width
+        let height = rect.size.height
+
+        // Make sure we do not exceed the size of the rectangle
+        let tr = min(min(self.tr, height/2), width/2)
+        let tl = min(min(self.tl, height/2), width/2)
+        let bl = min(min(self.bl, height/2), width/2)
+        let br = min(min(self.br, height/2), width/2)
+
+        path.move(to: CGPoint(x: width / 2.0, y: 0))
+        path.addLine(to: CGPoint(x: width - tr, y: 0))
+        path.addArc(center: CGPoint(x: width - tr, y: tr), radius: tr,
+                    startAngle: Angle(degrees: -90), endAngle: Angle(degrees: 0), clockwise: false)
+
+        path.addLine(to: CGPoint(x: width, y: height - br))
+        path.addArc(center: CGPoint(x: width - br, y: height - br), radius: br,
+                    startAngle: Angle(degrees: 0), endAngle: Angle(degrees: 90), clockwise: false)
+
+        path.addLine(to: CGPoint(x: bl, y: height))
+        path.addArc(center: CGPoint(x: bl, y: height - bl), radius: bl,
+                    startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 180), clockwise: false)
+
+        path.addLine(to: CGPoint(x: 0, y: tl))
+        path.addArc(center: CGPoint(x: tl, y: tl), radius: tl,
+                    startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
+        path.closeSubpath()
+
+        return path
+    }
+}
+
 struct ChatView: View {
     let chat: Chat
     @State private var inputMessage = ""
@@ -55,11 +97,11 @@ struct ChatView: View {
         VStack {
             ScrollViewReader { proxy in
                 ScrollView {
-//                    ForEach(chatViewModel.messages!) { message in
-//                        MessageBubbleView(sender: "someone", content: message.content.toString())
-//                            .frame(idealWidth: nil, maxWidth: 300)
-//                            .hLeading()
-//                    }
+                    //                    ForEach(chatViewModel.messages!) { message in
+                    //                        MessageBubbleView(sender: "someone", content: message.content.toString())
+                    //                            .frame(idealWidth: nil, maxWidth: 300)
+                    //                            .hLeading()
+                    //                    }
                 }
                 .onAppear {
                     proxy.scrollTo(50 - 1)
@@ -114,7 +156,7 @@ struct ChatView: View {
     // MARK: - Chat inspector
     private var chatInspector: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
                 // Header
                 Image("MockChatPhoto")
                     .resizable()
@@ -150,34 +192,43 @@ struct ChatView: View {
                 .frame(minWidth: 0, idealWidth: nil)
 
                 // More info
-                Picker("", selection: $selectedInspectorTab) {
-                    Text("Users").tag(InspectorTab.users)
-                    Text("Media").tag(InspectorTab.media)
-                    Text("Links").tag(InspectorTab.links)
-                    Text("Files").tag(InspectorTab.files)
-                    Text("Voice").tag(InspectorTab.voice)
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                .frame(minWidth: 0, idealWidth: nil)
-                ScrollView {
-                    switch selectedInspectorTab {
-                    case .users:
-                        ForEach(0..<10) { index in
-                            userRow(name: "User \(index)", status: .userStatusRecently, photo: Image("MockChatPhoto"))
-                                .padding(.horizontal, 8)
-                                .frame(minWidth: 0, idealWidth: nil)
+                Section(content: {
+                    ScrollView {
+                        switch selectedInspectorTab {
+                            case .users:
+                                ForEach(0..<10) { index in
+                                    userRow(
+                                        name: "User \(index)",
+                                        status: .userStatusRecently,
+                                        photo: Image("MockChatPhoto")
+                                    )
+                                    .padding(.horizontal, 8)
+                                    .frame(minWidth: 0, idealWidth: nil)
+                                }
+                            case .media:
+                                Text("Media")
+                            case .links:
+                                Text("Links")
+                            case .files:
+                                Text("Files")
+                            case .voice:
+                                Text("Voice")
                         }
-                    case .media:
-                        Text("Media")
-                    case .links:
-                        Text("Links")
-                    case .files:
-                        Text("Files")
-                    case .voice:
-                        Text("Voice")
                     }
-                }
+                }, header: {
+                    Picker("", selection: $selectedInspectorTab) {
+                        Text("Users").tag(InspectorTab.users)
+                        Text("Media").tag(InspectorTab.media)
+                        Text("Links").tag(InspectorTab.links)
+                        Text("Files").tag(InspectorTab.files)
+                        Text("Voice").tag(InspectorTab.voice)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    .frame(minWidth: 0, idealWidth: nil)
+                    .background(.ultraThinMaterial, in: RoundedCorners(tl: 0, tr: 0, bl: 8, br: 8))
+                })
+
             }
             .padding(.top)
         }
@@ -247,11 +298,11 @@ struct ChatView: View {
 
                 NSLog("Messages: \(messages)")
 
-//                chatViewModel.messages = messages!
+                //                chatViewModel.messages = messages!
 
-//                if self.messages == [] {
-//                    NSLog("Pizdec")
-//                }
+                //                if self.messages == [] {
+                //                    NSLog("Pizdec")
+                //                }
             }
     }
 }
