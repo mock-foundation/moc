@@ -28,6 +28,7 @@
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
 		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; };
 		4389A426278EDA330047D945 /* Preferences in Frameworks */ = {isa = PBXBuildFile; productRef = 4389A425278EDA330047D945 /* Preferences */; };
+		43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C0278F121F00236503 /* ImageUtils */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
 		43DD9576277E50C3000CE509 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9575277E50C3000CE509 /* MocTests.swift */; };
@@ -85,6 +86,7 @@
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		43832703278865CB004B0E18 /* ChatSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
 		4386E46627833B040084F809 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		43C7B4BD278F11D300236503 /* ImageUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ImageUtils; sourceTree = "<group>"; };
 		43DD9560277E50C0000CE509 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43DD9567277E50C3000CE509 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43DD956A277E50C3000CE509 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */,
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
@@ -169,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				43DD9562277E50C0000CE509 /* Moc */,
+				43C7B4BD278F11D300236503 /* ImageUtils */,
 				43DD9574277E50C3000CE509 /* MocTests */,
 				43DD9561277E50C0000CE509 /* Products */,
 				43DD9644277E7578000CE509 /* Frameworks */,
@@ -285,6 +289,7 @@
 				430B983E278B680600420D75 /* Lottie */,
 				4357F91F278E35F700154012 /* AlertToast */,
 				4389A425278EDA330047D945 /* Preferences */,
+				43C7B4C0278F121F00236503 /* ImageUtils */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -768,6 +773,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4389A424278EDA330047D945 /* XCRemoteSwiftPackageReference "Preferences" */;
 			productName = Preferences;
+		};
+		43C7B4C0278F121F00236503 /* ImageUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ImageUtils;
 		};
 		43DD9642277E7558000CE509 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
