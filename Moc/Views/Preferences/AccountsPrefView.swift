@@ -7,67 +7,126 @@
 
 import SwiftUI
 import SwiftUIUtils
+import Preferences
 
 struct AccountsPrefView: View {
-    var body: some View {
-        HStack {
-            VStack {
-                ZStack {
+    @State private var bioText: String = "Kotlin/Swift developer from Kyiv. @https200 github.com/ggoraa"
+
+    private var leftColumnContent: some View {
+        VStack {
+            ZStack {
+                Image("MockChatPhoto")
+                    .resizable()
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 256, height: 256)
+                VStack {
+                    Spacer()
+                    HStack {
+                        VStack {
+                            Text("Username")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.title)
+                            Text("Phone number")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.title3)
+                        }
+                        Spacer()
+                        Text("@nickname")
+                    }
+                    .padding()
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 25, style: .continuous))
+                    .padding()
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+            .frame(width: 256, height: 256)
+            .padding()
+            // swiftlint:disable multiple_closures_with_trailing_closure
+            HStack {
+                Button(action: {
+
+                }) {
+                    Label("Add account", systemImage: "person.badge.plus")
+                }
+                .controlSize(.large)
+                .buttonStyle(.borderless)
+                Spacer()
+                Button(role: .destructive, action: {
+
+                }) {
+                    Label("Leave", systemImage: "rectangle.portrait.and.arrow.right")
+                }
+                .tint(.red)
+                .controlSize(.large)
+                .buttonStyle(.borderless)
+            }
+            .padding(.horizontal, 24)
+            Spacer()
+        }
+    }
+
+    private var rightColumnContent: some View {
+        Preferences.Container(contentWidth: 300) {
+            Preferences.Section(title: "Profile photo:") {
+                HStack {
                     Image("MockChatPhoto")
                         .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 256, height: 256)
-                    VStack {
-                        Spacer()
-                        HStack {
-                            VStack {
-                                Text("Username")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .font(.title)
-                                Text("Phone number")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .font(.title3)
-                            }
-                            Spacer()
-                            Text("@nickname")
-                        }
-                        .padding()
-                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 25, style: .continuous))
-                        .padding()
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
+                    Button(action: { }) {
+                        Label("Change", systemImage: "square.and.pencil")
                     }
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-                .frame(width: 256, height: 256)
-                .padding()
+                Text("Chat photo that will be shown next to your messages.")
+                    .preferenceDescription()
+            }
+            Preferences.Section(title: "First name:") {
+                TextField("First name", text: .constant("GGorAA"))
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 150)
+            }
+            Preferences.Section(title: "Last name:") {
+                TextField("First name", text: .constant(""))
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 150)
+            }
+            Preferences.Section(title: "Username:") {
+                TextField("Username", text: .constant("@ggoraa"))
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 150)
+
+            }
+            Preferences.Section(title: "Bio:") {
+                TextEditor(text: $bioText)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+            Preferences.Section(title: "Phone number:") {
                 HStack {
-                    Button(action: {
-
-                    }) {
-                        Label("Add account", systemImage: "person.badge.plus")
+                    Text("+3809876567")
+                    Button(action: { }) {
+                        Label("Change", systemImage: "square.and.pencil")
                     }
-                    .controlSize(.large)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    Button(role: .destructive, action: {
-
-                    }) {
-                        Label("Leave", systemImage: "rectangle.portrait.and.arrow.right")
-                    }
-                    .foregroundColor(.red)
-                    .controlSize(.large)
-                    .buttonStyle(.borderless)
                 }
-                .padding(.horizontal, 24)
-                Spacer()
+                Text("Your account and all your cloud data — messages, media, contacts, etc. will be moved to the new number.")
+                    .preferenceDescription()
             }
-            VStack {
-                TextField("Phone number", text: .constant(""))
+        }
+        .onReceive(bioText.publisher) { _ in
+            if bioText.count > 70 {
+                bioText = String(bioText.prefix(70))
+                NSSound.beep()
+            }
+        }
+    }
 
-                Spacer()
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    var body: some View {
+        HStack {
+            leftColumnContent
+                .frame(width: 300)
+            rightColumnContent
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
