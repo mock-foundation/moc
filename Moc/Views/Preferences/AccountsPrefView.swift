@@ -8,22 +8,47 @@
 import SwiftUI
 import SwiftUIUtils
 import Preferences
+import TDLibKit
+import Resolver
+import ImageUtils
 
 struct AccountsPrefView: View {
-    @State private var firstName: String = "GGorAA"
+    @State private var photo: Image?
+    @State private var userId: Int64 = 0
+    @State private var firstName: String = ""
     @State private var lastName: String = ""
-    @State private var username: String = "@ggoraa"
-    @State private var bioText: String = "Kotlin/Swift developer from Kyiv. @https200 github.com/ggoraa"
-    @State private var phoneNumber: String = "+3809876567"
+    @State private var username: String = ""
+    @State private var bioText: String = ""
+    @State private var phoneNumber: String = ""
 
-    private var leftColumnContent: some View {
-        VStack {
-            ZStack {
-                Image("MockChatPhoto")
+    @State private var loading = true
+    @State private var showInitErrorAlert = false
+
+    @Injected private var tdApi: TdApi
+
+    private var background: some View {
+        ZStack {
+            if photo == nil {
+                ProfilePlaceholderView(
+                    userId: userId,
+                    firstName: firstName,
+                    lastName: lastName,
+                    style: .large
+                ).frame(width: 256, height: 256)
+            } else {
+                photo!
                     .resizable()
                     .scaledToFit()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 256, height: 256)
+            }
+        }
+    }
+
+    private var leftColumnContent: some View {
+        VStack {
+            ZStack {
+                background
                 VStack {
                     Spacer()
                     HStack {
@@ -70,8 +95,10 @@ struct AccountsPrefView: View {
         }
     }
 
+    @Environment(\.colorScheme) private var colorScheme
+
     private var rightColumnContent: some View {
-        Preferences.Container(contentWidth: 300) {
+        Preferences.Container(contentWidth: 400) {
             Preferences.Section(title: "Profile photo:") {
                 HStack {
                     Image("MockChatPhoto")
@@ -143,13 +170,72 @@ struct AccountsPrefView: View {
         }
     }
 
+    private func getAccountData() async {
+        let user = try? await tdApi.getMe()
+        guard user != nil else {
+            showInitErrorAlert = true
+            return
+        }
+
+        let userFullInfo = try? await tdApi.getUserFullInfo(userId: user!.id)
+        guard userFullInfo != nil else {
+            showInitErrorAlert = true
+            return
+        }
+
+        firstName = user!.firstName
+        lastName = user!.lastName
+        username = "@\(user!.username)"
+        bioText = userFullInfo!.bio
+        phoneNumber = "+\(user!.phoneNumber)"
+        userId = user!.id
+
+        guard let profilePhoto = user!.profilePhoto else {
+            loading = false
+            return
+
+        }
+        guard let profilePhotoPath = URL(string: profilePhoto.big.local.path) else {
+            loading = false
+            return
+
+        }
+        guard let nsImage = NSImage(contentsOf: profilePhotoPath) else {
+            loading = false
+            return
+
+        }
+
+        photo = Image(nsImage: nsImage)
+
+        loading = false
+    }
+
     var body: some View {
-        HStack {
-            leftColumnContent
-                .frame(width: 300)
-            rightColumnContent
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        if loading {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .task {
+                    await getAccountData()
+                }
+                .alert("Failed to get account data.", isPresented: $showInitErrorAlert, actions: {
+                    Button("Try again") {
+                        Task {
+                            await getAccountData()
+                        }
+                    }
+                    Button(role: .cancel, action: { }) {
+                        Text("Cancel")
+                    }
+                })
+        } else {
+            HStack {
+                leftColumnContent
+                    .frame(width: 300)
+                rightColumnContent
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
     }
 }
