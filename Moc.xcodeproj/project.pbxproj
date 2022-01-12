@@ -27,6 +27,7 @@
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
 		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; };
+		4389A426278EDA330047D945 /* Preferences in Frameworks */ = {isa = PBXBuildFile; productRef = 4389A425278EDA330047D945 /* Preferences */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
 		43DD9576277E50C3000CE509 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9575277E50C3000CE509 /* MocTests.swift */; };
@@ -116,6 +117,7 @@
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
+				4389A426278EDA330047D945 /* Preferences in Frameworks */,
 				43654D4527809CE50047F36F /* TDLibKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +284,7 @@
 				4386E46F27837A810084F809 /* SwiftUIUtils */,
 				430B983E278B680600420D75 /* Lottie */,
 				4357F91F278E35F700154012 /* AlertToast */,
+				4389A425278EDA330047D945 /* Preferences */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -339,6 +342,7 @@
 				4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
+				4389A424278EDA330047D945 /* XCRemoteSwiftPackageReference "Preferences" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -716,6 +720,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		4389A424278EDA330047D945 /* XCRemoteSwiftPackageReference "Preferences" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Preferences.git";
+			requirement = {
+				kind = revision;
+				revision = ffeaaad1def45d0625720dc1adae3789cd9c167d;
+			};
+		};
 		43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -751,6 +763,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
 			productName = SwiftUIUtils;
+		};
+		4389A425278EDA330047D945 /* Preferences */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4389A424278EDA330047D945 /* XCRemoteSwiftPackageReference "Preferences" */;
+			productName = Preferences;
 		};
 		43DD9642277E7558000CE509 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
