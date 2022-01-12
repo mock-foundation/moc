@@ -1,5 +1,6 @@
 import Foundation
 import IOKit
+import AppKit
 
 public struct SystemUtils {
     public static func post(notification: NSNotification.Name) {
@@ -11,7 +12,7 @@ public struct SystemUtils {
     }
 
     // Thanks to https://www.reddit.com/r/swift/comments/gwf9fa/how_do_i_find_the_model_of_the_mac_in_swift/
-    public static func getMacModel() -> String {
+    public static var macModel: String {
         // Get device identifier
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
         var modelIdentifier: String?
@@ -58,7 +59,7 @@ public struct SystemUtils {
         return model!
     }
 
-    public static func getOSVersionString() -> String {
+    public static var osVersionString: String {
         let info = ProcessInfo().operatingSystemVersionString
         var systemVersionCodename: String {
             let version = ProcessInfo().operatingSystemVersion.majorVersion
@@ -73,5 +74,9 @@ public struct SystemUtils {
         }
 
         return "\(systemVersionCodename) \(info)"
+    }
+
+    public static func playAlertSound() {
+        NSSound.beep()
     }
 }
