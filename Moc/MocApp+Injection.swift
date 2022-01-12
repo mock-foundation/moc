@@ -66,12 +66,12 @@ extension Resolver {
                                             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                                         ) ?? "Unknown",
                                         databaseDirectory: "",
-                                        deviceModel: SystemUtils.getMacModel(),
+                                        deviceModel: SystemUtils.macModel,
                                         enableStorageOptimizer: true,
                                         filesDirectory: "",
                                         ignoreFileNames: false,
                                         systemLanguageCode: "en-US",
-                                        systemVersion: SystemUtils.getOSVersionString(),
+                                        systemVersion: SystemUtils.osVersionString,
                                         useChatInfoDatabase: true,
                                         useFileDatabase: true,
                                         useMessageDatabase: true,
@@ -112,6 +112,8 @@ extension Resolver {
                         SystemUtils.post(notification: .updateChatLastMessage, withObject: state)
                     case .updateNewChat(let state):
                         SystemUtils.post(notification: .updateNewChat, withObject: state)
+                    case .updateFile(let info):
+                        SystemUtils.post(notification: .updateFile, withObject: info)
                     default:
                         NSLog("Unhandled TDLib update \(update)")
                 }
@@ -178,7 +180,7 @@ struct MocApp: App {
                         Label("Accounts", systemImage: "person.circle")
                     }
             }
-            .frame(width: 800, height: 400)
+            .frame(width: 800)
         }
     }
 }

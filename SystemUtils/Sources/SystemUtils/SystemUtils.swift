@@ -76,6 +76,10 @@ public struct SystemUtils {
         return "\(systemVersionCodename) \(info)"
     }
 
+    public static func info<T>(key: String) -> T? {
+        return Bundle.main.infoDictionary?[key] as? T
+    }
+
     public static func playAlertSound() {
         NSSound.beep()
     }

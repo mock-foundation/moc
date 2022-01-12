@@ -162,8 +162,6 @@ struct AccountsPrefView: View {
                         Label("Change", systemImage: "square.and.pencil")
                     }
                 }
-                Text("Your account and all your cloud data — messages, media, contacts, etc. will be moved to the new number.")
-                    .preferenceDescription()
             }
         }
         // Text length restrictions
