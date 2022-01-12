@@ -10,7 +10,11 @@ import SwiftUIUtils
 import Preferences
 
 struct AccountsPrefView: View {
+    @State private var firstName: String = "GGorAA"
+    @State private var lastName: String = ""
+    @State private var username: String = "@ggoraa"
     @State private var bioText: String = "Kotlin/Swift developer from Kyiv. @https200 github.com/ggoraa"
+    @State private var phoneNumber: String = "+3809876567"
 
     private var leftColumnContent: some View {
         VStack {
