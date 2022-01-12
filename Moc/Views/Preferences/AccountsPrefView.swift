@@ -28,15 +28,15 @@ struct AccountsPrefView: View {
                     Spacer()
                     HStack {
                         VStack {
-                            Text("Username")
+                            Text("\(firstName) \(lastName)")
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.title)
-                            Text("Phone number")
+                            Text(phoneNumber)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.title3)
                         }
                         Spacer()
-                        Text("@nickname")
+                        Text(username)
                     }
                     .padding()
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 25, style: .continuous))
@@ -86,17 +86,17 @@ struct AccountsPrefView: View {
                     .preferenceDescription()
             }
             Preferences.Section(title: "First name:") {
-                TextField("First name", text: .constant("GGorAA"))
+                TextField("First name", text: $firstName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
             }
             Preferences.Section(title: "Last name:") {
-                TextField("First name", text: .constant(""))
+                TextField("First name", text: $lastName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
             }
             Preferences.Section(title: "Username:") {
-                TextField("Username", text: .constant("@ggoraa"))
+                TextField("Username", text: $username)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
 
@@ -107,7 +107,7 @@ struct AccountsPrefView: View {
             }
             Preferences.Section(title: "Phone number:") {
                 HStack {
-                    Text("+3809876567")
+                    Text(phoneNumber)
                     Button(action: { }) {
                         Label("Change", systemImage: "square.and.pencil")
                     }
