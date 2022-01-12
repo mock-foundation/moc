@@ -11,9 +11,14 @@ import Preferences
 import TDLibKit
 import Resolver
 import ImageUtils
+import SystemUtils
 
 struct AccountsPrefView: View {
     @State private var photo: Image?
+    @State private var photoLoading = false
+    @State private var photoFileId: Int64 = 0
+    @State private var miniThumbnail: Image?
+
     @State private var userId: Int64 = 0
     @State private var firstName: String = ""
     @State private var lastName: String = ""
@@ -36,11 +41,31 @@ struct AccountsPrefView: View {
                     style: .large
                 ).frame(width: 256, height: 256)
             } else {
-                photo!
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 256, height: 256)
+                if photoLoading {
+                    ZStack {
+                        if miniThumbnail != nil {
+                            miniThumbnail!
+                                .scaledToFill()
+                        }
+                        ProgressView()
+                    }
+                } else {
+                    photo!
+                        .resizable()
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 256, height: 256)
+                }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .updateFile, object: nil)) {
+            let file = ($0.object as? UpdateFile)!.file
+            guard file.id == photoFileId else { return }
+
+            photoLoading = !file.local.isDownloadingCompleted
+
+            if file.local.isDownloadingCompleted {
+                photo = Image(nsImage: NSImage(contentsOf: URL(string: "file://\(file.local.path)")!)!)
             }
         }
     }
@@ -95,8 +120,6 @@ struct AccountsPrefView: View {
         }
     }
 
-    @Environment(\.colorScheme) private var colorScheme
-
     private var rightColumnContent: some View {
         Preferences.Container(contentWidth: 400) {
             Preferences.Section(title: "Profile photo:") {
@@ -147,25 +170,25 @@ struct AccountsPrefView: View {
         .onReceive(firstName.publisher) { _ in
             if firstName.count > 64 {
                 firstName = String(firstName.prefix(64))
-                NSSound.beep()
+                SystemUtils.playAlertSound()
             }
         }
         .onReceive(lastName.publisher) { _ in
             if lastName.count > 64 {
                 lastName = String(lastName.prefix(64))
-                NSSound.beep()
+                SystemUtils.playAlertSound()
             }
         }
         .onReceive(username.publisher) { _ in
             if username.count > 32 {
                 username = String(username.prefix(32))
-                NSSound.beep()
+                SystemUtils.playAlertSound()
             }
         }
         .onReceive(bioText.publisher) { _ in
             if bioText.count > 70 {
                 bioText = String(bioText.prefix(70))
-                NSSound.beep()
+                SystemUtils.playAlertSound()
             }
         }
     }
@@ -195,12 +218,19 @@ struct AccountsPrefView: View {
             return
 
         }
+        photoFileId = Int64(profilePhoto.big.id)
+        miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
+
+        // swiftlint:disable force_try
+        try! await tdApi.downloadFile(fileId: profilePhoto.big.id, limit: 0, offset: 0, priority: 32, synchronous: false)
+
+
         guard let profilePhotoPath = URL(string: profilePhoto.big.local.path) else {
             loading = false
             return
 
         }
-        guard let nsImage = NSImage(contentsOf: profilePhotoPath) else {
+        guard let nsImage = NSImage(contentsOf: URL(string: "file://\(profilePhotoPath)")!) else {
             loading = false
             return
 
@@ -215,6 +245,7 @@ struct AccountsPrefView: View {
         if loading {
             ProgressView()
                 .progressViewStyle(.circular)
+                .padding()
                 .task {
                     await getAccountData()
                 }
@@ -232,6 +263,7 @@ struct AccountsPrefView: View {
             HStack {
                 leftColumnContent
                     .frame(width: 300)
+                    .padding(.bottom)
                 rightColumnContent
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
