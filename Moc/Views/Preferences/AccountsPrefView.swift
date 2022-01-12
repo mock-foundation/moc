@@ -116,6 +116,25 @@ struct AccountsPrefView: View {
                     .preferenceDescription()
             }
         }
+        // Text length restrictions
+        .onReceive(firstName.publisher) { _ in
+            if firstName.count > 64 {
+                firstName = String(firstName.prefix(64))
+                NSSound.beep()
+            }
+        }
+        .onReceive(lastName.publisher) { _ in
+            if lastName.count > 64 {
+                lastName = String(lastName.prefix(64))
+                NSSound.beep()
+            }
+        }
+        .onReceive(username.publisher) { _ in
+            if username.count > 32 {
+                username = String(username.prefix(32))
+                NSSound.beep()
+            }
+        }
         .onReceive(bioText.publisher) { _ in
             if bioText.count > 70 {
                 bioText = String(bioText.prefix(70))
