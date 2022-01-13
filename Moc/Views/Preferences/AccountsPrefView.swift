@@ -12,6 +12,7 @@ import TDLibKit
 import Resolver
 import ImageUtils
 import SystemUtils
+import Combine
 
 struct AccountsPrefView: View {
     @State private var photos: [File] = []
@@ -35,40 +36,87 @@ struct AccountsPrefView: View {
     @State private var offset: CGFloat = 0
     @State private var isUserSwiping: Bool = false
 
+//    @State var subs = Set<AnyCancellable>() // Cancel onDisappear
+//
+//    private func trackScroll() {
+//        NSApp.publisher(for: \.currentEvent)
+//            .filter { event in
+//                event?.type == .beginGesture
+//            }
+//        NSApp.publisher(for: \.currentEvent)
+//            .filter { event in event?.type == .scrollWheel }
+//            .throttle(for: .milliseconds(200),
+//                         scheduler: DispatchQueue.main,
+//                         latest: true)
+//            .sink {
+//                if let event = $0 {
+//                    if event.deltaX > 0 { print("right") }
+//                    if event.deltaX < 0 { print("left") }
+//                    if event.deltaY > 0 { print("down") }
+//                    if event.deltaY < 0 { print("up") }
+//                    if (0..<256).contains(event.deltaY) {
+//                        self.index += 1
+//                    }
+//                    if (-256..<0).contains(event.deltaY) {
+//                        self.index -= 1
+//                    }
+//                    self.offset += event.deltaY
+//                }
+//            }
+//            .store(in: &subs)
+//    }
+
     private var photoSwitcher: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(photos, id: \.id) { photo in
-                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 256, height: 256)
+        ZStack {
+            VStack {
+                HStack {
+                    ForEach(0..<photos.count) {_ in
+                        RoundedRectangle(cornerRadius: 2, style: .continuous)
+                            .padding(4)
+                            .frame(maxWidth: .infinity, maxHeight: 4)
+                            .background(Color.white)
+                    }
+                }
+                .padding()
+                Spacer()
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(photos, id: \.id) { photo in
+                        Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
+                            .resizable()
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 256, height: 256)
+                    }
                 }
             }
-        }
-        .content
-        .offset(x: self.isUserSwiping ? self.offset : CGFloat(self.index) * -256)
-        .frame(width: 256, height: 256, alignment: .leading)
-        .gesture(
-            DragGesture()
-                .onChanged({ value in
-                    self.isUserSwiping = true
-                    self.offset = value.translation.width + -256 * CGFloat(self.index)
-                })
-                .onEnded({ value in
-                    if value.predictedEndTranslation.width < 256 / 2, self.index < self.photos.count - 1 {
-                        self.index += 1
-                    }
-                    if value.predictedEndTranslation.width > 256 / 2, self.index > 0 {
-                        self.index -= 1
-                    }
-                    withAnimation(.spring()) {
-                        self.isUserSwiping = false
-                    }
-                })
-
-        )
+            .content
+            .animation(.spring(), value: self.index)
+            .offset(x: self.isUserSwiping ? self.offset : CGFloat(self.index) * -256)
+            .frame(width: 256, height: 256, alignment: .leading)
+//        .onAppear {
+//            trackScroll()
+//        }
+//        .gesture(
+//            DragGesture()
+//                .onChanged({ value in
+//                    self.isUserSwiping = true
+//                    self.offset = value.translation.width + -256 * CGFloat(self.index)
+//                })
+//                .onEnded({ value in
+//                    if value.predictedEndTranslation.width < 256 / 2, self.index < self.photos.count - 1 {
+//                        self.index += 1
+//                    }
+//                    if value.predictedEndTranslation.width > 256 / 2, self.index > 0 {
+//                        self.index -= 1
+//                    }
+//                    withAnimation(.spring()) {
+//                        self.isUserSwiping = false
+//                    }
+//                })
+//        )
+        }.frame(width: 256, height: 256)
     }
 
     private var background: some View {
@@ -90,7 +138,21 @@ struct AccountsPrefView: View {
                         ProgressView()
                     }
                 } else {
-                    photoSwitcher
+                    ZStack {
+                        VStack {
+                            HStack {
+                                ForEach(0..<photos.count) {_ in
+                                    RoundedRectangle(cornerRadius: 2, style: .continuous)
+                                        .padding(2)
+                                        .frame(height: 2)
+                                        .background(Color.white)
+                                }
+                            }
+                            .padding()
+                            Spacer()
+                        }
+                        photoSwitcher
+                    }
                 }
             }
         }
@@ -122,7 +184,7 @@ struct AccountsPrefView: View {
                                 .font(.title3)
                         }
                         Spacer()
-                        Text(username)
+                        Text("@\(username)")
                     }
                     .padding()
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 25, style: .continuous))
@@ -157,10 +219,10 @@ struct AccountsPrefView: View {
     }
 
     private var rightColumnContent: some View {
-        Preferences.Container(contentWidth: 400) {
+        Preferences.Container(contentWidth: 450) {
             Preferences.Section(title: "Profile photo:") {
                 HStack {
-                    Image("MockChatPhoto")
+                Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
@@ -175,21 +237,42 @@ struct AccountsPrefView: View {
                 TextField("First name", text: $firstName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
+                    .onSubmit {
+                        Task {
+                            try await tdApi.setName(firstName: firstName, lastName: lastName)
+                        }
+                    }
             }
             Preferences.Section(title: "Last name:") {
                 TextField("First name", text: $lastName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
+                    .onSubmit {
+                        Task {
+                            try await tdApi.setName(firstName: firstName, lastName: lastName)
+                        }
+                    }
             }
             Preferences.Section(title: "Username:") {
                 TextField("Username", text: $username)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
+                    .onSubmit {
+                        Task {
+                            try await tdApi.setUsername(username: username)
+                        }
+                    }
 
             }
             Preferences.Section(title: "Bio:") {
-                TextEditor(text: $bioText)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                TextField("Bio", text: $bioText)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit {
+                        Task {
+                            try await tdApi.setBio(bio: bioText)
+                        }
+                    }
+                    .frame(width: 350)
             }
             Preferences.Section(title: "Phone number:") {
                 HStack {
@@ -200,6 +283,7 @@ struct AccountsPrefView: View {
                 }
             }
         }
+        .frame(width: 450)
         // Text length restrictions
         .onReceive(firstName.publisher) { _ in
             if firstName.count > 64 {
@@ -242,7 +326,7 @@ struct AccountsPrefView: View {
 
         firstName = user!.firstName
         lastName = user!.lastName
-        username = "@\(user!.username)"
+        username = user!.username
         bioText = userFullInfo!.bio
         phoneNumber = "+\(user!.phoneNumber)"
         userId = user!.id
@@ -262,7 +346,7 @@ struct AccountsPrefView: View {
 
         for photo in photos.photos {
             guard let file = try? await tdApi.downloadFile(
-                fileId: photo.sizes[0].photo.id,
+                fileId: photo.sizes[2].photo.id,
                 limit: 0,
                 offset: 0,
                 priority: 32,
