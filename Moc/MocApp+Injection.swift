@@ -130,6 +130,8 @@ extension Resolver {
 
 @main
 struct MocApp: App {
+    @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
+
     init() {
         Resolver.registerUI()
         Resolver.registerTd()
