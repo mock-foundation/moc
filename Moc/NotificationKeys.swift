@@ -71,4 +71,8 @@ extension NSNotification.Name {
     static var updateNewChat: NSNotification.Name {
         return .init("UpdateNewChat")
     }
+
+    static var updateFile: NSNotification.Name {
+        return .init(rawValue: "UpdateFile")
+    }
 }
