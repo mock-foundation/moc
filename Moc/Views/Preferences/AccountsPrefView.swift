@@ -14,7 +14,7 @@ import ImageUtils
 import SystemUtils
 
 struct AccountsPrefView: View {
-    @State private var photo: Image?
+    @State private var photos: [File] = []
     @State private var photoLoading = false
     @State private var photoFileId: Int64 = 0
     @State private var miniThumbnail: Image?
@@ -31,9 +31,49 @@ struct AccountsPrefView: View {
 
     @Injected private var tdApi: TdApi
 
+    @State private var index: Int = 0
+    @State private var offset: CGFloat = 0
+    @State private var isUserSwiping: Bool = false
+
+    private var photoSwitcher: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(photos, id: \.id) { photo in
+                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
+                        .resizable()
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 256, height: 256)
+                }
+            }
+        }
+        .content
+        .offset(x: self.isUserSwiping ? self.offset : CGFloat(self.index) * -256)
+        .frame(width: 256, height: 256, alignment: .leading)
+        .gesture(
+            DragGesture()
+                .onChanged({ value in
+                    self.isUserSwiping = true
+                    self.offset = value.translation.width + -256 * CGFloat(self.index)
+                })
+                .onEnded({ value in
+                    if value.predictedEndTranslation.width < 256 / 2, self.index < self.photos.count - 1 {
+                        self.index += 1
+                    }
+                    if value.predictedEndTranslation.width > 256 / 2, self.index > 0 {
+                        self.index -= 1
+                    }
+                    withAnimation(.spring()) {
+                        self.isUserSwiping = false
+                    }
+                })
+
+        )
+    }
+
     private var background: some View {
         ZStack {
-            if photo == nil {
+            if photos.isEmpty {
                 ProfilePlaceholderView(
                     userId: userId,
                     firstName: firstName,
@@ -50,11 +90,7 @@ struct AccountsPrefView: View {
                         ProgressView()
                     }
                 } else {
-                    photo!
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 256, height: 256)
+                    photoSwitcher
                 }
             }
         }
@@ -65,7 +101,7 @@ struct AccountsPrefView: View {
             photoLoading = !file.local.isDownloadingCompleted
 
             if file.local.isDownloadingCompleted {
-                photo = Image(nsImage: NSImage(contentsOf: URL(string: "file://\(file.local.path)")!)!)
+                photos[0] = file
             }
         }
     }
@@ -219,22 +255,25 @@ struct AccountsPrefView: View {
         photoFileId = Int64(profilePhoto.big.id)
         miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
 
-        // swiftlint:disable force_try
-        try! await tdApi.downloadFile(fileId: profilePhoto.big.id, limit: 0, offset: 0, priority: 32, synchronous: false)
-
-
-        guard let profilePhotoPath = URL(string: profilePhoto.big.local.path) else {
+        guard let photos = (try? await tdApi.getUserProfilePhotos(limit: 100, offset: 0, userId: user!.id)) else {
             loading = false
             return
-
-        }
-        guard let nsImage = NSImage(contentsOf: URL(string: "file://\(profilePhotoPath)")!) else {
-            loading = false
-            return
-
         }
 
-        photo = Image(nsImage: nsImage)
+        for photo in photos.photos {
+            guard let file = try? await tdApi.downloadFile(
+                fileId: photo.sizes[0].photo.id,
+                limit: 0,
+                offset: 0,
+                priority: 32,
+                synchronous: true
+            ) else {
+                NSLog("Failed to download photo")
+                loading = false
+                return
+            }
+            self.photos.append(file)
+        }
 
         loading = false
     }
