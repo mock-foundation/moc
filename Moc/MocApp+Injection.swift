@@ -95,7 +95,10 @@ extension Resolver {
                             case .authorizationStateReady:
                                 SystemUtils.post(notification: .authorizationStateReady)
                             case .authorizationStateWaitOtherDeviceConfirmation(let info):
-                                SystemUtils.post(notification: .authorizationStateWaitOtherDeviceConfirmation, withObject: info)
+                                SystemUtils.post(
+                                    notification: .authorizationStateWaitOtherDeviceConfirmation,
+                                    withObject: info
+                                )
                             case .authorizationStateLoggingOut:
                                 SystemUtils.post(notification: .authorizationStateLoggingOut)
                             case .authorizationStateClosing:
