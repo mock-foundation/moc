@@ -10,6 +10,7 @@ import TDLibKit
 import Resolver
 import SwiftUIUtils
 import CoreImage.CIFilterBuiltins
+import Logging
 
 private enum OpenedScreen {
     case phoneNumber
@@ -147,6 +148,7 @@ private extension Int {
 }
 
 struct LoginView: View {
+    private let logger = Logging.Logger(label: "LoginView")
     func stepView(number: Int, text: String) -> some View {
         HStack {
             ZStack {
@@ -399,7 +401,7 @@ struct LoginView: View {
 
             for country in countries! where country.countryCode == countryCode {
                 self.selectedNumberCode = Int(country.callingCodes[0])!
-                NSLog("Country code: \(self.selectedNumberCode)")
+                logger.info("Country code: \(self.selectedNumberCode)")
             }
         }
         .alert(

@@ -8,10 +8,13 @@
 import SwiftUI
 import TDLibKit
 import Resolver
+import Logging
 
 extension Chat: Identifiable { }
 
 struct ContentView: View {
+    private let logger = Logging.Logger(label: "ContentView")
+
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
     @State private var showingLoginScreen = false
@@ -38,7 +41,7 @@ struct ContentView: View {
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) { NSLog("Pressed Delete button") } label: {
+                                    Button(role: .destructive) { logger.info("Pressed Delete button") } label: {
                                         Label("Delete chat", systemImage: "trash")
                                     }
                                 }
@@ -92,7 +95,7 @@ struct ContentView: View {
 //            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .updateNewChat)) { data in
-            NSLog("Received chat position update")
+            logger.info("Received chat position update")
             guard data.object != nil else {
                 return
             }

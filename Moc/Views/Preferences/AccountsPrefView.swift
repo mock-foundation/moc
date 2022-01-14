@@ -13,8 +13,10 @@ import Resolver
 import ImageUtils
 import SystemUtils
 import Combine
+import Logging
 
 struct AccountsPrefView: View {
+    private var logger = Logging.Logger(label: "AccountsPrefView")
     @State private var photos: [File] = []
     @State private var photoLoading = false
     @State private var photoFileId: Int64 = 0
@@ -352,7 +354,7 @@ struct AccountsPrefView: View {
                 priority: 32,
                 synchronous: true
             ) else {
-                NSLog("Failed to download photo")
+                logger.error("Failed to download photo")
                 loading = false
                 return
             }

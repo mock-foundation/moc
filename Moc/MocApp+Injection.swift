@@ -9,12 +9,15 @@ import SwiftUI
 import TDLibKit
 import Resolver
 import SystemUtils
+import Logging
 
-final class TdLogger: Logger {
+final class TdLogger: TDLibKit.Logger {
+    private let logger = Logging.Logger(label: "TDLib")
+
     func log(_ message: String, type: LoggerMessageType?) {
         queue.async {
             guard type != nil else {
-                NSLog("TDLibKit: \(message)")
+                self.logger.info("TDLibKit: \(message)")
                 return
             }
 
@@ -30,7 +33,7 @@ final class TdLogger: Logger {
                     typeStr = "\(data):"
             }
 
-            NSLog("TDLibKit: \(typeStr) \(message)")
+            self.logger.info("TDLibKit: \(typeStr) \(message)")
         }
     }
 
@@ -42,6 +45,7 @@ final class TdLogger: Logger {
 }
 
 extension Resolver {
+    private static let logger = Logging.Logger(label: "TDLibUpdates")
     public static func registerUI() {
         register { MainViewModel() }
     }
@@ -118,10 +122,10 @@ extension Resolver {
                     case .updateFile(let info):
                         SystemUtils.post(notification: .updateFile, withObject: info)
                     default:
-                        NSLog("Unhandled TDLib update \(update)")
+                        logger.warning("Unhandled TDLib update \(update)")
                 }
             } catch {
-                NSLog("Error in TDLib update handler \(error.localizedDescription)")
+                logger.error("Error in TDLib update handler \(error.localizedDescription)")
             }
         }
         register { tdApi }
