@@ -11,7 +11,7 @@ _Work in progress..._
 
 ## Step 1 - Download right version of Xcode
 
-The development is going with Xcode 13.2. You csn download it from
+The development is going with Xcode 13.2. You can download it from
 [Apple Developer](https://developer.apple.com/download/release/).
 
 ## Step 2 - Install dependencies
@@ -38,4 +38,4 @@ at least because of a 300~ MB TDLib build)!
 
 Then click on app target in the toolbar > Edit schemes > Arguments, and fill up needed environment variables.
 
-Done! You have everything set up. You can now build Moc 😁
+**Done! You have everything set up. You can now build Moc 😁**
