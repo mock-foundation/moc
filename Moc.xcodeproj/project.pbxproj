@@ -46,8 +46,9 @@
 		43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9645277E7579000CE509 /* libc++.1.tbd */; };
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
 		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
-		43E8FD61279186B00016BE31 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD60279186B00016BE31 /* Secret.swift */; };
 		43E8FD64279190F70016BE31 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD63279190F70016BE31 /* Secret.swift */; };
+		43E8FD6727919DD30016BE31 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 43E8FD6627919DD30016BE31 /* Logging */; };
+		43E8FD692791B3610016BE31 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E8FD682791B3610016BE31 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +99,6 @@
 		43DD9571277E50C3000CE509 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43DD9575277E50C3000CE509 /* MocTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocTests.swift; sourceTree = "<group>"; };
 		43DD9603277E717B000CE509 /* MocApp+Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MocApp+Injection.swift"; sourceTree = "<group>"; };
-		43DD9606277E717B000CE509 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43DD960A277E717B000CE509 /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		43DD961B277E717C000CE509 /* MessageBubbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
 		43DD961C277E717C000CE509 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -110,8 +110,8 @@
 		43DD9645277E7579000CE509 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43DD9647277E7586000CE509 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		43E8FD50279040DF0016BE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		43E8FD60279186B00016BE31 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		43E8FD63279190F70016BE31 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		43E8FD682791B3610016BE31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +125,7 @@
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
+				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
@@ -206,12 +207,11 @@
 				4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */,
 				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
 				43E8FD63279190F70016BE31 /* Secret.swift */,
+				43E8FD682791B3610016BE31 /* Info.plist */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
 				43DD9567277E50C3000CE509 /* Assets.xcassets */,
-				43DD9606277E717B000CE509 /* Info.plist */,
 				43DD956C277E50C3000CE509 /* Moc.entitlements */,
 				43DD9569277E50C3000CE509 /* Preview Content */,
-				43E8FD60279186B00016BE31 /* Secret.swift */,
 			);
 			path = Moc;
 			sourceTree = "<group>";
@@ -305,6 +305,7 @@
 				4389A425278EDA330047D945 /* Preferences */,
 				43C7B4C0278F121F00236503 /* ImageUtils */,
 				43C7B4C3278F3DEF00236503 /* SystemUtils */,
+				43E8FD6627919DD30016BE31 /* Logging */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -363,6 +364,7 @@
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				4389A424278EDA330047D945 /* XCRemoteSwiftPackageReference "Preferences" */,
+				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -381,6 +383,7 @@
 			files = (
 				43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */,
 				43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */,
+				43E8FD692791B3610016BE31 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,7 +471,6 @@
 				4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */,
 				43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */,
 				4357F931278E3AE900154012 /* AppearancePrefView.swift in Sources */,
-				43E8FD61279186B00016BE31 /* Secret.swift in Sources */,
 				4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */,
 				4357F929278E3A3900154012 /* PrivacyView.swift in Sources */,
 				43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */,
@@ -798,6 +800,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -843,6 +853,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		43E8FD6627919DD30016BE31 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
