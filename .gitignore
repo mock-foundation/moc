@@ -6,3 +6,4 @@ xcshareddata/
 DerivedData/
 contents.xcworkspacedata
 *.resolved
+Secret.swift
