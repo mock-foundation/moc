@@ -3,3 +3,5 @@ disabled_rules:
 force_cast: warning
 force_try: warning
 reporter: "xcode"
+excluded:
+    - Moc/Secret.swift
