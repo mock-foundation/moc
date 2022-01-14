@@ -26,7 +26,7 @@
 		43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43832703278865CB004B0E18 /* ChatSplitView.swift */; };
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
-		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; };
+		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; settings = {ATTRIBUTES = (Required, ); }; };
 		4389A426278EDA330047D945 /* Preferences in Frameworks */ = {isa = PBXBuildFile; productRef = 4389A425278EDA330047D945 /* Preferences */; };
 		43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C0278F121F00236503 /* ImageUtils */; };
 		43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C3278F3DEF00236503 /* SystemUtils */; };
@@ -34,7 +34,6 @@
 		43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD956A277E50C3000CE509 /* Preview Assets.xcassets */; };
 		43DD9576277E50C3000CE509 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9575277E50C3000CE509 /* MocTests.swift */; };
 		43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD9603277E717B000CE509 /* MocApp+Injection.swift */; };
-		43DD9629277E717C000CE509 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9606277E717B000CE509 /* Info.plist */; };
 		43DD962C277E717C000CE509 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD960A277E717B000CE509 /* Folder.swift */; };
 		43DD9635277E717C000CE509 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD961B277E717C000CE509 /* MessageBubbleView.swift */; };
 		43DD9636277E717C000CE509 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD961C277E717C000CE509 /* LoginView.swift */; };
@@ -46,6 +45,9 @@
 		43DD9643277E7558000CE509 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43DD9642277E7558000CE509 /* Resolver */; };
 		43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9645277E7579000CE509 /* libc++.1.tbd */; };
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
+		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
+		43E8FD61279186B00016BE31 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD60279186B00016BE31 /* Secret.swift */; };
+		43E8FD64279190F70016BE31 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD63279190F70016BE31 /* Secret.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +109,9 @@
 		43DD9621277E717C000CE509 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		43DD9645277E7579000CE509 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43DD9647277E7586000CE509 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
+		43E8FD50279040DF0016BE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		43E8FD60279186B00016BE31 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		43E8FD63279190F70016BE31 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,11 +204,14 @@
 				43654D3B277FF84C0047F36F /* ViewModels */,
 				43DD9616277E717C000CE509 /* Views */,
 				4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */,
+				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
+				43E8FD63279190F70016BE31 /* Secret.swift */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
 				43DD9567277E50C3000CE509 /* Assets.xcassets */,
 				43DD9606277E717B000CE509 /* Info.plist */,
 				43DD956C277E50C3000CE509 /* Moc.entitlements */,
 				43DD9569277E50C3000CE509 /* Preview Content */,
+				43E8FD60279186B00016BE31 /* Secret.swift */,
 			);
 			path = Moc;
 			sourceTree = "<group>";
@@ -274,6 +282,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43DD9585277E50C3000CE509 /* Build configuration list for PBXNativeTarget "Moc" */;
 			buildPhases = (
+				43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */,
+				43E8FD5F279183C80016BE31 /* GYB Code generation */,
 				43DD955C277E50C0000CE509 /* Sources */,
 				43DD955D277E50C0000CE509 /* Frameworks */,
 				43DD955E277E50C0000CE509 /* Resources */,
@@ -369,7 +379,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43DD9629277E717C000CE509 /* Info.plist in Resources */,
 				43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */,
 				43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */,
 			);
@@ -385,6 +394,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Check dependency availability and download them";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# SwiftLInt\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		43E8FD5F279183C80016BE31 /* GYB Code generation */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GYB Code generation";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Environment\nexport API_HASH=insert_your\nexport API_ID=0\n\n# Generation\ncd Moc\nfind . -name '*.gyb' |                                           \\\nwhile read file; do                                              \\\n    gyb --line-directive '' -o \"${file%.gyb}\" \"$file\";           \\\ndone\n";
+			showEnvVarsInLog = 0;
+		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -401,7 +449,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --config .swiftlint.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "swiftlint --config .swiftlint.yml\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -419,10 +468,12 @@
 				4321D7FB277FE78A00CA18B5 /* NotificationKeys.swift in Sources */,
 				43DD9626277E717C000CE509 /* MocApp+Injection.swift in Sources */,
 				4357F931278E3AE900154012 /* AppearancePrefView.swift in Sources */,
+				43E8FD61279186B00016BE31 /* Secret.swift in Sources */,
 				4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */,
 				4357F929278E3A3900154012 /* PrivacyView.swift in Sources */,
 				43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */,
 				4357F927278E3A1200154012 /* NotificationsAndSoundsPrefView.swift in Sources */,
+				43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */,
 				43DD963A277E717C000CE509 /* ChatView.swift in Sources */,
 				4386E46727833B040084F809 /* LottieView.swift in Sources */,
 				4357F933278E3B1700154012 /* LanguagePrefView.swift in Sources */,
@@ -433,6 +484,7 @@
 				43DD9636277E717C000CE509 /* LoginView.swift in Sources */,
 				438326FB27877346004B0E18 /* ViewRouter.swift in Sources */,
 				43DD9635277E717C000CE509 /* MessageBubbleView.swift in Sources */,
+				43E8FD64279190F70016BE31 /* Secret.swift in Sources */,
 				43DD9639277E717C000CE509 /* FolderItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
