@@ -64,8 +64,8 @@ extension Resolver {
                                 SystemUtils.post(notification: .authorizationStateWaitTdlibParameters)
                                 Task {
                                     try? await tdApi.setTdlibParameters(parameters: TdlibParameters(
-                                        apiHash: MocApp.apiHash,
-                                        apiId: Int(MocApp.apiKey)!,
+                                        apiHash: Secret.apiHash,
+                                        apiId: Int(Secret.apiKey)!,
                                         applicationVersion: (
                                             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                                         ) ?? "Unknown",

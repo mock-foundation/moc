@@ -46,7 +46,6 @@
 		43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9645277E7579000CE509 /* libc++.1.tbd */; };
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
 		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
-		43E8FD64279190F70016BE31 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD63279190F70016BE31 /* Secret.swift */; };
 		43E8FD6727919DD30016BE31 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 43E8FD6627919DD30016BE31 /* Logging */; };
 		43E8FD692791B3610016BE31 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E8FD682791B3610016BE31 /* Info.plist */; };
 /* End PBXBuildFile section */
@@ -110,7 +109,6 @@
 		43DD9645277E7579000CE509 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43DD9647277E7586000CE509 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		43E8FD50279040DF0016BE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		43E8FD63279190F70016BE31 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		43E8FD682791B3610016BE31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,9 +204,8 @@
 				43DD9616277E717C000CE509 /* Views */,
 				4321D7FA277FE78A00CA18B5 /* NotificationKeys.swift */,
 				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
-				43E8FD63279190F70016BE31 /* Secret.swift */,
-				43E8FD682791B3610016BE31 /* Info.plist */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
+				43E8FD682791B3610016BE31 /* Info.plist */,
 				43DD9567277E50C3000CE509 /* Assets.xcassets */,
 				43DD956C277E50C3000CE509 /* Moc.entitlements */,
 				43DD9569277E50C3000CE509 /* Preview Content */,
@@ -283,7 +280,7 @@
 			buildConfigurationList = 43DD9585277E50C3000CE509 /* Build configuration list for PBXNativeTarget "Moc" */;
 			buildPhases = (
 				43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */,
-				43E8FD5F279183C80016BE31 /* GYB Code generation */,
+				43E8FD5F279183C80016BE31 /* Process secrets file */,
 				43DD955C277E50C0000CE509 /* Sources */,
 				43DD955D277E50C0000CE509 /* Frameworks */,
 				43DD955E277E50C0000CE509 /* Resources */,
@@ -416,7 +413,7 @@
 			shellScript = "# SwiftLInt\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		43E8FD5F279183C80016BE31 /* GYB Code generation */ = {
+		43E8FD5F279183C80016BE31 /* Process secrets file */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -426,7 +423,7 @@
 			);
 			inputPaths = (
 			);
-			name = "GYB Code generation";
+			name = "Process secrets file";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -486,7 +483,6 @@
 				43DD9636277E717C000CE509 /* LoginView.swift in Sources */,
 				438326FB27877346004B0E18 /* ViewRouter.swift in Sources */,
 				43DD9635277E717C000CE509 /* MessageBubbleView.swift in Sources */,
-				43E8FD64279190F70016BE31 /* Secret.swift in Sources */,
 				43DD9639277E717C000CE509 /* FolderItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,7 +557,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -616,7 +612,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -645,6 +641,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.Moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -673,6 +670,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.Moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
