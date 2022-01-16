@@ -55,6 +55,14 @@ extension Resolver {
     // swiftlint:disable cyclomatic_complexity function_body_length
     public static func registerTd() {
         let tdApi = TdApi(client: TdClientImpl(completionQueue: .global(), logger: TdLogger()))
+
+        Task {
+            #if DEBUG
+            tdApi.setLogVerbosityLevel(newVerbosityLevel: 5)
+            #else
+            tdApi.setLogVerbosityLevel(newVerbosityLevel: 0)
+            #endif
+        }
         tdApi.client.run {
             do {
                 let update = try tdApi.decoder.decode(Update.self, from: $0)
