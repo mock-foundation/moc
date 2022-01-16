@@ -32,7 +32,8 @@ struct AccountsPrefView: View {
 
     @State private var loading = true
     @State private var showInitErrorAlert = false
-    @State private var showLogOutToast = false
+    @State private var showLogOutSuccessfulToast = false
+    @State private var showLogOutFailedToast = false
 
     @Injected private var tdApi: TdApi
 
@@ -210,8 +211,12 @@ struct AccountsPrefView: View {
                 Spacer()
                 Button(role: .destructive, action: {
                     Task {
-                        try? await tdApi.logOut()
-                        showLogOutToast = true
+                        do {
+                            try await tdApi.logOut()
+                            showLogOutSuccessfulToast = true
+                        } catch {
+                            showLogOutFailedToast = true
+                        }
                     }
                 }) {
                     Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
@@ -395,8 +400,11 @@ struct AccountsPrefView: View {
                 rightColumnContent
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.toast(isPresenting: $showLogOutToast) {
+            }.toast(isPresenting: $showLogOutSuccessfulToast) {
                 AlertToast(displayMode: .alert, type: .complete(.gray), title: "Logged out successfully!")
+            }
+            .toast(isPresenting: $showLogOutFailedToast) {
+                AlertToast(displayMode: .alert, type: .error(.gray), title: "Log out failed :(")
             }
         }
     }
