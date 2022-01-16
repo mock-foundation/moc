@@ -11,12 +11,14 @@ let package = Package(
     products: [
         .library(
             name: "SystemUtils",
-            targets: ["SystemUtils"]),
+            targets: ["SystemUtils"])
     ],
     dependencies: [],
     targets: [
         .target(
             name: "SystemUtils",
-            dependencies: [])
+            dependencies: [],
+            resources: []
+        )
     ]
 )

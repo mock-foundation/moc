@@ -10,6 +10,7 @@ import TDLibKit
 import Resolver
 import SystemUtils
 import Logging
+import KeychainSwift
 
 final class TdLogger: TDLibKit.Logger {
     private let logger = Logging.Logger(label: "TDLib")
@@ -46,13 +47,14 @@ final class TdLogger: TDLibKit.Logger {
 
 extension Resolver {
     private static let logger = Logging.Logger(label: "TDLibUpdates")
+
     public static func registerUI() {
         register { MainViewModel() }
     }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
     public static func registerTd() {
-        let tdApi = TdApi(client: TdClientImpl(completionQueue: .main, logger: TdLogger()))
+        let tdApi = TdApi(client: TdClientImpl(completionQueue: .global(), logger: TdLogger()))
         tdApi.client.run {
             do {
                 let update = try tdApi.decoder.decode(Update.self, from: $0)
@@ -69,10 +71,10 @@ extension Resolver {
                                         applicationVersion: (
                                             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                                         ) ?? "Unknown",
-                                        databaseDirectory: "",
+                                        databaseDirectory: "td",
                                         deviceModel: SystemUtils.macModel,
                                         enableStorageOptimizer: true,
-                                        filesDirectory: "",
+                                        filesDirectory: "td",
                                         ignoreFileNames: false,
                                         systemLanguageCode: "en-US",
                                         systemVersion: SystemUtils.osVersionString,
@@ -86,7 +88,9 @@ extension Resolver {
                             case .authorizationStateWaitEncryptionKey(let info):
                                 SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, withObject: info)
                                 Task {
-                                    try? await tdApi.checkDatabaseEncryptionKey(encryptionKey: nil)
+                                    try? await tdApi.checkDatabaseEncryptionKey(
+                                        encryptionKey: MocApp.tdDatabaseEncryptionKey
+                                    )
                                 }
                             case .authorizationStateWaitPhoneNumber:
                                 SystemUtils.post(notification: .authorizationStateWaitPhoneNumber)
@@ -132,9 +136,22 @@ extension Resolver {
     }
 }
 
+// swiftlint:disable weak_delegate
 @main
 struct MocApp: App {
     @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
+
+    static var tdDatabaseEncryptionKey: Data {
+        let keychain = KeychainSwift()
+        let encryptionKey = keychain.getData("tdDatabaseEncryptionKey")
+        if encryptionKey == nil {
+            let data = SystemUtils.sha256(data: Data(SystemUtils.randomString(length: 10).utf8))
+            keychain.set(data, forKey: "tdDatabaseEncryptionKey", withAccess: .accessibleAfterFirstUnlock)
+            return data
+        } else {
+            return encryptionKey!
+        }
+    }
 
     init() {
         Resolver.registerUI()
