@@ -34,7 +34,9 @@ final class TdLogger: TDLibKit.Logger {
                     typeStr = "\(data):"
             }
 
+            #if DEBUG
             self.logger.info("TDLibKit: \(typeStr) \(message)")
+            #endif
         }
     }
 
@@ -134,10 +136,14 @@ extension Resolver {
                     case .updateFile(let info):
                         SystemUtils.post(notification: .updateFile, withObject: info)
                     default:
+                        #if DEBUG
                         logger.warning("Unhandled TDLib update \(update)")
+                        #endif
                 }
             } catch {
+                #if DEBUG
                 logger.error("Error in TDLib update handler \(error.localizedDescription)")
+                #endif
             }
         }
         register { tdApi }
