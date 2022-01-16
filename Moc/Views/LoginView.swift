@@ -21,101 +21,6 @@ private enum OpenedScreen {
     case welcome
 }
 
-private struct PasscodeField: View {
-
-    var maxDigits: Int = 4
-    var label = "Enter One Time Password"
-
-    @State private var pin: String = ""
-    @State private var showPin = true
-    @State private var isDisabled = false
-
-    var handler: (String, @escaping (Bool) -> Void) -> Void
-
-    public var body: some View {
-        VStack(spacing: 12) {
-            Text(label).font(.title)
-            ZStack {
-                pinDots
-                backgroundField
-            }
-            showPinStack
-        }
-
-    }
-
-    private var pinDots: some View {
-        HStack {
-            Spacer()
-            ForEach(0..<maxDigits) { index in
-                Image(systemName: self.getImageName(at: index))
-                Spacer()
-            }
-        }
-    }
-
-    private var backgroundField: some View {
-        let boundPin = Binding<String>(get: { self.pin }, set: { newValue in
-            self.pin = newValue
-            self.submitPin()
-        })
-
-        return TextField("", text: boundPin, onCommit: submitPin)
-            .textFieldStyle(.plain)
-            .accentColor(.clear)
-            .foregroundColor(.clear)
-            .disabled(isDisabled)
-    }
-
-    private var showPinStack: some View {
-        HStack {
-            Spacer()
-        }
-        .frame(height: 16)
-        .padding([.trailing])
-    }
-
-    private func submitPin() {
-        guard !pin.isEmpty else {
-            showPin = false
-            return
-        }
-
-        if pin.count == maxDigits {
-            isDisabled = true
-
-            handler(pin) { isSuccess in
-                if isSuccess {
-                    print("pin matched, go to next page, no action to perfrom here")
-                } else {
-                    pin = ""
-                    isDisabled = false
-                    print("this has to called after showing toast why is the failure")
-                }
-            }
-        }
-
-        // this code is never reached under normal circumstances. If the user pastes a text with count higher than the
-        // max digits, we remove the additional characters and make a recursive call.
-        if pin.count > maxDigits {
-            pin = String(pin.prefix(maxDigits))
-            submitPin()
-        }
-    }
-
-    private func getImageName(at index: Int) -> String {
-        if index >= self.pin.count {
-            return "circle"
-        }
-
-        if self.showPin {
-            return self.pin.digits[index].numberString + ".circle"
-        }
-
-        return "circle.fill"
-    }
-}
-
 private extension String {
 
     var digits: [Int] {
@@ -181,21 +86,7 @@ struct LoginView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     @Injected private var tdApi: TdApi
-
-    //    private func codeNumberCell(index: Int) -> some View {
-    //        @State var num: String = ""
-    //        return TextField("", text: $num)
-    //            .textFieldStyle(.plain)
-    //            .frame(width: 10, height: 16)
-    //            .border(Color.gray, width: 2)
-    //            .onReceive(num.publisher) { _ in
-    //                if !num.isNumber() {
-    //                    code[index] = nil
-    //                }
-    //                code[index] = Int(num)!
-    //            }
-    //    }
-
+    
     func generateQRCode(from string: String) -> NSImage {
         let context = CIContext()
         let filter = CIFilter.qrCodeGenerator()
@@ -304,14 +195,6 @@ struct LoginView: View {
                     VStack {
                         Text("Enter the code")
                             .font(.title)
-                        //                        PasscodeField(maxDigits: 5, label: "Enter the code") { code, done in
-                        //                            Task {
-                        //                                do {
-                        //                                    try await tdApi.checkAuthenticationCode(code: code)
-                        //                                    done(true)
-                        //                                }
-                        //                            }
-                        //                        }
                         TextField("Code", text: $code)
                             .onSubmit {
                                 Task {
@@ -325,7 +208,6 @@ struct LoginView: View {
                                 }
                             }
                             .frame(width: 156)
-                            .textContentType(.password)
                             .textFieldStyle(.roundedBorder)
                         if showLoadingSpinner {
                             ProgressView()
