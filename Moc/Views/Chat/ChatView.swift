@@ -85,7 +85,13 @@ struct ChatView: View {
                 .textFieldStyle(.plain)
                 .padding(6)
                 .padding(.horizontal, 8)
-                .background(RoundedRectangle(cornerRadius: 16).stroke(Color("InputFieldBorderColor"), lineWidth: 1))
+                .background(
+                    RoundedRectangle(
+                        cornerRadius: 16)
+                            .strokeBorder(
+                                Color("InputFieldBorderColor"),
+                                lineWidth: 1)
+                )
             Image(systemName: "face.smiling")
                 .font(.system(size: 16))
             Image(systemName: "mic")
