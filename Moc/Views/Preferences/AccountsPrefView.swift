@@ -41,36 +41,6 @@ struct AccountsPrefView: View {
     @State private var offset: CGFloat = 0
     @State private var isUserSwiping: Bool = false
 
-//    @State var subs = Set<AnyCancellable>() // Cancel onDisappear
-//
-//    private func trackScroll() {
-//        NSApp.publisher(for: \.currentEvent)
-//            .filter { event in
-//                event?.type == .beginGesture
-//            }
-//        NSApp.publisher(for: \.currentEvent)
-//            .filter { event in event?.type == .scrollWheel }
-//            .throttle(for: .milliseconds(200),
-//                         scheduler: DispatchQueue.main,
-//                         latest: true)
-//            .sink {
-//                if let event = $0 {
-//                    if event.deltaX > 0 { print("right") }
-//                    if event.deltaX < 0 { print("left") }
-//                    if event.deltaY > 0 { print("down") }
-//                    if event.deltaY < 0 { print("up") }
-//                    if (0..<256).contains(event.deltaY) {
-//                        self.index += 1
-//                    }
-//                    if (-256..<0).contains(event.deltaY) {
-//                        self.index -= 1
-//                    }
-//                    self.offset += event.deltaY
-//                }
-//            }
-//            .store(in: &subs)
-//    }
-
     private var photoSwitcher: some View {
         ZStack {
             VStack {
@@ -100,27 +70,6 @@ struct AccountsPrefView: View {
             .animation(.spring(), value: self.index)
             .offset(x: self.isUserSwiping ? self.offset : CGFloat(self.index) * -256)
             .frame(width: 256, height: 256, alignment: .leading)
-//        .onAppear {
-//            trackScroll()
-//        }
-//        .gesture(
-//            DragGesture()
-//                .onChanged({ value in
-//                    self.isUserSwiping = true
-//                    self.offset = value.translation.width + -256 * CGFloat(self.index)
-//                })
-//                .onEnded({ value in
-//                    if value.predictedEndTranslation.width < 256 / 2, self.index < self.photos.count - 1 {
-//                        self.index += 1
-//                    }
-//                    if value.predictedEndTranslation.width > 256 / 2, self.index > 0 {
-//                        self.index -= 1
-//                    }
-//                    withAnimation(.spring()) {
-//                        self.isUserSwiping = false
-//                    }
-//                })
-//        )
         }.frame(width: 256, height: 256)
     }
 
