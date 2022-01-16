@@ -86,6 +86,13 @@ struct ContentView: View {
             LoginView()
                 .frame(width: 400, height: 500)
         }
+        .onReceive(SystemUtils.ncPublisher(for: .updateChatPosition)) { notification in
+            logger.info("Update chat position")
+            let update = (notification.object as? UpdateChatPosition)!
+            let position = update.position
+            let chatId = update.chatId
+
+        }
         .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
             let message = (notification.object as? UpdateNewMessage)!.message
 

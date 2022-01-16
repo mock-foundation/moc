@@ -86,7 +86,7 @@ struct LoginView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     @Injected private var tdApi: TdApi
-    
+
     func generateQRCode(from string: String) -> NSImage {
         let context = CIContext()
         let filter = CIFilter.qrCodeGenerator()
