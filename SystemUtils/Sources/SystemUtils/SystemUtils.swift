@@ -35,6 +35,10 @@ public struct SystemUtils {
         }
     }
 
+    public static func ncPublisher(for notification: NSNotification.Name) -> NotificationCenter.Publisher {
+        return NotificationCenter.default.publisher(for: notification)
+    }
+
     // Thanks to https://stackoverflow.com/a/26845710
     public static func randomString(length: Int) -> String {
         return String((0..<length).map { _ in

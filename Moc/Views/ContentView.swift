@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Resolver
 import Logging
+import SystemUtils
 
 extension Chat: Identifiable { }
 
@@ -85,8 +86,8 @@ struct ContentView: View {
             LoginView()
                 .frame(width: 400, height: 500)
         }
-        .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
-            let message = (data.object as? UpdateNewMessage)!.message
+        .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
+            let message = (notification.object as? UpdateNewMessage)!.message
 
             guard viewRouter.openedChat != nil else { return }
 
@@ -94,36 +95,51 @@ struct ContentView: View {
 //                chatViewModel.messages?.append(message)
 //            }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .updateNewChat)) { data in
-            logger.info("Received chat position update")
+        .onReceive(SystemUtils.ncPublisher(for: .updateNewChat)) { data in
+            logger.info("Received new chat update")
             guard data.object != nil else {
                 return
             }
             let chat = (data.object as? UpdateNewChat)!.chat
+
             let hasChat = mainViewModel.chatList.contains(where: {
                 $0.id == chat.id
             })
 
-            if !hasChat {
-                mainViewModel.chatList.append(chat)
+            logger.info("\(chat)")
+
+            var isInMainChatList: Bool {
+                for position in chat.positions {
+                    if position.list == .chatListMain {
+                        logger.info("In main chat list")
+                        if !hasChat {
+                            mainViewModel.chatList.append(chat)
+                        }
+                        return true
+                    } else {
+                        logger.warning("Not in main chat list")
+                        return false
+                    }
+                }
+                logger.warning("Chat positions empty")
+                return false
             }
 
             mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
-                if !$0.positions.isEmpty && !$1.positions.isEmpty {
-                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-                } else {
-                    return true
-                }
-                //
-                //                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-                //                    return true
-                //                } else {
-                //                    return false
-                //                }
+//                if !$0.positions.isEmpty && !$1.positions.isEmpty {
+//                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+//                } else {
+//                    return true
+//                }
+                                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
+                                    return true
+                                } else {
+                                    return false
+                                }
             })
 
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { _ in
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)) { _ in
             showingLoginScreen = true
         }
     }
