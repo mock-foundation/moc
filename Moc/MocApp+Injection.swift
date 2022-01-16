@@ -11,6 +11,7 @@ import Resolver
 import SystemUtils
 import Logging
 import KeychainSwift
+import CryptoKit
 
 final class TdLogger: TDLibKit.Logger {
     private let logger = Logging.Logger(label: "TDLib")
@@ -159,9 +160,11 @@ struct MocApp: App {
         let keychain = KeychainSwift()
         let encryptionKey = keychain.getData("tdDatabaseEncryptionKey")
         if encryptionKey == nil {
-            let data = SystemUtils.sha256(data: Data(SystemUtils.randomString(length: 10).utf8))
-            keychain.set(data, forKey: "tdDatabaseEncryptionKey", withAccess: .accessibleAfterFirstUnlock)
-            return data
+            let key = SymmetricKey(size: .bits256).withUnsafeBytes {
+                return Data(Array($0))
+            }
+            keychain.set(key, forKey: "tdDatabaseEncryptionKey", withAccess: .accessibleAfterFirstUnlock)
+            return key
         } else {
             return encryptionKey!
         }
