@@ -38,7 +38,7 @@ struct ContentView: View {
                     VStack {
                         SearchField()
                             .padding([.leading, .bottom, .trailing], 10.0)
-                        List(mainViewModel.chatList) { chat in
+                        List(mainViewModel.mainChatList) { chat in
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .swipeActions(edge: .trailing) {
@@ -92,6 +92,24 @@ struct ContentView: View {
             let position = update.position
             let chatId = update.chatId
 
+            if mainViewModel.unorderedChatList.contains(where: { $0.id == chatId }) {
+                switch position.list {
+                    case .chatListMain:
+                        let chats = mainViewModel.unorderedChatList.filter { chat in
+                            return chat.id == chatId
+                        }
+                        for chat in chats {
+                            mainViewModel.mainChatList.append(chat)
+                        }
+                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
+                            return $0.id != chatId
+                        }
+                        sortMainChatList()
+                    case .chatListArchive:
+                        break
+                    default: break
+                }
+            }
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
             let message = (notification.object as? UpdateNewMessage)!.message
@@ -109,46 +127,37 @@ struct ContentView: View {
             }
             let chat = (data.object as? UpdateNewChat)!.chat
 
-            let hasChat = mainViewModel.chatList.contains(where: {
+            let hasChat = mainViewModel.unorderedChatList.contains(where: {
                 $0.id == chat.id
             })
 
-            logger.info("\(chat)")
-
-            var isInMainChatList: Bool {
-                for position in chat.positions {
-                    if position.list == .chatListMain {
-                        logger.info("In main chat list")
-                        if !hasChat {
-                            mainViewModel.chatList.append(chat)
-                        }
-                        return true
-                    } else {
-                        logger.warning("Not in main chat list")
-                        return false
-                    }
-                }
-                logger.warning("Chat positions empty")
-                return false
+            if !hasChat {
+                mainViewModel.unorderedChatList.append(chat)
             }
 
-            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
-//                if !$0.positions.isEmpty && !$1.positions.isEmpty {
-//                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-//                } else {
-//                    return true
-//                }
-                                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-                                    return true
-                                } else {
-                                    return false
-                                }
-            })
+            logger.info("\(chat)")
+
+            sortMainChatList()
 
         }
         .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)) { _ in
             showingLoginScreen = true
         }
+    }
+
+    private func sortMainChatList() {
+        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted(by: {
+            //                if !$0.positions.isEmpty && !$1.positions.isEmpty {
+            //                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+            //                } else {
+            //                    return true
+            //                }
+            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
+                return true
+            } else {
+                return false
+            }
+        })
     }
 }
 
