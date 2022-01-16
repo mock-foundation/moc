@@ -38,15 +38,10 @@ struct ContentView: View {
                     .frame(minWidth: 70)
                     VStack {
                         SearchField()
-                            .padding([.leading, .bottom, .trailing], 10.0)
+                            .padding([.leading, .bottom, .trailing], 15.0)
                         List(mainViewModel.mainChatList) { chat in
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
-                                .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) { logger.info("Pressed Delete button") } label: {
-                                        Label("Delete chat", systemImage: "trash")
-                                    }
-                                }
                                 .onTapGesture {
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
@@ -59,7 +54,16 @@ struct ContentView: View {
                                     : nil
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+
+//                                .swipeActions {
+//                                    Button(role: .destructive) {
+//                                        logger.info("Pressed Delete button")
+//                                    } label: {
+//                                        Label("Delete chat", systemImage: "trash")
+//                                    }
+//                                }
                         }
+                        .frame(minWidth: 320)
                     }.toolbar {
                         ToolbarItem(placement: .status) {
                             Toggle(isOn: $isArchiveChatListOpen) {
