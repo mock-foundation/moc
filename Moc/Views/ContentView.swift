@@ -18,6 +18,7 @@ struct ContentView: View {
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
+    @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
 
     @StateObject private var mainViewModel = MainViewModel()
@@ -61,7 +62,15 @@ struct ContentView: View {
                         }
                     }.toolbar {
                         ToolbarItem(placement: .status) {
-                            Button(action: { print("add chat") }) {
+                            Toggle(isOn: $isArchiveChatListOpen) {
+                                Image(systemName: "archivebox")
+                            }
+                        }
+                        ToolbarItem(placement: .status) {
+                            Spacer()
+                        }
+                        ToolbarItem(placement: .status) {
+                            Button(action: { logger.info("Pressed add chat") }) {
                                 Image(systemName: "square.and.pencil")
                             }
                         }
@@ -107,18 +116,10 @@ struct ContentView: View {
                         sortMainChatList()
                     case .chatListArchive:
                         break
-                    default: break
+                    case .chatListFilter(_):
+                        break
                 }
             }
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
-            let message = (notification.object as? UpdateNewMessage)!.message
-
-            guard viewRouter.openedChat != nil else { return }
-
-//            if message.chatId == viewRouter.openedChat!.id {
-//                chatViewModel.messages?.append(message)
-//            }
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateNewChat)) { data in
             logger.info("Received new chat update")
