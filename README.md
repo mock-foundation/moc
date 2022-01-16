@@ -12,8 +12,6 @@ If you have any questions, ask them in [Discussions](https://github.com/ggoraa/m
 
 # Building
 
-_Work in progress..._
-
 ## Step 1 - Download right version of Xcode
 
 The development is going with Xcode 13.2. You can download it from
