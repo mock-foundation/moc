@@ -58,9 +58,9 @@ extension Resolver {
 
         Task {
             #if DEBUG
-            tdApi.setLogVerbosityLevel(newVerbosityLevel: 5)
+            try? await tdApi.setLogVerbosityLevel(newVerbosityLevel: 5)
             #else
-            tdApi.setLogVerbosityLevel(newVerbosityLevel: 0)
+            try? await tdApi.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif
         }
         tdApi.client.run {
