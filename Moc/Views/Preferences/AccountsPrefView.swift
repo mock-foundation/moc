@@ -14,6 +14,7 @@ import ImageUtils
 import SystemUtils
 import Combine
 import Logging
+import AlertToast
 
 struct AccountsPrefView: View {
     private var logger = Logging.Logger(label: "AccountsPrefView")
@@ -31,6 +32,7 @@ struct AccountsPrefView: View {
 
     @State private var loading = true
     @State private var showInitErrorAlert = false
+    @State private var showLogOutToast = false
 
     @Injected private var tdApi: TdApi
 
@@ -207,9 +209,12 @@ struct AccountsPrefView: View {
                 .buttonStyle(.borderless)
                 Spacer()
                 Button(role: .destructive, action: {
-
+                    Task {
+                        try? await tdApi.logOut()
+                        showLogOutToast = true
+                    }
                 }) {
-                    Label("Leave", systemImage: "rectangle.portrait.and.arrow.right")
+                    Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
                 }
                 .tint(.red)
                 .controlSize(.large)
@@ -390,6 +395,8 @@ struct AccountsPrefView: View {
                 rightColumnContent
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }.toast(isPresenting: $showLogOutToast) {
+                AlertToast(displayMode: .alert, type: .complete(.gray), title: "Logged out successfully!")
             }
         }
     }
