@@ -3,7 +3,7 @@ import plistlib
 file = open("Settings.plist")
 plist = plistlib.readPlist(file)
 }%
-extension String {
+public extension String {
     // swiftlint:disable cyclomatic_complexity
     init(fromTdIcon icon: String) {
         switch icon {

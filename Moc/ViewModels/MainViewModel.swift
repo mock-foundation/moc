@@ -13,7 +13,7 @@ class MainViewModel: ObservableObject {
     // MARK: - Chat lists
     @Published var mainChatList: [Chat] = []
     @Published var archiveChatList: [Chat] = []
-    @Published var folderChatLists: [String: [Chat]] = [:]
+    @Published var folderChatLists: [Int: [Chat]] = [:]
 
     /// For chats that have not received updateChatPosition update, and are waiting for distribution.
     var unorderedChatList: [Chat] = []

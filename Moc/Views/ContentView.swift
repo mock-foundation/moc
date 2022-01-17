@@ -67,7 +67,7 @@ struct ContentView: View {
                     }.toolbar {
                         ToolbarItem(placement: .status) {
                             Toggle(isOn: $isArchiveChatListOpen) {
-                                Image(systemName: "archivebox")
+                                Image(systemName: isArchiveChatListOpen ? "archivebox" : "archivebox.fill")
                             }
                         }
                         ToolbarItem(placement: .status) {

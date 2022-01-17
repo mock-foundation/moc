@@ -12,6 +12,7 @@ import SystemUtils
 import Logging
 import KeychainSwift
 import CryptoKit
+import Generated
 
 final class TdLogger: TDLibKit.Logger {
     private let logger = Logging.Logger(label: "TDLib")

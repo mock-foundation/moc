@@ -7,3 +7,4 @@ DerivedData/
 contents.xcworkspacedata
 *.resolved
 Secret.swift
+StringExtension.swift
