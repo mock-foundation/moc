@@ -21,6 +21,7 @@
 		4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F936278E3B5B00154012 /* FoldersPrefView.swift */; };
 		4357F939278E3B7200154012 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F938278E3B7200154012 /* AccountsPrefView.swift */; };
 		436207962793606F008C7FFE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 436207952793606F008C7FFE /* KeychainSwift */; };
+		436207A12794F6AD008C7FFE /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A02794F6AD008C7FFE /* Generated */; };
 		43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3C277FF85F0047F36F /* MainViewModel.swift */; };
 		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
 		438326FB27877346004B0E18 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438326FA27877346004B0E18 /* ViewRouter.swift */; };
@@ -121,6 +122,7 @@
 			files = (
 				43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */,
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
+				436207A12794F6AD008C7FFE /* Generated in Frameworks */,
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
@@ -309,6 +311,7 @@
 				43C7B4C3278F3DEF00236503 /* SystemUtils */,
 				43E8FD6627919DD30016BE31 /* Logging */,
 				436207952793606F008C7FFE /* KeychainSwift */,
+				436207A02794F6AD008C7FFE /* Generated */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -842,6 +845,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 436207942793606E008C7FFE /* XCRemoteSwiftPackageReference "keychain-swift" */;
 			productName = KeychainSwift;
+		};
+		436207A02794F6AD008C7FFE /* Generated */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Generated;
 		};
 		43654D4427809CE50047F36F /* TDLibKit */ = {
 			isa = XCSwiftPackageProductDependency;
