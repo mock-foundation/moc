@@ -24,7 +24,7 @@ public class ChatDataSource: ChatDataSourcable {
         }
     }
     @Published var draftMessage: DraftMessage? = nil
-    @Published var chatId: Int64 = 0
+    @Published var chatId: Int64? = nil
     @Published var chatType: ChatType = .chatTypePrivate(.init(userId: 0))
     @Published var chatMemberCount: Int? = nil
     @Published var protected: Bool = false
@@ -32,12 +32,16 @@ public class ChatDataSource: ChatDataSourcable {
 
     var tdApi: TdApi = .shared[0]
 
-    public init?(chatId: Int64) async {
-        self.chatId = chatId
+    public init() {
+
     }
 
     public func start() async {
-        let maybeChatInfo = try? await tdApi.getChat(chatId: chatId)
+        guard let chatId = chatId else {
+            return
+        }
+
+        let maybeChatInfo = try? await tdApi.getChat(chatId: self.chatId)
         guard let chatInfo = maybeChatInfo else {
             logger.error("Failed to get chat info from chatId \(chatId)")
             return
@@ -58,14 +62,14 @@ public class ChatDataSource: ChatDataSourcable {
 
                 if basicGroup.upgradedToSupergroupId != 0 {
                     self.chatId = basicGroup.upgradedToSupergroupId
-                    guard let supegroup = await getSupergroup(chatId: self.chatId) else {
+                    guard let supegroup = await getSupergroup(chatId: chatId) else {
                         logger.error("Failed to get upgraded supergroup from chatId \(self.chatId)")
                         return
                     }
                     self.chatMemberCount = supegroup.memberCount
                 }
             case .chatTypeSupergroup(_):
-                guard let supegroup = await getSupergroup(chatId: self.chatId) else {
+                guard let supegroup = await getSupergroup(chatId: chatId) else {
                     logger.error("Failed to get upgraded supergroup from chatId \(self.chatId)")
                     return
                 }
@@ -76,6 +80,7 @@ public class ChatDataSource: ChatDataSourcable {
         self.protected = chatInfo.hasProtectedContent
     }
 
+    /// Just a helper function
     private func getSupergroup(chatId: Int64) async -> Supergroup? {
         let maybeSupergroup = try? await tdApi.getSupergroup(supergroupId: chatId)
         guard let supergroup = maybeSupergroup else { return nil }

@@ -8,6 +8,6 @@
 import TDLibKit
 
 /// A base protocol for encapsulating TDLib.
-protocol DataSourcable {
+public protocol DataSourcable {
     var tdApi: TdApi { get }
 }

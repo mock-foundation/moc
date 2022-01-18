@@ -13,6 +13,7 @@ import Logging
 import KeychainSwift
 import CryptoKit
 import Generated
+import Backend
 
 final class TdLogger: TDLibKit.Logger {
     private let logger = Logging.Logger(label: "TDLib")
@@ -57,7 +58,7 @@ extension Resolver {
     }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
-    public static func registerTd() {
+    public static func registerBackend() {
         let tdApi = TdApi(client: TdClientImpl(completionQueue: .global(), logger: TdLogger()))
 
         Task {
@@ -158,6 +159,8 @@ extension Resolver {
             }
         }
         register { tdApi }
+            .scope(.shared)
+        register { ChatDataSource() as ChatDataSourcable }
     }
 }
 
@@ -182,7 +185,7 @@ struct MocApp: App {
 
     init() {
         Resolver.registerUI()
-        Resolver.registerTd()
+        Resolver.registerBackend()
     }
 
     var body: some Scene {

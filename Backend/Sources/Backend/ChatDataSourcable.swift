@@ -7,13 +7,14 @@
 import Combine
 import TDLibKit
 
-protocol ChatDataSourcable: ObservableObject, DataSourcable {
+public protocol ChatDataSourcable: ObservableObject, DataSourcable {
     // MARK: - Messages
     var messageHistory: [Message] { get }
     var draftMessage: DraftMessage? { get set }
 
     // MARK: - Chat info
-    var chatId: Int64 { get }
+    /// `nil` when nothing to show
+    var chatId: Int64? { get }
     var chatTitle: String { get set }
     var chatType: ChatType { get }
     /// Can be nil if it is a secret/private chat. If nil, a user status (online, offline,
