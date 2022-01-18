@@ -21,6 +21,7 @@
 		4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F936278E3B5B00154012 /* FoldersPrefView.swift */; };
 		4357F939278E3B7200154012 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F938278E3B7200154012 /* AccountsPrefView.swift */; };
 		436207962793606F008C7FFE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 436207952793606F008C7FFE /* KeychainSwift */; };
+		436207A12794F6AD008C7FFE /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A02794F6AD008C7FFE /* Generated */; };
 		43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3C277FF85F0047F36F /* MainViewModel.swift */; };
 		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
 		438326FB27877346004B0E18 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438326FA27877346004B0E18 /* ViewRouter.swift */; };
@@ -48,7 +49,6 @@
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
 		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
 		43E8FD6727919DD30016BE31 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 43E8FD6627919DD30016BE31 /* Logging */; };
-		43E8FD692791B3610016BE31 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E8FD682791B3610016BE31 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +86,8 @@
 		4357F934278E3B3C00154012 /* StickersPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickersPrefView.swift; sourceTree = "<group>"; };
 		4357F936278E3B5B00154012 /* FoldersPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefView.swift; sourceTree = "<group>"; };
 		4357F938278E3B7200154012 /* AccountsPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
+		4362079D2794E21B008C7FFE /* Generated */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Generated; sourceTree = "<group>"; };
+		4362079F2794F403008C7FFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		43654D3C277FF85F0047F36F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		43832703278865CB004B0E18 /* ChatSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			files = (
 				43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */,
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
+				436207A12794F6AD008C7FFE /* Generated in Frameworks */,
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
@@ -181,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				43DD9562277E50C0000CE509 /* Moc */,
+				4362079D2794E21B008C7FFE /* Generated */,
 				43C7B4C2278F3DE500236503 /* SystemUtils */,
 				43C7B4BD278F11D300236503 /* ImageUtils */,
 				43DD9574277E50C3000CE509 /* MocTests */,
@@ -211,6 +215,7 @@
 				43DD9567277E50C3000CE509 /* Assets.xcassets */,
 				43DD956C277E50C3000CE509 /* Moc.entitlements */,
 				43DD9569277E50C3000CE509 /* Preview Content */,
+				4362079F2794F403008C7FFE /* Config.xcconfig */,
 			);
 			path = Moc;
 			sourceTree = "<group>";
@@ -282,12 +287,12 @@
 			buildConfigurationList = 43DD9585277E50C3000CE509 /* Build configuration list for PBXNativeTarget "Moc" */;
 			buildPhases = (
 				43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */,
-				43E8FD5F279183C80016BE31 /* Process secrets file */,
+				43E8FD5F279183C80016BE31 /* GYB Code Generation */,
 				43DD955C277E50C0000CE509 /* Sources */,
+				43FB9654278B051E00FB86FF /* Run SwiftLint */,
 				43DD955D277E50C0000CE509 /* Frameworks */,
 				43DD955E277E50C0000CE509 /* Resources */,
 				4386E45F2782FFEF0084F809 /* Embed Frameworks */,
-				43FB9654278B051E00FB86FF /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -306,6 +311,7 @@
 				43C7B4C3278F3DEF00236503 /* SystemUtils */,
 				43E8FD6627919DD30016BE31 /* Logging */,
 				436207952793606F008C7FFE /* KeychainSwift */,
+				436207A02794F6AD008C7FFE /* Generated */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -384,7 +390,6 @@
 			files = (
 				43DD956B277E50C3000CE509 /* Preview Assets.xcassets in Resources */,
 				43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */,
-				43E8FD692791B3610016BE31 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,10 +419,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# SwiftLInt\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n";
+			shellScript = "# SwiftLInt\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		43E8FD5F279183C80016BE31 /* Process secrets file */ = {
+		43E8FD5F279183C80016BE31 /* GYB Code Generation */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -427,14 +432,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Process secrets file";
+			name = "GYB Code Generation";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment\nexport API_HASH=insert_your\nexport API_ID=0\n\n# Generation\ncd Moc\nfind . -name '*.gyb' |                                           \\\nwhile read file; do                                              \\\n    gyb --line-directive '' -o \"${file%.gyb}\" \"$file\";           \\\ndone\n";
+			shellScript = "cd Generated\nfind . -name '*.gyb' |                                                       \\\n    while read file; do                                                      \\\n        gyb --line-directive '' -o \"Sources/Generated/${file%.gyb}\" \"$file\"; \\\n    done\n\n";
 			showEnvVarsInLog = 0;
 		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
@@ -512,6 +517,7 @@
 /* Begin XCBuildConfiguration section */
 		43DD9583277E50C3000CE509 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4362079F2794F403008C7FFE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -573,6 +579,7 @@
 		};
 		43DD9584277E50C3000CE509 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4362079F2794F403008C7FFE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -627,13 +634,14 @@
 		};
 		43DD9586277E50C3000CE509 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4362079F2794F403008C7FFE /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Moc/Moc.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Moc/Preview Content\"";
 				DEVELOPMENT_TEAM = 9H3XZRTVLY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -656,13 +664,14 @@
 		};
 		43DD9587277E50C3000CE509 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4362079F2794F403008C7FFE /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Moc/Moc.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Moc/Preview Content\"";
 				DEVELOPMENT_TEAM = 9H3XZRTVLY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -836,6 +845,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 436207942793606E008C7FFE /* XCRemoteSwiftPackageReference "keychain-swift" */;
 			productName = KeychainSwift;
+		};
+		436207A02794F6AD008C7FFE /* Generated */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Generated;
 		};
 		43654D4427809CE50047F36F /* TDLibKit */ = {
 			isa = XCSwiftPackageProductDependency;

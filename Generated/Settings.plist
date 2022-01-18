@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TdToSf</key>
+	<dict>
+		<key>All</key>
+		<string>bubble.left.and.bubble.right</string>
+		<key>Unread</key>
+		<string>exclamationmark.bubble</string>
+		<key>Unmuted</key>
+		<string>text.bubble</string>
+		<key>Bots</key>
+		<string>face.dashed</string>
+		<key>Channels</key>
+		<string>megaphone</string>
+		<key>Groups</key>
+		<string>person.2</string>
+		<key>Private</key>
+		<string>person</string>
+		<key>Custom</key>
+		<string>folder</string>
+		<key>Setup</key>
+		<string>list.bullet</string>
+		<key>Cat</key>
+		<string>pawprint</string>
+		<key>Crown</key>
+		<string>crown</string>
+		<key>Favorite</key>
+		<string>star</string>
+		<key>Flower</key>
+		<string>leaf</string>
+		<key>Game</key>
+		<string>gamecontroller</string>
+		<key>Home</key>
+		<string>house</string>
+		<key>Love</key>
+		<string>heart</string>
+		<key>Mask</key>
+		<string>theatermasks</string>
+		<key>Party</key>
+		<string>sparkles</string>
+		<key>Sport</key>
+		<string>sportscourt</string>
+		<key>Study</key>
+		<string>graduationcap</string>
+		<key>Trade</key>
+		<string>cart</string>
+		<key>Travel</key>
+		<string>airplane</string>
+		<key>Work</key>
+		<string>building.2</string>
+	</dict>
+</dict>
+</plist>

@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Resolver
 import Logging
+import SystemUtils
 
 extension Chat: Identifiable { }
 
@@ -17,6 +18,7 @@ struct ContentView: View {
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
+    @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
 
     @StateObject private var mainViewModel = MainViewModel()
@@ -36,15 +38,10 @@ struct ContentView: View {
                     .frame(minWidth: 70)
                     VStack {
                         SearchField()
-                            .padding([.leading, .bottom, .trailing], 10.0)
-                        List(mainViewModel.chatList) { chat in
+                            .padding([.leading, .bottom, .trailing], 15.0)
+                        List(mainViewModel.mainChatList) { chat in
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
-                                .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) { logger.info("Pressed Delete button") } label: {
-                                        Label("Delete chat", systemImage: "trash")
-                                    }
-                                }
                                 .onTapGesture {
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
@@ -57,10 +54,27 @@ struct ContentView: View {
                                     : nil
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+
+//                                .swipeActions {
+//                                    Button(role: .destructive) {
+//                                        logger.info("Pressed Delete button")
+//                                    } label: {
+//                                        Label("Delete chat", systemImage: "trash")
+//                                    }
+//                                }
                         }
+                        .frame(minWidth: 320)
                     }.toolbar {
                         ToolbarItem(placement: .status) {
-                            Button(action: { print("add chat") }) {
+                            Toggle(isOn: $isArchiveChatListOpen) {
+                                Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
+                            }
+                        }
+                        ToolbarItem(placement: .status) {
+                            Spacer()
+                        }
+                        ToolbarItem(placement: .status) {
+                            Button(action: { logger.info("Pressed add chat") }) {
                                 Image(systemName: "square.and.pencil")
                             }
                         }
@@ -85,47 +99,70 @@ struct ContentView: View {
             LoginView()
                 .frame(width: 400, height: 500)
         }
-        .onReceive(NotificationCenter.default.publisher(for: .updateNewMessage)) { data in
-            let message = (data.object as? UpdateNewMessage)!.message
+        .onReceive(SystemUtils.ncPublisher(for: .updateChatPosition)) { notification in
+            logger.info("Update chat position")
+            let update = (notification.object as? UpdateChatPosition)!
+            let position = update.position
+            let chatId = update.chatId
 
-            guard viewRouter.openedChat != nil else { return }
-
-//            if message.chatId == viewRouter.openedChat!.id {
-//                chatViewModel.messages?.append(message)
-//            }
+            if mainViewModel.unorderedChatList.contains(where: { $0.id == chatId }) {
+                switch position.list {
+                    case .chatListMain:
+                        let chats = mainViewModel.unorderedChatList.filter { chat in
+                            return chat.id == chatId
+                        }
+                        for chat in chats {
+                            mainViewModel.mainChatList.append(chat)
+                        }
+                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
+                            return $0.id != chatId
+                        }
+                        sortMainChatList()
+                    case .chatListArchive:
+                        break
+                    case .chatListFilter(_):
+                        break
+                }
+            }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .updateNewChat)) { data in
-            logger.info("Received chat position update")
+        .onReceive(SystemUtils.ncPublisher(for: .updateNewChat)) { data in
+            logger.info("Received new chat update")
             guard data.object != nil else {
                 return
             }
             let chat = (data.object as? UpdateNewChat)!.chat
-            let hasChat = mainViewModel.chatList.contains(where: {
+
+            let hasChat = mainViewModel.unorderedChatList.contains(where: {
                 $0.id == chat.id
             })
 
             if !hasChat {
-                mainViewModel.chatList.append(chat)
+                mainViewModel.unorderedChatList.append(chat)
             }
 
-            mainViewModel.chatList = mainViewModel.chatList.sorted(by: {
-                if !$0.positions.isEmpty && !$1.positions.isEmpty {
-                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-                } else {
-                    return true
-                }
-                //
-                //                if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-                //                    return true
-                //                } else {
-                //                    return false
-                //                }
-            })
+            logger.info("\(chat)")
+
+            sortMainChatList()
 
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPhoneNumber)) { _ in
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)) { _ in
             showingLoginScreen = true
         }
+    }
+
+    private func sortMainChatList() {
+        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted(by: {
+            //                if !$0.positions.isEmpty && !$1.positions.isEmpty {
+            //                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+            //                } else {
+            //                    return true
+            //                }
+            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
+                return true
+            } else {
+                return false
+            }
+        })
     }
 }
 

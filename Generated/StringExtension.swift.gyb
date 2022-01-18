@@ -1,0 +1,16 @@
+%{
+import plistlib
+file = open("Settings.plist")
+plist = plistlib.readPlist(file)
+}%
+public extension String {
+    // swiftlint:disable cyclomatic_complexity
+    init(fromTdIcon icon: String) {
+        switch icon {
+            % for icon in plist["TdToSf"]:
+            case "${icon}": self.init("${plist["TdToSf"][icon]}")
+            % end
+            default: self.init("folder")
+        }
+    }
+}
