@@ -10,6 +10,7 @@ import TDLibKit
 import Resolver
 import Logging
 import SystemUtils
+import Backend
 
 extension Chat: Identifiable { }
 
@@ -90,7 +91,7 @@ struct ContentView: View {
                     }
                 case .chat:
                     VStack {
-                        ChatView(chat: viewRouter.openedChat!)
+                        ChatView<TdChatDataSource>(chat: viewRouter.openedChat!)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
             }
@@ -151,7 +152,7 @@ struct ContentView: View {
     }
 
     private func sortMainChatList() {
-        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted(by: {
+        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted {
             //                if !$0.positions.isEmpty && !$1.positions.isEmpty {
             //                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             //                } else {
@@ -162,7 +163,7 @@ struct ContentView: View {
             } else {
                 return false
             }
-        })
+        }
     }
 }
 

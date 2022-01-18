@@ -10,6 +10,7 @@ import TDLibKit
 import SwiftUIUtils
 import Resolver
 import SystemUtils
+import Backend
 
 extension Message: Identifiable { }
 
@@ -68,7 +69,9 @@ private struct RoundedCorners: Shape {
     }
 }
 
-struct ChatView: View {
+struct ChatView<T: ChatDataSourcable>: View {
+    @Injected var chatDataSource: T
+
     let chat: Chat
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
@@ -323,7 +326,7 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(chat: Chat(
+        ChatView<MockChatDataSource>(chat: Chat(
             actionBar: .none,
             canBeDeletedForAllUsers: true,
             canBeDeletedOnlyForSelf: true,

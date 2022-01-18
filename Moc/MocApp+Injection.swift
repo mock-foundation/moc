@@ -160,7 +160,8 @@ extension Resolver {
         }
         register { tdApi }
             .scope(.shared)
-        register { ChatDataSource() as ChatDataSourcable }
+        register { TdChatDataSource() as ChatDataSourcable }
+            .scope(.shared)
     }
 }
 
