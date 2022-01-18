@@ -113,6 +113,14 @@ extension Resolver {
                             case .authorizationStateWaitPassword(let info):
                                 SystemUtils.post(notification: .authorizationStateWaitPassword, withObject: info)
                             case .authorizationStateReady:
+                                Task {
+                                    do {
+                                        _ = try await tdApi.loadChats(chatList: .chatListMain, limit: 15)
+                                        _ = try await tdApi.loadChats(chatList: .chatListArchive, limit: 15)
+                                    } catch {
+                                        logger.error("Failed to load chats")
+                                    }
+                                }
                                 SystemUtils.post(notification: .authorizationStateReady)
                             case .authorizationStateWaitOtherDeviceConfirmation(let info):
                                 SystemUtils.post(
@@ -126,17 +134,18 @@ extension Resolver {
                             case .authorizationStateClosed:
                                 SystemUtils.post(notification: .authorizationStateClosed)
                         }
-                        // MARK: - Chat position
-                    case .updateChatPosition(let state):
-                        SystemUtils.post(notification: .updateChatPosition, withObject: state)
-                    case .updateNewMessage(let state):
-                        SystemUtils.post(notification: .updateNewMessage, withObject: state)
-                    case .updateChatLastMessage(let state):
-                        SystemUtils.post(notification: .updateChatLastMessage, withObject: state)
-                    case .updateNewChat(let state):
-                        SystemUtils.post(notification: .updateNewChat, withObject: state)
+                        // MARK: - Chat updates
+                    case .updateChatPosition(let info):
+                        SystemUtils.post(notification: .updateChatPosition, withObject: info)
+                    case .updateNewMessage(let info):
+                        SystemUtils.post(notification: .updateNewMessage, withObject: info)
+                    case .updateChatLastMessage(let info):
+                        SystemUtils.post(notification: .updateChatLastMessage, withObject: info)
+                    case .updateNewChat(let info):
+                        SystemUtils.post(notification: .updateNewChat, withObject: info)
                     case .updateFile(let info):
                         SystemUtils.post(notification: .updateFile, withObject: info)
+
                     default:
                         #if DEBUG
                         logger.warning("Unhandled TDLib update \(update)")
