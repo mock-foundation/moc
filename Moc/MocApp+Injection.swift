@@ -79,7 +79,7 @@ extension Resolver {
                                 Task {
                                     try? await tdApi.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
-                                        apiId: Int(Secret.apiKey)!,
+                                        apiId: Secret.apiId,
                                         applicationVersion: (
                                             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                                         ) ?? "Unknown",
