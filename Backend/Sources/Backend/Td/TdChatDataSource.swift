@@ -1,5 +1,5 @@
 //
-//  ChatDataSource.swift
+//  TdChatDataSource.swift
 //  
 //
 //  Created by Егор Яковенко on 18.01.2022.
@@ -9,28 +9,28 @@ import Combine
 import TDLibKit
 import Logging
 
-public class ChatDataSource: ChatDataSourcable {
-    private var logger = Logger(label: "ChatDataSource")
+public class TdChatDataSource: ChatDataSourcable {
+    private var logger = Logger(label: "TdChatDataSource")
 
     // MARK: - Messages
-    @Published var messageHistory: [Message] = []
+    @Published public var messageHistory: [Message] = []
 
     // MARK: - Chat info
-    @Published var chatTitle: String = "" {
+    @Published public var chatTitle: String = "" {
         didSet {
             Task {
                 try await tdApi.setChatTitle(chatId: self.chatId, title: self.chatTitle)
             }
         }
     }
-    @Published var draftMessage: DraftMessage? = nil
-    @Published var chatId: Int64? = nil
-    @Published var chatType: ChatType = .chatTypePrivate(.init(userId: 0))
-    @Published var chatMemberCount: Int? = nil
-    @Published var protected: Bool = false
-    @Published var blocked: Bool = false
+    @Published public var draftMessage: DraftMessage? = nil
+    @Published public var chatId: Int64? = nil
+    @Published public var chatType: ChatType = .chatTypePrivate(.init(userId: 0))
+    @Published public var chatMemberCount: Int? = nil
+    @Published public var protected: Bool = false
+    @Published public var blocked: Bool = false
 
-    var tdApi: TdApi = .shared[0]
+    public var tdApi: TdApi = .shared[0]
 
     public init() {
 
