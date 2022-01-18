@@ -22,8 +22,8 @@
 		4357F939278E3B7200154012 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F938278E3B7200154012 /* AccountsPrefView.swift */; };
 		436207962793606F008C7FFE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 436207952793606F008C7FFE /* KeychainSwift */; };
 		436207A12794F6AD008C7FFE /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A02794F6AD008C7FFE /* Generated */; };
+		436207A62796A3D6008C7FFE /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A52796A3D6008C7FFE /* Backend */; };
 		43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3C277FF85F0047F36F /* MainViewModel.swift */; };
-		43654D4527809CE50047F36F /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43654D4427809CE50047F36F /* TDLibKit */; };
 		438326FB27877346004B0E18 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438326FA27877346004B0E18 /* ViewRouter.swift */; };
 		43832704278865CB004B0E18 /* ChatSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43832703278865CB004B0E18 /* ChatSplitView.swift */; };
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
@@ -88,6 +88,7 @@
 		4357F938278E3B7200154012 /* AccountsPrefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
 		4362079D2794E21B008C7FFE /* Generated */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Generated; sourceTree = "<group>"; };
 		4362079F2794F403008C7FFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		436207A42796A1D1008C7FFE /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
 		43654D3C277FF85F0047F36F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		43832703278865CB004B0E18 /* ChatSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 				43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */,
 				43DD9643277E7558000CE509 /* Resolver in Frameworks */,
 				436207A12794F6AD008C7FFE /* Generated in Frameworks */,
+				436207A62796A3D6008C7FFE /* Backend in Frameworks */,
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
@@ -133,7 +135,6 @@
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 				4389A426278EDA330047D945 /* Preferences in Frameworks */,
-				43654D4527809CE50047F36F /* TDLibKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				43DD9562277E50C0000CE509 /* Moc */,
+				436207A42796A1D1008C7FFE /* Backend */,
 				4362079D2794E21B008C7FFE /* Generated */,
 				43C7B4C2278F3DE500236503 /* SystemUtils */,
 				43C7B4BD278F11D300236503 /* ImageUtils */,
@@ -301,7 +303,6 @@
 			name = Moc;
 			packageProductDependencies = (
 				43DD9642277E7558000CE509 /* Resolver */,
-				43654D4427809CE50047F36F /* TDLibKit */,
 				4386E45A2782FFEB0084F809 /* Resolver-Static */,
 				4386E46F27837A810084F809 /* SwiftUIUtils */,
 				430B983E278B680600420D75 /* Lottie */,
@@ -312,6 +313,7 @@
 				43E8FD6627919DD30016BE31 /* Logging */,
 				436207952793606F008C7FFE /* KeychainSwift */,
 				436207A02794F6AD008C7FFE /* Generated */,
+				436207A52796A3D6008C7FFE /* Backend */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -365,7 +367,6 @@
 			mainGroup = 43DD9557277E50C0000CE509;
 			packageReferences = (
 				43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */,
-				43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
@@ -788,14 +789,6 @@
 				version = 20.0.0;
 			};
 		};
-		43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
-			requirement = {
-				kind = revision;
-				revision = e78aef926cdd92323755bcb72309aa5afed1f02a;
-			};
-		};
 		4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ggoraa/SwiftUIUtils.git";
@@ -850,10 +843,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Generated;
 		};
-		43654D4427809CE50047F36F /* TDLibKit */ = {
+		436207A52796A3D6008C7FFE /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 43654D4327809CE50047F36F /* XCRemoteSwiftPackageReference "TDLibKit" */;
-			productName = TDLibKit;
+			productName = Backend;
 		};
 		4386E45A2782FFEB0084F809 /* Resolver-Static */ = {
 			isa = XCSwiftPackageProductDependency;
