@@ -161,9 +161,11 @@ struct AccountsPrefView: View {
                 Button(role: .destructive, action: {
                     Task {
                         do {
-                            try await tdApi.logOut()
+                            _ = try await tdApi.logOut()
+                            NSSound(named: "Glass")?.play()
                             showLogOutSuccessfulToast = true
                         } catch {
+                            NSSound(named: "Purr")?.play()
                             showLogOutFailedToast = true
                         }
                     }
