@@ -24,7 +24,7 @@ public struct SystemUtils {
     // Thanks to https://stackoverflow.com/a/26845710
     public static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+        return String((0..<length).map { _ in letters.randomElement()! })
     }
 
     // Thanks to https://www.reddit.com/r/swift/comments/gwf9fa/how_do_i_find_the_model_of_the_mac_in_swift/
