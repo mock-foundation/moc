@@ -9,7 +9,7 @@ import Combine
 import TDLibKit
 import Logging
 
-public class TdChatDataSource: ChatDataSourcable {
+public class TdChatDataSource: ChatDataSource {
     private var logger = Logger(label: "TdChatDataSource")
 
     // MARK: - Messages
@@ -23,10 +23,10 @@ public class TdChatDataSource: ChatDataSourcable {
             }
         }
     }
-    @Published public var draftMessage: DraftMessage? = nil
-    @Published public var chatId: Int64? = nil
+    @Published public var draftMessage: DraftMessage?
+    @Published public var chatId: Int64?
     @Published public var chatType: ChatType = .chatTypePrivate(.init(userId: 0))
-    @Published public var chatMemberCount: Int? = nil
+    @Published public var chatMemberCount: Int?
     @Published public var protected: Bool = false
     @Published public var blocked: Bool = false
 
@@ -63,14 +63,14 @@ public class TdChatDataSource: ChatDataSourcable {
                 if basicGroup.upgradedToSupergroupId != 0 {
                     self.chatId = basicGroup.upgradedToSupergroupId
                     guard let supegroup = await getSupergroup(chatId: chatId) else {
-                        logger.error("Failed to get upgraded supergroup from chatId \(self.chatId)")
+                        logger.error("Failed to get upgraded supergroup from chatId \(String(describing: self.chatId))")
                         return
                     }
                     self.chatMemberCount = supegroup.memberCount
                 }
             case .chatTypeSupergroup(_):
                 guard let supegroup = await getSupergroup(chatId: chatId) else {
-                    logger.error("Failed to get upgraded supergroup from chatId \(self.chatId)")
+                    logger.error("Failed to get upgraded supergroup from chatId \(String(describing: self.chatId))")
                     return
                 }
                 self.chatMemberCount = supegroup.memberCount
@@ -85,5 +85,13 @@ public class TdChatDataSource: ChatDataSourcable {
         let maybeSupergroup = try? await tdApi.getSupergroup(supergroupId: chatId)
         guard let supergroup = maybeSupergroup else { return nil }
         return supergroup
+    }
+
+    public func setChat(_ chat: Chat) {
+        self.chatId = chat.id
+        self.chatType = chat.type
+        self.protected = chat.hasProtectedContent
+        self.blocked = chat.isBlocked
+        self.chatTitle = chat.title
     }
 }

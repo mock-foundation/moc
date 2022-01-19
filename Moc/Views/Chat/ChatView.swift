@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TDLibKit
 import SwiftUIUtils
 import Resolver
 import SystemUtils
@@ -69,16 +68,12 @@ private struct RoundedCorners: Shape {
     }
 }
 
-struct ChatView<T: ChatDataSourcable>: View {
-    @Injected var chatDataSource: T
+struct ChatView<T: ChatDataSource>: View {
+    @Injected private var chatDataSource: T
 
-    let chat: Chat
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
     @Environment(\.colorScheme) var colorScheme
-
-    @Injected private var tdApi: TdApi
-
     // MARK: - Input field
     private var inputField: some View {
         HStack(spacing: 16) {
@@ -172,7 +167,7 @@ struct ChatView<T: ChatDataSourcable>: View {
                     .resizable()
                     .frame(minWidth: 0, maxWidth: 86, minHeight: 0, maxHeight: 86)
                     .clipShape(Circle())
-                Text(chat.title)
+                Text(chatDataSource.chatTitle)
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.horizontal)
@@ -197,6 +192,7 @@ struct ChatView<T: ChatDataSourcable>: View {
                         imageName: "arrow.turn.up.right",
                         text: "Leave"
                     )
+                        .tint(.red)
                 }
                 .padding(.vertical)
                 .frame(minWidth: 0, idealWidth: nil)
@@ -263,7 +259,7 @@ struct ChatView<T: ChatDataSourcable>: View {
                 }
                 ToolbarItem(placement: .navigation) {
                     VStack(alignment: .leading) {
-                        Text(chat.title)
+                        Text(chatDataSource.chatTitle)
                             .font(.headline)
                         Text("Some users were here lol")
                             .font(.subheadline)
@@ -294,39 +290,12 @@ struct ChatView<T: ChatDataSourcable>: View {
                 //                chatViewModel.messages?.append(message)
                 //            }
             }
-            .task {
-                let history = try? await tdApi.getChatHistory(
-                    chatId: chat.id,
-                    fromMessageId: 0,
-                    limit: 50,
-                    offset: 0,
-                    onlyLocal: false
-                )
-
-                guard history != nil else {
-                    NSLog("edren baton")
-                    return
-                }
-
-                let messages = history!.messages
-
-                guard messages != nil else {
-                    NSLog("Pizdec")
-                    return
-                }
-
-                //                chatViewModel.messages = messages!
-
-                //                if self.messages == [] {
-                //                    NSLog("Pizdec")
-                //                }
-            }
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView<MockChatDataSource>(chat: Chat(
+        ChatView<MockChatDataSource>(/*chat: Chat(
             actionBar: .none,
             canBeDeletedForAllUsers: true,
             canBeDeletedOnlyForSelf: true,
@@ -383,7 +352,7 @@ struct ChatView_Previews: PreviewProvider {
                 defaultParticipantId: nil,
                 groupCallId: 0,
                 hasParticipants: false
-            )))
+            ))*/)
             .frame(width: 800, height: 600)
     }
 }

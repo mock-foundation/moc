@@ -8,7 +8,9 @@
 import TDLibKit
 import Resolver
 
-public class MockChatDataSource: ChatDataSourcable {
+public class MockChatDataSource: ChatDataSource {
+    public func setChat(chat: Chat) { }
+
     public var messageHistory: [Message] = []
     public var draftMessage: DraftMessage?
     public var chatId: Int64?
@@ -17,5 +19,4 @@ public class MockChatDataSource: ChatDataSourcable {
     public var chatMemberCount: Int?
     public var protected: Bool = false
     public var blocked: Bool = false
-    @Injected public var tdApi: TdApi
 }

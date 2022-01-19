@@ -14,7 +14,7 @@ import Backend
 
 extension Chat: Identifiable { }
 
-struct ContentView: View {
+struct ContentView<T: ChatDataSource>: View {
     private let logger = Logging.Logger(label: "ContentView")
 
     @State private var selectedFolder: Int = 0
@@ -22,10 +22,10 @@ struct ContentView: View {
     @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
 
+    @Injected private var chatDataSource: T
+
     @StateObject private var mainViewModel = MainViewModel()
     @StateObject private var viewRouter = ViewRouter()
-
-    @Injected private var tdApi: TdApi
 
     var body: some View {
         NavigationView {
@@ -44,6 +44,7 @@ struct ContentView: View {
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .onTapGesture {
+                                    chatDataSource.setChat(chat)
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
                                 }
@@ -55,14 +56,13 @@ struct ContentView: View {
                                     : nil
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-
-//                                .swipeActions {
-//                                    Button(role: .destructive) {
-//                                        logger.info("Pressed Delete button")
-//                                    } label: {
-//                                        Label("Delete chat", systemImage: "trash")
-//                                    }
-//                                }
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        logger.info("Pressed Delete button")
+                                    } label: {
+                                        Label("Delete chat", systemImage: "trash")
+                                    }
+                                }
                         }
                         .frame(minWidth: 320)
                     }.toolbar {
@@ -90,14 +90,12 @@ struct ContentView: View {
                         Text("Select chat")
                     }
                 case .chat:
-                    VStack {
-                        ChatView<TdChatDataSource>(chat: viewRouter.openedChat!)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
+                    ChatView<TdChatDataSource>()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .sheet(isPresented: $showingLoginScreen) {
-            LoginView()
+            LoginView<TdLoginDataSource>()
                 .frame(width: 400, height: 500)
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateChatPosition)) { notification in
@@ -169,6 +167,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView<MockChatDataSource>()
     }
 }
