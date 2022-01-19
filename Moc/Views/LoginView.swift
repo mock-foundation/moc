@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
-import TDLibKit
 import Resolver
 import SwiftUIUtils
 import CoreImage.CIFilterBuiltins
 import Logging
+import TDLibKit
+import Backend
 
 private enum OpenedScreen {
     case phoneNumber
@@ -22,16 +23,13 @@ private enum OpenedScreen {
 }
 
 private extension String {
-
     var digits: [Int] {
         var result = [Int]()
-
         for char in self {
             if let number = Int(String(char)) {
                 result.append(number)
             }
         }
-
         return result
     }
 
@@ -39,21 +37,17 @@ private extension String {
         let numberCharacters = NSCharacterSet.decimalDigits.inverted
         return !self.isEmpty && (self.rangeOfCharacter(from: numberCharacters) != nil)
     }
-
 }
 
-private extension Int {
+private class LoginViewModel: ObservableObject {
+    @Injected @Published private var dataSource: LoginDataSource
 
-    var numberString: String {
-
-        guard self < 10 else { return "0" }
-
-        return String(self)
-    }
 }
 
 struct LoginView: View {
     private let logger = Logging.Logger(label: "LoginView")
+    @InjectedObject private var dataSource: LoginDataSource
+
     func stepView(number: Int, text: String) -> some View {
         HStack {
             ZStack {
@@ -84,8 +78,6 @@ struct LoginView: View {
     @State private var showLoadingSpinner = false
 
     @Environment(\.presentationMode) private var presentationMode
-
-    @Injected private var tdApi: TdApi
 
     func generateQRCode(from string: String) -> NSImage {
         let context = CIContext()
@@ -135,7 +127,7 @@ struct LoginView: View {
                         .padding(.bottom, 8)
                         Button("Continue using QR code") {
                             Task {
-                                try? await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+                                try? await dataSource.requestQrCodeAuth()
                             }
                         }
                         .controlSize(.large)
@@ -159,10 +151,7 @@ struct LoginView: View {
                                     Task {
                                         withAnimation { showLoadingSpinner = true }
                                         do {
-                                            try await tdApi.setAuthenticationPhoneNumber(
-                                                phoneNumber: "+\(selectedNumberCode)\(phoneNumber)",
-                                                settings: nil
-                                            )
+                                            try await dataSource.setAuthPhoneNumber("+\(selectedNumberCode)\(phoneNumber)")
                                         } catch {
                                             showErrorAlert = true
                                         }
@@ -181,7 +170,7 @@ struct LoginView: View {
                         Button("Use QR Code") {
                             Task {
                                 do {
-                                    try await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+                                    _ = try await dataSource.requestQrCodeAuth()
                                 } catch {
                                     showErrorAlert = true
                                 }
@@ -200,7 +189,7 @@ struct LoginView: View {
                                 Task {
                                     do {
                                         withAnimation { showLoadingSpinner = true }
-                                        try await tdApi.checkAuthenticationCode(code: code)
+                                        try await dataSource.checkAuth(code: code)
                                         withAnimation { showLoadingSpinner = false }
                                     } catch {
                                         showErrorAlert = true
@@ -255,7 +244,7 @@ struct LoginView: View {
                             .onSubmit {
                                 Task {
                                     withAnimation { showLoadingSpinner = true }
-                                    if (try? await tdApi.checkAuthenticationPassword(
+                                    if (try? await dataSource.checkAuth(
                                         password: twoFactorAuthPassword
                                     )) == nil {
                                         showErrorAlert = true
@@ -274,12 +263,11 @@ struct LoginView: View {
 
         }
         .task {
-            let countries = try? await tdApi.getCountries().countries
-            guard countries != nil else {
-                return
-            }
+            let countries = try? await dataSource.countries
+            guard countries != nil else { return }
+
             self.phoneNumberCodes = countries!
-            let countryCode = (try? await tdApi.getCountryCode().text) ?? "EN"
+            let countryCode = (try? await dataSource.countryCode) ?? "EN"
 
             for country in countries! where country.countryCode == countryCode {
                 self.selectedNumberCode = Int(country.callingCodes[0])!
@@ -326,6 +314,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView<MockLoginDataSource>()
     }
 }
