@@ -8,15 +8,16 @@
 import SwiftUI
 import SwiftUIUtils
 import Preferences
-import TDLibKit
 import Resolver
 import ImageUtils
 import SystemUtils
 import Combine
 import Logging
 import AlertToast
+import Backend
+import TDLibKit
 
-struct AccountsPrefView: View {
+struct AccountsPrefView<T: AccountsPrefDataSource>: View {
     private var logger = Logging.Logger(label: "AccountsPrefView")
     @State private var photos: [File] = []
     @State private var photoLoading = false
@@ -34,8 +35,6 @@ struct AccountsPrefView: View {
     @State private var showInitErrorAlert = false
     @State private var showLogOutSuccessfulToast = false
     @State private var showLogOutFailedToast = false
-
-    @Injected private var tdApi: TdApi
 
     @State private var index: Int = 0
     @State private var offset: CGFloat = 0
@@ -363,6 +362,6 @@ struct AccountsPrefView: View {
 
 struct AccountsPrefView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountsPrefView()
+        AccountsPrefView<MockAccountsPrefDataSource>()
     }
 }
