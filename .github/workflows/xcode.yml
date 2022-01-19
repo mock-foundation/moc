@@ -16,4 +16,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: |
-          xcodebuild build -scheme "Moc" 
+          ls -a
+          xcodebuild build -scheme "Moc"
+          ls -a
