@@ -8,7 +8,7 @@
 import Foundation
 
 /// A ton of custom keys for representing notifications from TDLib.
-extension NSNotification.Name {
+public extension NSNotification.Name {
     // MARK: - Authorization states
     static var authorizationStateWaitTdlibParameters: NSNotification.Name {
         return .init("AuthorizationStateWaitTdlibParameters")
