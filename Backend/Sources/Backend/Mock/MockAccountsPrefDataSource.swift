@@ -12,6 +12,10 @@ public class MockAccountsPrefDataSource: AccountsPrefDataSource {
 
     public func set(lastName: String) async throws { }
 
+    public func set(username: String) async throws { }
+
+    public func set(bio: String) async throws { }
+
     public func logOut() async throws { }
 
     public func getMe() async throws -> User {
@@ -57,7 +61,7 @@ public class MockAccountsPrefDataSource: AccountsPrefDataSource {
         return []
     }
 
-    public func downloadFile(fileId: Int) async throws -> File {
+    public func downloadFile(fileId: Int, priority: Int, synchronous: Bool) async throws -> File {
         throw Error(code: 1, message: "Download file is not working in mock instances")
     }
 }

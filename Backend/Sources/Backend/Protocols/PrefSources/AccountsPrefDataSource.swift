@@ -12,8 +12,10 @@ public protocol AccountsPrefDataSource {
 
     func set(firstName: String) async throws
     func set(lastName: String) async throws
+    func set(username: String) async throws
+    func set(bio: String) async throws
     func getMe() async throws -> User
     func getFullInfo() async throws -> UserFullInfo
     func getProfilePhotos() async throws -> [ChatPhoto]
-    func downloadFile(fileId: Int, priority: Int = 32, synchronous: Bool = true) async throws -> File
+    func downloadFile(fileId: Int, priority: Int, synchronous: Bool) async throws -> File
 }

@@ -22,6 +22,14 @@ public class TdAccountsPrefDataSource: AccountsPrefDataSource {
         _ = try await tdApi.setName(firstName: "", lastName: lastName)
     }
 
+    public func set(username: String) async throws {
+        _ = try await tdApi.setUsername(username: username)
+    }
+
+    public func set(bio: String) async throws {
+        _ = try await tdApi.setBio(bio: bio)
+    }
+
     public func getMe() async throws -> User {
         return try await tdApi.getMe()
     }
@@ -47,4 +55,6 @@ public class TdAccountsPrefDataSource: AccountsPrefDataSource {
             synchronous: synchronous
         )
     }
+
+    public init() { }
 }
