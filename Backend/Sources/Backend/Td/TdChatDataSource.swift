@@ -42,7 +42,6 @@ public class TdChatDataSource: ChatDataSource {
         _ = try await tdApi.setChatDraftMessage(chatId: chatId, draftMessage: draft, messageThreadId: nil)
     }
 
-
     // MARK: - Messages
     @Published public var messageHistory: [Message] = []
 
@@ -54,7 +53,7 @@ public class TdChatDataSource: ChatDataSource {
             }
         }
     }
-    
+
     public var draftMessage: DraftMessage? {
         get async throws {
             return try await tdApi.getChat(chatId: chatId).draftMessage

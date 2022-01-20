@@ -62,7 +62,7 @@ extension Resolver {
         register { TdLoginDataSource() as LoginDataSource }
             .scope(.shared)
         register { TdAccountsPrefDataSource() as AccountsPrefDataSource }
-        .scope(.shared)
+            .scope(.shared)
     }
 }
 

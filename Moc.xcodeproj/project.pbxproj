@@ -223,10 +223,10 @@
 				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
 				43E8FD682791B3610016BE31 /* Info.plist */,
+				4362079F2794F403008C7FFE /* Config.xcconfig */,
 				43DD9567277E50C3000CE509 /* Assets.xcassets */,
 				43DD956C277E50C3000CE509 /* Moc.entitlements */,
 				43DD9569277E50C3000CE509 /* Preview Content */,
-				4362079F2794F403008C7FFE /* Config.xcconfig */,
 			);
 			path = Moc;
 			sourceTree = "<group>";
