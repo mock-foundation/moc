@@ -17,6 +17,8 @@ public class TdLoginDataSource: LoginDataSource {
         )
     }
 
+    public init() { }
+
     public func checkAuth(code: String) async throws {
         _ = try await tdApi.checkAuthenticationCode(code: code)
     }

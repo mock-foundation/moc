@@ -14,7 +14,7 @@ import Backend
 
 extension Chat: Identifiable { }
 
-struct ContentView<T: ChatDataSource>: View {
+struct ContentView: View {
     private let logger = Logging.Logger(label: "ContentView")
 
     @State private var selectedFolder: Int = 0
@@ -22,7 +22,7 @@ struct ContentView<T: ChatDataSource>: View {
     @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
 
-    @Injected private var chatDataSource: T
+    @Injected private var chatDataSource: ChatDataSource
 
     @StateObject private var mainViewModel = MainViewModel()
     @StateObject private var viewRouter = ViewRouter()
@@ -167,6 +167,6 @@ struct ContentView<T: ChatDataSource>: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView<MockChatDataSource>()
+        ContentView()
     }
 }

@@ -19,6 +19,8 @@ import TDLibKit
 
 struct AccountsPrefView: View {
     private var logger = Logging.Logger(label: "AccountsPrefView")
+    @StateObject private var viewModel = AccountsPrefViewModel()
+
     @State private var photos: [File] = []
     @State private var photoLoading = false
     @State private var photoFileId: Int64 = 0
@@ -160,7 +162,7 @@ struct AccountsPrefView: View {
                 Button(role: .destructive, action: {
                     Task {
                         do {
-                            _ = try await tdApi.logOut()
+                            _ = try await viewModel.dataSource.logOut()
                             NSSound(named: "Glass")?.play()
                             showLogOutSuccessfulToast = true
                         } catch {
@@ -201,7 +203,7 @@ struct AccountsPrefView: View {
                     .frame(width: 150)
                     .onSubmit {
                         Task {
-                            try await tdApi.setName(firstName: firstName, lastName: lastName)
+                            try await viewModel.dataSource.set(firstName: firstName)
                         }
                     }
             }
@@ -211,7 +213,7 @@ struct AccountsPrefView: View {
                     .frame(width: 150)
                     .onSubmit {
                         Task {
-                            try await tdApi.setName(firstName: firstName, lastName: lastName)
+                            try await viewModel.dataSource.set(lastName: lastName)
                         }
                     }
             }
@@ -221,7 +223,7 @@ struct AccountsPrefView: View {
                     .frame(width: 150)
                     .onSubmit {
                         Task {
-                            try await tdApi.setUsername(username: username)
+                            try await viewModel.dataSource.set(username: username)
                         }
                     }
 
@@ -231,7 +233,7 @@ struct AccountsPrefView: View {
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         Task {
-                            try await tdApi.setBio(bio: bioText)
+                            try await viewModel.dataSource.set(bio: bioText)
                         }
                     }
                     .frame(width: 350)
@@ -274,13 +276,13 @@ struct AccountsPrefView: View {
     }
 
     private func getAccountData() async {
-        let user = try? await tdApi.getMe()
+        let user = try? await viewModel.dataSource.getMe()
         guard user != nil else {
             showInitErrorAlert = true
             return
         }
 
-        let userFullInfo = try? await tdApi.getUserFullInfo(userId: user!.id)
+        let userFullInfo = try? await viewModel.dataSource.getFullInfo()
         guard userFullInfo != nil else {
             showInitErrorAlert = true
             return
@@ -301,16 +303,14 @@ struct AccountsPrefView: View {
         photoFileId = Int64(profilePhoto.big.id)
         miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
 
-        guard let photos = (try? await tdApi.getUserProfilePhotos(limit: 100, offset: 0, userId: user!.id)) else {
+        guard let photos = (try? await viewModel.dataSource.getProfilePhotos()) else {
             loading = false
             return
         }
 
-        for photo in photos.photos {
-            guard let file = try? await tdApi.downloadFile(
+        for photo in photos {
+            guard let file = try? await viewModel.dataSource.downloadFile(
                 fileId: photo.sizes[2].photo.id,
-                limit: 0,
-                offset: 0,
                 priority: 32,
                 synchronous: true
             ) else {
@@ -362,6 +362,6 @@ struct AccountsPrefView: View {
 
 struct AccountsPrefView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountsPrefView<MockAccountsPrefDataSource>()
+        AccountsPrefView()
     }
 }
