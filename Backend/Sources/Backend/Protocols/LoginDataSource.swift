@@ -14,7 +14,7 @@ public protocol LoginDataSource {
 
     /// Sets an authentication phone number. On real implementeation
     /// corresponds to `setAuthenticationPhoneNumber(phoneNumber:settings:)`.
-    func setAuthPhoneNumber(_ phoneNumber: String) async throws
+    func checkAuth(phoneNumber: String) async throws
 
     /// Checks auth code
     func checkAuth(code: String) async throws

@@ -7,26 +7,28 @@
 import Combine
 import TDLibKit
 
-public protocol ChatDataSource: ObservableObject {
+public protocol ChatDataSource {
     // MARK: - Messages
-    var messageHistory: [Message] { get }
-    var draftMessage: DraftMessage? { get set }
-
+    var messageHistory: [Message] { get async throws }
+    var draftMessage: DraftMessage? { get async throws }
+    func set(draft: DraftMessage?) async throws
     // MARK: - Chat info
     /// `nil` when nothing to show
-    var chatId: Int64? { get set }
-    var chatTitle: String { get set }
-    var chatType: ChatType { get }
+    var chatId: Int64? { get async throws }
+    var chatTitle: String { get async throws }
+    var chatType: ChatType { get async throws }
     /// Can be nil if it is a secret/private chat. If nil, a user status (online, offline,
     /// last seen a minute ago etc) will be displayed.
-    var chatMemberCount: Int? { get }
+    var chatMemberCount: Int? { get async throws }
     /// Whether content from the chat can't be forwarded, saved locally, or copied.
-    /// The `set` method will work when you have such powers and permissions 😉
-    var protected: Bool { get set }
+    var protected: Bool { get async throws }
     /// True, if the chat is blocked by the current user and private messages from
     /// the chat can’t be received.
-    var blocked: Bool { get set }
-
+    var blocked: Bool { get async throws }
     /// Use a provided `Chat` instance to fill variables.
-    func setChat(_ chat: Chat)
+    func set(chat: Chat)
+    /// Will work when you have such powers and permissions 😉
+    func set(protected: Bool) async throws
+    func set(blocked: Bool) async throws
+    func set(chatTitle: String) async throws
 }

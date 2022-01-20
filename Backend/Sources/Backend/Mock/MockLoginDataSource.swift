@@ -13,19 +13,27 @@ public class MockLoginDataSource: LoginDataSource {
 
     }
 
-    public func setAuthPhoneNumber(_ phoneNumber: String) async throws {
+    public func checkAuth(phoneNumber: String) async throws {
 
     }
 
     public func checkAuth(code: String) async throws {
-
+        
     }
 
     public func checkAuth(password: String) async throws {
 
     }
 
-    public var countries: [CountryInfo] = [CountryInfo(callingCodes: ["380"], countryCode: "UA", englishName: "UA", isHidden: false, name: "Ukraine")]
+    public var countries: [CountryInfo] = [
+        CountryInfo(
+            callingCodes: ["380"],
+            countryCode: "UA",
+            englishName: "UA",
+            isHidden: false,
+            name: "Ukraine"
+        )
+    ]
 
     public var countryCode: String = "380"
 }
