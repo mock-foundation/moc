@@ -44,7 +44,7 @@ struct ContentView<T: ChatDataSource>: View {
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .onTapGesture {
-                                    chatDataSource.setChat(chat)
+                                    chatDataSource.set(chat: chat)
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
                                 }
@@ -90,12 +90,12 @@ struct ContentView<T: ChatDataSource>: View {
                         Text("Select chat")
                     }
                 case .chat:
-                    ChatView<TdChatDataSource>()
+                    ChatView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .sheet(isPresented: $showingLoginScreen) {
-            LoginView<TdLoginDataSource>()
+            LoginView()
                 .frame(width: 400, height: 500)
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateChatPosition)) { notification in

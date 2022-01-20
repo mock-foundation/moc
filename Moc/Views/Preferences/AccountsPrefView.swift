@@ -17,7 +17,7 @@ import AlertToast
 import Backend
 import TDLibKit
 
-struct AccountsPrefView<T: AccountsPrefDataSource>: View {
+struct AccountsPrefView: View {
     private var logger = Logging.Logger(label: "AccountsPrefView")
     @State private var photos: [File] = []
     @State private var photoLoading = false

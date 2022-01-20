@@ -10,6 +10,7 @@ import SwiftUIUtils
 import Resolver
 import SystemUtils
 import Backend
+import TDLibKit
 
 extension Message: Identifiable { }
 
@@ -68,12 +69,11 @@ private struct RoundedCorners: Shape {
     }
 }
 
-struct ChatView<T: ChatDataSource>: View {
-    @Injected private var chatDataSource: T
-
+struct ChatView: View {
+    @StateObject private var viewModel = ChatViewModel()
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
-    @Environment(\.colorScheme) var colorScheme
+
     // MARK: - Input field
     private var inputField: some View {
         HStack(spacing: 16) {
@@ -167,13 +167,13 @@ struct ChatView<T: ChatDataSource>: View {
                     .resizable()
                     .frame(minWidth: 0, maxWidth: 86, minHeight: 0, maxHeight: 86)
                     .clipShape(Circle())
-                Text(chatDataSource.chatTitle)
+                Text(viewModel.chatTitle)
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.horizontal)
                     .frame(minWidth: 0, idealWidth: nil)
                     .multilineTextAlignment(.center)
-                Text("a ton of members")
+                Text("\(viewModel.chatMemberCount ?? 0) members")
 
                 // Quick actions
                 HStack(spacing: 24) {
@@ -259,7 +259,7 @@ struct ChatView<T: ChatDataSource>: View {
                 }
                 ToolbarItem(placement: .navigation) {
                     VStack(alignment: .leading) {
-                        Text(chatDataSource.chatTitle)
+                        Text(viewModel.chatTitle)
                             .font(.headline)
                         Text("Some users were here lol")
                             .font(.subheadline)
@@ -295,7 +295,7 @@ struct ChatView<T: ChatDataSource>: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView<MockChatDataSource>(/*chat: Chat(
+        ChatView(/*chat: Chat(
             actionBar: .none,
             canBeDeletedForAllUsers: true,
             canBeDeletedOnlyForSelf: true,

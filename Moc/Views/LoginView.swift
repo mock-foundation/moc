@@ -39,14 +39,9 @@ private extension String {
     }
 }
 
-private class LoginViewModel: ObservableObject {
-    @Injected @Published private var dataSource: LoginDataSource
-
-}
-
 struct LoginView: View {
     private let logger = Logging.Logger(label: "LoginView")
-    @InjectedObject private var dataSource: LoginDataSource
+    @Injected private var dataSource: LoginDataSource
 
     func stepView(number: Int, text: String) -> some View {
         HStack {
@@ -151,7 +146,7 @@ struct LoginView: View {
                                     Task {
                                         withAnimation { showLoadingSpinner = true }
                                         do {
-                                            try await dataSource.setAuthPhoneNumber("+\(selectedNumberCode)\(phoneNumber)")
+                                            try await dataSource.checkAuth(phoneNumber: "+\(selectedNumberCode)\(phoneNumber)")
                                         } catch {
                                             showErrorAlert = true
                                         }
@@ -314,6 +309,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView<MockLoginDataSource>()
+        LoginView()
     }
 }
