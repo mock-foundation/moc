@@ -56,10 +56,13 @@ extension Resolver {
         register { MainViewModel() }
     }
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
     public static func registerBackend() {
         register { TdChatDataSource() as ChatDataSource }
             .scope(.shared)
+        register { TdLoginDataSource() as LoginDataSource }
+            .scope(.shared)
+        register { TdAccountsPrefDataSource() as AccountsPrefDataSource }
+        .scope(.shared)
     }
 }
 
@@ -78,7 +81,7 @@ struct MocApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView<TdChatDataSource>()
+            ContentView()
         }
 
         Settings {
