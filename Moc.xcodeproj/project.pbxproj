@@ -19,7 +19,6 @@
 		4357F935278E3B3C00154012 /* StickersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F934278E3B3C00154012 /* StickersPrefView.swift */; };
 		4357F937278E3B5B00154012 /* FoldersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F936278E3B5B00154012 /* FoldersPrefView.swift */; };
 		4357F939278E3B7200154012 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4357F938278E3B7200154012 /* AccountsPrefView.swift */; };
-		436207962793606F008C7FFE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 436207952793606F008C7FFE /* KeychainSwift */; };
 		436207A12794F6AD008C7FFE /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A02794F6AD008C7FFE /* Generated */; };
 		436207A62796A3D6008C7FFE /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A52796A3D6008C7FFE /* Backend */; };
 		43654D3D277FF85F0047F36F /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43654D3C277FF85F0047F36F /* MainViewModel.swift */; };
@@ -126,7 +125,6 @@
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
-				436207962793606F008C7FFE /* KeychainSwift in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
@@ -308,7 +306,6 @@
 				43C7B4C0278F121F00236503 /* ImageUtils */,
 				43C7B4C3278F3DEF00236503 /* SystemUtils */,
 				43E8FD6627919DD30016BE31 /* Logging */,
-				436207952793606F008C7FFE /* KeychainSwift */,
 				436207A02794F6AD008C7FFE /* Generated */,
 				436207A52796A3D6008C7FFE /* Backend */,
 			);
@@ -369,7 +366,6 @@
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				4389A424278EDA330047D945 /* XCRemoteSwiftPackageReference "Preferences" */,
 				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
-				436207942793606E008C7FFE /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -777,14 +773,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		436207942793606E008C7FFE /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 20.0.0;
-			};
-		};
 		4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ggoraa/SwiftUIUtils.git";
@@ -829,11 +817,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
-		};
-		436207952793606F008C7FFE /* KeychainSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 436207942793606E008C7FFE /* XCRemoteSwiftPackageReference "keychain-swift" */;
-			productName = KeychainSwift;
 		};
 		436207A02794F6AD008C7FFE /* Generated */ = {
 			isa = XCSwiftPackageProductDependency;

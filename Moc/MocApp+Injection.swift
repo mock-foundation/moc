@@ -10,7 +10,6 @@ import TDLibKit
 import Resolver
 import SystemUtils
 import Logging
-import KeychainSwift
 import CryptoKit
 import Generated
 import Backend
