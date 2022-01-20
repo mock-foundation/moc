@@ -11,6 +11,7 @@ import Logging
 
 public class TdChatDataSource: ChatDataSource {
     private var logger = Logger(label: "TdChatDataSource")
+    public var tdApi: TdApi = .shared[0]
 
     public func set(protected: Bool) async throws {
         logger.error("set(protected:) not implemented")
@@ -76,8 +77,6 @@ public class TdChatDataSource: ChatDataSource {
             return true
         }
     }
-
-    public var tdApi: TdApi = .shared[0]
 
     public init() { }
 
