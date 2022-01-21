@@ -10,5 +10,5 @@ import Resolver
 import Backend
 
 class AccountsPrefViewModel: ObservableObject {
-    @Injected var dataSource: AccountsPrefDataRepository
+    @Injected var dataSource: AccountsPrefService
 }

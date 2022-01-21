@@ -58,11 +58,11 @@ extension Resolver {
     }
 
     public static func registerBackend() {
-        register { TdChatDataRepository() as ChatDataRepository }
+        register { TdChatService() as ChatService }
             .scope(.shared)
-        register { TdLoginDataRepository() as LoginDataDatabase }
+        register { TdLoginService() as LoginService }
             .scope(.shared)
-        register { TdAccountsPrefDataRepository() as AccountsPrefDataRepository }
+        register { TdAccountsPrefService() as AccountsPrefService }
             .scope(.shared)
     }
 }

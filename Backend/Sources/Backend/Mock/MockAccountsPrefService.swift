@@ -1,5 +1,5 @@
 //
-//  MockAccountsPrefDataRepository.swift
+//  MockAccountsPrefService.swift
 //  
 //
 //  Created by Егор Яковенко on 19.01.2022.
@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public class MockAccountsPrefDataRepository: AccountsPrefDataRepository {
+public class MockAccountsPrefService: AccountsPrefService {
     public func set(firstName: String) async throws { }
 
     public func set(lastName: String) async throws { }

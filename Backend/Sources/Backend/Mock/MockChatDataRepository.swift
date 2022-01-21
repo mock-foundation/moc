@@ -8,7 +8,7 @@
 import TDLibKit
 import Resolver
 
-public class MockChatDataRepository: ChatDataRepository {
+public class MockChatDataRepository: ChatService {
     public var messageHistory: [Message] = []
 
     public var draftMessage: DraftMessage?

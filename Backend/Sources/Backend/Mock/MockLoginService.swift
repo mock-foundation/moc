@@ -8,7 +8,7 @@
 import Combine
 import TDLibKit
 
-public class MockLoginDataRepository: LoginDataDatabase {
+public class MockLoginService: LoginService {
     public func requestQrCodeAuth() async throws { }
 
     public func checkAuth(phoneNumber: String) async throws { }

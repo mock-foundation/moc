@@ -1,5 +1,5 @@
 //
-//  ChatDataRepository.swift
+//  ChatService.swift
 //  
 //
 //  Created by Егор Яковенко on 18.01.2022.
@@ -7,7 +7,7 @@
 import Combine
 import TDLibKit
 
-public protocol ChatDataRepository {
+public protocol ChatService {
     // MARK: - Messages
     var messageHistory: [Message] { get async throws }
     var draftMessage: DraftMessage? { get async throws }

@@ -1,5 +1,5 @@
 //
-//  TdAccountsPrefDataRepository.swift
+//  TdAccountsPrefService.swift
 //  
 //
 //  Created by Егор Яковенко on 19.01.2022.
@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public class TdAccountsPrefDataRepository: AccountsPrefDataRepository {
+public class TdAccountsPrefService: AccountsPrefService {
     public var tdApi: TdApi = .shared[0]
 
     public func logOut() async throws {

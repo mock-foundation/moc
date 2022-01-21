@@ -270,10 +270,10 @@
 		43DD9616277E717C000CE509 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				432179AF279B06C9002AC3A1 /* Preferences */,
 				438326FA27877346004B0E18 /* ViewRouter.swift */,
 				438326F927872FC6004B0E18 /* AppKitBindings */,
 				43DD961A277E717C000CE509 /* Chat */,
+				432179AF279B06C9002AC3A1 /* Preferences */,
 				43DD961C277E717C000CE509 /* LoginView.swift */,
 				43DD961D277E717C000CE509 /* ChatItemView.swift */,
 				43DD961F277E717C000CE509 /* FolderItemView.swift */,

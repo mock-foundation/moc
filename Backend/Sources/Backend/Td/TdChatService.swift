@@ -1,5 +1,5 @@
 //
-//  TdChatDataSource.swift
+//  TdChatService.swift
 //  
 //
 //  Created by Егор Яковенко on 18.01.2022.
@@ -11,7 +11,7 @@ import Logging
 import Foundation
 import SystemUtils
 
-public class TdChatDataRepository: ChatDataRepository {
+public class TdChatService: ChatService {
     private var logger = Logger(label: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 
@@ -32,7 +32,7 @@ public class TdChatDataRepository: ChatDataRepository {
                     senderId: .messageSenderChat(.init(chatId: chatId!))
                 )
             default:
-                throw ChatDataSourceError.cantBeBlocked
+                throw ChatServiceError.cantBeBlocked
         }
     }
 
@@ -45,10 +45,10 @@ public class TdChatDataRepository: ChatDataRepository {
     }
 
     // MARK: - Messages
-    @Published public var messageHistory: [Message] = []
+    public var messageHistory: [Message] = []
 
     // MARK: - Chat info
-    @Published public var chatTitle: String = "" {
+    public var chatTitle: String = "" {
         didSet {
             Task {
                 try await tdApi.setChatTitle(chatId: self.chatId, title: self.chatTitle)

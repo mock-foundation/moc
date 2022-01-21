@@ -1,5 +1,5 @@
 //
-//  TdLoginDataRepository.swift
+//  TdLoginService.swift
 //  
 //
 //  Created by Егор Яковенко on 19.01.2022.
@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public class TdLoginDataRepository: LoginDataDatabase {
+public class TdLoginService: LoginService {
     private var tdApi: TdApi = .shared[0]
 
     public func checkAuth(phoneNumber: String) async throws {

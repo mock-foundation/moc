@@ -1,5 +1,5 @@
 //
-//  AccountsPrefDataRepository.swift
+//  AccountsPrefService.swift
 //  
 //
 //  Created by Егор Яковенко on 19.01.2022.
@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public protocol AccountsPrefDataRepository {
+public protocol AccountsPrefService {
     func logOut() async throws
 
     func set(firstName: String) async throws
