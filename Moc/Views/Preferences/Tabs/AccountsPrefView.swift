@@ -190,11 +190,12 @@ struct AccountsPrefView: View {
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
                     Button(action: { }) {
-                        Label("Change", systemImage: "square.and.pencil")
+                        Label("Update profile photo", systemImage: "square.and.pencil")
                     }
                 }
             } footer: {
                 Text("Chat photo that will be shown next to your messages.")
+                    .foregroundStyle(.secondary)
             }
             TextField("First name", text: $lastName)
                 .textFieldStyle(.roundedBorder)
@@ -220,23 +221,24 @@ struct AccountsPrefView: View {
                         try await viewModel.dataSource.set(username: username)
                     }
                 }
-            TextField("Bio", text: $bioText)
-                .textFieldStyle(.roundedBorder)
-                .onSubmit {
-                    Task {
-                        try await viewModel.dataSource.set(bio: bioText)
-                    }
-                }
-                .frame(width: 350)
             Section {
-                HStack {
-                    Text(phoneNumber)
-                    Button(action: { }) {
-                        Label("Change", systemImage: "square.and.pencil")
+                TextField("Bio", text: $bioText)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit {
+                        Task {
+                            try await viewModel.dataSource.set(bio: bioText)
+                        }
                     }
+                    .frame(width: 350)
+            } footer: {
+                Text("Any details such as age, occupation or city. Example: 23 y.o designer from San Francisco.")
+                    .foregroundStyle(.secondary)
+            }
+            HStack {
+                Text(phoneNumber)
+                Button(action: { }) {
+                    Label("Change", systemImage: "square.and.pencil")
                 }
-            } header: {
-                Text("Phone number")
             }
         }
         .frame(width: 450)
