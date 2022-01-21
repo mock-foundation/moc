@@ -16,6 +16,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: |
-          ls -a
+          mkdir Moc/Generated/Sources
+          mkdir Moc/Generated/Sources/Generated
           xcodebuild build -scheme "Moc"
-          ls -a
