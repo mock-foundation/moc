@@ -294,6 +294,9 @@ struct ChatView: View {
 }
 
 struct ChatView_Previews: PreviewProvider {
+    init() {
+        Resolver.register { MockChatService() as ChatService }
+    }
     static var previews: some View {
         ChatView(/*chat: Chat(
             actionBar: .none,

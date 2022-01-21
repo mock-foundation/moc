@@ -67,7 +67,24 @@ public class TdChatService: ChatService {
             return try await tdApi.getChat(chatId: chatId).type
         }
     }
-    public var chatMemberCount: Int?
+
+    public var chatMemberCount: Int? {
+        get async throws {
+            switch try await chatType {
+                case .chatTypeBasicGroup(let info):
+                    return try await tdApi.getBasicGroupFullInfo(
+                        basicGroupId: info.basicGroupId
+                    ).members.count
+                case .chatTypeSupergroup(let info):
+                    return try await tdApi.getSupergroupFullInfo(
+                        supergroupId: info.supergroupId
+                    ).memberCount
+                default:
+                    return nil
+            }
+        }
+    }
+
     public var protected: Bool {
         get async {
             return true

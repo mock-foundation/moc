@@ -9,6 +9,8 @@ import TDLibKit
 import Resolver
 
 public class MockChatService: ChatService {
+
+    public init() { }
     public var messageHistory: [Message] = []
 
     public var draftMessage: DraftMessage?
