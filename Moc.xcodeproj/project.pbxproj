@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		430B983F278B680600420D75 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 430B983E278B680600420D75 /* Lottie */; };
-		43217980279AF52F002AC3A1 /* Preferences in Frameworks */ = {isa = PBXBuildFile; productRef = 4321797F279AF52F002AC3A1 /* Preferences */; };
 		4321799B279B06AC002AC3A1 /* PreferencesContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217985279B06AB002AC3A1 /* PreferencesContent.swift */; };
 		4321799E279B06AC002AC3A1 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217989279B06AB002AC3A1 /* AccountsPrefView.swift */; };
 		4321799F279B06AC002AC3A1 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4321798A279B06AB002AC3A1 /* PrivacyView.swift */; };
@@ -131,7 +130,6 @@
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
-				43217980279AF52F002AC3A1 /* Preferences in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
@@ -333,7 +331,6 @@
 				43E8FD6627919DD30016BE31 /* Logging */,
 				436207A02794F6AD008C7FFE /* Generated */,
 				436207A52796A3D6008C7FFE /* Backend */,
-				4321797F279AF52F002AC3A1 /* Preferences */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -391,7 +388,6 @@
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
-				4321797E279AF52F002AC3A1 /* XCRemoteSwiftPackageReference "Preferences" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -794,14 +790,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		4321797E279AF52F002AC3A1 /* XCRemoteSwiftPackageReference "Preferences" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/Preferences.git";
-			requirement = {
-				kind = revision;
-				revision = ffeaaad1def45d0625720dc1adae3789cd9c167d;
-			};
-		};
 		4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -841,11 +829,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		4321797F279AF52F002AC3A1 /* Preferences */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4321797E279AF52F002AC3A1 /* XCRemoteSwiftPackageReference "Preferences" */;
-			productName = Preferences;
 		};
 		4357F91F278E35F700154012 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
