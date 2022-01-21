@@ -1,5 +1,5 @@
 //
-//  MockChatDataRepository.swift
+//  MockChatService.swift
 //  
 //
 //  Created by Егор Яковенко on 18.01.2022.
@@ -8,7 +8,7 @@
 import TDLibKit
 import Resolver
 
-public class MockChatDataRepository: ChatService {
+public class MockChatService: ChatService {
     public var messageHistory: [Message] = []
 
     public var draftMessage: DraftMessage?
