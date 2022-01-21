@@ -47,18 +47,19 @@ struct ChatItemView: View {
 					Text(chat.title)
 						.font(.title3)
 						.fontWeight(.bold)
+                        .foregroundStyle(Color.primary)
 					Spacer()
 //					Image(chat.seen ? "MessageSeenIcon" : "MessageSentIcon")
                     Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
-						.foregroundColor(.secondary)
-				}
+                        .foregroundStyle(Color.secondary)
+                }
 				HStack {
 					VStack {
                         Text("mock last message")
 							.multilineTextAlignment(.leading)
 							.fixedSize(horizontal: false, vertical: true)
 							.lineLimit(2)
-							.foregroundColor(.secondary)
+                            .foregroundStyle(Color.secondary)
 						Spacer()
 					}
 					Spacer()

@@ -40,7 +40,7 @@ struct ContentView: View {
                     VStack {
                         SearchField()
                             .padding([.leading, .bottom, .trailing], 15.0)
-                        List(mainViewModel.mainChatList) { chat in
+                        List(isArchiveChatListOpen ? mainViewModel.archiveChatList : mainViewModel.mainChatList) { chat in
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .onTapGesture {
@@ -58,7 +58,7 @@ struct ContentView: View {
                                 .background(
                                     (viewRouter.currentView == .chat
                                      && viewRouter.openedChat! == chat)
-                                    ? Color.blue.opacity(0.8)
+                                    ? Color.accentColor.opacity(0.6)
                                     : nil
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
@@ -124,7 +124,16 @@ struct ContentView: View {
                         }
                         sortMainChatList()
                     case .chatListArchive:
-                        break
+                        let chats = mainViewModel.unorderedChatList.filter { chat in
+                            return chat.id == chatId
+                        }
+                        for chat in chats {
+                            mainViewModel.archiveChatList.append(chat)
+                        }
+                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
+                            return $0.id != chatId
+                        }
+                        sortArchiveChatList()
                     case .chatListFilter(_):
                         break
                 }
@@ -157,15 +166,25 @@ struct ContentView: View {
 
     private func sortMainChatList() {
         mainViewModel.mainChatList = mainViewModel.mainChatList.sorted {
-            //                if !$0.positions.isEmpty && !$1.positions.isEmpty {
-            //                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-            //                } else {
-            //                    return true
-            //                }
-            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-                return true
+            if !$0.positions.isEmpty && !$1.positions.isEmpty {
+                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             } else {
-                return false
+                return true
+            }
+//            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
+//                return true
+//            } else {
+//                return false
+//            }
+        }
+    }
+
+    private func sortArchiveChatList() {
+        mainViewModel.archiveChatList = mainViewModel.archiveChatList.sorted {
+            if !$0.positions.isEmpty && !$1.positions.isEmpty {
+                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+            } else {
+                return true
             }
         }
     }
