@@ -22,9 +22,9 @@ struct ContentView: View {
     @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
 
-    @Injected private var chatDataSource: ChatDataSource
+    @InjectedObject private var chatViewModel: ChatViewModel
 
-    @StateObject private var mainViewModel = MainViewModel()
+    @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
 
     var body: some View {
@@ -44,7 +44,13 @@ struct ContentView: View {
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .onTapGesture {
-                                    chatDataSource.set(chat: chat)
+                                    Task {
+                                        do {
+                                            try await chatViewModel.update(chat: chat)
+                                        } catch {
+                                            logger.error("Error in \(error.localizedDescription)")
+                                        }
+                                    }
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
                                 }

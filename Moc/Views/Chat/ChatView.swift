@@ -70,7 +70,7 @@ private struct RoundedCorners: Shape {
 }
 
 struct ChatView: View {
-    @StateObject private var viewModel = ChatViewModel()
+    @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
 

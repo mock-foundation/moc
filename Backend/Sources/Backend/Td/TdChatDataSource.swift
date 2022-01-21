@@ -8,6 +8,8 @@
 import Combine
 import TDLibKit
 import Logging
+import Foundation
+import SystemUtils
 
 public class TdChatDataSource: ChatDataSource {
     private var logger = Logger(label: "TdChatDataSource")
@@ -81,5 +83,6 @@ public class TdChatDataSource: ChatDataSource {
 
     public func set(chat: Chat) {
         self.chatId = chat.id
+        SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
     }
 }

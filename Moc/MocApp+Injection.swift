@@ -53,7 +53,8 @@ extension Resolver {
     private static let logger = Logging.Logger(label: "TDLibUpdates")
 
     public static func registerUI() {
-        register { MainViewModel() }
+        register { MainViewModel() }.scope(.shared)
+        register { ChatViewModel() }.scope(.shared)
     }
 
     public static func registerBackend() {
