@@ -10,9 +10,7 @@ import Resolver
 import TDLibKit
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    @Injected var tdApi: TdApi
-
     private func applicationWillTerminate(_ notification: NSNotification) {
-        tdApi.client.close()
+        TdApi.shared[0].client.close()
     }
 }

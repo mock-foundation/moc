@@ -10,6 +10,7 @@ import TDLibKit
 import Resolver
 import Logging
 import SystemUtils
+import Backend
 
 extension Chat: Identifiable { }
 
@@ -21,10 +22,10 @@ struct ContentView: View {
     @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
 
-    @StateObject private var mainViewModel = MainViewModel()
-    @StateObject private var viewRouter = ViewRouter()
+    @InjectedObject private var chatViewModel: ChatViewModel
 
-    @Injected private var tdApi: TdApi
+    @InjectedObject private var mainViewModel: MainViewModel
+    @StateObject private var viewRouter = ViewRouter()
 
     var body: some View {
         NavigationView {
@@ -43,6 +44,13 @@ struct ContentView: View {
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .onTapGesture {
+                                    Task {
+                                        do {
+                                            try await chatViewModel.update(chat: chat)
+                                        } catch {
+                                            logger.error("Error in \(error.localizedDescription)")
+                                        }
+                                    }
                                     viewRouter.openedChat = chat
                                     viewRouter.currentView = .chat
                                 }
@@ -54,14 +62,13 @@ struct ContentView: View {
                                     : nil
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-
-//                                .swipeActions {
-//                                    Button(role: .destructive) {
-//                                        logger.info("Pressed Delete button")
-//                                    } label: {
-//                                        Label("Delete chat", systemImage: "trash")
-//                                    }
-//                                }
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        logger.info("Pressed Delete button")
+                                    } label: {
+                                        Label("Delete chat", systemImage: "trash")
+                                    }
+                                }
                         }
                         .frame(minWidth: 320)
                     }.toolbar {
@@ -89,10 +96,8 @@ struct ContentView: View {
                         Text("Select chat")
                     }
                 case .chat:
-                    VStack {
-                        ChatView(chat: viewRouter.openedChat!)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
+                    ChatView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .sheet(isPresented: $showingLoginScreen) {
@@ -151,7 +156,7 @@ struct ContentView: View {
     }
 
     private func sortMainChatList() {
-        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted(by: {
+        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted {
             //                if !$0.positions.isEmpty && !$1.positions.isEmpty {
             //                    return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             //                } else {
@@ -162,7 +167,7 @@ struct ContentView: View {
             } else {
                 return false
             }
-        })
+        }
     }
 }
 

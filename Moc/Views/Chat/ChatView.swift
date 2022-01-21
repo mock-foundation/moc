@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
-import TDLibKit
 import SwiftUIUtils
 import Resolver
 import SystemUtils
+import Backend
+import TDLibKit
 
 extension Message: Identifiable { }
 
@@ -69,12 +70,9 @@ private struct RoundedCorners: Shape {
 }
 
 struct ChatView: View {
-    let chat: Chat
+    @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
-    @Environment(\.colorScheme) var colorScheme
-
-    @Injected private var tdApi: TdApi
 
     // MARK: - Input field
     private var inputField: some View {
@@ -169,13 +167,13 @@ struct ChatView: View {
                     .resizable()
                     .frame(minWidth: 0, maxWidth: 86, minHeight: 0, maxHeight: 86)
                     .clipShape(Circle())
-                Text(chat.title)
+                Text(viewModel.chatTitle)
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.horizontal)
                     .frame(minWidth: 0, idealWidth: nil)
                     .multilineTextAlignment(.center)
-                Text("a ton of members")
+                Text("\(viewModel.chatMemberCount ?? 0) members")
 
                 // Quick actions
                 HStack(spacing: 24) {
@@ -194,6 +192,7 @@ struct ChatView: View {
                         imageName: "arrow.turn.up.right",
                         text: "Leave"
                     )
+                        .tint(.red)
                 }
                 .padding(.vertical)
                 .frame(minWidth: 0, idealWidth: nil)
@@ -260,7 +259,7 @@ struct ChatView: View {
                 }
                 ToolbarItem(placement: .navigation) {
                     VStack(alignment: .leading) {
-                        Text(chat.title)
+                        Text(viewModel.chatTitle)
                             .font(.headline)
                         Text("Some users were here lol")
                             .font(.subheadline)
@@ -291,39 +290,15 @@ struct ChatView: View {
                 //                chatViewModel.messages?.append(message)
                 //            }
             }
-            .task {
-                let history = try? await tdApi.getChatHistory(
-                    chatId: chat.id,
-                    fromMessageId: 0,
-                    limit: 50,
-                    offset: 0,
-                    onlyLocal: false
-                )
-
-                guard history != nil else {
-                    NSLog("edren baton")
-                    return
-                }
-
-                let messages = history!.messages
-
-                guard messages != nil else {
-                    NSLog("Pizdec")
-                    return
-                }
-
-                //                chatViewModel.messages = messages!
-
-                //                if self.messages == [] {
-                //                    NSLog("Pizdec")
-                //                }
-            }
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
+    init() {
+        Resolver.register { MockChatService() as ChatService }
+    }
     static var previews: some View {
-        ChatView(chat: Chat(
+        ChatView(/*chat: Chat(
             actionBar: .none,
             canBeDeletedForAllUsers: true,
             canBeDeletedOnlyForSelf: true,
@@ -380,7 +355,7 @@ struct ChatView_Previews: PreviewProvider {
                 defaultParticipantId: nil,
                 groupCallId: 0,
                 hasParticipants: false
-            )))
+            ))*/)
             .frame(width: 800, height: 600)
     }
 }

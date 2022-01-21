@@ -325,7 +325,7 @@ struct AccountsPrefView: View {
     }
 
     var body: some View {
-        if loading {
+         if loading {
             ProgressView()
                 .progressViewStyle(.circular)
                 .padding()
