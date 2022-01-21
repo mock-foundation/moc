@@ -1,5 +1,5 @@
 //
-//  MockChatDataSource.swift
+//  MockChatDataRepository.swift
 //  
 //
 //  Created by Егор Яковенко on 18.01.2022.
@@ -8,10 +8,10 @@
 import TDLibKit
 import Resolver
 
-public class MockChatDataSource: ChatDataSource {
+public class MockChatDataRepository: ChatDataRepository {
     public var messageHistory: [Message] = []
 
-    public var draftMessage: DraftMessage? = nil
+    public var draftMessage: DraftMessage?
 
     public func set(draft: DraftMessage?) async throws {
 

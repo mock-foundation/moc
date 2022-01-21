@@ -11,7 +11,7 @@ import Logging
 import Foundation
 import SystemUtils
 
-public class TdChatDataSource: ChatDataSource {
+public class TdChatDataRepository: ChatDataRepository {
     private var logger = Logger(label: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 

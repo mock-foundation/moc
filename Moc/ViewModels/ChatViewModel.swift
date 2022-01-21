@@ -13,7 +13,7 @@ import TDLibKit
 import Combine
 
 class ChatViewModel: ObservableObject {
-    @Injected private var dataSource: ChatDataSource
+    @Injected private var dataSource: ChatDataRepository
     private var queue: DispatchQueue = .main
 
     // MARK: - UI state

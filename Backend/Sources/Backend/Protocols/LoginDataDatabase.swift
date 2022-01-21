@@ -1,5 +1,5 @@
 //
-//  LoginDataSource.swift
+//  LoginDataDatabase.swift
 //  
 //
 //  Created by Егор Яковенко on 19.01.2022.
@@ -8,7 +8,7 @@
 import TDLibKit
 import Combine
 
-public protocol LoginDataSource {
+public protocol LoginDataDatabase {
     /// Requests login using a QR code.
     func requestQrCodeAuth() async throws
 

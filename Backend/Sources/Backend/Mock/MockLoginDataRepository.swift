@@ -1,5 +1,5 @@
 //
-//  MockLoginDataSource.swift
+//  MockLoginDataRepository.swift
 //  
 //
 //  Created by Егор Яковенко on 19.01.2022.
@@ -8,7 +8,7 @@
 import Combine
 import TDLibKit
 
-public class MockLoginDataSource: LoginDataSource {
+public class MockLoginDataRepository: LoginDataDatabase {
     public func requestQrCodeAuth() async throws { }
 
     public func checkAuth(phoneNumber: String) async throws { }
