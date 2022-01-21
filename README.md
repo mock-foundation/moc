@@ -2,7 +2,7 @@
 A (really) native and powerful macOS Telegram client, optimized
 for moderating large communities and personal use. 
 
-This client is currently **in development** and **not usable**. You can track progress by observing the [project table](https://github.com/users/ggoraa/projects/1), [issues](https://github.com/ggoraa/moc/issues), [pull requests](https://github.com/ggoraa/moc/pulls), and a [Telegram channel](https://t.me/moc_updates_ru) (russian).
+This client is currently **in development** and **not usable**. You can track progress by observing the [project table](https://github.com/users/ggoraa/projects/1/views/4), [issues](https://github.com/ggoraa/moc/issues), [pull requests](https://github.com/ggoraa/moc/pulls), and a [Telegram channel](https://t.me/moc_updates_ru) (russian).
 
 Project roadmap: [Craft](https://www.craft.do/s/rmUOSbIPXTVbCY)
 
