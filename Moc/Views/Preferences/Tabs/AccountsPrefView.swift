@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftUIUtils
-import Preferences
 import Resolver
 import ImageUtils
 import SystemUtils
@@ -183,10 +182,10 @@ struct AccountsPrefView: View {
     }
 
     private var rightColumnContent: some View {
-        Preferences.Container(contentWidth: 450) {
-            Preferences.Section(title: "Profile photo:") {
+        Form {
+            Section {
                 HStack {
-                Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
+                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
@@ -194,57 +193,50 @@ struct AccountsPrefView: View {
                         Label("Change", systemImage: "square.and.pencil")
                     }
                 }
+            } footer: {
                 Text("Chat photo that will be shown next to your messages.")
-                    .preferenceDescription()
             }
-            Preferences.Section(title: "First name:") {
-                TextField("First name", text: $firstName)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 150)
-                    .onSubmit {
-                        Task {
-                            try await viewModel.dataSource.set(firstName: firstName)
-                        }
+            TextField("First name", text: $lastName)
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 150)
+                .onSubmit {
+                    Task {
+                        try await viewModel.dataSource.set(lastName: lastName)
                     }
-            }
-            Preferences.Section(title: "Last name:") {
-                TextField("First name", text: $lastName)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 150)
-                    .onSubmit {
-                        Task {
-                            try await viewModel.dataSource.set(lastName: lastName)
-                        }
+                }
+            TextField("Last name", text: $lastName)
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 150)
+                .onSubmit {
+                    Task {
+                        try await viewModel.dataSource.set(lastName: lastName)
                     }
-            }
-            Preferences.Section(title: "Username:") {
-                TextField("Username", text: $username)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 150)
-                    .onSubmit {
-                        Task {
-                            try await viewModel.dataSource.set(username: username)
-                        }
+                }
+            TextField("Username", text: $username)
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 150)
+                .onSubmit {
+                    Task {
+                        try await viewModel.dataSource.set(username: username)
                     }
-
-            }
-            Preferences.Section(title: "Bio:") {
-                TextField("Bio", text: $bioText)
-                    .textFieldStyle(.roundedBorder)
-                    .onSubmit {
-                        Task {
-                            try await viewModel.dataSource.set(bio: bioText)
-                        }
+                }
+            TextField("Bio", text: $bioText)
+                .textFieldStyle(.roundedBorder)
+                .onSubmit {
+                    Task {
+                        try await viewModel.dataSource.set(bio: bioText)
                     }
-                    .frame(width: 350)
-            }
-            Preferences.Section(title: "Phone number:") {
+                }
+                .frame(width: 350)
+            Section {
                 HStack {
                     Text(phoneNumber)
                     Button(action: { }) {
                         Label("Change", systemImage: "square.and.pencil")
                     }
                 }
+            } header: {
+                Text("Phone number")
             }
         }
         .frame(width: 450)
