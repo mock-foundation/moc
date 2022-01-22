@@ -69,7 +69,11 @@ private struct RoundedCorners: Shape {
     }
 }
 
-struct ChatView: View {
+struct ChatView: View, Equatable {
+    static func == (lhs: ChatView, rhs: ChatView) -> Bool {
+        return false
+    }
+
     @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true

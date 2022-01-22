@@ -19,6 +19,7 @@
 		432179A5279B06AC002AC3A1 /* DevicesPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217990279B06AB002AC3A1 /* DevicesPrefView.swift */; };
 		432179A6279B06AC002AC3A1 /* GeneralPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217991279B06AB002AC3A1 /* GeneralPrefView.swift */; };
 		432179A7279B06AC002AC3A1 /* NotificationsAndSoundsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */; };
+		43425E12279C682C003E9493 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 43425E11279C682C003E9493 /* KeychainSwift */; };
 		4357F920278E35F700154012 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 4357F91F278E35F700154012 /* AlertToast */; };
 		436207A12794F6AD008C7FFE /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A02794F6AD008C7FFE /* Generated */; };
 		436207A62796A3D6008C7FFE /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A52796A3D6008C7FFE /* Backend */; };
@@ -76,16 +77,16 @@
 
 /* Begin PBXFileReference section */
 		43217985279B06AB002AC3A1 /* PreferencesContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesContent.swift; sourceTree = "<group>"; };
-		43217989279B06AB002AC3A1 /* AccountsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
-		4321798A279B06AB002AC3A1 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
-		4321798B279B06AB002AC3A1 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAndStoragePrefView.swift; sourceTree = "<group>"; };
-		4321798C279B06AB002AC3A1 /* AppearancePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefView.swift; sourceTree = "<group>"; };
-		4321798D279B06AB002AC3A1 /* StickersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersPrefView.swift; sourceTree = "<group>"; };
-		4321798E279B06AB002AC3A1 /* FoldersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersPrefView.swift; sourceTree = "<group>"; };
-		4321798F279B06AB002AC3A1 /* LanguagePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagePrefView.swift; sourceTree = "<group>"; };
-		43217990279B06AB002AC3A1 /* DevicesPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesPrefView.swift; sourceTree = "<group>"; };
-		43217991279B06AB002AC3A1 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPrefView.swift; sourceTree = "<group>"; };
-		43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
+		43217989279B06AB002AC3A1 /* AccountsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountsPrefView.swift; path = Tabs/AccountsPrefView.swift; sourceTree = "<group>"; };
+		4321798A279B06AB002AC3A1 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyView.swift; path = Tabs/PrivacyView.swift; sourceTree = "<group>"; };
+		4321798B279B06AB002AC3A1 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataAndStoragePrefView.swift; path = Tabs/DataAndStoragePrefView.swift; sourceTree = "<group>"; };
+		4321798C279B06AB002AC3A1 /* AppearancePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppearancePrefView.swift; path = Tabs/AppearancePrefView.swift; sourceTree = "<group>"; };
+		4321798D279B06AB002AC3A1 /* StickersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StickersPrefView.swift; path = Tabs/StickersPrefView.swift; sourceTree = "<group>"; };
+		4321798E279B06AB002AC3A1 /* FoldersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FoldersPrefView.swift; path = Tabs/FoldersPrefView.swift; sourceTree = "<group>"; };
+		4321798F279B06AB002AC3A1 /* LanguagePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagePrefView.swift; path = Tabs/LanguagePrefView.swift; sourceTree = "<group>"; };
+		43217990279B06AB002AC3A1 /* DevicesPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DevicesPrefView.swift; path = Tabs/DevicesPrefView.swift; sourceTree = "<group>"; };
+		43217991279B06AB002AC3A1 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPrefView.swift; path = Tabs/GeneralPrefView.swift; sourceTree = "<group>"; };
+		43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsAndSoundsPrefView.swift; path = Tabs/NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
 		4362079D2794E21B008C7FFE /* Generated */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Generated; sourceTree = "<group>"; };
 		4362079F2794F403008C7FFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		436207A42796A1D1008C7FFE /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
+				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 			);
@@ -148,7 +150,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		43217988279B06AB002AC3A1 /* Tabs */ = {
+		432179AF279B06C9002AC3A1 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
 				43217989279B06AB002AC3A1 /* AccountsPrefView.swift */,
@@ -161,14 +163,6 @@
 				43217990279B06AB002AC3A1 /* DevicesPrefView.swift */,
 				43217991279B06AB002AC3A1 /* GeneralPrefView.swift */,
 				43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */,
-			);
-			path = Tabs;
-			sourceTree = "<group>";
-		};
-		432179AF279B06C9002AC3A1 /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-				43217988279B06AB002AC3A1 /* Tabs */,
 				43217985279B06AB002AC3A1 /* PreferencesContent.swift */,
 			);
 			name = Preferences;
@@ -331,6 +325,7 @@
 				43E8FD6627919DD30016BE31 /* Logging */,
 				436207A02794F6AD008C7FFE /* Generated */,
 				436207A52796A3D6008C7FFE /* Backend */,
+				43425E11279C682C003E9493 /* KeychainSwift */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -388,6 +383,7 @@
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
+				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -671,7 +667,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.Moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -701,7 +697,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.Moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -790,6 +786,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 20.0.0;
+			};
+		};
 		4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -829,6 +833,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		43425E11279C682C003E9493 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
 		};
 		4357F91F278E35F700154012 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
