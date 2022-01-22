@@ -76,16 +76,16 @@
 
 /* Begin PBXFileReference section */
 		43217985279B06AB002AC3A1 /* PreferencesContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesContent.swift; sourceTree = "<group>"; };
-		43217989279B06AB002AC3A1 /* AccountsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
-		4321798A279B06AB002AC3A1 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
-		4321798B279B06AB002AC3A1 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAndStoragePrefView.swift; sourceTree = "<group>"; };
-		4321798C279B06AB002AC3A1 /* AppearancePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefView.swift; sourceTree = "<group>"; };
-		4321798D279B06AB002AC3A1 /* StickersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersPrefView.swift; sourceTree = "<group>"; };
-		4321798E279B06AB002AC3A1 /* FoldersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersPrefView.swift; sourceTree = "<group>"; };
-		4321798F279B06AB002AC3A1 /* LanguagePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagePrefView.swift; sourceTree = "<group>"; };
-		43217990279B06AB002AC3A1 /* DevicesPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesPrefView.swift; sourceTree = "<group>"; };
-		43217991279B06AB002AC3A1 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPrefView.swift; sourceTree = "<group>"; };
-		43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
+		43217989279B06AB002AC3A1 /* AccountsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountsPrefView.swift; path = Tabs/AccountsPrefView.swift; sourceTree = "<group>"; };
+		4321798A279B06AB002AC3A1 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyView.swift; path = Tabs/PrivacyView.swift; sourceTree = "<group>"; };
+		4321798B279B06AB002AC3A1 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataAndStoragePrefView.swift; path = Tabs/DataAndStoragePrefView.swift; sourceTree = "<group>"; };
+		4321798C279B06AB002AC3A1 /* AppearancePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppearancePrefView.swift; path = Tabs/AppearancePrefView.swift; sourceTree = "<group>"; };
+		4321798D279B06AB002AC3A1 /* StickersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StickersPrefView.swift; path = Tabs/StickersPrefView.swift; sourceTree = "<group>"; };
+		4321798E279B06AB002AC3A1 /* FoldersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FoldersPrefView.swift; path = Tabs/FoldersPrefView.swift; sourceTree = "<group>"; };
+		4321798F279B06AB002AC3A1 /* LanguagePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagePrefView.swift; path = Tabs/LanguagePrefView.swift; sourceTree = "<group>"; };
+		43217990279B06AB002AC3A1 /* DevicesPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DevicesPrefView.swift; path = Tabs/DevicesPrefView.swift; sourceTree = "<group>"; };
+		43217991279B06AB002AC3A1 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPrefView.swift; path = Tabs/GeneralPrefView.swift; sourceTree = "<group>"; };
+		43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsAndSoundsPrefView.swift; path = Tabs/NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
 		4362079D2794E21B008C7FFE /* Generated */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Generated; sourceTree = "<group>"; };
 		4362079F2794F403008C7FFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		436207A42796A1D1008C7FFE /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		43217988279B06AB002AC3A1 /* Tabs */ = {
+		432179AF279B06C9002AC3A1 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
 				43217989279B06AB002AC3A1 /* AccountsPrefView.swift */,
@@ -161,14 +161,6 @@
 				43217990279B06AB002AC3A1 /* DevicesPrefView.swift */,
 				43217991279B06AB002AC3A1 /* GeneralPrefView.swift */,
 				43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */,
-			);
-			path = Tabs;
-			sourceTree = "<group>";
-		};
-		432179AF279B06C9002AC3A1 /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-				43217988279B06AB002AC3A1 /* Tabs */,
 				43217985279B06AB002AC3A1 /* PreferencesContent.swift */,
 			);
 			name = Preferences;
