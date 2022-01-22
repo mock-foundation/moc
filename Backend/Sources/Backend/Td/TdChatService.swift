@@ -21,15 +21,15 @@ public class TdChatService: ChatService {
 
     public func set(blocked: Bool) async throws {
         switch try await chatType {
-            case .chatTypePrivate(_):
+            case .chatTypePrivate(let info):
                 _ = try await tdApi.toggleMessageSenderIsBlocked(
                     isBlocked: blocked,
-                    senderId: .messageSenderUser(.init(userId: chatId!))
+                    senderId: .messageSenderUser(.init(userId: info.userId))
                 )
-            case .chatTypeSupergroup(_):
+            case .chatTypeSupergroup(let info):
                 _ = try await tdApi.toggleMessageSenderIsBlocked(
                     isBlocked: blocked,
-                    senderId: .messageSenderChat(.init(chatId: chatId!))
+                    senderId: .messageSenderChat(.init(chatId: info.supergroupId))
                 )
             default:
                 throw ChatServiceError.cantBeBlocked

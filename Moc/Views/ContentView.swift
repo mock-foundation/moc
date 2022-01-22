@@ -40,7 +40,11 @@ struct ContentView: View {
                     VStack {
                         SearchField()
                             .padding([.leading, .bottom, .trailing], 15.0)
-                        List(isArchiveChatListOpen ? mainViewModel.archiveChatList : mainViewModel.mainChatList) { chat in
+                        List(
+                            isArchiveChatListOpen
+                            ? mainViewModel.archiveChatList
+                            : mainViewModel.mainChatList
+                        ) { chat in
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
                                 .onTapGesture {
@@ -81,6 +85,7 @@ struct ContentView: View {
                             Spacer()
                         }
                         ToolbarItem(placement: .status) {
+                            // swiftlint:disable multiple_closures_with_trailing_closure
                             Button(action: { logger.info("Pressed add chat") }) {
                                 Image(systemName: "square.and.pencil")
                             }
@@ -134,7 +139,7 @@ struct ContentView: View {
                             return $0.id != chatId
                         }
                         sortArchiveChatList()
-                    case .chatListFilter(_):
+                    default:
                         break
                 }
             }

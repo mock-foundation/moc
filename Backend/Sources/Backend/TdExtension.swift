@@ -22,6 +22,7 @@ public extension TdApi {
 
     private static let logger = Logging.Logger(label: "TDLibUpdates")
 
+    // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
         Task {
             #if DEBUG

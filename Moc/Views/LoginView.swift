@@ -146,7 +146,9 @@ struct LoginView: View {
                                     Task {
                                         withAnimation { showLoadingSpinner = true }
                                         do {
-                                            try await dataSource.checkAuth(phoneNumber: "+\(selectedNumberCode)\(phoneNumber)")
+                                            try await dataSource.checkAuth(
+                                                phoneNumber: "+\(selectedNumberCode)\(phoneNumber)"
+                                            )
                                         } catch {
                                             showErrorAlert = true
                                         }
