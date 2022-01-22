@@ -39,4 +39,4 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
       - name: Build
         run: |
-          xcodebuild build
+          xcodebuild -configuration Debug build
