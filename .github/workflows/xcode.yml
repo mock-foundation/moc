@@ -18,4 +18,5 @@ jobs:
         run: |
           mkdir Generated/Sources
           mkdir Generated/Sources/Generated
+          xcodebuild -resolverPackageDependencies
           xcodebuild build -scheme "Moc"
