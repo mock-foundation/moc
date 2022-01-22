@@ -13,15 +13,14 @@ struct MessageBubbleView: View {
     @State var content: String
 
 	var body: some View {
-        HStack {
-            Image("MockChatPhoto")
-                .resizable()
-                .frame(width: 36, height: 36)
-                .clipShape(Circle())
-                .padding(.leading, 8)
-                .vBottom()
+//        HStack {
+//            Image("MockChatPhoto")
+//                .resizable()
+//                .frame(width: 36, height: 36)
+//                .clipShape(Circle())
+//                .padding(.leading, 8)
+//                .vBottom()
             ZStack {
-                // Background
                 Image("ChatMessageBubbleRecipient")
                     .resizable(capInsets: EdgeInsets(
                         top: 18,
@@ -40,7 +39,7 @@ struct MessageBubbleView: View {
                 .padding(.leading)
                 .padding([.bottom, .top, .trailing], 6)
             }
-        }
+//        }
 	}
 }
 
