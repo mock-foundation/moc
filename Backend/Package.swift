@@ -13,22 +13,9 @@ let package = Package(
             name: "Backend",
             targets: ["Backend"])
     ],
-    dependencies: [
-        .package(
-            name: "TDLibKit",
-            url: "https://github.com/Swiftgram/TDLibKit.git",
-            .revisionItem("e78aef926cdd92323755bcb72309aa5afed1f02a")
-        ),
-        .package(
-            name: "KeychainSwift",
-            url: "https://github.com/evgenyneu/keychain-swift.git",
-            .exactItem("20.0.0"))
-    ],
+    dependencies: [],
     targets: [.target(
             name: "Backend",
-            dependencies: [
-                "TDLibKit",
-                "KeychainSwift"
-            ])
+            dependencies: [])
     ]
 )

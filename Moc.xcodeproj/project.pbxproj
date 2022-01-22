@@ -19,6 +19,8 @@
 		432179A5279B06AC002AC3A1 /* DevicesPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217990279B06AB002AC3A1 /* DevicesPrefView.swift */; };
 		432179A6279B06AC002AC3A1 /* GeneralPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217991279B06AB002AC3A1 /* GeneralPrefView.swift */; };
 		432179A7279B06AC002AC3A1 /* NotificationsAndSoundsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */; };
+		43425E0F279C6765003E9493 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43425E0E279C6765003E9493 /* TDLibKit */; };
+		43425E12279C682C003E9493 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 43425E11279C682C003E9493 /* KeychainSwift */; };
 		4357F920278E35F700154012 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 4357F91F278E35F700154012 /* AlertToast */; };
 		436207A12794F6AD008C7FFE /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A02794F6AD008C7FFE /* Generated */; };
 		436207A62796A3D6008C7FFE /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 436207A52796A3D6008C7FFE /* Backend */; };
@@ -133,7 +135,9 @@
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
+				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
+				43425E0F279C6765003E9493 /* TDLibKit in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +327,8 @@
 				43E8FD6627919DD30016BE31 /* Logging */,
 				436207A02794F6AD008C7FFE /* Generated */,
 				436207A52796A3D6008C7FFE /* Backend */,
+				43425E0E279C6765003E9493 /* TDLibKit */,
+				43425E11279C682C003E9493 /* KeychainSwift */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -380,6 +386,8 @@
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
+				43425E0D279C6765003E9493 /* XCRemoteSwiftPackageReference "TDLibKit" */,
+				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -782,6 +790,22 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		43425E0D279C6765003E9493 /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
+			requirement = {
+				kind = revision;
+				revision = e78aef926cdd92323755bcb72309aa5afed1f02a;
+			};
+		};
+		43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 20.0.0;
+			};
+		};
 		4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -821,6 +845,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		43425E0E279C6765003E9493 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43425E0D279C6765003E9493 /* XCRemoteSwiftPackageReference "TDLibKit" */;
+			productName = TDLibKit;
+		};
+		43425E11279C682C003E9493 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
 		};
 		4357F91F278E35F700154012 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
