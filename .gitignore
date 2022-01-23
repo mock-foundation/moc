@@ -1,8 +1,11 @@
 .DS_Store
 /.build
+build
 /Packages
 xcuserdata/
-xcshareddata/
+!Moc.xcodeproj/project.xcworkspace/xcshareddata/
+Moc.xcodeproj/project.xcworkspace/xcshareddata/*
+!Moc.xcodeproj/project.xcworkspace/xcshareddata/xcschemes/
 DerivedData/
 contents.xcworkspacedata
 *.resolved
