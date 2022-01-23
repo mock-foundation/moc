@@ -13,11 +13,9 @@ let package = Package(
             name: "Backend",
             targets: ["Backend"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/Swiftgram/TDLibKit.git", .revisionItem("e78aef926cdd92323755bcb72309aa5afed1f02a"))
-    ],
+    dependencies: [],
     targets: [.target(
             name: "Backend",
-            dependencies: ["TDLibKit"])
+            dependencies: [])
     ]
 )

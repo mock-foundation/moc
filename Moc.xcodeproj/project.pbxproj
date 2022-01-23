@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4301E936279DC485001ACEEB /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4301E935279DC485001ACEEB /* TDLibKit */; };
 		430B983F278B680600420D75 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 430B983E278B680600420D75 /* Lottie */; };
 		4321799B279B06AC002AC3A1 /* PreferencesContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217985279B06AB002AC3A1 /* PreferencesContent.swift */; };
 		4321799E279B06AC002AC3A1 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217989279B06AB002AC3A1 /* AccountsPrefView.swift */; };
@@ -133,6 +134,7 @@
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
+				4301E936279DC485001ACEEB /* TDLibKit in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
 				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
@@ -312,6 +314,16 @@
 			buildRules = (
 			);
 			dependencies = (
+				4301E938279DC49F001ACEEB /* PBXTargetDependency */,
+				4301E933279DC434001ACEEB /* PBXTargetDependency */,
+				4301E931279DC427001ACEEB /* PBXTargetDependency */,
+				4301E92F279DC423001ACEEB /* PBXTargetDependency */,
+				4301E92D279DC41E001ACEEB /* PBXTargetDependency */,
+				4301E92B279DC40E001ACEEB /* PBXTargetDependency */,
+				4301E929279DC40B001ACEEB /* PBXTargetDependency */,
+				4301E927279DC408001ACEEB /* PBXTargetDependency */,
+				4301E925279DC405001ACEEB /* PBXTargetDependency */,
+				4301E923279DC401001ACEEB /* PBXTargetDependency */,
 			);
 			name = Moc;
 			packageProductDependencies = (
@@ -326,6 +338,7 @@
 				436207A02794F6AD008C7FFE /* Generated */,
 				436207A52796A3D6008C7FFE /* Backend */,
 				43425E11279C682C003E9493 /* KeychainSwift */,
+				4301E935279DC485001ACEEB /* TDLibKit */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -384,6 +397,7 @@
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
 				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -521,6 +535,46 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4301E923279DC401001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E922279DC401001ACEEB /* Backend */;
+		};
+		4301E925279DC405001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E924279DC405001ACEEB /* Generated */;
+		};
+		4301E927279DC408001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E926279DC408001ACEEB /* SystemUtils */;
+		};
+		4301E929279DC40B001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E928279DC40B001ACEEB /* ImageUtils */;
+		};
+		4301E92B279DC40E001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E92A279DC40E001ACEEB /* Resolver */;
+		};
+		4301E92D279DC41E001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E92C279DC41E001ACEEB /* SwiftUIUtils */;
+		};
+		4301E92F279DC423001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E92E279DC423001ACEEB /* Lottie */;
+		};
+		4301E931279DC427001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E930279DC427001ACEEB /* AlertToast */;
+		};
+		4301E933279DC434001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E932279DC434001ACEEB /* KeychainSwift */;
+		};
+		4301E938279DC49F001ACEEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 4301E937279DC49F001ACEEB /* TDLibKit */;
+		};
 		43DD9573277E50C3000CE509 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43DD955F277E50C0000CE509 /* Moc */;
@@ -778,6 +832,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
+			requirement = {
+				kind = revision;
+				revision = e78aef926cdd92323755bcb72309aa5afed1f02a;
+			};
+		};
 		430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -829,6 +891,57 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4301E922279DC401001ACEEB /* Backend */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Backend;
+		};
+		4301E924279DC405001ACEEB /* Generated */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Generated;
+		};
+		4301E926279DC408001ACEEB /* SystemUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SystemUtils;
+		};
+		4301E928279DC40B001ACEEB /* ImageUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ImageUtils;
+		};
+		4301E92A279DC40E001ACEEB /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+		4301E92C279DC41E001ACEEB /* SwiftUIUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
+			productName = SwiftUIUtils;
+		};
+		4301E92E279DC423001ACEEB /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		4301E930279DC427001ACEEB /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+		4301E932279DC434001ACEEB /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+		4301E935279DC485001ACEEB /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */;
+			productName = TDLibKit;
+		};
+		4301E937279DC49F001ACEEB /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */;
+			productName = TDLibKit;
+		};
 		430B983E278B680600420D75 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
