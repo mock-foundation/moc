@@ -124,12 +124,12 @@ public extension TdApi {
 
     static var tdDatabaseEncryptionKey: Data {
         let keychain = KeychainSwift()
-        let encryptionKey = keychain.getData("tdDatabaseEncryptionKey")
+        let encryptionKey = keychain.getData(tdDatabaseEncryptionKeyName)
         if encryptionKey == nil {
             let key = SymmetricKey(size: .bits256).withUnsafeBytes {
                 return Data(Array($0))
             }
-            keychain.set(key, forKey: "tdDatabaseEncryptionKey", withAccess: .accessibleAfterFirstUnlock)
+            keychain.set(key, forKey: tdDatabaseEncryptionKeyName, withAccess: .accessibleAfterFirstUnlock)
             return key
         } else {
             return encryptionKey!

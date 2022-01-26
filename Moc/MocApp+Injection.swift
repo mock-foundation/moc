@@ -16,11 +16,12 @@ import Backend
 
 final class TdLogger: TDLibKit.Logger {
     private let logger = Logging.Logger(label: "TDLib")
+    let queue: DispatchQueue
 
     func log(_ message: String, type: LoggerMessageType?) {
         queue.async {
             guard type != nil else {
-                self.logger.info("TDLibKit: \(message)")
+                self.logger.info("\(message)")
                 return
             }
 
@@ -37,12 +38,10 @@ final class TdLogger: TDLibKit.Logger {
             }
 
             #if DEBUG
-            self.logger.info("TDLibKit: \(typeStr) \(message)")
+            self.logger.info("\(typeStr) \(message)")
             #endif
         }
     }
-
-    let queue: DispatchQueue
 
     init() {
         queue = DispatchQueue(label: "TDLibKitLog", qos: .userInitiated)
@@ -76,7 +75,15 @@ struct MocApp: App {
     init() {
         Resolver.registerUI()
         Resolver.registerBackend()
-        TdApi.shared.append(TdApi(client: TdClientImpl(completionQueue: .main, logger: TdLogger())))
+        TdApi.shared.append(TdApi(
+            client: TdClientImpl(
+                completionQueue: DispatchQueue(
+                    label: tdCompletionQueueLabel,
+                    qos: .userInteractive
+                ),
+                logger: TdLogger()
+            )
+        ))
         TdApi.shared[0].startTdLibUpdateHandler()
     }
 
