@@ -29,6 +29,7 @@
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E46727833B040084F809 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386E46627833B040084F809 /* LottieView.swift */; };
 		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; settings = {ATTRIBUTES = (Required, ); }; };
+		43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43B1697D279E8A5E00AEBAE0 /* TDLibKit */; };
 		43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C0278F121F00236503 /* ImageUtils */; };
 		43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C3278F3DEF00236503 /* SystemUtils */; };
 		43D6DB68279946AA0068CE9D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D6DB67279946AA0068CE9D /* ChatViewModel.swift */; };
@@ -48,7 +49,6 @@
 		43DD9643277E7558000CE509 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43DD9642277E7558000CE509 /* Resolver */; };
 		43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9645277E7579000CE509 /* libc++.1.tbd */; };
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
-		43E01B8B279DD161000952AE /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43E01B8A279DD161000952AE /* TDLibKit */; };
 		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
 		43E8FD6727919DD30016BE31 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 43E8FD6627919DD30016BE31 /* Logging */; };
 /* End PBXBuildFile section */
@@ -134,7 +134,7 @@
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
-				43E01B8B279DD161000952AE /* TDLibKit in Frameworks */,
+				43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
 				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
@@ -304,6 +304,7 @@
 			buildConfigurationList = 43DD9585277E50C3000CE509 /* Build configuration list for PBXNativeTarget "Moc" */;
 			buildPhases = (
 				43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */,
+				43B16980279E943400AEBAE0 /* GYB Code generation */,
 				43DD955C277E50C0000CE509 /* Sources */,
 				43FB9654278B051E00FB86FF /* Run SwiftLint */,
 				43DD955D277E50C0000CE509 /* Frameworks */,
@@ -313,16 +314,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				43E01B95279E033B000952AE /* PBXTargetDependency */,
-				43E01B93279DD178000952AE /* PBXTargetDependency */,
-				43E01B91279DD175000952AE /* PBXTargetDependency */,
-				43E01B8D279DD16D000952AE /* PBXTargetDependency */,
-				4301E938279DC49F001ACEEB /* PBXTargetDependency */,
-				4301E933279DC434001ACEEB /* PBXTargetDependency */,
-				4301E931279DC427001ACEEB /* PBXTargetDependency */,
-				4301E92F279DC423001ACEEB /* PBXTargetDependency */,
-				4301E92D279DC41E001ACEEB /* PBXTargetDependency */,
-				4301E92B279DC40E001ACEEB /* PBXTargetDependency */,
 			);
 			name = Moc;
 			packageProductDependencies = (
@@ -337,7 +328,7 @@
 				436207A02794F6AD008C7FFE /* Generated */,
 				436207A52796A3D6008C7FFE /* Backend */,
 				43425E11279C682C003E9493 /* KeychainSwift */,
-				43E01B8A279DD161000952AE /* TDLibKit */,
+				43B1697D279E8A5E00AEBAE0 /* TDLibKit */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -428,6 +419,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		43B16980279E943400AEBAE0 /* GYB Code generation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "GYB Code generation";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -514,50 +523,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4301E92B279DC40E001ACEEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 4301E92A279DC40E001ACEEB /* Resolver */;
-		};
-		4301E92D279DC41E001ACEEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 4301E92C279DC41E001ACEEB /* SwiftUIUtils */;
-		};
-		4301E92F279DC423001ACEEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 4301E92E279DC423001ACEEB /* Lottie */;
-		};
-		4301E931279DC427001ACEEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 4301E930279DC427001ACEEB /* AlertToast */;
-		};
-		4301E933279DC434001ACEEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 4301E932279DC434001ACEEB /* KeychainSwift */;
-		};
-		4301E938279DC49F001ACEEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 4301E937279DC49F001ACEEB /* TDLibKit */;
-		};
 		43DD9573277E50C3000CE509 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43DD955F277E50C0000CE509 /* Moc */;
 			targetProxy = 43DD9572277E50C3000CE509 /* PBXContainerItemProxy */;
-		};
-		43E01B8D279DD16D000952AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43E01B8C279DD16D000952AE /* Backend */;
-		};
-		43E01B91279DD175000952AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43E01B90279DD175000952AE /* SystemUtils */;
-		};
-		43E01B93279DD178000952AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43E01B92279DD178000952AE /* ImageUtils */;
-		};
-		43E01B95279E033B000952AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43E01B94279E033B000952AE /* Generated */;
 		};
 /* End PBXTargetDependency section */
 
@@ -872,36 +841,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4301E92A279DC40E001ACEEB /* Resolver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
-			productName = Resolver;
-		};
-		4301E92C279DC41E001ACEEB /* SwiftUIUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
-			productName = SwiftUIUtils;
-		};
-		4301E92E279DC423001ACEEB /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-		4301E930279DC427001ACEEB /* AlertToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
-		};
-		4301E932279DC434001ACEEB /* KeychainSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */;
-			productName = KeychainSwift;
-		};
-		4301E937279DC49F001ACEEB /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */;
-			productName = TDLibKit;
-		};
 		430B983E278B680600420D75 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
@@ -935,6 +874,11 @@
 			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
 			productName = SwiftUIUtils;
 		};
+		43B1697D279E8A5E00AEBAE0 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */;
+			productName = TDLibKit;
+		};
 		43C7B4C0278F121F00236503 /* ImageUtils */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ImageUtils;
@@ -947,27 +891,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
-		};
-		43E01B8A279DD161000952AE /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */;
-			productName = TDLibKit;
-		};
-		43E01B8C279DD16D000952AE /* Backend */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Backend;
-		};
-		43E01B90279DD175000952AE /* SystemUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SystemUtils;
-		};
-		43E01B92279DD178000952AE /* ImageUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ImageUtils;
-		};
-		43E01B94279E033B000952AE /* Generated */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Generated;
 		};
 		43E8FD6627919DD30016BE31 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
