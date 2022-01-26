@@ -41,4 +41,4 @@ jobs:
         env:
           DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
         run: |
-          xcodebuild -configuration Debug build
+          xcodebuild -scheme Moc clean build
