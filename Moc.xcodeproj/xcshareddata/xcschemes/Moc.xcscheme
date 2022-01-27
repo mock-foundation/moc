@@ -5,15 +5,6 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
-      <PreActions>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "echo &quot;${PROJECT_DIR}/Moc/Generated&quot;&#10;cd $PROJECT_DIR&#10;cd Moc/Generated&#10;find . -name &quot;*.gyb&quot; |                                                       \&#10;    while read file; do                                                      \&#10;        gyb --line-directive &apos;&apos; -o &quot;Sources/Generated/${file%.gyb}&quot; &quot;$file&quot;; \&#10;    done&#10;&#10;">
-            </ActionContent>
-         </ExecutionAction>
-      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"

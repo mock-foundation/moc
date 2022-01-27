@@ -446,7 +446,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+			shellScript = "cd Generated\nfind . -name \"*.gyb\" |                                                       \\\n    while read file; do                                                      \\\n        gyb --line-directive '' -o \"Sources/Generated/${file%.gyb}\" \"$file\"; \\\n    done\n\n";
 		};
 		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
 			isa = PBXShellScriptBuildPhase;
