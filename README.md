@@ -1,4 +1,8 @@
-# Moc
+<p align="center">
+<img src="https://github.com/ggoraa/moc/raw/master/Moc/Assets.xcassets/AppIcon.appiconset/icon_256x256.png">
+</p>
+<h1 align="center">Moc</h1>
+
 A (really) native and powerful macOS Telegram client, optimized
 for moderating large communities and personal use. 
 
