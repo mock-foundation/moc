@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DevicesPrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Device Preferences")
     }
 }
 

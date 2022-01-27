@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LanguagePrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Language Preferences")
     }
 }
 

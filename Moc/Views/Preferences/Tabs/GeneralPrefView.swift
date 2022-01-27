@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GeneralPrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Folder Preferences")
     }
 }
 

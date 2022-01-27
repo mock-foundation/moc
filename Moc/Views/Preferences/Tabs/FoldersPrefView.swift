@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FoldersPrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Folders Preferences") 
     }
 }
 

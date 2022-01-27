@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotificationsAndSoundsPrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Notification and Sound Preferences")
     }
 }
 

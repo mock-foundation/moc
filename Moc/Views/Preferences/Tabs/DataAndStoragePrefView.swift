@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DataAndStoragePrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Data And Storage Preferences")
     }
 }
 

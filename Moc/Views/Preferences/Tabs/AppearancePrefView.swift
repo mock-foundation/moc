@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppearancePrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Appearance Preferences")
     }
 }
 

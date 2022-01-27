@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StickersPrefView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Sticker Preferences")
     }
 }
 
