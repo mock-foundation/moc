@@ -22,7 +22,7 @@ public struct PreferencesContent: View {
                 }
             PrivacyView()
                 .tabItem {
-                    Label("Privacy", systemImage: "lock")
+                    Label("Privacy and Security", systemImage: "lock")
                 }
             DataAndStoragePrefView()
                 .tabItem {
@@ -30,7 +30,7 @@ public struct PreferencesContent: View {
                 }
             DevicesPrefView()
                 .tabItem {
-                    Label("Devices", systemImage: "laptopcomputer.and.iphone")
+                    Label("Active Sessions", systemImage: "laptopcomputer.and.iphone")
                 }
             AppearancePrefView()
                 .tabItem {
