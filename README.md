@@ -26,7 +26,7 @@ The development is going with Xcode 13.2. You can download it from
 
 ## Step 2 - Obtain `api_id` and `api_hash`
 
-They can be obtained at https://my.telegram.org. Log in, open **API devevelolment tools**, and fill up needed info. Then click **Save changes**
+They can be obtained [here](https://my.telegram.org/). Log in, open **API devevelolment tools**, and fill up needed info. Then click **Save changes**
 at the bottom of the page. Leave the page open, this will be needed in the next step!
 
 ## Step 3 - Set up development environment
