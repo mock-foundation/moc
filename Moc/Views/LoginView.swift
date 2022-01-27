@@ -5,13 +5,14 @@
 //  Created by Егор Яковенко on 25.12.2021.
 //
 
-import SwiftUI
-import Resolver
-import SwiftUIUtils
+import Backend
 import CoreImage.CIFilterBuiltins
 import Logging
+import Resolver
+import SFSymbols
+import SwiftUI
+import SwiftUIUtils
 import TDLibKit
-import Backend
 
 private enum OpenedScreen {
     case phoneNumber
@@ -35,7 +36,7 @@ private extension String {
 
     func isNumber() -> Bool {
         let numberCharacters = NSCharacterSet.decimalDigits.inverted
-        return !self.isEmpty && (self.rangeOfCharacter(from: numberCharacters) != nil)
+        return !isEmpty && (rangeOfCharacter(from: numberCharacters) != nil)
     }
 }
 
@@ -86,7 +87,7 @@ struct LoginView: View {
             }
         }
 
-        return NSImage(systemSymbolName: "xmark.circle", accessibilityDescription: nil) ?? NSImage()
+        return NSImage(.xmark.circle)
     }
 
     var body: some View {
@@ -95,7 +96,7 @@ struct LoginView: View {
             Button(action: {
                 showExitAlert = true
             }) {
-                Image(systemName: "xmark")
+                Image(.xmark)
             }
             .buttonStyle(.plain)
             .keyboardShortcut(.escape, modifiers: [])
@@ -104,119 +105,123 @@ struct LoginView: View {
             .padding()
 
             switch openedScreen {
-                case .welcome:
-                    VStack {
-                        Image("WelcomeScreenImage")
-                            .resizable()
-                            .frame(width: 206, height: 206)
-                            .padding(.top)
-                        Text("Welcome to Moc!")
-                            .font(.largeTitle)
-                        Text("Choose your login method")
-                        Spacer()
-                        Button("Continue using phone number") {
-                            openedScreen = .phoneNumber
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                        .padding(.bottom, 8)
-                        Button("Continue using QR code") {
-                            Task {
-                                try? await dataSource.requestQrCodeAuth()
-                            }
-                        }
-                        .controlSize(.large)
-                        Spacer()
+            case .welcome:
+                VStack {
+                    Image("WelcomeScreenImage")
+                        .resizable()
+                        .frame(width: 206, height: 206)
+                        .padding(.top)
+                    Text("Welcome to Moc!")
+                        .font(.largeTitle)
+                    Text("Choose your login method")
+                    Spacer()
+                    Button(action: {
+                        openedScreen = .phoneNumber
+                    }) {
+                        Label("Continue using phone number", systemImage: SFSymbol.phone.name)
                     }
-                case .phoneNumber:
-                    VStack {
-                        Spacer()
-                        Text("Enter your phone number")
-                            .font(.title)
-                        HStack {
-                            Picker("", selection: $selectedNumberCode) {
-                                ForEach(phoneNumberCodes, id: \.name) { info in
-                                    Text("\(info.countryCode) (+\(info.callingCodes[0]))")
-                                        .tag(Int(info.callingCodes[0])!)
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .padding(.bottom, 8)
+                    Button(action: {
+                        Task {
+                            try? await dataSource.requestQrCodeAuth()
+                        }
+                    }) {
+                        Label("Continue using QR Code", systemImage: "qrcode")
+                    }
+                    .controlSize(.large)
+                    Spacer()
+                }
+            case .phoneNumber:
+                VStack {
+                    Spacer()
+                    Text("Enter your phone number")
+                        .font(.title)
+                    HStack {
+                        Picker("", selection: $selectedNumberCode) {
+                            ForEach(phoneNumberCodes, id: \.name) { info in
+                                Text("\(info.countryCode) (+\(info.callingCodes[0]))")
+                                    .tag(Int(info.callingCodes[0])!)
+                            }
+                        }
+                        .frame(width: 100)
+                        TextField("Phone number", text: $phoneNumber)
+                            .onSubmit {
+                                Task {
+                                    withAnimation { showLoadingSpinner = true }
+                                    do {
+                                        try await dataSource.checkAuth(
+                                            phoneNumber: "+\(selectedNumberCode)\(phoneNumber)"
+                                        )
+                                    } catch {
+                                        showErrorAlert = true
+                                    }
+                                    withAnimation { showLoadingSpinner = false }
                                 }
                             }
-                            .frame(width: 100)
-                            TextField("Phone number", text: $phoneNumber)
-                                .onSubmit {
-                                    Task {
-                                        withAnimation { showLoadingSpinner = true }
-                                        do {
-                                            try await dataSource.checkAuth(
-                                                phoneNumber: "+\(selectedNumberCode)\(phoneNumber)"
-                                            )
-                                        } catch {
-                                            showErrorAlert = true
-                                        }
-                                        withAnimation { showLoadingSpinner = false }
-                                    }
-                                }
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 156)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 156)
+                    }
+                    if showLoadingSpinner {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .padding()
+                    }
+                    Spacer()
+                    Button("Use QR Code") {
+                        Task {
+                            do {
+                                _ = try await dataSource.requestQrCodeAuth()
+                            } catch {
+                                showErrorAlert = true
+                            }
                         }
-                        if showLoadingSpinner {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                                .padding()
-                        }
-                        Spacer()
-                        Button("Use QR Code") {
+                    }
+                    .padding()
+                    .buttonStyle(.borderless)
+                }
+
+            case .code:
+                VStack {
+                    Text("Enter the code")
+                        .font(.title)
+                    TextField("Code", text: $code)
+                        .onSubmit {
                             Task {
                                 do {
-                                    _ = try await dataSource.requestQrCodeAuth()
+                                    withAnimation { showLoadingSpinner = true }
+                                    try await dataSource.checkAuth(code: code)
+                                    withAnimation { showLoadingSpinner = false }
                                 } catch {
                                     showErrorAlert = true
                                 }
                             }
                         }
-                        .padding()
-                        .buttonStyle(.borderless)
+                        .frame(width: 156)
+                        .textFieldStyle(.roundedBorder)
+                    if showLoadingSpinner {
+                        ProgressView()
+                            .progressViewStyle(.circular)
                     }
-
-                case .code:
+                }
+            case .qrCode:
+                VStack(spacing: 12) {
+                    Text("Login using a QR code")
+                        .font(.title)
+                        .padding(.top)
+                    // QR Code
+                    Image(nsImage: generateQRCode(from: qrCodeLink))
+                        .resizable()
+                        .interpolation(.none)
+                        .scaledToFit()
+                        .frame(width: 150, height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                     VStack {
-                        Text("Enter the code")
-                            .font(.title)
-                        TextField("Code", text: $code)
-                            .onSubmit {
-                                Task {
-                                    do {
-                                        withAnimation { showLoadingSpinner = true }
-                                        try await dataSource.checkAuth(code: code)
-                                        withAnimation { showLoadingSpinner = false }
-                                    } catch {
-                                        showErrorAlert = true
-                                    }
-                                }
-                            }
-                            .frame(width: 156)
-                            .textFieldStyle(.roundedBorder)
-                        if showLoadingSpinner {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                        }
+                        stepView(number: 1, text: "Open Telegram from your phone")
+                        stepView(number: 2, text: "Go to **Settings** -> **Devices** -> **Connect device**.")
+                        stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
                     }
-                case .qrCode:
-                    VStack(spacing: 12) {
-                        Text("Login using a QR code")
-                            .font(.title)
-                            .padding(.top)
-                        // QR Code
-                        Image(nsImage: generateQRCode(from: qrCodeLink))
-                            .resizable()
-                            .interpolation(.none)
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                        VStack {
-                            stepView(number: 1, text: "Open Telegram from your phone")
-                            stepView(number: 2, text: "Go to **Settings** -> **Devices** -> **Connect device**.")
-                            stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
-                        }
 
 //                        Button("Use phone number") {
 //                            Task {
@@ -224,40 +229,39 @@ struct LoginView: View {
 //                            }
 //                        }
 //                        .buttonStyle(.borderless)
-                        .frame(width: 200)
-                        .padding()
-                    }
+                    .frame(width: 200)
                     .padding()
+                }
+                .padding()
 
-                case .registration:
-                    Text("Register a new Telegram account")
+            case .registration:
+                Text("Register a new Telegram account")
+                    .font(.title)
+            case .twoFACode:
+                VStack {
+                    Text("Enter your Two Factor Authentication (2FA) password")
                         .font(.title)
-                case .twoFACode:
-                    VStack {
-                        Text("Enter your Two Factor Authentication (2FA) password")
-                            .font(.title)
-                            .multilineTextAlignment(.center)
-                        SecureField("Password", text: $twoFactorAuthPassword)
-                            .onSubmit {
-                                Task {
-                                    withAnimation { showLoadingSpinner = true }
-                                    if (try? await dataSource.checkAuth(
-                                        password: twoFactorAuthPassword
-                                    )) == nil {
-                                        showErrorAlert = true
-                                    }
-                                    withAnimation { showLoadingSpinner = false }
+                        .multilineTextAlignment(.center)
+                    SecureField("Password", text: $twoFactorAuthPassword)
+                        .onSubmit {
+                            Task {
+                                withAnimation { showLoadingSpinner = true }
+                                if (try? await dataSource.checkAuth(
+                                    password: twoFactorAuthPassword
+                                )) == nil {
+                                    showErrorAlert = true
                                 }
+                                withAnimation { showLoadingSpinner = false }
                             }
-                            .textFieldStyle(.roundedBorder)
-                            .padding()
-                        if showLoadingSpinner {
-                            ProgressView()
-                                .progressViewStyle(.circular)
                         }
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                    if showLoadingSpinner {
+                        ProgressView()
+                            .progressViewStyle(.circular)
                     }
+                }
             }
-
         }
         .task {
             let countries = try? await dataSource.countries
@@ -274,7 +278,7 @@ struct LoginView: View {
         .alert(
             "Error",
             isPresented: $showErrorAlert,
-            actions: { },
+            actions: {},
             message: { Text("You typed in wrong/bad data. Please try again!") }
         )
         .alert("You sure you want to exit?", isPresented: $showExitAlert) {
@@ -285,11 +289,11 @@ struct LoginView: View {
                     NSApp.terminate(self)
                 }
             }
-            Button("Not really") { }
+            Button("Not really") {}
         }
         .onReceive(NotificationCenter.default.publisher(
             for: .authorizationStateWaitOtherDeviceConfirmation,
-               object: nil
+            object: nil
         )) { notification in
             self.qrCodeLink = (notification.object as? AuthorizationStateWaitOtherDeviceConfirmation)!.link
             openedScreen = .qrCode

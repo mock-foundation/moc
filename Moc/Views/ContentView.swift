@@ -5,14 +5,15 @@
 //  Created by Егор Яковенко on 24.12.2021.
 //
 
-import SwiftUI
-import TDLibKit
-import Resolver
-import Logging
-import SystemUtils
 import Backend
+import Logging
+import Resolver
+import SFSymbols
+import SwiftUI
+import SystemUtils
+import TDLibKit
 
-extension Chat: Identifiable { }
+extension Chat: Identifiable {}
 
 struct ContentView: View {
     private let logger = Logging.Logger(label: "ContentView")
@@ -32,7 +33,7 @@ struct ContentView: View {
             VStack {
                 HStack {
                     ScrollView(showsIndicators: false) {
-                        ForEach(0..<10, content: { _ in
+                        ForEach(0 ..< 10, content: { _ in
                             FolderItemView()
                         }).frame(alignment: .center)
                     }
@@ -42,8 +43,8 @@ struct ContentView: View {
                             .padding([.leading, .bottom, .trailing], 15.0)
                         List(
                             isArchiveChatListOpen
-                            ? mainViewModel.archiveChatList
-                            : mainViewModel.mainChatList
+                                ? mainViewModel.archiveChatList
+                                : mainViewModel.mainChatList
                         ) { chat in
                             ChatItemView(chat: chat)
                                 .frame(height: 52)
@@ -61,16 +62,16 @@ struct ContentView: View {
                                 .padding(6)
                                 .background(
                                     (viewRouter.currentView == .chat
-                                     && viewRouter.openedChat! == chat)
-                                    ? Color.accentColor.opacity(0.6)
-                                    : nil
+                                        && viewRouter.openedChat! == chat)
+                                        ? Color.accentColor.opacity(0.6)
+                                        : nil
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                 .swipeActions {
                                     Button(role: .destructive) {
                                         logger.info("Pressed Delete button")
                                     } label: {
-                                        Label("Delete chat", systemImage: "trash")
+                                        Label("Delete chat", systemImage: SFSymbol.trash.name)
                                     }
                                 }
                         }
@@ -78,7 +79,7 @@ struct ContentView: View {
                     }.toolbar {
                         ToolbarItem(placement: .status) {
                             Toggle(isOn: $isArchiveChatListOpen) {
-                                Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
+                                Image(isArchiveChatListOpen ? .archivebox.fill : .archivebox)
                             }
                         }
                         ToolbarItem(placement: .status) {
@@ -87,7 +88,7 @@ struct ContentView: View {
                         ToolbarItem(placement: .status) {
                             // swiftlint:disable multiple_closures_with_trailing_closure
                             Button(action: { logger.info("Pressed add chat") }) {
-                                Image(systemName: "square.and.pencil")
+                                Image(.square.andPencil)
                             }
                         }
                     }
@@ -96,13 +97,13 @@ struct ContentView: View {
             .listStyle(.sidebar)
 
             switch viewRouter.currentView {
-                case .selectChat:
-                    VStack {
-                        Text("Select chat")
-                    }
-                case .chat:
-                    ChatView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .selectChat:
+                VStack {
+                    Text("Select chat")
+                }
+            case .chat:
+                ChatView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .sheet(isPresented: $showingLoginScreen) {
@@ -117,30 +118,30 @@ struct ContentView: View {
 
             if mainViewModel.unorderedChatList.contains(where: { $0.id == chatId }) {
                 switch position.list {
-                    case .chatListMain:
-                        let chats = mainViewModel.unorderedChatList.filter { chat in
-                            return chat.id == chatId
-                        }
-                        for chat in chats {
-                            mainViewModel.mainChatList.append(chat)
-                        }
-                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
-                            return $0.id != chatId
-                        }
-                        sortMainChatList()
-                    case .chatListArchive:
-                        let chats = mainViewModel.unorderedChatList.filter { chat in
-                            return chat.id == chatId
-                        }
-                        for chat in chats {
-                            mainViewModel.archiveChatList.append(chat)
-                        }
-                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
-                            return $0.id != chatId
-                        }
-                        sortArchiveChatList()
-                    default:
-                        break
+                case .chatListMain:
+                    let chats = mainViewModel.unorderedChatList.filter { chat in
+                        chat.id == chatId
+                    }
+                    for chat in chats {
+                        mainViewModel.mainChatList.append(chat)
+                    }
+                    mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
+                        return $0.id != chatId
+                    }
+                    sortMainChatList()
+                case .chatListArchive:
+                    let chats = mainViewModel.unorderedChatList.filter { chat in
+                        chat.id == chatId
+                    }
+                    for chat in chats {
+                        mainViewModel.archiveChatList.append(chat)
+                    }
+                    mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
+                        return $0.id != chatId
+                    }
+                    sortArchiveChatList()
+                default:
+                    break
                 }
             }
         }
@@ -162,7 +163,6 @@ struct ContentView: View {
             logger.info("\(chat)")
 
             sortMainChatList()
-
         }
         .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)) { _ in
             showingLoginScreen = true
@@ -171,7 +171,7 @@ struct ContentView: View {
 
     private func sortMainChatList() {
         mainViewModel.mainChatList = mainViewModel.mainChatList.sorted {
-            if !$0.positions.isEmpty && !$1.positions.isEmpty {
+            if !$0.positions.isEmpty, !$1.positions.isEmpty {
                 return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             } else {
                 return true
@@ -186,7 +186,7 @@ struct ContentView: View {
 
     private func sortArchiveChatList() {
         mainViewModel.archiveChatList = mainViewModel.archiveChatList.sorted {
-            if !$0.positions.isEmpty && !$1.positions.isEmpty {
+            if !$0.positions.isEmpty, !$1.positions.isEmpty {
                 return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             } else {
                 return true

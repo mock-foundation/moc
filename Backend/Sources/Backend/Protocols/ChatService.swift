@@ -1,6 +1,6 @@
 //
 //  ChatService.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 18.01.2022.
 //
@@ -9,10 +9,13 @@ import TDLibKit
 
 public protocol ChatService {
     // MARK: - Messages
+
     var messageHistory: [Message] { get async throws }
     var draftMessage: DraftMessage? { get async throws }
     func set(draft: DraftMessage?) async throws
+
     // MARK: - Chat info
+
     /// `nil` when nothing to show
     var chatId: Int64? { get async throws }
     var chatTitle: String { get async throws }

@@ -11,6 +11,7 @@ import TDLibKit
 
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
+
     @Published var mainChatList: [Chat] = []
     @Published var archiveChatList: [Chat] = []
     @Published var folderChatLists: [Int: [Chat]] = [:]

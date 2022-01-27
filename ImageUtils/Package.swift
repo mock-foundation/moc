@@ -6,17 +6,19 @@ import PackageDescription
 let package = Package(
     name: "ImageUtils",
     platforms: [
-        .macOS(.v12)
+        .macOS(.v12),
     ],
     products: [
         .library(
             name: "ImageUtils",
-            targets: ["ImageUtils"])
+            targets: ["ImageUtils"]
+        ),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "ImageUtils",
-            dependencies: [])
+            dependencies: []
+        ),
     ]
 )

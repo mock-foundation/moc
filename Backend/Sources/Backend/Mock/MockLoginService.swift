@@ -1,6 +1,6 @@
 //
 //  MockLoginDataRepository.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 19.01.2022.
 //
@@ -9,13 +9,13 @@ import Combine
 import TDLibKit
 
 public class MockLoginService: LoginService {
-    public func requestQrCodeAuth() async throws { }
+    public func requestQrCodeAuth() async throws {}
 
-    public func checkAuth(phoneNumber: String) async throws { }
+    public func checkAuth(phoneNumber _: String) async throws {}
 
-    public func checkAuth(code: String) async throws { }
+    public func checkAuth(code _: String) async throws {}
 
-    public func checkAuth(password: String) async throws { }
+    public func checkAuth(password _: String) async throws {}
 
     public var countries: [CountryInfo] = [
         CountryInfo(
@@ -24,7 +24,7 @@ public class MockLoginService: LoginService {
             englishName: "UA",
             isHidden: false,
             name: "Ukraine"
-        )
+        ),
     ]
 
     public var countryCode: String = "380"

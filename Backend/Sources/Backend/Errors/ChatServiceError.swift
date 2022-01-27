@@ -1,6 +1,6 @@
 //
 //  ChatServiceError.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 20.01.2022.
 //

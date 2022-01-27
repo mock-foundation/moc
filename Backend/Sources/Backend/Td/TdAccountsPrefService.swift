@@ -1,6 +1,6 @@
 //
 //  TdAccountsPrefService.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 19.01.2022.
 //
@@ -31,15 +31,15 @@ public class TdAccountsPrefService: AccountsPrefService {
     }
 
     public func getMe() async throws -> User {
-        return try await tdApi.getMe()
+        try await tdApi.getMe()
     }
 
     public func getFullInfo() async throws -> UserFullInfo {
-        return try await tdApi.getUserFullInfo(userId: try await getMe().id)
+        try await tdApi.getUserFullInfo(userId: try await getMe().id)
     }
 
     public func getProfilePhotos() async throws -> [ChatPhoto] {
-        return try await tdApi.getUserProfilePhotos(limit: 100, offset: 0, userId: try await getMe().id).photos
+        try await tdApi.getUserProfilePhotos(limit: 100, offset: 0, userId: try await getMe().id).photos
     }
 
     public func downloadFile(
@@ -47,7 +47,7 @@ public class TdAccountsPrefService: AccountsPrefService {
         priority: Int = 32,
         synchronous: Bool = true
     ) async throws -> File {
-        return try await tdApi.downloadFile(
+        try await tdApi.downloadFile(
             fileId: fileId,
             limit: 0,
             offset: 0,
@@ -56,5 +56,5 @@ public class TdAccountsPrefService: AccountsPrefService {
         )
     }
 
-    public init() { }
+    public init() {}
 }

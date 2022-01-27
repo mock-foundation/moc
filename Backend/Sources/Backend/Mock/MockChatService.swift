@@ -1,23 +1,20 @@
 //
 //  MockChatService.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 18.01.2022.
 //
 
-import TDLibKit
 import Resolver
+import TDLibKit
 
 public class MockChatService: ChatService {
-
-    public init() { }
+    public init() {}
     public var messageHistory: [Message] = []
 
     public var draftMessage: DraftMessage?
 
-    public func set(draft: DraftMessage?) async throws {
-
-    }
+    public func set(draft _: DraftMessage?) async throws {}
 
     public var chatId: Int64? = 0
 
@@ -31,19 +28,11 @@ public class MockChatService: ChatService {
 
     public var blocked: Bool = false
 
-    public func set(chat: Chat) {
+    public func set(chat _: Chat) {}
 
-    }
+    public func set(protected _: Bool) async throws {}
 
-    public func set(protected: Bool) async throws {
+    public func set(blocked _: Bool) async throws {}
 
-    }
-
-    public func set(blocked: Bool) async throws {
-
-    }
-
-    public func set(chatTitle: String) async throws {
-
-    }
+    public func set(chatTitle _: String) async throws {}
 }

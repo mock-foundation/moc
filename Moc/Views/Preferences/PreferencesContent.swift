@@ -1,56 +1,57 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 21.01.2022.
 //
 
+import SFSymbols
 import SwiftUI
 
 public struct PreferencesContent: View {
-    public init() { }
+    public init() {}
 
     public var body: some View {
         TabView {
             GeneralPrefView()
                 .tabItem {
-                    Label("General", systemImage: "gear")
+                    Label("General", systemImage: SFSymbol.gear.name)
                 }
             NotificationsAndSoundsPrefView()
                 .tabItem {
-                    Label("Notifications and Sounds", systemImage: "bell")
+                    Label("Notifications and Sounds", systemImage: SFSymbol.bell.name)
                 }
             PrivacyView()
                 .tabItem {
-                    Label("Privacy", systemImage: "lock")
+                    Label("Privacy", systemImage: SFSymbol.lock.name)
                 }
             DataAndStoragePrefView()
                 .tabItem {
-                    Label("Data and Storage", systemImage: "externaldrive")
+                    Label("Data and Storage", systemImage: SFSymbol.externaldrive.name)
                 }
             DevicesPrefView()
                 .tabItem {
-                    Label("Devices", systemImage: "laptopcomputer.and.iphone")
+                    Label("Devices", systemImage: SFSymbol.laptopcomputer.andIphone.name)
                 }
             AppearancePrefView()
                 .tabItem {
-                    Label("Appearance", systemImage: "paintbrush")
+                    Label("Appearance", systemImage: SFSymbol.paintbrush.name)
                 }
             LanguagePrefView()
                 .tabItem {
-                    Label("Language", systemImage: "globe")
+                    Label("Language", systemImage: SFSymbol.globe.name)
                 }
             StickersPrefView()
                 .tabItem {
-                    Label("Stickers", systemImage: "rectangle.3.group.bubble.left")
+                    Label("Stickers", systemImage: SFSymbol.rectangle._3GroupBubbleLeft.name)
                 }
             FoldersPrefView()
                 .tabItem {
-                    Label("Folders", systemImage: "folder")
+                    Label("Folders", systemImage: SFSymbol.folder.name)
                 }
             AccountsPrefView()
                 .tabItem {
-                    Label("Accounts", systemImage: "person.circle")
+                    Label("Accounts", systemImage: SFSymbol.person.circle.name)
                 }
         }
         .frame(width: 800)

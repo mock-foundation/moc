@@ -5,13 +5,13 @@
 //  Created by Егор Яковенко on 03.01.2022.
 //
 
-import SwiftUI
 import Lottie
+import SwiftUI
 
 struct LottieView: NSViewRepresentable {
     typealias NSViewType = NSView
 
-    func makeNSView(context: Context) -> NSView {
+    func makeNSView(context _: Context) -> NSView {
         let view = NSView(frame: .zero)
 
         let animationView = AnimationView()
@@ -27,13 +27,13 @@ struct LottieView: NSViewRepresentable {
             animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
             animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
             animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
 
         return view
     }
 
-    func updateNSView(_ nsView: NSView, context: Context) {  }
+    func updateNSView(_: NSView, context _: Context) {}
 
     var filename: String
 }

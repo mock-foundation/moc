@@ -5,24 +5,25 @@
 //  Created by Егор Яковенко on 28.12.2021.
 //
 
+import Backend
+import Resolver
+import SFSymbols
 import SwiftUI
 import SwiftUIUtils
-import Resolver
 import SystemUtils
-import Backend
 import TDLibKit
 
-extension Message: Identifiable { }
+extension Message: Identifiable {}
 
-extension MessageContent {
-    public func toString() -> String {
+public extension MessageContent {
+    func toString() -> String {
         switch self {
-            case .messageText(let data):
-                return data.text.text
-            case .messageUnsupported:
-                return "This message is unsupported, sorry."
-            default:
-                return "This message is unsupported, sorry."
+        case let .messageText(data):
+            return data.text.text
+        case .messageUnsupported:
+            return "This message is unsupported, sorry."
+        default:
+            return "This message is unsupported, sorry."
         }
     }
 }
@@ -42,10 +43,10 @@ private struct RoundedCorners: Shape {
         let height = rect.size.height
 
         // Make sure we do not exceed the size of the rectangle
-        let tr = min(min(self.tr, height/2), width/2)
-        let tl = min(min(self.tl, height/2), width/2)
-        let bl = min(min(self.bl, height/2), width/2)
-        let br = min(min(self.br, height/2), width/2)
+        let tr = min(min(tr, height / 2), width / 2)
+        let tl = min(min(tl, height / 2), width / 2)
+        let bl = min(min(bl, height / 2), width / 2)
+        let br = min(min(br, height / 2), width / 2)
 
         path.move(to: CGPoint(x: width / 2.0, y: 0))
         path.addLine(to: CGPoint(x: width - tr, y: 0))
@@ -70,8 +71,8 @@ private struct RoundedCorners: Shape {
 }
 
 struct ChatView: View, Equatable {
-    static func == (lhs: ChatView, rhs: ChatView) -> Bool {
-        return false
+    static func == (_: ChatView, _: ChatView) -> Bool {
+        false
     }
 
     @InjectedObject private var viewModel: ChatViewModel
@@ -79,9 +80,10 @@ struct ChatView: View, Equatable {
     @State private var isInspectorShown = true
 
     // MARK: - Input field
+
     private var inputField: some View {
         HStack(spacing: 16) {
-            Image(systemName: "paperclip")
+            Image(.paperclip)
                 .font(.system(size: 16))
             TextField("Write a message...", text: $inputMessage)
                 .textFieldStyle(.plain)
@@ -90,18 +92,20 @@ struct ChatView: View, Equatable {
                 .background(
                     RoundedRectangle(
                         cornerRadius: 16)
-                            .strokeBorder(
-                                Color("InputFieldBorderColor"),
-                                lineWidth: 1)
+                        .strokeBorder(
+                            Color("InputFieldBorderColor"),
+                            lineWidth: 1
+                        )
                 )
-            Image(systemName: "face.smiling")
+            Image(.face.smiling)
                 .font(.system(size: 16))
-            Image(systemName: "mic")
+            Image(.mic)
                 .font(.system(size: 16))
         }
     }
 
     // MARK: - Chat view
+
     private var chatView: some View {
         VStack {
             ScrollViewReader { proxy in
@@ -122,10 +126,11 @@ struct ChatView: View, Equatable {
     }
 
     // MARK: - Additional inspector stuff
-    private func inspectorButton(action: @escaping () -> Void, imageName: String, text: String) -> some View {
+
+    private func inspectorButton(action: @escaping () -> Void, imageName: SFSymbol, text: String) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
-                Image(systemName: imageName)
+                Image(systemName: imageName.name)
                     .font(.system(size: 24))
                     .padding(4)
                 Text(text)
@@ -135,7 +140,7 @@ struct ChatView: View, Equatable {
         .buttonStyle(.borderless)
     }
 
-    private func userRow(name: String, status: UserStatus, photo: Image? = nil) -> some View {
+    private func userRow(name: String, status _: UserStatus, photo: Image? = nil) -> some View {
         HStack {
             if photo != nil {
                 photo!
@@ -163,6 +168,7 @@ struct ChatView: View, Equatable {
     @State private var selectedInspectorTab: InspectorTab = .users
 
     // MARK: - Chat inspector
+
     private var chatInspector: some View {
         ScrollView {
             LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
@@ -182,21 +188,21 @@ struct ChatView: View, Equatable {
                 // Quick actions
                 HStack(spacing: 24) {
                     inspectorButton(
-                        action: {  },
-                        imageName: "person.crop.circle.badge.plus",
+                        action: {},
+                        imageName: .person.cropCircleBadgePlus,
                         text: "Add"
                     )
                     inspectorButton(
-                        action: {  },
-                        imageName: "bell.slash",
+                        action: {},
+                        imageName: .bell.slash,
                         text: "Mute"
                     )
                     inspectorButton(
-                        action: {  },
-                        imageName: "arrow.turn.up.right",
+                        action: {},
+                        imageName: .arrow.turnUpRight,
                         text: "Leave"
                     )
-                        .tint(.red)
+                    .tint(.red)
                 }
                 .padding(.vertical)
                 .frame(minWidth: 0, idealWidth: nil)
@@ -205,24 +211,24 @@ struct ChatView: View, Equatable {
                 Section(content: {
                     ScrollView {
                         switch selectedInspectorTab {
-                            case .users:
-                                ForEach(0..<10) { index in
-                                    userRow(
-                                        name: "User \(index)",
-                                        status: .userStatusRecently,
-                                        photo: Image("MockChatPhoto")
-                                    )
-                                    .padding(.horizontal, 8)
-                                    .frame(minWidth: 0, idealWidth: nil)
-                                }
-                            case .media:
-                                Text("Media")
-                            case .links:
-                                Text("Links")
-                            case .files:
-                                Text("Files")
-                            case .voice:
-                                Text("Voice")
+                        case .users:
+                            ForEach(0 ..< 10) { index in
+                                userRow(
+                                    name: "User \(index)",
+                                    status: .userStatusRecently,
+                                    photo: Image("MockChatPhoto")
+                                )
+                                .padding(.horizontal, 8)
+                                .frame(minWidth: 0, idealWidth: nil)
+                            }
+                        case .media:
+                            Text("Media")
+                        case .links:
+                            Text("Links")
+                        case .files:
+                            Text("Files")
+                        case .voice:
+                            Text("Voice")
                         }
                     }
                 }, header: {
@@ -238,7 +244,6 @@ struct ChatView: View, Equatable {
                     .frame(minWidth: 0, idealWidth: nil)
                     .background(.ultraThinMaterial, in: RoundedCorners(tl: 0, tr: 0, bl: 8, br: 8))
                 })
-
             }
             .padding(.top)
         }
@@ -253,7 +258,9 @@ struct ChatView: View, Equatable {
                 .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
         }, isRightViewVisible: isInspectorShown)
             .navigationTitle("")
-        // MARK: - Toolbar
+
+            // MARK: - Toolbar
+
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     Image("MockChatPhoto")
@@ -273,7 +280,7 @@ struct ChatView: View, Equatable {
                     Button(action: {
                         print("search")
                     }, label: {
-                        Image(systemName: "magnifyingglass")
+                        Image(.magnifyingglass)
                     })
                     Button(action: { isInspectorShown.toggle() }, label: {
                         Image(systemName: "sidebar.right")
@@ -281,7 +288,7 @@ struct ChatView: View, Equatable {
                     Button(action: {
                         print("more")
                     }, label: {
-                        Image(systemName: "ellipsis")
+                        Image(.ellipsis)
                     })
                 }
             }
@@ -301,65 +308,66 @@ struct ChatView_Previews: PreviewProvider {
     init() {
         Resolver.register { MockChatService() as ChatService }
     }
+
     static var previews: some View {
-        ChatView(/*chat: Chat(
-            actionBar: .none,
-            canBeDeletedForAllUsers: true,
-            canBeDeletedOnlyForSelf: true,
-            canBeReported: true,
-            clientData: "",
-            defaultDisableNotification: true,
-            draftMessage: nil,
-            hasProtectedContent: false,
-            hasScheduledMessages: false,
-            id: 10294934 /* i just banged my head against the keyboard, so this number is completely random */,
-            isBlocked: false,
-            isMarkedAsUnread: false,
-            lastMessage: nil,
-            lastReadInboxMessageId: 102044379 /* the same */,
-            lastReadOutboxMessageId: 39439379573 /* again */,
-            messageSenderId: nil, messageTtl: 0,
-            notificationSettings: ChatNotificationSettings(
-                disableMentionNotifications: true,
-                disablePinnedMessageNotifications: true,
-                muteFor: 10,
-                showPreview: false,
-                sound: "",
-                useDefaultDisableMentionNotifications: true,
-                useDefaultDisablePinnedMessageNotifications: true,
-                useDefaultMuteFor: true,
-                useDefaultShowPreview: true,
-                useDefaultSound: true
-            ),
-            pendingJoinRequests: nil,
-            permissions: ChatPermissions(
-                canAddWebPagePreviews: true,
-                canChangeInfo: true,
-                canInviteUsers: true,
-                canPinMessages: true,
-                canSendMediaMessages: true,
-                canSendMessages: true,
-                canSendOtherMessages: true,
-                canSendPolls: true
-            ),
-            photo: nil,
-            positions: [],
-            replyMarkupMessageId: 1023948920349 /* my head hurts */,
-            themeName: "",
-            title: "Curry Club - Ninjas from the reeds",
-            type: .chatTypeBasicGroup(
-                .init(basicGroupId: 102343920
-                      // i really should use a proper random number generator
-                      // instead of using my head as a random number generator
-                )
-            ),
-            unreadCount: 0,
-            unreadMentionCount: 0,
-            videoChat: VideoChat(
-                defaultParticipantId: nil,
-                groupCallId: 0,
-                hasParticipants: false
-            ))*/)
-            .frame(width: 800, height: 600)
+        ChatView( /* chat: Chat(
+         actionBar: .none,
+         canBeDeletedForAllUsers: true,
+         canBeDeletedOnlyForSelf: true,
+         canBeReported: true,
+         clientData: "",
+         defaultDisableNotification: true,
+         draftMessage: nil,
+         hasProtectedContent: false,
+         hasScheduledMessages: false,
+         id: 10294934 /* i just banged my head against the keyboard, so this number is completely random */ ,
+         isBlocked: false,
+         isMarkedAsUnread: false,
+         lastMessage: nil,
+         lastReadInboxMessageId: 102044379 /* the same */ ,
+         lastReadOutboxMessageId: 39439379573 /* again */ ,
+         messageSenderId: nil, messageTtl: 0,
+         notificationSettings: ChatNotificationSettings(
+             disableMentionNotifications: true,
+             disablePinnedMessageNotifications: true,
+             muteFor: 10,
+             showPreview: false,
+             sound: "",
+             useDefaultDisableMentionNotifications: true,
+             useDefaultDisablePinnedMessageNotifications: true,
+             useDefaultMuteFor: true,
+             useDefaultShowPreview: true,
+             useDefaultSound: true
+         ),
+         pendingJoinRequests: nil,
+         permissions: ChatPermissions(
+             canAddWebPagePreviews: true,
+             canChangeInfo: true,
+             canInviteUsers: true,
+             canPinMessages: true,
+             canSendMediaMessages: true,
+             canSendMessages: true,
+             canSendOtherMessages: true,
+             canSendPolls: true
+         ),
+         photo: nil,
+         positions: [],
+         replyMarkupMessageId: 1023948920349 /* my head hurts */ ,
+         themeName: "",
+         title: "Curry Club - Ninjas from the reeds",
+         type: .chatTypeBasicGroup(
+             .init(basicGroupId: 102343920
+                   // i really should use a proper random number generator
+                   // instead of using my head as a random number generator
+             )
+         ),
+         unreadCount: 0,
+         unreadMentionCount: 0,
+         videoChat: VideoChat(
+             defaultParticipantId: nil,
+             groupCallId: 0,
+             hasParticipants: false
+         )) */ )
+         .frame(width: 800, height: 600)
     }
 }

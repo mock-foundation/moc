@@ -1,6 +1,6 @@
 //
 //  TdLoginService.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 19.01.2022.
 //
@@ -17,7 +17,7 @@ public class TdLoginService: LoginService {
         )
     }
 
-    public init() { }
+    public init() {}
 
     public func checkAuth(code: String) async throws {
         _ = try await tdApi.checkAuthenticationCode(code: code)
@@ -29,13 +29,13 @@ public class TdLoginService: LoginService {
 
     public var countries: [CountryInfo] {
         get async throws {
-            return (try? await tdApi.getCountries().countries) ?? []
+            (try? await tdApi.getCountries().countries) ?? []
         }
     }
 
     public var countryCode: String {
         get async throws {
-            return (try? await tdApi.getCountryCode().text) ?? "en"
+            (try? await tdApi.getCountryCode().text) ?? "en"
         }
     }
 

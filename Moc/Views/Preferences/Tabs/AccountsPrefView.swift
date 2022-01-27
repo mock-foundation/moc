@@ -5,15 +5,16 @@
 //  Created by Егор Яковенко on 12.01.2022.
 //
 
-import SwiftUI
-import SwiftUIUtils
-import Resolver
-import ImageUtils
-import SystemUtils
-import Combine
-import Logging
 import AlertToast
 import Backend
+import Combine
+import ImageUtils
+import Logging
+import Resolver
+import SFSymbols
+import SwiftUI
+import SwiftUIUtils
+import SystemUtils
 import TDLibKit
 
 struct AccountsPrefView: View {
@@ -37,15 +38,11 @@ struct AccountsPrefView: View {
     @State private var showLogOutSuccessfulToast = false
     @State private var showLogOutFailedToast = false
 
-    @State private var index: Int = 0
-    @State private var offset: CGFloat = 0
-    @State private var isUserSwiping: Bool = false
-
     private var photoSwitcher: some View {
         ZStack {
             VStack {
                 HStack {
-                    ForEach(0..<photos.count) {_ in
+                    ForEach(0 ..< photos.count) { _ in
                         RoundedRectangle(cornerRadius: 2, style: .continuous)
                             .padding(4)
                             .frame(maxWidth: .infinity, maxHeight: 4)
@@ -66,9 +63,6 @@ struct AccountsPrefView: View {
                     }
                 }
             }
-            .content
-            .animation(.spring(), value: self.index)
-            .offset(x: self.isUserSwiping ? self.offset : CGFloat(self.index) * -256)
             .frame(width: 256, height: 256, alignment: .leading)
         }.frame(width: 256, height: 256)
     }
@@ -95,7 +89,7 @@ struct AccountsPrefView: View {
                     ZStack {
                         VStack {
                             HStack {
-                                ForEach(0..<photos.count) {_ in
+                                ForEach(0 ..< photos.count) { _ in
                                     RoundedRectangle(cornerRadius: 2, style: .continuous)
                                         .padding(2)
                                         .frame(height: 2)
@@ -150,10 +144,8 @@ struct AccountsPrefView: View {
             .padding()
             // swiftlint:disable multiple_closures_with_trailing_closure
             HStack {
-                Button(action: {
-
-                }) {
-                    Label("Add account", systemImage: "person.badge.plus")
+                Button(action: {}) {
+                    Label("Add account", systemImage: SFSymbol.person.badgePlus.name)
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderless)
@@ -170,7 +162,9 @@ struct AccountsPrefView: View {
                         }
                     }
                 }) {
-                    Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
+                    // rectangle.portrait.and.arrow.right
+                    Label("Log out",
+                          systemImage: SFSymbol.rectangle.portraitAndArrowRight.name)
                 }
                 .tint(.red)
                 .controlSize(.large)
@@ -189,8 +183,9 @@ struct AccountsPrefView: View {
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
-                    Button(action: { }) {
-                        Label("Update profile photo", systemImage: "square.and.pencil")
+                    Button(action: {}) {
+                        Label("Update profile photo",
+                              systemImage: SFSymbol.square.andPencil.name)
                     }
                 }
             } footer: {
@@ -236,8 +231,8 @@ struct AccountsPrefView: View {
             }
             HStack {
                 Text(phoneNumber)
-                Button(action: { }) {
-                    Label("Change", systemImage: "square.and.pencil")
+                Button(action: {}) {
+                    Label("Change", systemImage: SFSymbol.square.andPencil.name)
                 }
             }
         }
@@ -292,7 +287,6 @@ struct AccountsPrefView: View {
         guard let profilePhoto = user!.profilePhoto else {
             loading = false
             return
-
         }
         photoFileId = Int64(profilePhoto.big.id)
         miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
@@ -319,7 +313,7 @@ struct AccountsPrefView: View {
     }
 
     var body: some View {
-         if loading {
+        if loading {
             ProgressView()
                 .progressViewStyle(.circular)
                 .padding()
@@ -332,7 +326,7 @@ struct AccountsPrefView: View {
                             await getAccountData()
                         }
                     }
-                    Button(role: .cancel, action: { }) {
+                    Button(role: .cancel, action: {}) {
                         Text("Cancel")
                     }
                 })

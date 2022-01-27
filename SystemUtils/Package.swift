@@ -6,12 +6,13 @@ import PackageDescription
 let package = Package(
     name: "SystemUtils",
     platforms: [
-        .macOS(.v12)
+        .macOS(.v12),
     ],
     products: [
         .library(
             name: "SystemUtils",
-            targets: ["SystemUtils"])
+            targets: ["SystemUtils"]
+        ),
     ],
     dependencies: [],
     targets: [
@@ -19,6 +20,6 @@ let package = Package(
             name: "SystemUtils",
             dependencies: [],
             resources: []
-        )
+        ),
     ]
 )

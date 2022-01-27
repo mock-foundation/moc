@@ -1,6 +1,6 @@
 //
 //  ColorExtension.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 18.01.2022.
 //

@@ -1,38 +1,38 @@
 //
 //  TdChatService.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 18.01.2022.
 //
 
 import Combine
-import TDLibKit
-import Logging
 import Foundation
+import Logging
 import SystemUtils
+import TDLibKit
 
 public class TdChatService: ChatService {
     private var logger = Logger(label: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 
-    public func set(protected: Bool) async throws {
+    public func set(protected _: Bool) async throws {
         logger.error("set(protected:) not implemented")
     }
 
     public func set(blocked: Bool) async throws {
         switch try await chatType {
-            case .chatTypePrivate(let info):
-                _ = try await tdApi.toggleMessageSenderIsBlocked(
-                    isBlocked: blocked,
-                    senderId: .messageSenderUser(.init(userId: info.userId))
-                )
-            case .chatTypeSupergroup(let info):
-                _ = try await tdApi.toggleMessageSenderIsBlocked(
-                    isBlocked: blocked,
-                    senderId: .messageSenderChat(.init(chatId: info.supergroupId))
-                )
-            default:
-                throw ChatServiceError.cantBeBlocked
+        case let .chatTypePrivate(info):
+            _ = try await tdApi.toggleMessageSenderIsBlocked(
+                isBlocked: blocked,
+                senderId: .messageSenderUser(.init(userId: info.userId))
+            )
+        case let .chatTypeSupergroup(info):
+            _ = try await tdApi.toggleMessageSenderIsBlocked(
+                isBlocked: blocked,
+                senderId: .messageSenderChat(.init(chatId: info.supergroupId))
+            )
+        default:
+            throw ChatServiceError.cantBeBlocked
         }
     }
 
@@ -45,9 +45,11 @@ public class TdChatService: ChatService {
     }
 
     // MARK: - Messages
+
     public var messageHistory: [Message] = []
 
     // MARK: - Chat info
+
     public var chatTitle: String = "" {
         didSet {
             Task {
@@ -58,48 +60,50 @@ public class TdChatService: ChatService {
 
     public var draftMessage: DraftMessage? {
         get async throws {
-            return try await tdApi.getChat(chatId: chatId).draftMessage
+            try await tdApi.getChat(chatId: chatId).draftMessage
         }
     }
+
     public var chatId: Int64?
     public var chatType: ChatType {
         get async throws {
-            return try await tdApi.getChat(chatId: chatId).type
+            try await tdApi.getChat(chatId: chatId).type
         }
     }
 
     public var chatMemberCount: Int? {
         get async throws {
             switch try await chatType {
-                case .chatTypeBasicGroup(let info):
-                    return try await tdApi.getBasicGroupFullInfo(
-                        basicGroupId: info.basicGroupId
-                    ).members.count
-                case .chatTypeSupergroup(let info):
-                    return try await tdApi.getSupergroupFullInfo(
-                        supergroupId: info.supergroupId
-                    ).memberCount
-                default:
-                    return nil
+            case let .chatTypeBasicGroup(info):
+                return try await tdApi.getBasicGroupFullInfo(
+                    basicGroupId: info.basicGroupId
+                ).members.count
+            case let .chatTypeSupergroup(info):
+                return try await tdApi.getSupergroupFullInfo(
+                    supergroupId: info.supergroupId
+                ).memberCount
+            default:
+                return nil
             }
         }
     }
 
     public var protected: Bool {
         get async {
-            return true
+            true
         }
     }
+
     public var blocked: Bool {
         get async {
-            return true
+            true
         }
     }
 
-    public init() { }
+    public init() {}
 
     public func set(chat: Chat) {
-        self.chatId = chat.id
+        chatId = chat.id
         SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
     }
 }

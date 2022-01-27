@@ -5,9 +5,9 @@
 //  Created by Егор Яковенко on 20.01.2022.
 //
 
+import Backend
 import Foundation
 import Resolver
-import Backend
 
 class AccountsPrefViewModel: ObservableObject {
     @Injected var dataSource: AccountsPrefService

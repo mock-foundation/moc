@@ -1,6 +1,6 @@
 //
 //  ColorExtension.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 12.01.2022.
 //
@@ -17,7 +17,7 @@ public extension Color {
             .purple,
             .pink,
             .blue,
-            .orange
+            .orange,
         ]
         let id = Int(String(userId).replacingOccurrences(of: "-100", with: "-"))!
         // colors[[0, 7, 4, 1, 6, 3, 5][id % 7]]

@@ -1,12 +1,12 @@
 //
 //  LoginService.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 19.01.2022.
 //
 
-import TDLibKit
 import Combine
+import TDLibKit
 
 public protocol LoginService {
     /// Requests login using a QR code.

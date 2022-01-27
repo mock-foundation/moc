@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		430B983F278B680600420D75 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 430B983E278B680600420D75 /* Lottie */; };
+		430D640E27A2058E009C81BE /* SFSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 430D640D27A2058E009C81BE /* SFSymbols */; };
 		4321799B279B06AC002AC3A1 /* PreferencesContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217985279B06AB002AC3A1 /* PreferencesContent.swift */; };
 		4321799E279B06AC002AC3A1 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217989279B06AB002AC3A1 /* AccountsPrefView.swift */; };
 		4321799F279B06AC002AC3A1 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4321798A279B06AB002AC3A1 /* PrivacyView.swift */; };
@@ -134,6 +135,7 @@
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
 				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
+				430D640E27A2058E009C81BE /* SFSymbols in Frameworks */,
 				43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */,
 				43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */,
 				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
@@ -314,6 +316,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				431AE22A27A2BD0200F5A609 /* PBXTargetDependency */,
 				43EAAE3627A16176008D8CA2 /* PBXTargetDependency */,
 				43EAAE3427A16172008D8CA2 /* PBXTargetDependency */,
 				43EAAE3227A1616F008D8CA2 /* PBXTargetDependency */,
@@ -340,6 +343,7 @@
 				436207A52796A3D6008C7FFE /* Backend */,
 				43425E11279C682C003E9493 /* KeychainSwift */,
 				43B1697D279E8A5E00AEBAE0 /* TDLibKit */,
+				430D640D27A2058E009C81BE /* SFSymbols */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -399,6 +403,7 @@
 				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
 				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */,
+				430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -464,7 +469,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# SwiftLInt\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
+			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
@@ -534,6 +539,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		431AE22A27A2BD0200F5A609 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 431AE22927A2BD0200F5A609 /* SFSymbols */;
+		};
 		43DD9573277E50C3000CE509 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43DD955F277E50C0000CE509 /* Moc */;
@@ -853,6 +862,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanvorobei/SFSymbols.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
@@ -900,6 +917,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		430D640D27A2058E009C81BE /* SFSymbols */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */;
+			productName = SFSymbols;
+		};
+		431AE22927A2BD0200F5A609 /* SFSymbols */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */;
+			productName = SFSymbols;
 		};
 		43425E11279C682C003E9493 /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;

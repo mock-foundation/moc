@@ -1,6 +1,6 @@
 //
 //  PlaceholderStyle.swift
-//  
+//
 //
 //  Created by Егор Яковенко on 12.01.2022.
 //

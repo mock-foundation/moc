@@ -1,5 +1,6 @@
 disabled_rules:
     - switch_case_alignment
+    - trailing_comma
 force_cast: warning
 force_try: warning
 reporter: "xcode"

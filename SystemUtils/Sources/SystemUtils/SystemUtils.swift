@@ -1,8 +1,8 @@
+import AppKit
 import Foundation
 import IOKit
-import AppKit
 
-public struct SystemUtils {
+public enum SystemUtils {
     private static let notificationQueue = DispatchQueue.main
 
     public static func post(notification: NSNotification.Name) {
@@ -18,13 +18,13 @@ public struct SystemUtils {
     }
 
     public static func ncPublisher(for notification: NSNotification.Name) -> NotificationCenter.Publisher {
-        return NotificationCenter.default.publisher(for: notification)
+        NotificationCenter.default.publisher(for: notification)
     }
 
     // Thanks to https://stackoverflow.com/a/26845710
     public static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map { _ in letters.randomElement()! })
+        return String((0 ..< length).map { _ in letters.randomElement()! })
     }
 
     // Thanks to https://www.reddit.com/r/swift/comments/gwf9fa/how_do_i_find_the_model_of_the_mac_in_swift/
@@ -80,12 +80,12 @@ public struct SystemUtils {
         var systemVersionCodename: String {
             let version = ProcessInfo().operatingSystemVersion.majorVersion
             switch version {
-                case 11:
-                    return "macOS 11 Big Sur"
-                case 12:
-                    return "macOS 12 Monterey"
-                default:
-                    return "macOS \(version)"
+            case 11:
+                return "macOS 11 Big Sur"
+            case 12:
+                return "macOS 12 Monterey"
+            default:
+                return "macOS \(version)"
             }
         }
 
@@ -93,7 +93,7 @@ public struct SystemUtils {
     }
 
     public static func info<T>(key: String) -> T? {
-        return Bundle.main.infoDictionary?[key] as? T
+        Bundle.main.infoDictionary?[key] as? T
     }
 
     public static func playAlertSound() {

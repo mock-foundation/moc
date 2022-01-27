@@ -8,6 +8,6 @@
 import SwiftUI
 
 struct FolderItem {
-	let name: String
-	let icon: Image
+    let name: String
+    let icon: Image
 }

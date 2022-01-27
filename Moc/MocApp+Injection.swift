@@ -5,14 +5,14 @@
 //  Created by Егор Яковенко on 24.12.2021.
 //
 
-import SwiftUI
-import TDLibKit
-import Resolver
-import SystemUtils
-import Logging
+import Backend
 import CryptoKit
 import Generated
-import Backend
+import Logging
+import Resolver
+import SwiftUI
+import SystemUtils
+import TDLibKit
 
 final class TdLogger: TDLibKit.Logger {
     private let logger = Logging.Logger(label: "TDLib")
@@ -27,18 +27,18 @@ final class TdLogger: TDLibKit.Logger {
 
             var typeStr = ""
             switch type! {
-                case .receive:
-                    typeStr = "receive:"
-                case .send:
-                    typeStr = "send:"
-                case .execute:
-                    typeStr = "execute:"
-                case .custom(let data):
-                    typeStr = "\(data):"
+            case .receive:
+                typeStr = "receive:"
+            case .send:
+                typeStr = "send:"
+            case .execute:
+                typeStr = "execute:"
+            case let .custom(data):
+                typeStr = "\(data):"
             }
 
             #if DEBUG
-            self.logger.info("\(typeStr) \(message)")
+                self.logger.info("\(typeStr) \(message)")
             #endif
         }
     }
@@ -48,15 +48,15 @@ final class TdLogger: TDLibKit.Logger {
     }
 }
 
-extension Resolver {
+public extension Resolver {
     private static let logger = Logging.Logger(label: "TDLibUpdates")
 
-    public static func registerUI() {
+    static func registerUI() {
         register { MainViewModel() }.scope(.shared)
         register { ChatViewModel() }.scope(.shared)
     }
 
-    public static func registerBackend() {
+    static func registerBackend() {
         register { TdChatService() as ChatService }
             .scope(.shared)
         register { TdLoginService() as LoginService }
