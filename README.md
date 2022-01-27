@@ -2,9 +2,10 @@
 <img src="https://github.com/ggoraa/moc/raw/master/Moc/Assets.xcassets/AppIcon.appiconset/icon_256x256.png">
 </p>
 <h1 align="center">Moc</h1>
-
+<p align="center">
 A (really) native and powerful macOS Telegram client, optimized
 for moderating large communities and personal use. 
+</p>
 
 This client is currently **in development** and **not usable**. You can track progress by observing the [project table](https://github.com/users/ggoraa/projects/1/views/4), [issues](https://github.com/ggoraa/moc/issues), [pull requests](https://github.com/ggoraa/moc/pulls), and a [Telegram channel](https://t.me/moc_updates_ru) (russian).
 
