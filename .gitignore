@@ -1,0 +1,14 @@
+.DS_Store
+/.build
+build
+/Packages
+xcuserdata/
+!Moc.xcodeproj/project.xcworkspace/xcshareddata/
+Moc.xcodeproj/project.xcworkspace/xcshareddata/*
+!Moc.xcodeproj/project.xcworkspace/xcshareddata/xcschemes/
+DerivedData/
+Config.xcconfig
+contents.xcworkspacedata
+*.resolved
+Secret.swift
+StringExtension.swift
