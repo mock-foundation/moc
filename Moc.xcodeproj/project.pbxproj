@@ -451,7 +451,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd Generated\nfind . -name \"*.gyb\" |                                                       \\\n    while read file; do                                                      \\\n        gyb --line-directive '' -o \"Sources/Generated/${file%.gyb}\" \"$file\"; \\\n    done\n\n";
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\ncd Generated\nfind . -name \"*.gyb\" |                                                       \\\n    while read file; do                                                      \\\n            if which gyb; then\n            gyb --line-directive '' -o \"Sources/Generated/${file%.gyb}\" \"$file\"; \\\n            fi\n    done\n\n";
 		};
 		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -488,7 +488,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "swiftlint --config .swiftlint.yml\n";
+			shellScript = "\n# Adds support for Apple Silicon brew directory\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint; then\n    swiftlint --config .swiftlint.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
