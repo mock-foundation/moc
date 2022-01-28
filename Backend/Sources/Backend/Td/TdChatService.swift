@@ -46,7 +46,19 @@ public class TdChatService: ChatService {
 
     // MARK: - Messages
 
-    public var messageHistory: [Message] = []
+    public var messageHistory: [Message] {
+        get async throws {
+            let history = try await tdApi.getChatHistory(
+                chatId: chatId,
+                fromMessageId: 0,
+                limit: 50,
+                offset: 0,
+                onlyLocal: false
+            )
+            logger.info("Chat history length: \(history.totalCount)")
+            return history.messages ?? []
+        }
+    }
 
     // MARK: - Chat info
 

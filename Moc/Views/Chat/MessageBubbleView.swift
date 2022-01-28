@@ -8,12 +8,11 @@
 import SwiftUI
 import SwiftUIUtils
 
-struct MessageBubbleView: View {
+struct MessageBubbleView<Content: View>: View {
     @State var sender: String
-    @State var content: String
+    @State var content: () -> Content
 
     var body: some View {
-//        HStack {
 //            Image("MockChatPhoto")
 //                .resizable()
 //                .frame(width: 36, height: 36)
@@ -33,20 +32,22 @@ struct MessageBubbleView: View {
             VStack(alignment: .leading) {
                 Text(sender)
                     .foregroundColor(.blue)
-                Text(content)
-                    .lineLimit(50)
+                content()
+//                Text(content)
+//                    .lineLimit(50)
             }.hLeading()
                 .padding(.leading)
                 .padding([.bottom, .top, .trailing], 6)
         }
-//        }
     }
 }
 
 struct MessageBubble_Previews: PreviewProvider {
     static var previews: some View {
-        MessageBubbleView(sender: "Me", content: "u just wOt?")
-            .preferredColorScheme(.dark)
-            .frame(height: 40.0)
+        MessageBubbleView(sender: "Me", content: {
+            Text("u just wOt?")
+        })
+        .preferredColorScheme(.dark)
+        .frame(height: 40.0)
     }
 }

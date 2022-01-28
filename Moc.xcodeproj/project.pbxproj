@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		430B983F278B680600420D75 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 430B983E278B680600420D75 /* Lottie */; };
 		430D640E27A2058E009C81BE /* SFSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 430D640D27A2058E009C81BE /* SFSymbols */; };
+		431AE22D27A3619C00F5A609 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 431AE22C27A3619C00F5A609 /* Introspect */; };
 		4321799B279B06AC002AC3A1 /* PreferencesContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217985279B06AB002AC3A1 /* PreferencesContent.swift */; };
 		4321799E279B06AC002AC3A1 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43217989279B06AB002AC3A1 /* AccountsPrefView.swift */; };
 		4321799F279B06AC002AC3A1 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4321798A279B06AB002AC3A1 /* PrivacyView.swift */; };
@@ -131,6 +132,7 @@
 				436207A12794F6AD008C7FFE /* Generated in Frameworks */,
 				436207A62796A3D6008C7FFE /* Backend in Frameworks */,
 				430B983F278B680600420D75 /* Lottie in Frameworks */,
+				431AE22D27A3619C00F5A609 /* Introspect in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
@@ -344,6 +346,7 @@
 				43425E11279C682C003E9493 /* KeychainSwift */,
 				43B1697D279E8A5E00AEBAE0 /* TDLibKit */,
 				430D640D27A2058E009C81BE /* SFSymbols */,
+				431AE22C27A3619C00F5A609 /* Introspect */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -404,6 +407,7 @@
 				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */,
+				431AE22B27A3619B00F5A609 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 43DD9561277E50C0000CE509 /* Products */;
 			projectDirPath = "";
@@ -870,6 +874,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		431AE22B27A3619B00F5A609 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
@@ -927,6 +939,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */;
 			productName = SFSymbols;
+		};
+		431AE22C27A3619C00F5A609 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 431AE22B27A3619B00F5A609 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
 		};
 		43425E11279C682C003E9493 /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;

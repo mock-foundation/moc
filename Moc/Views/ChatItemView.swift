@@ -31,18 +31,18 @@ struct ChatItemView: View {
             VStack(alignment: .leading) {
                 HStack {
                     switch chat.type {
-                        case .chatTypePrivate:
-                            EmptyView()
-                        case .chatTypeBasicGroup:
-                            Image(.person._2)
-                        case let .chatTypeSupergroup(info):
-                            if info.isChannel {
-                                Image(.megaphone)
-                            } else {
-                                Image(.person._2Fill)
-                            }
-                        case .chatTypeSecret:
-                            Image(.lock)
+                    case .chatTypePrivate:
+                        EmptyView()
+                    case .chatTypeBasicGroup:
+                        Image(.person._2)
+                    case let .chatTypeSupergroup(info):
+                        if info.isChannel {
+                            Image(.megaphone)
+                        } else {
+                            Image(.person._2Fill)
+                        }
+                    case .chatTypeSecret:
+                        Image(.lock)
                     }
                     Text(chat.title)
                         .font(.title3)

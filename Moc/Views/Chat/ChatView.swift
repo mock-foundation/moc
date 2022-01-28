@@ -6,6 +6,7 @@
 //
 
 import Backend
+import Introspect
 import Resolver
 import SFSymbols
 import SwiftUI
@@ -108,17 +109,17 @@ struct ChatView: View, Equatable {
 
     private var chatView: some View {
         VStack {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    //                    ForEach(chatViewModel.messages!) { message in
-                    //                        MessageBubbleView(sender: "someone", content: message.content.toString())
-                    //                            .frame(idealWidth: nil, maxWidth: 300)
-                    //                            .hLeading()
-                    //                    }
+            ScrollView {
+                ForEach(viewModel.messages) { message in
+                    MessageBubbleView(sender: "someone") {
+                        Text(message.content.toString())
+                    }
+                    .frame(idealWidth: nil, maxWidth: 300)
+                    .hLeading()
                 }
-                .onAppear {
-                    proxy.scrollTo(50 - 1)
-                }
+            }
+            .introspectScrollView { scrollView in
+                scrollView.documentView?.scroll(CGPoint(x: 0, y: scrollView.documentView?.frame.height ?? 5))
             }
             inputField
                 .padding()

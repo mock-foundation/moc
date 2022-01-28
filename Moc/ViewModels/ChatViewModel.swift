@@ -14,19 +14,26 @@ import TDLibKit
 
 class ChatViewModel: ObservableObject {
     @Injected private var dataSource: ChatService
-    private var queue: DispatchQueue = .main
 
     // MARK: - UI state
 
     @Published var inputMessage = ""
     @Published var isInspectorShown = false
+    @Published var messages: [Message] = []
 
     @Published var chatTitle = "mock"
     @Published var chatMemberCount: Int?
 
     func update(chat: Chat) async throws {
         dataSource.set(chat: chat)
+        objectWillChange.send()
         chatTitle = chat.title
-        chatMemberCount = try await dataSource.chatMemberCount
+        let memberCount = try await dataSource.chatMemberCount
+        let messageHistory = try await dataSource.messageHistory
+        DispatchQueue.main.async {
+            self.chatMemberCount = memberCount
+            self.objectWillChange.send()
+            self.messages = messageHistory
+        }
     }
 }
