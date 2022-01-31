@@ -11,11 +11,13 @@ import SwiftUI
 struct LottieView: NSViewRepresentable {
     typealias NSViewType = NSView
 
+    var name: String
+
     func makeNSView(context _: Context) -> NSView {
         let view = NSView(frame: .zero)
 
         let animationView = AnimationView()
-        let animation = Animation.named(filename)
+        let animation = Animation.named(name)
         animationView.animation = animation
         animationView.contentMode = .scaleAspectFit
         animationView.play()
@@ -34,12 +36,10 @@ struct LottieView: NSViewRepresentable {
     }
 
     func updateNSView(_: NSView, context _: Context) {}
-
-    var filename: String
 }
 
 struct LottieView_Previews: PreviewProvider {
     static var previews: some View {
-        LottieView(filename: "")
+        LottieView(name: "")
     }
 }

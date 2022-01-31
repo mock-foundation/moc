@@ -318,18 +318,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				431AE22A27A2BD0200F5A609 /* PBXTargetDependency */,
-				43EAAE3627A16176008D8CA2 /* PBXTargetDependency */,
-				43EAAE3427A16172008D8CA2 /* PBXTargetDependency */,
-				43EAAE3227A1616F008D8CA2 /* PBXTargetDependency */,
-				43EAAE3027A1616B008D8CA2 /* PBXTargetDependency */,
-				43EAAE2E27A16167008D8CA2 /* PBXTargetDependency */,
-				43EAAE2C27A16161008D8CA2 /* PBXTargetDependency */,
-				43EAAE2A27A1615C008D8CA2 /* PBXTargetDependency */,
-				43EAAE2827A16158008D8CA2 /* PBXTargetDependency */,
-				43EAAE2627A16154008D8CA2 /* PBXTargetDependency */,
-				43EAAE2427A16151008D8CA2 /* PBXTargetDependency */,
-				43EAAE2227A1614E008D8CA2 /* PBXTargetDependency */,
 			);
 			name = Moc;
 			packageProductDependencies = (
@@ -543,58 +531,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		431AE22A27A2BD0200F5A609 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 431AE22927A2BD0200F5A609 /* SFSymbols */;
-		};
 		43DD9573277E50C3000CE509 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43DD955F277E50C0000CE509 /* Moc */;
 			targetProxy = 43DD9572277E50C3000CE509 /* PBXContainerItemProxy */;
-		};
-		43EAAE2227A1614E008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2127A1614E008D8CA2 /* TDLibKit */;
-		};
-		43EAAE2427A16151008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2327A16151008D8CA2 /* KeychainSwift */;
-		};
-		43EAAE2627A16154008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2527A16154008D8CA2 /* Logging */;
-		};
-		43EAAE2827A16158008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2727A16158008D8CA2 /* AlertToast */;
-		};
-		43EAAE2A27A1615C008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2927A1615C008D8CA2 /* Lottie */;
-		};
-		43EAAE2C27A16161008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2B27A16161008D8CA2 /* SwiftUIUtils */;
-		};
-		43EAAE2E27A16167008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2D27A16167008D8CA2 /* Resolver */;
-		};
-		43EAAE3027A1616B008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE2F27A1616B008D8CA2 /* ImageUtils */;
-		};
-		43EAAE3227A1616F008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE3127A1616F008D8CA2 /* SystemUtils */;
-		};
-		43EAAE3427A16172008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE3327A16172008D8CA2 /* Generated */;
-		};
-		43EAAE3627A16176008D8CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 43EAAE3527A16176008D8CA2 /* Backend */;
 		};
 /* End PBXTargetDependency section */
 
@@ -935,11 +875,6 @@
 			package = 430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */;
 			productName = SFSymbols;
 		};
-		431AE22927A2BD0200F5A609 /* SFSymbols */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */;
-			productName = SFSymbols;
-		};
 		431AE22C27A3619C00F5A609 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 431AE22B27A3619B00F5A609 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
@@ -995,57 +930,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
-		};
-		43EAAE2127A1614E008D8CA2 /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */;
-			productName = TDLibKit;
-		};
-		43EAAE2327A16151008D8CA2 /* KeychainSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */;
-			productName = KeychainSwift;
-		};
-		43EAAE2527A16154008D8CA2 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */;
-			productName = Logging;
-		};
-		43EAAE2727A16158008D8CA2 /* AlertToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
-		};
-		43EAAE2927A1615C008D8CA2 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-		43EAAE2B27A16161008D8CA2 /* SwiftUIUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
-			productName = SwiftUIUtils;
-		};
-		43EAAE2D27A16167008D8CA2 /* Resolver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
-			productName = Resolver;
-		};
-		43EAAE2F27A1616B008D8CA2 /* ImageUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ImageUtils;
-		};
-		43EAAE3127A1616F008D8CA2 /* SystemUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SystemUtils;
-		};
-		43EAAE3327A16172008D8CA2 /* Generated */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Generated;
-		};
-		43EAAE3527A16176008D8CA2 /* Backend */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Backend;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

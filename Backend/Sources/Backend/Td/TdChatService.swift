@@ -19,6 +19,33 @@ public class TdChatService: ChatService {
         logger.error("set(protected:) not implemented")
     }
 
+    public func getMessageSenderName(_ sender: MessageSender) throws -> String {
+        switch sender {
+            case .messageSenderUser(let messageSenderUser):
+                var str = ""
+                try tdApi.getUser(userId: messageSenderUser.userId) { result in
+                    switch result {
+                        case .success(let data):
+                            str = "\(data.firstName) \(data.lastName)"
+                        case .failure(_):
+                            str = "Failure"
+                    }
+                }
+                return str
+            case .messageSenderChat(let messageSenderChat):
+                var str = ""
+                try tdApi.getChat(chatId: messageSenderChat.chatId) {
+                    switch $0 {
+                        case .success(let data):
+                            str = data.title
+                        case .failure(_):
+                            str = "Failure"
+                    }
+                }
+                return str
+        }
+    }
+
     public func set(blocked: Bool) async throws {
         switch try await chatType {
         case let .chatTypePrivate(info):
@@ -48,15 +75,13 @@ public class TdChatService: ChatService {
 
     public var messageHistory: [Message] {
         get async throws {
-            let history = try await tdApi.getChatHistory(
-                chatId: chatId,
+            return try await tdApi.getChatHistory(
+                chatId: self.chatId,
                 fromMessageId: 0,
                 limit: 50,
                 offset: 0,
                 onlyLocal: false
-            )
-            logger.info("Chat history length: \(history.totalCount)")
-            return history.messages ?? []
+            ).messages ?? []
         }
     }
 
