@@ -110,8 +110,10 @@ struct ChatView: View, Equatable {
     private var chatView: some View {
         VStack {
             ScrollView {
-                ForEach(viewModel.messages) { message in
-                    MessageBubbleView(sender: "someone") {
+                ForEach(viewModel.messages.sorted { item1, item2 in
+                    return item1.id > item2.id ? false : true
+                }) { message in
+                    MessageBubbleView(sender: viewModel.getMessageSender(message.senderId)) {
                         Text(message.content.toString())
                     }
                     .frame(idealWidth: nil, maxWidth: 300)
