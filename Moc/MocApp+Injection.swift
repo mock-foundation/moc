@@ -77,10 +77,7 @@ struct MocApp: App {
         Resolver.registerBackend()
         TdApi.shared.append(TdApi(
             client: TdClientImpl(
-                completionQueue: DispatchQueue(
-                    label: tdCompletionQueueLabel,
-                    qos: .userInteractive
-                ),
+                completionQueue: .global(),
                 logger: TdLogger()
             )
         ))
