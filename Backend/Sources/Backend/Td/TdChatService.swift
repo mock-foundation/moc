@@ -19,33 +19,6 @@ public class TdChatService: ChatService {
         logger.error("set(protected:) not implemented")
     }
 
-    public func getMessageSenderName(_ sender: MessageSender) throws -> String {
-        switch sender {
-            case .messageSenderUser(let messageSenderUser):
-                var str = ""
-                try tdApi.getUser(userId: messageSenderUser.userId) { result in
-                    switch result {
-                        case .success(let data):
-                            str = "\(data.firstName) \(data.lastName)"
-                        case .failure(_):
-                            str = "Failure"
-                    }
-                }
-                return str
-            case .messageSenderChat(let messageSenderChat):
-                var str = ""
-                try tdApi.getChat(chatId: messageSenderChat.chatId) {
-                    switch $0 {
-                        case .success(let data):
-                            str = data.title
-                        case .failure(_):
-                            str = "Failure"
-                    }
-                }
-                return str
-        }
-    }
-
     public func set(blocked: Bool) async throws {
         switch try await chatType {
         case let .chatTypePrivate(info):
@@ -73,15 +46,73 @@ public class TdChatService: ChatService {
 
     // MARK: - Messages
 
-    public var messageHistory: [Message] {
+    public var messageHistory: [Backend.Message] {
         get async throws {
-            return try await tdApi.getChatHistory(
+            let chatHistory = try await tdApi.getChatHistory(
                 chatId: self.chatId,
                 fromMessageId: 0,
                 limit: 50,
                 offset: 0,
                 onlyLocal: false
             ).messages ?? []
+            return chatHistory.map { tdMessage in
+                var type: MessageSenderType
+                var id: Int64
+                var content: Backend.MessageContent
+                var message: Backend.Message = .init(
+                    id: 0,
+                    sender: .init(
+                        name: "",
+                        type: .user,
+                        id: 0
+                    ),
+                    content: .unsupported,
+                    isOutgoing: false
+                )
+                switch tdMessage.content {
+                    case .messageText(let text):
+                        content = .text(text)
+                    default:
+                        content = .unsupported
+                }
+                switch tdMessage.senderId {
+                    case .messageSenderUser(let user):
+                        type = .user
+                        id = user.userId
+                        try? tdApi.getUser(userId: id) { result in
+                            switch result {
+                                case .success(let user):
+                                    message = Message(
+                                        id: 0,
+                                        sender: .init(
+                                            name: "\(user.firstName) \(user.lastName)",
+                                            type: type,
+                                            id: user.id
+                                        ),
+                                        content: content,
+                                        isOutgoing: tdMessage.isOutgoing
+                                    )
+                                case .failure(_):
+                                    break
+                            }
+                        }
+                        return Backend.Message(
+                            id: 0,
+                            sender: .init(
+                                name: "Failed to get user",
+                                type: type,
+                                id: id
+                            ),
+                            content: content,
+                            isOutgoing: false
+                        )
+
+                    case .messageSenderChat(let chat):
+                        type = .chat
+                        id = chat.chatId
+                }
+                return message
+            }
         }
     }
 

@@ -12,10 +12,6 @@ public class MockChatService: ChatService {
     public init() {}
     public var messageHistory: [Message] = []
 
-    public func getMessageSenderName(_ sender: MessageSender) throws -> String {
-        return "Name"
-    }
-
     public var draftMessage: DraftMessage?
 
     public func set(draft _: DraftMessage?) async throws {}

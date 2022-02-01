@@ -14,14 +14,12 @@ import SwiftUIUtils
 import SystemUtils
 import TDLibKit
 
-extension Message: Identifiable {}
-
-public extension MessageContent {
+public extension Backend.MessageContent {
     func toString() -> String {
         switch self {
-        case let .messageText(data):
+        case let .text(data):
             return data.text.text
-        case .messageUnsupported:
+        case .unsupported:
             return "This message is unsupported, sorry."
         default:
             return "This message is unsupported, sorry."
@@ -113,7 +111,7 @@ struct ChatView: View, Equatable {
                 ForEach(viewModel.messages.sorted { item1, item2 in
                     return item1.id > item2.id ? false : true
                 }) { message in
-                    MessageBubbleView(sender: viewModel.getMessageSender(message.senderId)) {
+                    MessageBubbleView(sender: message.sender.name) {
                         Text(message.content.toString())
                     }
                     .frame(idealWidth: nil, maxWidth: 300)
