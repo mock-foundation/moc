@@ -10,6 +10,7 @@ import Combine
 import Foundation
 import Resolver
 import SystemUtils
+import TDLibKit
 
 class ChatViewModel: ObservableObject {
     @Injected private var dataSource: ChatService
@@ -22,7 +23,11 @@ class ChatViewModel: ObservableObject {
 
     @Published var chatTitle = "mock"
     @Published var chatMemberCount: Int?
-    
+
+    func getMessageSender(_ sender: MessageSender) -> String {
+        return try! dataSource.getMessageSenderName(sender)
+    }
+
     func update(chat: Chat) async throws {
         dataSource.set(chat: chat)
         objectWillChange.send()

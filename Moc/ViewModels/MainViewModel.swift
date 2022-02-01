@@ -7,7 +7,7 @@
 
 import Resolver
 import SwiftUI
-import Backend
+import TDLibKit
 
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists

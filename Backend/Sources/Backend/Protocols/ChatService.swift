@@ -13,6 +13,7 @@ public protocol ChatService {
     var messageHistory: [Message] { get async throws }
     var draftMessage: DraftMessage? { get async throws }
     func set(draft: DraftMessage?) async throws
+    func getMessageSenderName(_ sender: MessageSender) throws -> String
 
     // MARK: - Chat info
 
