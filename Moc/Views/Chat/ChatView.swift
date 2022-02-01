@@ -14,16 +14,12 @@ import SwiftUIUtils
 import SystemUtils
 import TDLibKit
 
-extension Message: Identifiable {}
-
 public extension MessageContent {
     func toString() -> String {
         switch self {
-        case let .messageText(data):
+        case let .text(data):
             return data.text.text
-        case .messageUnsupported:
-            return "This message is unsupported, sorry."
-        default:
+        case .unsupported:
             return "This message is unsupported, sorry."
         }
     }
@@ -71,11 +67,7 @@ private struct RoundedCorners: Shape {
     }
 }
 
-struct ChatView: View, Equatable {
-    static func == (_: ChatView, _: ChatView) -> Bool {
-        false
-    }
-
+struct ChatView: View {
     @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
@@ -111,9 +103,9 @@ struct ChatView: View, Equatable {
         VStack {
             ScrollView {
                 ForEach(viewModel.messages.sorted { item1, item2 in
-                    return item1.id > item2.id ? false : true
+                    item1.id > item2.id ? false : true
                 }) { message in
-                    MessageBubbleView(sender: viewModel.getMessageSender(message.senderId)) {
+                    MessageBubbleView(sender: message.sender.name) {
                         Text(message.content.toString())
                     }
                     .frame(idealWidth: nil, maxWidth: 300)

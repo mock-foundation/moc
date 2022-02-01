@@ -31,17 +31,15 @@ struct ChatItemView: View {
             VStack(alignment: .leading) {
                 HStack {
                     switch chat.type {
-                    case .chatTypePrivate:
+                    case .privateChat:
                         EmptyView()
-                    case .chatTypeBasicGroup:
+                    case .basicGroup:
                         Image(.person._2)
-                    case let .chatTypeSupergroup(info):
-                        if info.isChannel {
-                            Image(.megaphone)
-                        } else {
-                            Image(.person._2Fill)
-                        }
-                    case .chatTypeSecret:
+                    case .supergroup:
+                        Image(.person._2Fill)
+                    case .channel:
+                        Image(.megaphone)
+                    case .secret:
                         Image(.lock)
                     }
                     Text(chat.title)

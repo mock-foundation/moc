@@ -13,8 +13,6 @@ import SwiftUI
 import SystemUtils
 import TDLibKit
 
-extension Chat: Identifiable {}
-
 struct ContentView: View {
     private let logger = Logging.Logger(label: "ContentView")
 

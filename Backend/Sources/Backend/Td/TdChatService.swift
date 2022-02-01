@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import Logging
+import SwiftUI
 import SystemUtils
 import TDLibKit
 
@@ -19,30 +20,44 @@ public class TdChatService: ChatService {
         logger.error("set(protected:) not implemented")
     }
 
+    public func getUser(byId: Int64) throws -> User {
+        Task.detached {
+            try await self.tdApi.getUser(userId: byId)
+        }
+        dispatchMain()
+    }
+
+    public func getChat(id: Int64) throws -> Chat {
+        Task.detached {
+            try await self.tdApi.getChat(chatId: id)
+        }
+        dispatchMain()
+    }
+
     public func getMessageSenderName(_ sender: MessageSender) throws -> String {
         switch sender {
-            case .messageSenderUser(let messageSenderUser):
-                var str = ""
-                try tdApi.getUser(userId: messageSenderUser.userId) { result in
-                    switch result {
-                        case .success(let data):
-                            str = "\(data.firstName) \(data.lastName)"
-                        case .failure(_):
-                            str = "Failure"
-                    }
+        case let .messageSenderUser(messageSenderUser):
+            var str = ""
+            try tdApi.getUser(userId: messageSenderUser.userId) { result in
+                switch result {
+                case let .success(data):
+                    str = "\(data.firstName) \(data.lastName)"
+                case .failure:
+                    str = "Failure"
                 }
-                return str
-            case .messageSenderChat(let messageSenderChat):
-                var str = ""
-                try tdApi.getChat(chatId: messageSenderChat.chatId) {
-                    switch $0 {
-                        case .success(let data):
-                            str = data.title
-                        case .failure(_):
-                            str = "Failure"
-                    }
+            }
+            return str
+        case let .messageSenderChat(messageSenderChat):
+            var str = ""
+            try tdApi.getChat(chatId: messageSenderChat.chatId) {
+                switch $0 {
+                case let .success(data):
+                    str = data.title
+                case .failure:
+                    str = "Failure"
                 }
-                return str
+            }
+            return str
         }
     }
 
@@ -75,8 +90,8 @@ public class TdChatService: ChatService {
 
     public var messageHistory: [Message] {
         get async throws {
-            return try await tdApi.getChatHistory(
-                chatId: self.chatId,
+            try await tdApi.getChatHistory(
+                chatId: chatId,
                 fromMessageId: 0,
                 limit: 50,
                 offset: 0,
@@ -102,6 +117,12 @@ public class TdChatService: ChatService {
     }
 
     public var chatId: Int64?
+
+    public func set(chatId: Int64) {
+        self.chatId = chatId
+        SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
+    }
+
     public var chatType: ChatType {
         get async throws {
             try await tdApi.getChat(chatId: chatId).type
@@ -138,9 +159,4 @@ public class TdChatService: ChatService {
     }
 
     public init() {}
-
-    public func set(chat: Chat) {
-        chatId = chat.id
-        SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
-    }
 }
