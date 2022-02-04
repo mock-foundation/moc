@@ -119,6 +119,7 @@
 		43DD9647277E7586000CE509 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		43E8FD50279040DF0016BE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43E8FD682791B3610016BE31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5A6370027ADAAF700AE534D /* generate_secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_secrets.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +226,7 @@
 		43DD9562277E50C0000CE509 /* Moc */ = {
 			isa = PBXGroup;
 			children = (
+				A5A636FF27ADAAD200AE534D /* SupportFiles */,
 				43DD9607277E717B000CE509 /* Models */,
 				43654D3B277FF84C0047F36F /* ViewModels */,
 				43DD9616277E717C000CE509 /* Views */,
@@ -296,6 +298,14 @@
 				43DD9645277E7579000CE509 /* libc++.1.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5A636FF27ADAAD200AE534D /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				A5A6370027ADAAF700AE534D /* generate_secrets.sh */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,7 +479,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
+			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
