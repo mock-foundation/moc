@@ -1,0 +1,74 @@
+name: Build app
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and Upload Moc.app
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Generate Secret.swift
+        run: |
+          if [[ -z "${{ secrets.API_ID }}" || -z "${{ secrets.API_HASH }}" ]]
+          then
+              echo "\$API_ID or \$API_HASH is empty. Setting to default MacOS app"
+              API_ID=2834
+              API_HASH=68875f756c9b437a8b916ca3de215815
+          else
+              echo "Using secrets provided API_ID & API_HASH"
+              API_ID=${{ secrets.API_ID }}
+              API_HASH=${{ secrets.API_HASH }}
+          fi
+          HOMEBREW_NO_INSTALL_CLEANUP=1 API_ID=$API_ID API_HASH=$API_HASH ./Moc/SupportFiles/generate_secrets.sh
+
+      - name: Build
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
+        run: |
+          xcodebuild -scheme Moc -configuration Release clean build
+
+      - name: Move artifact
+        run: |
+          mv ~/Library/Developer/Xcode/DerivedData/Moc-*/Build/Products/Release/Moc.app Moc.app
+
+      - name: Get Version and Build number
+        run: |
+          APP_VERSION=$(/usr/libexec/PlistBuddy -c 'print ":CFBundleShortVersionString"' Moc.app/Contents/Info.plist)
+          APP_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c 'print ":CFBundleVersion"' Moc.app/Contents/Info.plist)
+
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "APP_BUILD_NUMBER=$APP_BUILD_NUMBER" >> $GITHUB_ENV
+
+      - name: Make .dmg
+        run: |
+          mkdir dmgsrc
+          mv Moc.app dmgsrc
+          hdiutil create -volname Moc -srcfolder dmgsrc -ov -format UDZO Moc.dmg
+
+      - name: Prepare artifact for upload
+        run: |
+          mkdir artifact
+          mv Moc.dmg artifact/
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Moc
+          path: artifact/
+          if-no-files-found: error
+
+      - name: Release (master only)
+        uses: softprops/action-gh-release@fe9a9bd3295828558c7a3c004f23f3bf77d155b2
+        if: github.ref == 'refs/heads/master'
+        with:
+          tag_name: ${{ env.APP_VERSION }}
+          files: artifact/Moc.dmg
+          generate_release_notes: true
