@@ -73,4 +73,5 @@ jobs:
           tag_name: ${{ env.APP_VERSION }}
           name: ${{ env.APP_VERSION }} Nightly
           files: artifact/Moc.dmg
+          prerelease: true
           generate_release_notes: true
