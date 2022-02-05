@@ -70,7 +70,7 @@ jobs:
         uses: softprops/action-gh-release@fe9a9bd3295828558c7a3c004f23f3bf77d155b2
         if: github.ref == 'refs/heads/master'
         with:
-          tag_name: ${{ env.APP_VERSION }}
+          tag_name: nightly
           name: ${{ env.APP_VERSION }} Nightly
           files: artifact/Moc.dmg
           prerelease: true
