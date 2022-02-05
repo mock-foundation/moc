@@ -11,3 +11,6 @@ contents.xcworkspacedata
 *.resolved
 Secret.swift
 StringExtension.swift
+Moc.app
+Moc.dmg
+dmgsrc/

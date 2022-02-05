@@ -90,7 +90,6 @@
 		43217991279B06AB002AC3A1 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPrefView.swift; path = Tabs/GeneralPrefView.swift; sourceTree = "<group>"; };
 		43217992279B06AB002AC3A1 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsAndSoundsPrefView.swift; path = Tabs/NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
 		4362079D2794E21B008C7FFE /* Generated */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Generated; sourceTree = "<group>"; };
-		4362079F2794F403008C7FFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		436207A42796A1D1008C7FFE /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
 		43654D3C277FF85F0047F36F /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		43DD9647277E7586000CE509 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		43E8FD50279040DF0016BE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43E8FD682791B3610016BE31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5A6370027ADAAF700AE534D /* generate_secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_secrets.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,13 +225,13 @@
 		43DD9562277E50C0000CE509 /* Moc */ = {
 			isa = PBXGroup;
 			children = (
+				A5A636FF27ADAAD200AE534D /* SupportFiles */,
 				43DD9607277E717B000CE509 /* Models */,
 				43654D3B277FF84C0047F36F /* ViewModels */,
 				43DD9616277E717C000CE509 /* Views */,
 				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
 				43E8FD682791B3610016BE31 /* Info.plist */,
-				4362079F2794F403008C7FFE /* Config.xcconfig */,
 				43DD9567277E50C3000CE509 /* Assets.xcassets */,
 				43DD956C277E50C3000CE509 /* Moc.entitlements */,
 				43DD9569277E50C3000CE509 /* Preview Content */,
@@ -298,6 +298,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A5A636FF27ADAAD200AE534D /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				A5A6370027ADAAF700AE534D /* generate_secrets.sh */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -306,7 +314,6 @@
 			buildConfigurationList = 43DD9585277E50C3000CE509 /* Build configuration list for PBXNativeTarget "Moc" */;
 			buildPhases = (
 				43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */,
-				43B16980279E943400AEBAE0 /* GYB Code generation */,
 				43DD955C277E50C0000CE509 /* Sources */,
 				43FB9654278B051E00FB86FF /* Run SwiftLint */,
 				43DD955D277E50C0000CE509 /* Frameworks */,
@@ -435,24 +442,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		43B16980279E943400AEBAE0 /* GYB Code generation */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "GYB Code generation";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd Generated\nfind . -name \"*.gyb\" |                                                       \\\n    while read file; do                                                      \\\n        gyb --line-directive '' -o \"Sources/Generated/${file%.gyb}\" \"$file\"; \\\n    done\n\n";
-		};
 		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -469,7 +458,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
+			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
@@ -597,7 +586,6 @@
 /* Begin XCBuildConfiguration section */
 		43DD9583277E50C3000CE509 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4362079F2794F403008C7FFE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -659,7 +647,6 @@
 		};
 		43DD9584277E50C3000CE509 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4362079F2794F403008C7FFE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
