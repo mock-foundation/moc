@@ -8,7 +8,7 @@ This action provides a release build on each push or pull request to `master` br
 
 ### master workflow
 CI will build the app with Release configuration and provided `API_ID` and `API_HASH` secrets. 
-*In case secrets not found, script will use official MacOS API_ID and API_HASH to make build valid.*
+*In case secrets not found, script will use official macOS API_ID and API_HASH to make build valid.*
 
 Then CI will create Github Release using `APP_VERSION` as a git tag and generate changelog. **Version must be incremented manualy in related Pull Request.**
 App binary will be attached to release as well.

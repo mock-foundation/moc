@@ -19,7 +19,7 @@ jobs:
         run: |
           if [[ -z "${{ secrets.API_ID }}" || -z "${{ secrets.API_HASH }}" ]]
           then
-              echo "\$API_ID or \$API_HASH is empty. Setting to default MacOS app"
+              echo "\$API_ID or \$API_HASH is empty. Setting to default macOS app"
               API_ID=2834
               API_HASH=68875f756c9b437a8b916ca3de215815
           else

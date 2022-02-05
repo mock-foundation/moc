@@ -1,6 +1,6 @@
 # Installation
 
-App distrubuted as an unsigned binary, so you will need to mitigate some MacOS warnings to start the app.
+App distrubuted as an unsigned binary, so you will need to mitigate some macOS warnings to start the app.
 
 1. Download Release.
 You can find latest release at [Releases page](https://github.com/ggoraa/moc/releases)
