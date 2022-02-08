@@ -9,6 +9,14 @@ A (really) native and powerful macOS Telegram client, optimized
 for moderating large communities and personal use. 
 </p>
 
+![](https://img.shields.io/badge/platform-macOS-000000?style=flat&logo=apple&logoColor=white&message=ayy)
+![](https://img.shields.io/badge/Swift-FA7343?style=flat&logo=swift&logoColor=white)
+![](https://img.shields.io/badge/SwiftUI-2E00F1?style=flat&logo=swift&logoColor=white)
+![](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)
+[![Build app](https://github.com/ggoraa/moc/actions/workflows/build.yml/badge.svg)](https://github.com/ggoraa/moc/actions/workflows/build.yml)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg?style=flat)](https://opensource.org/licenses/)
+[![Github All Releases](https://img.shields.io/github/downloads/ggoraa/moc/total.svg?style=flat)]() 
+
 This client is currently **in development** and **not usable**. You can track progress by observing the [project table](https://github.com/users/ggoraa/projects/1/views/4), [issues](https://github.com/ggoraa/moc/issues), [pull requests](https://github.com/ggoraa/moc/pulls), and a [Telegram channel](https://t.me/moc_updates_ru) (russian).
 
 Project roadmap: [Craft](https://www.craft.do/s/rmUOSbIPXTVbCY)
