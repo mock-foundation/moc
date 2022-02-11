@@ -13,4 +13,5 @@ public struct Message: Identifiable {
     public let sender: MessageSender
     public let content: MessageContent
     public let isOutgoing: Bool
+    public let date: Foundation.Date
 }

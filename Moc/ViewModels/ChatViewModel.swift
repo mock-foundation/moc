@@ -41,7 +41,8 @@ class ChatViewModel: ObservableObject {
                         id: user.id
                     ),
                     content: MessageContent(tdMessage.content),
-                    isOutgoing: tdMessage.isOutgoing
+                    isOutgoing: tdMessage.isOutgoing,
+                    date: Date(timeIntervalSince1970: 0)
                 )
             case let .messageSenderChat(chat):
                 let chat = try self.service.getChat(id: chat.chatId)
@@ -53,7 +54,8 @@ class ChatViewModel: ObservableObject {
                         id: chat.id
                     ),
                     content: MessageContent(tdMessage.content),
-                    isOutgoing: tdMessage.isOutgoing
+                    isOutgoing: tdMessage.isOutgoing,
+                    date: Date(timeIntervalSince1970: 0)
                 )
             }
         }
