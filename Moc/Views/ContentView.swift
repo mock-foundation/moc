@@ -20,6 +20,7 @@ struct ContentView: View {
     @State private var selectedChat: Int? = 0
     @State private var isArchiveChatListOpen = false
     @State private var showingLoginScreen = false
+    @State private var selectedTab = 0
 
     @InjectedObject private var chatViewModel: ChatViewModel
 
@@ -76,12 +77,19 @@ struct ContentView: View {
                         .frame(minWidth: 320)
                     }.toolbar {
                         ToolbarItem(placement: .status) {
-                            Toggle(isOn: $isArchiveChatListOpen) {
-                                Image(isArchiveChatListOpen ? .archivebox.fill : .archivebox)
-                            }
+                            Picker("", selection: $selectedTab) {
+                                Image(.bubble.leftAndBubbleRight).tag(0)
+                                Image(.phone.andWaveform).tag(1)
+                                Image(.person._2).tag(2)
+                            }.pickerStyle(.segmented)
                         }
                         ToolbarItem(placement: .status) {
                             Spacer()
+                        }
+                        ToolbarItem(placement: .status) {
+                            Toggle(isOn: $isArchiveChatListOpen) {
+                                Image(isArchiveChatListOpen ? .archivebox.fill : .archivebox)
+                            }
                         }
                         ToolbarItem(placement: .status) {
                             // swiftlint:disable multiple_closures_with_trailing_closure
