@@ -107,9 +107,10 @@ struct ContentView: View {
                 VStack {
                     Image(.bubble.leftAndBubbleRight)
                         .font(.system(size: 96))
+                        .foregroundColor(.gray)
+                    Text("Open a chat or start a new one!")
+                        .font(.largeTitle)
                         .foregroundStyle(Color.secondary)
-                    Text("Open a chat or start a new one")
-                        .font(.title2)
                     Text("Pick any chat on the left sidebar, and have fun chatting!")
                         .foregroundStyle(Color.secondary)
                 }
