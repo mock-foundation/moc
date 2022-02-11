@@ -8,7 +8,7 @@
 import Backend
 import Introspect
 import Resolver
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
 import SwiftUIUtils
 import SystemUtils
@@ -122,7 +122,7 @@ struct ChatView: View {
 
     // MARK: - Additional inspector stuff
 
-    private func inspectorButton(action: @escaping () -> Void, imageName: SFSymbol, text: String) -> some View {
+    private func inspectorButton(action: @escaping () -> Void, imageName: SPSafeSymbol, text: String) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: imageName.name)

@@ -11,7 +11,7 @@ import Combine
 import ImageUtils
 import Logging
 import Resolver
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
 import SwiftUIUtils
 import SystemUtils
@@ -131,7 +131,7 @@ struct AccountsPrefView: View {
             // swiftlint:disable multiple_closures_with_trailing_closure
             HStack {
                 Button(action: {}) {
-                    Label("Add account", systemImage: SFSymbol.person.badgePlus.name)
+                    Label("Add account", systemImage: SPSafeSymbol.person.badgePlus.name)
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderless)
@@ -150,7 +150,7 @@ struct AccountsPrefView: View {
                 }) {
                     // rectangle.portrait.and.arrow.right
                     Label("Log out",
-                          systemImage: SFSymbol.rectangle.portraitAndArrowRight.name)
+                          systemImage: SPSafeSymbol.rectangle.portraitAndArrowRight.name)
                 }
                 .tint(.red)
                 .controlSize(.large)
@@ -171,7 +171,7 @@ struct AccountsPrefView: View {
                         .clipShape(Circle())
                     Button(action: {}) {
                         Label("Update profile photo",
-                              systemImage: SFSymbol.square.andPencil.name)
+                              systemImage: SPSafeSymbol.square.andPencil.name)
                     }
                 }
             } footer: {
@@ -218,7 +218,7 @@ struct AccountsPrefView: View {
             HStack {
                 Text(phoneNumber)
                 Button(action: {}) {
-                    Label("Change", systemImage: SFSymbol.square.andPencil.name)
+                    Label("Change", systemImage: SPSafeSymbol.square.andPencil.name)
                 }
             }
         }

@@ -9,7 +9,7 @@ import Backend
 import CoreImage.CIFilterBuiltins
 import Logging
 import Resolver
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
 import SwiftUIUtils
 import TDLibKit
@@ -118,7 +118,7 @@ struct LoginView: View {
                     Button(action: {
                         openedScreen = .phoneNumber
                     }) {
-                        Label("Continue using phone number", systemImage: SFSymbol.phone.name)
+                        Label("Continue using phone number", systemImage: SPSafeSymbol.phone.name)
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)

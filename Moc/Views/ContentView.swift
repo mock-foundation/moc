@@ -8,7 +8,7 @@
 import Backend
 import Logging
 import Resolver
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
 import SystemUtils
 import TDLibKit
@@ -70,7 +70,7 @@ struct ContentView: View {
                                     Button(role: .destructive) {
                                         logger.info("Pressed Delete button")
                                     } label: {
-                                        Label("Delete chat", systemImage: SFSymbol.trash.name)
+                                        Label("Delete chat", systemImage: SPSafeSymbol.trash.name)
                                     }
                                 }
                         }
