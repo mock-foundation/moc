@@ -97,7 +97,13 @@ struct ContentView: View {
             switch viewRouter.currentView {
             case .selectChat:
                 VStack {
-                    Text("Select chat")
+                    Image(.bubble.leftAndBubbleRight)
+                        .font(.system(size: 96))
+                        .foregroundStyle(Color.secondary)
+                    Text("Open a chat or start a new one")
+                        .font(.title2)
+                    Text("Pick any chat on the left sidebar, and have fun chatting!")
+                        .foregroundStyle(Color.secondary)
                 }
             case .chat:
                 ChatView()
