@@ -37,6 +37,7 @@
 		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; settings = {ATTRIBUTES = (Required, ); }; };
 		43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43B1697D279E8A5E00AEBAE0 /* TDLibKit */; };
 		43C309C227B67BDC00194209 /* SPSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 43C309C127B67BDC00194209 /* SPSafeSymbols */; };
+		43C309C527B681EA00194209 /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C309C427B681EA00194209 /* AppCommands.swift */; };
 		43C7B4C1278F121F00236503 /* ImageUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C0278F121F00236503 /* ImageUtils */; };
 		43C7B4C4278F3DEF00236503 /* SystemUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 43C7B4C3278F3DEF00236503 /* SystemUtils */; };
 		43D6DB68279946AA0068CE9D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D6DB67279946AA0068CE9D /* ChatViewModel.swift */; };
@@ -107,6 +108,7 @@
 		438326FA27877346004B0E18 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		43832703278865CB004B0E18 /* ChatSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
 		4386E46627833B040084F809 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		43C309C427B681EA00194209 /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		43C7B4BD278F11D300236503 /* ImageUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ImageUtils; sourceTree = "<group>"; };
 		43C7B4C2278F3DE500236503 /* SystemUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SystemUtils; sourceTree = "<group>"; };
 		43D6DB67279946AA0068CE9D /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
@@ -203,6 +205,14 @@
 			path = AppKitBindings;
 			sourceTree = "<group>";
 		};
+		43C309C327B681D400194209 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				43C309C427B681EA00194209 /* AppCommands.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
 		43D6DB69279994CA0068CE9D /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +293,7 @@
 		43DD9616277E717C000CE509 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				43C309C327B681D400194209 /* Commands */,
 				438326FA27877346004B0E18 /* ViewRouter.swift */,
 				438326F927872FC6004B0E18 /* AppKitBindings */,
 				43DD961A277E717C000CE509 /* Chat */,
@@ -531,6 +542,7 @@
 				432179A3279B06AC002AC3A1 /* FoldersPrefView.swift in Sources */,
 				43DD962C277E717C000CE509 /* Folder.swift in Sources */,
 				432179A7279B06AC002AC3A1 /* NotificationsAndSoundsPrefView.swift in Sources */,
+				43C309C527B681EA00194209 /* AppCommands.swift in Sources */,
 				43DD9637277E717C000CE509 /* ChatItemView.swift in Sources */,
 				43DD9636277E717C000CE509 /* LoginView.swift in Sources */,
 				438326FB27877346004B0E18 /* ViewRouter.swift in Sources */,
