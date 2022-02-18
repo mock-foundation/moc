@@ -8,6 +8,7 @@
 import Resolver
 import TDLibKit
 
+// swiftlint:disable function_body_length type_body_length
 public class MockChatService: ChatService {
     public func getUser(byId: Int64) throws -> User {
         User(
