@@ -1,0 +1,17 @@
+# strings:
+#   inputs:
+#     - Resources/Base.lproj
+#   outputs:
+#     - templateName: structured-swift5
+#       output: Strings+Generated.swift
+output_dir: Moc/SwiftGen
+input_dir: Moc
+xcassets:
+    inputs:
+        - Assets.xcassets
+    outputs:
+        - templateName: swift5
+          params:
+            forceProvidesNamespaces: true
+          output: XCAssets+Generated.swift
+## https://github.com/SwiftGen/SwiftGen/tree/6.5.1/Documentation/

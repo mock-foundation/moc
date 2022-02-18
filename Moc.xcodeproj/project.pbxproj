@@ -228,8 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				43DD9562277E50C0000CE509 /* Moc */,
-				4390A0E027BB002E00C67F7F /* Caching */,
 				436207A42796A1D1008C7FFE /* Backend */,
+				4390A0E027BB002E00C67F7F /* Caching */,
 				4362079D2794E21B008C7FFE /* Generated */,
 				43C7B4C2278F3DE500236503 /* SystemUtils */,
 				43C7B4BD278F11D300236503 /* ImageUtils */,
@@ -254,6 +254,7 @@
 				43DD9607277E717B000CE509 /* Models */,
 				43654D3B277FF84C0047F36F /* ViewModels */,
 				43DD9616277E717C000CE509 /* Views */,
+				43E7FC5427BCE6BB00A2CC2A /* SwiftGen */,
 				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
 				43E8FD682791B3610016BE31 /* Info.plist */,
@@ -330,6 +331,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		43E7FC5427BCE6BB00A2CC2A /* SwiftGen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SwiftGen;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -338,6 +346,7 @@
 			buildConfigurationList = 43DD9585277E50C3000CE509 /* Build configuration list for PBXNativeTarget "Moc" */;
 			buildPhases = (
 				43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */,
+				43E7FC5727BCE89D00A2CC2A /* Run SwiftGen */,
 				43B16980279E943400AEBAE0 /* GYB Code generation */,
 				43DD955C277E50C0000CE509 /* Sources */,
 				43FB9654278B051E00FB86FF /* Run SwiftLint */,
@@ -476,9 +485,29 @@
 			shellPath = /bin/sh;
 			shellScript = "cd Generated\nfind . -name \"*.gyb\" |                                                       \\\n    while read file; do                                                      \\\n        gyb --line-directive '' -o \"Sources/Generated/${file%.gyb}\" \"$file\"; \\\n    done\n\n";
 		};
-		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
+		43E7FC5727BCE89D00A2CC2A /* Run SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Assets.xcassets",
+			);
+			name = "Run SwiftGen";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/SwiftGen/XCAssets+Generated.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swiftgen\n";
+		};
+		43E8FD5B27917FD60016BE31 /* Check dependency availability and download them */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -490,9 +519,9 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
+			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# SwiftGen\nif which swiftgen >/dev/null; then\n    echo \"SwiftGen is available, skipping installation\"\nelse\n    brew install swiftgen\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
