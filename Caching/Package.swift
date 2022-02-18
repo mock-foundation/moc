@@ -17,9 +17,13 @@ let package = Package(
             url: "https://github.com/Swiftgram/TDLibKit.git",
             .revisionItem("e78aef926cdd92323755bcb72309aa5afed1f02a")
         ),
+        .package(url: "https://github.com/hyperoslo/Cache.git", .exactItem(.init(6, 0, 0)))
     ],
     targets: [.target(
             name: "Caching",
-            dependencies: ["TDLibKit"]),
+            dependencies: [
+                "TDLibKit",
+                "Cache"
+            ]),
     ]
 )
