@@ -8,15 +8,15 @@
 import Backend
 import CryptoKit
 import Generated
-import Logging
 import Resolver
 import SwiftUI
 import Utils
 import TDLibKit
+import Logging
 
 final class TdLogger: TDLibKit.Logger {
-    private let logger = Logging.Logger(label: "TDLib")
-    let queue: DispatchQueue
+    private let queue: DispatchQueue
+    private let logger = Logging.Logger(label: "TDLib", category: "TDLibKit")
 
     func log(_ message: String, type: LoggerMessageType?) {
         queue.async {
@@ -49,8 +49,6 @@ final class TdLogger: TDLibKit.Logger {
 }
 
 public extension Resolver {
-    private static let logger = Logging.Logger(label: "TDLibUpdates")
-
     static func registerUI() {
         register { MainViewModel() }.scope(.shared)
         register { ChatViewModel() }.scope(.shared)
@@ -70,7 +68,6 @@ public extension Resolver {
 @main
 struct MocApp: App {
     @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
-    private let logger = Logging.Logger(label: "TDLibUpdates")
 
     init() {
         Resolver.registerUI()

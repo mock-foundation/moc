@@ -7,6 +7,16 @@
 
 import Resolver
 import SwiftUI
+import Utils
+import Combine
+import TDLibKit
+import Logging
+
+private enum Event {
+    case updateChatPosition
+    case authorization
+    case updateNewChat
+}
 
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
@@ -15,89 +25,115 @@ class MainViewModel: ObservableObject {
     @Published var archiveChatList: [Chat] = []
     @Published var folderChatLists: [Int: [Chat]] = [:]
 
+    @Published var showingLoginScreen = false
+
     /// For chats that have not received updateChatPosition update, and are waiting for distribution.
     var unorderedChatList: [Chat] = []
 
-//        .onReceive(SystemUtils.ncPublisher(for: .updateChatPosition)) { notification in
-//            logger.info("Update chat position")
-//            let update = (notification.object as? UpdateChatPosition)!
-//            let position = update.position
-//            let chatId = update.chatId
-//
-//            if mainViewModel.unorderedChatList.contains(where: { $0.id == chatId }) {
-//                switch position.list {
-//                    case .chatListMain:
-//                        let chats = mainViewModel.unorderedChatList.filter { chat in
-//                            chat.id == chatId
-//                        }
-//                        for chat in chats {
-//                            mainViewModel.mainChatList.append(chat)
-//                        }
-//                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
-//                            return $0.id != chatId
-//                        }
-//                        sortMainChatList()
-//                    case .chatListArchive:
-//                        let chats = mainViewModel.unorderedChatList.filter { chat in
-//                            chat.id == chatId
-//                        }
-//                        for chat in chats {
-//                            mainViewModel.archiveChatList.append(chat)
-//                        }
-//                        mainViewModel.unorderedChatList = mainViewModel.unorderedChatList.filter {
-//                            return $0.id != chatId
-//                        }
-//                        sortArchiveChatList()
-//                    default:
-//                        break
-//                }
-//            }
-//        }
-    //        .onReceive(SystemUtils.ncPublisher(for: .updateNewChat)) { data in
-    //            logger.info("Received new chat update")
-    //            guard data.object != nil else {
-    //                return
-    //            }
-    //            let chat = (data.object as? UpdateNewChat)!.chat
-    //
-    //            let hasChat = mainViewModel.unorderedChatList.contains(where: {
-    //                $0.id == chat.id
-    //            })
-    //
-    //            if !hasChat {
-    //                mainViewModel.unorderedChatList.append(chat)
-    //            }
-    //
-    //            logger.info("\(chat)")
-    //
-    //            sortMainChatList()
-    //        }
-    //        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)) { _ in
-    //            showingLoginScreen = true
-    //        }
+    private var publishers: [Event: NotificationCenter.Publisher] = [:]
+    private var subscribers: [Event: AnyCancellable] = [:]
 
-    //    private func sortMainChatList() {
-    //        mainViewModel.mainChatList = mainViewModel.mainChatList.sorted {
-    //            if !$0.positions.isEmpty, !$1.positions.isEmpty {
-    //                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-    //            } else {
-    //                return true
-    //            }
-    //            //            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-    //            //                return true
-    //            //            } else {
-    //            //                return false
-    //            //            }
-    //        }
-    //    }
-    //
-    //    private func sortArchiveChatList() {
-    //        mainViewModel.archiveChatList = mainViewModel.archiveChatList.sorted {
-    //            if !$0.positions.isEmpty, !$1.positions.isEmpty {
-    //                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-    //            } else {
-    //                return true
-    //            }
-    //        }
-    //    }
+    private var logger = Logging.Logger(label: "UI", category: "MainViewModel")
+
+    init() {
+        publishers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition)
+        publishers[.authorization] = SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)
+        publishers[.updateNewChat] = SystemUtils.ncPublisher(for: .updateNewChat)
+    }
+
+    func registerSubscriptions() {
+        subscribers[.updateChatPosition] = publishers[.updateChatPosition]?.sink(
+            receiveValue: updateChatPosition(notification:)
+        )
+        subscribers[.authorization] = publishers[.authorization]?.sink(receiveValue: authorization(notification:))
+        subscribers[.updateNewChat] = publishers[.updateNewChat]?.sink(receiveValue: updateNewChat(notification:))
+    }
+
+    func updateChatPosition(notification: NotificationCenter.Publisher.Output) {
+        let update = (notification.object as? UpdateChatPosition)!
+        let position = update.position
+        let chatId = update.chatId
+
+        if self.unorderedChatList.contains(where: { $0.id == chatId }) {
+            switch position.list {
+                case .chatListMain:
+                    let chats = self.unorderedChatList.filter { chat in
+                        chat.id == chatId
+                    }
+                    for chat in chats {
+                        self.mainChatList.append(chat)
+                    }
+                    self.unorderedChatList = self.unorderedChatList.filter {
+                        return $0.id != chatId
+                    }
+                    sortMainChatList()
+                case .chatListArchive:
+                    let chats = self.unorderedChatList.filter { chat in
+                        chat.id == chatId
+                    }
+                    for chat in chats {
+                        self.archiveChatList.append(chat)
+                    }
+                    self.unorderedChatList = self.unorderedChatList.filter {
+                        return $0.id != chatId
+                    }
+                    sortArchiveChatList()
+                default:
+                    break
+            }
+        }
+    }
+
+    func authorization(notification: NotificationCenter.Publisher.Output) {
+        showingLoginScreen = true
+    }
+
+    func updateNewChat(notification: NotificationCenter.Publisher.Output) {
+        logger.info("Received new chat update")
+        guard notification.object != nil else {
+            return
+        }
+        let chat: Chat = (notification.object as? UpdateNewChat)!.chat
+
+        let hasChat = unorderedChatList.contains(where: {
+            $0.id == chat.id
+        })
+
+        if !hasChat {
+            unorderedChatList.append(chat)
+        }
+
+        logger.info("\(chat)")
+    }
+
+    deinit {
+        for subscriber in subscribers {
+            subscriber.value.cancel()
+        }
+    }
+
+    private func sortMainChatList() {
+        mainChatList = mainChatList.sorted {
+            if !$0.positions.isEmpty, !$1.positions.isEmpty {
+                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+            } else {
+                return true
+            }
+            //            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
+            //                return true
+            //            } else {
+            //                return false
+            //            }
+        }
+    }
+
+    private func sortArchiveChatList() {
+        archiveChatList = archiveChatList.sorted {
+            if !$0.positions.isEmpty, !$1.positions.isEmpty {
+                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
+            } else {
+                return true
+            }
+        }
+    }
 }

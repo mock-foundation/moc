@@ -8,9 +8,9 @@
 import Resolver
 import TDLibKit
 
-// swiftlint:disable function_body_length type_body_length
+// swiftlint:disable function_body_length
 public class MockChatService: ChatService {
-    public func getUser(byId: Int64) throws -> User {
+    public func getUser(byId: Int64) async throws -> User {
         User(
             firstName: "First",
             haveAccess: true,
@@ -32,7 +32,7 @@ public class MockChatService: ChatService {
         )
     }
 
-    public func getChat(id: Int64) throws -> Chat {
+    public func getChat(id: Int64) async throws -> Chat {
         Chat(
             actionBar: nil,
             availableReactions: [],

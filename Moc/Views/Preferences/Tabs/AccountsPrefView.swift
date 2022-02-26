@@ -16,8 +16,9 @@ import SwiftUI
 import SwiftUIUtils
 import TDLibKit
 
+// swiftlint:disable type_body_length
 struct AccountsPrefView: View {
-    private var logger = Logging.Logger(label: "AccountsPrefView")
+    private var logger = Logging.Logger(label: "Preferences", category: "AccountPaneUI")
     @StateObject private var viewModel = AccountsPrefViewModel()
 
     @State private var photos: [File] = []

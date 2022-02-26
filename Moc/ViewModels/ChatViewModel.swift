@@ -29,34 +29,34 @@ class ChatViewModel: ObservableObject {
         objectWillChange.send()
         chatTitle = chat.title
         let memberCount = try await service.chatMemberCount
-        let messageHistory: [Message] = try await service.messageHistory.map { tdMessage in
+        let messageHistory: [Message] = try await service.messageHistory.asyncMap { tdMessage in
             switch tdMessage.senderId {
-            case let .messageSenderUser(user):
-                let user = try self.service.getUser(byId: user.userId)
-                return Message(
-                    id: tdMessage.id,
-                    sender: .init(
-                        name: "\(user.firstName) \(user.lastName)",
-                        type: .user,
-                        id: user.id
-                    ),
-                    content: MessageContent(tdMessage.content),
-                    isOutgoing: tdMessage.isOutgoing,
-                    date: Date(timeIntervalSince1970: 0)
-                )
-            case let .messageSenderChat(chat):
-                let chat = try self.service.getChat(id: chat.chatId)
-                return Message(
-                    id: tdMessage.id,
-                    sender: .init(
-                        name: chat.title,
-                        type: .chat,
-                        id: chat.id
-                    ),
-                    content: MessageContent(tdMessage.content),
-                    isOutgoing: tdMessage.isOutgoing,
-                    date: Date(timeIntervalSince1970: 0)
-                )
+                case let .messageSenderUser(user):
+                    let user = try await self.service.getUser(byId: user.userId)
+                    return Message(
+                        id: tdMessage.id,
+                        sender: .init(
+                            name: "\(user.firstName) \(user.lastName)",
+                            type: .user,
+                            id: user.id
+                        ),
+                        content: MessageContent(tdMessage.content),
+                        isOutgoing: tdMessage.isOutgoing,
+                        date: Date(timeIntervalSince1970: 0)
+                    )
+                case let .messageSenderChat(chat):
+                    let chat = try await self.service.getChat(id: chat.chatId)
+                    return Message(
+                        id: tdMessage.id,
+                        sender: .init(
+                            name: chat.title,
+                            type: .chat,
+                            id: chat.id
+                        ),
+                        content: MessageContent(tdMessage.content),
+                        isOutgoing: tdMessage.isOutgoing,
+                        date: Date(timeIntervalSince1970: 0)
+                    )
             }
         }
 
@@ -66,4 +66,14 @@ class ChatViewModel: ObservableObject {
             self.messages = messageHistory
         }
     }
+
+//        .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
+//            let message = (notification.object as? UpdateNewMessage)!.message
+//
+//            //                guard viewRouter.openedChat != nil else { return }
+//
+//            //            if message.chatId == viewRouter.openedChat!.id {
+//            //                chatViewModel.messages?.append(message)
+//            //            }
+//        }
 }

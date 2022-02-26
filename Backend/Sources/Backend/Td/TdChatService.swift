@@ -7,31 +7,25 @@
 
 import Combine
 import Foundation
-import Logging
 import SwiftUI
 import Utils
 import TDLibKit
+import Logging
 
 public class TdChatService: ChatService {
-    private var logger = Logger(label: "TdChatDataSource")
+    private var logger = Logging.Logger(label: "Services", category: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 
     public func set(protected _: Bool) async throws {
         logger.error("set(protected:) not implemented")
     }
 
-    public func getUser(byId: Int64) throws -> User {
-        Task.detached {
-            try await self.tdApi.getUser(userId: byId)
-        }
-        dispatchMain()
+    public func getUser(byId: Int64) async throws -> User {
+        try await self.tdApi.getUser(userId: byId)
     }
 
-    public func getChat(id: Int64) throws -> Chat {
-        Task.detached {
-            try await self.tdApi.getChat(chatId: id)
-        }
-        dispatchMain()
+    public func getChat(id: Int64) async throws -> Chat {
+        try await self.tdApi.getChat(chatId: id)
     }
 
     public func getMessageSenderName(_ sender: MessageSender) throws -> String {

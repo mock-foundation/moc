@@ -13,74 +13,101 @@ import SwiftUI
 import Utils
 import TDLibKit
 
+private enum Tab {
+    case chat
+    case contacts
+    case calls
+}
+
 struct ContentView: View {
-    private let logger = Logging.Logger(label: "ContentView")
+    private let logger = Logging.Logger(label: "UI", category: "ContentView")
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
     @State private var isArchiveChatListOpen = false
-    @State private var showingLoginScreen = false
-    @State private var selectedTab = 0
+    @State private var selectedTab: Tab = .chat
 
     @InjectedObject private var chatViewModel: ChatViewModel
 
     @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
 
+    init() {
+        mainViewModel.registerSubscriptions()
+    }
+
     var body: some View {
         NavigationView {
             VStack {
                 HStack {
                     ScrollView(showsIndicators: false) {
-                        ForEach(0 ..< 10, content: { _ in
-                            FolderItemView()
-                        }).frame(alignment: .center)
+                        Group {
+                            switch selectedTab {
+                                case .chat:
+                                    ForEach(0 ..< 10, content: { _ in
+                                        FolderItemView()
+                                    })
+                                case .contacts:
+                                    Image(.person._2)
+                                case .calls:
+                                    Image(.phone.andWaveform)
+                            }
+                        }.frame(alignment: .center)
                     }
                     .frame(minWidth: 70)
                     VStack {
                         SearchField()
                             .padding([.leading, .bottom, .trailing], 15.0)
-                        List(
-                            isArchiveChatListOpen
-                                ? mainViewModel.archiveChatList
-                                : mainViewModel.mainChatList
-                        ) { chat in
-                            ChatItemView(chat: chat)
-                                .frame(height: 52)
-                                .onTapGesture {
-                                    Task {
-                                        do {
-                                            try await chatViewModel.update(chat: chat)
-                                        } catch {
-                                            logger.error("Error in \(error.localizedDescription)")
-                                        }
+                        Group {
+                            switch selectedTab {
+                                case .chat:
+                                    List(
+                                        isArchiveChatListOpen
+                                        ? mainViewModel.archiveChatList
+                                        : mainViewModel.mainChatList
+                                    ) { chat in
+                                        ChatItemView(chat: chat)
+                                            .frame(height: 52)
+                                            .onTapGesture {
+                                                Task {
+                                                    do {
+                                                        try await chatViewModel.update(chat: chat)
+                                                    } catch {
+                                                        logger.error("Error in \(error.localizedDescription)")
+                                                    }
+                                                }
+                                                viewRouter.openedChat = chat
+                                                viewRouter.currentView = .chat
+                                            }
+                                            .padding(6)
+                                            .background(
+                                                (viewRouter.currentView == .chat
+                                                 && viewRouter.openedChat! == chat)
+                                                ? Color.accentColor.opacity(0.6)
+                                                : nil
+                                            )
+                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                            .swipeActions {
+                                                Button(role: .destructive) {
+                                                    logger.info("Pressed Delete button")
+                                                } label: {
+                                                    Label("Delete chat", systemImage: SPSafeSymbol.trash.name)
+                                                }
+                                            }
                                     }
-                                    viewRouter.openedChat = chat
-                                    viewRouter.currentView = .chat
-                                }
-                                .padding(6)
-                                .background(
-                                    (viewRouter.currentView == .chat
-                                        && viewRouter.openedChat! == chat)
-                                        ? Color.accentColor.opacity(0.6)
-                                        : nil
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        logger.info("Pressed Delete button")
-                                    } label: {
-                                        Label("Delete chat", systemImage: SPSafeSymbol.trash.name)
-                                    }
-                                }
+                                case .contacts:
+                                    Text("Contacts")
+                                case .calls:
+                                    Text("Calls")
+                            }
                         }
-                        .frame(minWidth: 320)
+                        .frame(minWidth: 320, maxHeight: .infinity)
                     }.toolbar {
                         ToolbarItem(placement: .status) {
                             Picker("", selection: $selectedTab) {
-                                Image(.bubble.leftAndBubbleRight).tag(0)
-                                Image(.phone.andWaveform).tag(1)
-                                Image(.person._2).tag(2)
+                                Image(.bubble.leftAndBubbleRight).tag(Tab.chat)
+                                Image(.phone.andWaveform).tag(Tab.calls)
+                                Image(.person._2).tag(Tab.contacts)
                             }.pickerStyle(.segmented)
                         }
                         ToolbarItem(placement: .status) {
@@ -104,24 +131,28 @@ struct ContentView: View {
 
             switch viewRouter.currentView {
             case .selectChat:
-                VStack {
-                    Image(.bubble.leftAndBubbleRight)
-                        .font(.system(size: 96))
-                        .foregroundColor(.gray)
-                    Text("Open a chat or start a new one!")
-                        .font(.largeTitle)
-                        .foregroundStyle(Color.secondary)
-                    Text("Pick any chat on the left sidebar, and have fun chatting!")
-                        .foregroundStyle(Color.secondary)
-                }
+                chatPlaceholder
             case .chat:
                 ChatView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .sheet(isPresented: $showingLoginScreen) {
+        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
             LoginView()
                 .frame(width: 400, height: 500)
+        }
+    }
+
+    private var chatPlaceholder: some View {
+        VStack {
+            Image(.bubble.leftAndBubbleRight)
+                .font(.system(size: 96))
+                .foregroundColor(.gray)
+            Text("Open a chat or start a new one!")
+                .font(.largeTitle)
+                .foregroundStyle(Color.secondary)
+            Text("Pick any chat on the left sidebar, and have fun chatting!")
+                .foregroundStyle(Color.secondary)
         }
     }
 }

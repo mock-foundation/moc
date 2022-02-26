@@ -22,34 +22,36 @@ struct ChatItemView: View {
 
     var body: some View {
         HStack(alignment: .top) {
-            //				chat.chatIcon
+            //                chat.chatIcon
             Image("MockChatPhoto")
                 .resizable()
-                .frame(width: 52, height: 52)
+                .frame(width: 56, height: 56)
                 .clipShape(Circle())
                 .fixedSize()
             VStack(alignment: .leading) {
                 HStack {
+                    // swiftlint:disable empty_enum_arguments switch_case_alignment
                     switch chat.type {
-                    case .privateChat:
-                        EmptyView()
-                    case .basicGroup:
-                        Image(.person._2)
-                    case .supergroup:
-                        Image(.person._2Fill)
-                    case .channel:
-                        Image(.megaphone)
-                    case .secret:
-                        Image(.lock)
+                        case .chatTypePrivate( _):
+                            EmptyView()
+                        case .chatTypeBasicGroup(_):
+                            Image(systemName: "person.2")
+                        case .chatTypeSupergroup(let info):
+                            if info.isChannel {
+                                Image(systemName: "megaphone")
+                            } else {
+                                Image(systemName: "person.2.fill")
+                            }
+                        case .chatTypeSecret(_):
+                            Image(systemName: "lock")
                     }
                     Text(chat.title)
                         .font(.title3)
                         .fontWeight(.bold)
-                        .foregroundStyle(Color.primary)
                     Spacer()
-                    //					Image(chat.seen ? "MessageSeenIcon" : "MessageSentIcon")
-                    Text(chat.lastMessage?.date.hoursAndMinutes ?? "")
-                        .foregroundStyle(Color.secondary)
+                    //                    Image(chat.seen ? "MessageSeenIcon" : "MessageSentIcon")
+                    Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
+                        .foregroundColor(.secondary)
                 }
                 HStack {
                     VStack {
@@ -57,16 +59,16 @@ struct ChatItemView: View {
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(2)
-                            .foregroundStyle(Color.secondary)
+                            .foregroundColor(.secondary)
                         Spacer()
                     }
                     Spacer()
                     VStack {
                         Spacer()
-                        //						if chat.isPinned {
-//                            Image(.pin)
-                        //								.rotationEffect(.degrees(15))
-                        //						}
+//                        if chat.isPinned {
+//                            Image(systemName: "pin")
+//                                .rotationEffect(.degrees(15))
+//                        }
                     }
                 }
             }

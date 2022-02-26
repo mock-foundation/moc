@@ -20,7 +20,7 @@ public extension TdApi {
     /// use `shared[0]`.
     static var shared: [TdApi] = []
 
-    private static let logger = Logging.Logger(label: "TDLibUpdates")
+    private static let logger = Logging.Logger(label: "TDLib", category: "Updates")
 
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {

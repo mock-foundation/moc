@@ -105,9 +105,7 @@ struct ChatView: View {
                 ForEach(viewModel.messages.sorted { item1, item2 in
                     item1.id > item2.id ? false : true
                 }) { message in
-                    MessageBubbleView(sender: message.sender.name) {
-                        Text(message.content.toString())
-                    }
+                    MessageView(message: message)
                     .frame(idealWidth: nil, maxWidth: 300)
                     .hLeading()
                 }
@@ -122,7 +120,7 @@ struct ChatView: View {
 
     // MARK: - Additional inspector stuff
 
-    private func inspectorButton(action: @escaping () -> Void, imageName: SPSafeSymbol, text: String) -> some View {
+    private func makeInspectorButton(action: @escaping () -> Void, imageName: SPSafeSymbol, text: String) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: imageName.name)
@@ -182,17 +180,17 @@ struct ChatView: View {
 
                 // Quick actions
                 HStack(spacing: 24) {
-                    inspectorButton(
+                    makeInspectorButton(
                         action: {},
                         imageName: .person.cropCircleBadgePlus,
                         text: "Add"
                     )
-                    inspectorButton(
+                    makeInspectorButton(
                         action: {},
                         imageName: .bell.slash,
                         text: "Mute"
                     )
-                    inspectorButton(
+                    makeInspectorButton(
                         action: {},
                         imageName: .arrow.turnUpRight,
                         text: "Leave"
@@ -287,15 +285,6 @@ struct ChatView: View {
                     })
                 }
             }
-            .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
-                let message = (notification.object as? UpdateNewMessage)!.message
-
-//                guard viewRouter.openedChat != nil else { return }
-
-                //            if message.chatId == viewRouter.openedChat!.id {
-                //                chatViewModel.messages?.append(message)
-                //            }
-            }
     }
 }
 
@@ -305,64 +294,7 @@ struct ChatView_Previews: PreviewProvider {
     }
 
     static var previews: some View {
-        ChatView( /* chat: Chat(
-         actionBar: .none,
-         canBeDeletedForAllUsers: true,
-         canBeDeletedOnlyForSelf: true,
-         canBeReported: true,
-         clientData: "",
-         defaultDisableNotification: true,
-         draftMessage: nil,
-         hasProtectedContent: false,
-         hasScheduledMessages: false,
-         id: 10294934 /* i just banged my head against the keyboard, so this number is completely random */ ,
-         isBlocked: false,
-         isMarkedAsUnread: false,
-         lastMessage: nil,
-         lastReadInboxMessageId: 102044379 /* the same */ ,
-         lastReadOutboxMessageId: 39439379573 /* again */ ,
-         messageSenderId: nil, messageTtl: 0,
-         notificationSettings: ChatNotificationSettings(
-             disableMentionNotifications: true,
-             disablePinnedMessageNotifications: true,
-             muteFor: 10,
-             showPreview: false,
-             sound: "",
-             useDefaultDisableMentionNotifications: true,
-             useDefaultDisablePinnedMessageNotifications: true,
-             useDefaultMuteFor: true,
-             useDefaultShowPreview: true,
-             useDefaultSound: true
-         ),
-         pendingJoinRequests: nil,
-         permissions: ChatPermissions(
-             canAddWebPagePreviews: true,
-             canChangeInfo: true,
-             canInviteUsers: true,
-             canPinMessages: true,
-             canSendMediaMessages: true,
-             canSendMessages: true,
-             canSendOtherMessages: true,
-             canSendPolls: true
-         ),
-         photo: nil,
-         positions: [],
-         replyMarkupMessageId: 1023948920349 /* my head hurts */ ,
-         themeName: "",
-         title: "Curry Club - Ninjas from the reeds",
-         type: .chatTypeBasicGroup(
-             .init(basicGroupId: 102343920
-                   // i really should use a proper random number generator
-                   // instead of using my head as a random number generator
-             )
-         ),
-         unreadCount: 0,
-         unreadMentionCount: 0,
-         videoChat: VideoChat(
-             defaultParticipantId: nil,
-             groupCallId: 0,
-             hasParticipants: false
-         )) */ )
-         .frame(width: 800, height: 600)
+        ChatView()
+            .frame(width: 800, height: 600)
     }
 }

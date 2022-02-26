@@ -38,7 +38,6 @@
 		437D7EAC27C9AB7B00B0B82C /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E8927C9AB7B00B0B82C /* SearchField.swift */; };
 		437D7EAD27C9AB7B00B0B82C /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E8B27C9AB7B00B0B82C /* MessageSender.swift */; };
 		437D7EAE27C9AB7B00B0B82C /* MessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E8C27C9AB7B00B0B82C /* MessageContent.swift */; };
-		437D7EAF27C9AB7B00B0B82C /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E8D27C9AB7B00B0B82C /* Chat.swift */; };
 		437D7EB027C9AB7B00B0B82C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E8E27C9AB7B00B0B82C /* Message.swift */; };
 		437D7EB127C9AB7B00B0B82C /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E8F27C9AB7B00B0B82C /* Folder.swift */; };
 		437D7EB227C9AB7B00B0B82C /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E9027C9AB7B00B0B82C /* ChatType.swift */; };
@@ -47,6 +46,8 @@
 		437D7EB527C9AB7B00B0B82C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E9527C9AB7B00B0B82C /* MainViewModel.swift */; };
 		437D7EB727C9ABB200B0B82C /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7EB627C9ABB200B0B82C /* Backend */; };
 		437D7EB927C9ABB200B0B82C /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7EB827C9ABB200B0B82C /* Caching */; };
+		437D7EBC27C9B41000B0B82C /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7EBB27C9B41000B0B82C /* MessageView.swift */; };
+		437D7EBF27CAA68B00B0B82C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7EBE27CAA68B00B0B82C /* Logging */; };
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
 		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; settings = {ATTRIBUTES = (Required, ); }; };
 		43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43B1697D279E8A5E00AEBAE0 /* TDLibKit */; };
@@ -59,7 +60,6 @@
 		43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9645277E7579000CE509 /* libc++.1.tbd */; };
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
 		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
-		43E8FD6727919DD30016BE31 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 43E8FD6627919DD30016BE31 /* Logging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,13 +114,14 @@
 		437D7E8927C9AB7B00B0B82C /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		437D7E8B27C9AB7B00B0B82C /* MessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
 		437D7E8C27C9AB7B00B0B82C /* MessageContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContent.swift; sourceTree = "<group>"; };
-		437D7E8D27C9AB7B00B0B82C /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		437D7E8E27C9AB7B00B0B82C /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		437D7E8F27C9AB7B00B0B82C /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		437D7E9027C9AB7B00B0B82C /* ChatType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		437D7E9327C9AB7B00B0B82C /* AccountsPrefViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsPrefViewModel.swift; sourceTree = "<group>"; };
 		437D7E9427C9AB7B00B0B82C /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		437D7E9527C9AB7B00B0B82C /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		437D7EBB27C9B41000B0B82C /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		437D7EBD27CA32E400B0B82C /* Logging */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logging; sourceTree = "<group>"; };
 		4390A0E027BB002E00C67F7F /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
 		43DD9560277E50C0000CE509 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43DD9567277E50C3000CE509 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,11 +152,11 @@
 				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43C309C227B67BDC00194209 /* SPSafeSymbols in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
-				43E8FD6727919DD30016BE31 /* Logging in Frameworks */,
 				437D7E6127C9AB2F00B0B82C /* Utils in Frameworks */,
 				43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */,
 				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
+				437D7EBF27CAA68B00B0B82C /* Logging in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,16 +182,16 @@
 		437D7E6E27C9AB7B00B0B82C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				437D7E8327C9AB7B00B0B82C /* Commands */,
 				437D7E6F27C9AB7B00B0B82C /* Preferences */,
+				437D7E8827C9AB7B00B0B82C /* AppKitBindings */,
 				437D7E7C27C9AB7B00B0B82C /* Chat */,
 				437D7E8027C9AB7B00B0B82C /* LoginView.swift */,
 				437D7E8127C9AB7B00B0B82C /* ChatItemView.swift */,
 				437D7E8227C9AB7B00B0B82C /* LottieView.swift */,
-				437D7E8327C9AB7B00B0B82C /* Commands */,
 				437D7E8527C9AB7B00B0B82C /* FolderItemView.swift */,
 				437D7E8627C9AB7B00B0B82C /* ViewRouter.swift */,
 				437D7E8727C9AB7B00B0B82C /* ContentView.swift */,
-				437D7E8827C9AB7B00B0B82C /* AppKitBindings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,8 +225,8 @@
 		437D7E7C27C9AB7B00B0B82C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				437D7EBA27C9B3F100B0B82C /* Message */,
 				437D7E7D27C9AB7B00B0B82C /* ChatSplitView.swift */,
-				437D7E7E27C9AB7B00B0B82C /* MessageBubbleView.swift */,
 				437D7E7F27C9AB7B00B0B82C /* ChatView.swift */,
 			);
 			path = Chat;
@@ -252,7 +253,6 @@
 			children = (
 				437D7E8B27C9AB7B00B0B82C /* MessageSender.swift */,
 				437D7E8C27C9AB7B00B0B82C /* MessageContent.swift */,
-				437D7E8D27C9AB7B00B0B82C /* Chat.swift */,
 				437D7E8E27C9AB7B00B0B82C /* Message.swift */,
 				437D7E8F27C9AB7B00B0B82C /* Folder.swift */,
 				437D7E9027C9AB7B00B0B82C /* ChatType.swift */,
@@ -278,6 +278,15 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		437D7EBA27C9B3F100B0B82C /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				437D7E7E27C9AB7B00B0B82C /* MessageBubbleView.swift */,
+				437D7EBB27C9B41000B0B82C /* MessageView.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		43DD9557277E50C0000CE509 = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +294,7 @@
 				436207A42796A1D1008C7FFE /* Backend */,
 				4390A0E027BB002E00C67F7F /* Caching */,
 				437D7E5F27C99C5900B0B82C /* Utils */,
+				437D7EBD27CA32E400B0B82C /* Logging */,
 				4362079D2794E21B008C7FFE /* Generated */,
 				43DD9574277E50C3000CE509 /* MocTests */,
 				43DD9561277E50C0000CE509 /* Products */,
@@ -378,7 +388,6 @@
 				4386E46F27837A810084F809 /* SwiftUIUtils */,
 				430B983E278B680600420D75 /* Lottie */,
 				4357F91F278E35F700154012 /* AlertToast */,
-				43E8FD6627919DD30016BE31 /* Logging */,
 				43425E11279C682C003E9493 /* KeychainSwift */,
 				43B1697D279E8A5E00AEBAE0 /* TDLibKit */,
 				431AE22C27A3619C00F5A609 /* Introspect */,
@@ -387,6 +396,7 @@
 				437D7E6227C9AB3300B0B82C /* Generated */,
 				437D7EB627C9ABB200B0B82C /* Backend */,
 				437D7EB827C9ABB200B0B82C /* Caching */,
+				437D7EBE27CAA68B00B0B82C /* Logging */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -443,7 +453,6 @@
 				4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */,
 				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				4301E934279DC485001ACEEB /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				430D640C27A2058E009C81BE /* XCRemoteSwiftPackageReference "SFSymbols" */,
@@ -554,7 +563,6 @@
 				437D7E9C27C9AB7B00B0B82C /* FoldersPrefView.swift in Sources */,
 				437D7EAC27C9AB7B00B0B82C /* SearchField.swift in Sources */,
 				437D7E9B27C9AB7B00B0B82C /* StickersPrefView.swift in Sources */,
-				437D7EAF27C9AB7B00B0B82C /* Chat.swift in Sources */,
 				437D7EB127C9AB7B00B0B82C /* Folder.swift in Sources */,
 				437D7E9A27C9AB7B00B0B82C /* AppearancePrefView.swift in Sources */,
 				437D7EA127C9AB7B00B0B82C /* PreferencesContent.swift in Sources */,
@@ -563,6 +571,7 @@
 				437D7EAE27C9AB7B00B0B82C /* MessageContent.swift in Sources */,
 				437D7EA927C9AB7B00B0B82C /* FolderItemView.swift in Sources */,
 				437D7EA727C9AB7B00B0B82C /* LottieView.swift in Sources */,
+				437D7EBC27C9B41000B0B82C /* MessageView.swift in Sources */,
 				437D7EA827C9AB7B00B0B82C /* AppCommands.swift in Sources */,
 				437D7EA227C9AB7B00B0B82C /* ChatSplitView.swift in Sources */,
 				437D7E9727C9AB7B00B0B82C /* AccountsPrefView.swift in Sources */,
@@ -913,14 +922,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-log.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -960,6 +961,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Caching;
 		};
+		437D7EBE27CAA68B00B0B82C /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logging;
+		};
 		4386E45A2782FFEB0084F809 /* Resolver-Static */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
@@ -984,11 +989,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
-		};
-		43E8FD6627919DD30016BE31 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43E8FD6527919DD30016BE31 /* XCRemoteSwiftPackageReference "swift-log" */;
-			productName = Logging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
