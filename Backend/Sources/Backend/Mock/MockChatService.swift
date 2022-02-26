@@ -35,6 +35,7 @@ public class MockChatService: ChatService {
     public func getChat(id: Int64) throws -> Chat {
         Chat(
             actionBar: nil,
+            availableReactions: [],
             canBeDeletedForAllUsers: true,
             canBeDeletedOnlyForSelf: true,
             canBeReported: true,
@@ -82,6 +83,7 @@ public class MockChatService: ChatService {
             type: .chatTypePrivate(.init(userId: 0)),
             unreadCount: 0,
             unreadMentionCount: 0,
+            unreadReactionCount: 0,
             videoChat: .init(
                 defaultParticipantId: nil,
                 groupCallId: 0,

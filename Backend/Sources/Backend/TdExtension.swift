@@ -10,7 +10,7 @@ import Foundation
 import Generated
 import KeychainSwift
 import Logging
-import SystemUtils
+import Utils
 import TDLibKit
 
 public extension TdApi {

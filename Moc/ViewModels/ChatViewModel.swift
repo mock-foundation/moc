@@ -9,7 +9,7 @@ import Backend
 import Combine
 import Foundation
 import Resolver
-import SystemUtils
+import Utils
 import TDLibKit
 
 class ChatViewModel: ObservableObject {

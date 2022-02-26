@@ -11,7 +11,7 @@ import Generated
 import Logging
 import Resolver
 import SwiftUI
-import SystemUtils
+import Utils
 import TDLibKit
 
 final class TdLogger: TDLibKit.Logger {
@@ -27,14 +27,14 @@ final class TdLogger: TDLibKit.Logger {
 
             var typeStr = ""
             switch type! {
-            case .receive:
-                typeStr = "receive:"
-            case .send:
-                typeStr = "send:"
-            case .execute:
-                typeStr = "execute:"
-            case let .custom(data):
-                typeStr = "\(data):"
+                case .receive:
+                    typeStr = "receive:"
+                case .send:
+                    typeStr = "send:"
+                case .execute:
+                    typeStr = "execute:"
+                case let .custom(data):
+                    typeStr = "\(data):"
             }
 
             #if DEBUG

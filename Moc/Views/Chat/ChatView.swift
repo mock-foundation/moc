@@ -11,7 +11,7 @@ import Resolver
 import SPSafeSymbols
 import SwiftUI
 import SwiftUIUtils
-import SystemUtils
+import Utils
 import TDLibKit
 
 public extension MessageContent {

@@ -10,7 +10,7 @@ import Logging
 import Resolver
 import SPSafeSymbols
 import SwiftUI
-import SystemUtils
+import Utils
 import TDLibKit
 
 struct ContentView: View {
