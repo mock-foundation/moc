@@ -4,4 +4,5 @@ A description of this package.
 
 ## Credits
 
-Sequence extensions: https://www.swiftbysundell.com/articles/async-and-concurrent-forEach-and-map/
+Sequence extensions: https://github.com/JohnSundell/CollectionConcurrencyKit
+View frame extensions: https://github.com/ggoraa/SwiftUIUtils
