@@ -11,7 +11,6 @@
 		431AE22D27A3619C00F5A609 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 431AE22C27A3619C00F5A609 /* Introspect */; };
 		43425E12279C682C003E9493 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 43425E11279C682C003E9493 /* KeychainSwift */; };
 		4357F920278E35F700154012 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 4357F91F278E35F700154012 /* AlertToast */; };
-		437D7E6127C9AB2F00B0B82C /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7E6027C9AB2F00B0B82C /* Utils */; };
 		437D7E6327C9AB3300B0B82C /* Generated in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7E6227C9AB3300B0B82C /* Generated */; };
 		437D7E9627C9AB7B00B0B82C /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E6D27C9AB7B00B0B82C /* XCAssets+Generated.swift */; };
 		437D7E9727C9AB7B00B0B82C /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7E7127C9AB7B00B0B82C /* AccountsPrefView.swift */; };
@@ -48,8 +47,8 @@
 		437D7EB927C9ABB200B0B82C /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7EB827C9ABB200B0B82C /* Caching */; };
 		437D7EBC27C9B41000B0B82C /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437D7EBB27C9B41000B0B82C /* MessageView.swift */; };
 		437D7EBF27CAA68B00B0B82C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7EBE27CAA68B00B0B82C /* Logging */; };
+		437D7FE127CC1BF900B0B82C /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = 437D7FE027CC1BF900B0B82C /* Utils */; };
 		4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E45A2782FFEB0084F809 /* Resolver-Static */; };
-		4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 4386E46F27837A810084F809 /* SwiftUIUtils */; settings = {ATTRIBUTES = (Required, ); }; };
 		43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43B1697D279E8A5E00AEBAE0 /* TDLibKit */; };
 		43C309C227B67BDC00194209 /* SPSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 43C309C127B67BDC00194209 /* SPSafeSymbols */; };
 		43DD9568277E50C3000CE509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43DD9567277E50C3000CE509 /* Assets.xcassets */; };
@@ -59,6 +58,7 @@
 		43DD9643277E7558000CE509 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43DD9642277E7558000CE509 /* Resolver */; };
 		43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9645277E7579000CE509 /* libc++.1.tbd */; };
 		43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43DD9647277E7586000CE509 /* libz.1.tbd */; };
+		43E7221627CC1FD600FD44A9 /* Chat+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E7221527CC1FD500FD44A9 /* Chat+Identifiable.swift */; };
 		43E8FD51279040DF0016BE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E8FD50279040DF0016BE31 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +132,7 @@
 		43DD9603277E717B000CE509 /* MocApp+Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MocApp+Injection.swift"; sourceTree = "<group>"; };
 		43DD9645277E7579000CE509 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43DD9647277E7586000CE509 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
+		43E7221527CC1FD500FD44A9 /* Chat+Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chat+Identifiable.swift"; sourceTree = "<group>"; };
 		43E8FD50279040DF0016BE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43E8FD682791B3610016BE31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5A6370027ADAAF700AE534D /* generate_secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_secrets.sh; sourceTree = "<group>"; };
@@ -149,13 +150,12 @@
 				437D7EB927C9ABB200B0B82C /* Caching in Frameworks */,
 				431AE22D27A3619C00F5A609 /* Introspect in Frameworks */,
 				43DD9648277E758C000CE509 /* libz.1.tbd in Frameworks */,
-				4386E47027837A810084F809 /* SwiftUIUtils in Frameworks */,
 				43C309C227B67BDC00194209 /* SPSafeSymbols in Frameworks */,
 				43DD9646277E7580000CE509 /* libc++.1.tbd in Frameworks */,
-				437D7E6127C9AB2F00B0B82C /* Utils in Frameworks */,
 				43B1697E279E8A5E00AEBAE0 /* TDLibKit in Frameworks */,
 				43425E12279C682C003E9493 /* KeychainSwift in Frameworks */,
 				4357F920278E35F700154012 /* AlertToast in Frameworks */,
+				437D7FE127CC1BF900B0B82C /* Utils in Frameworks */,
 				437D7EBF27CAA68B00B0B82C /* Logging in Frameworks */,
 				4386E45B2782FFEB0084F809 /* Resolver-Static in Frameworks */,
 			);
@@ -291,9 +291,9 @@
 			isa = PBXGroup;
 			children = (
 				43DD9562277E50C0000CE509 /* Moc */,
+				437D7E5F27C99C5900B0B82C /* Utils */,
 				436207A42796A1D1008C7FFE /* Backend */,
 				4390A0E027BB002E00C67F7F /* Caching */,
-				437D7E5F27C99C5900B0B82C /* Utils */,
 				437D7EBD27CA32E400B0B82C /* Logging */,
 				4362079D2794E21B008C7FFE /* Generated */,
 				43DD9574277E50C3000CE509 /* MocTests */,
@@ -319,6 +319,7 @@
 				437D7E9127C9AB7B00B0B82C /* ViewModels */,
 				437D7E6E27C9AB7B00B0B82C /* Views */,
 				437D7E6C27C9AB7B00B0B82C /* SwiftGen */,
+				43E7221427CC1FBA00FD44A9 /* Utils */,
 				43E8FD50279040DF0016BE31 /* AppDelegate.swift */,
 				43DD9603277E717B000CE509 /* MocApp+Injection.swift */,
 				43E8FD682791B3610016BE31 /* Info.plist */,
@@ -354,6 +355,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		43E7221427CC1FBA00FD44A9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				43E7221527CC1FD500FD44A9 /* Chat+Identifiable.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		A5A636FF27ADAAD200AE534D /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,23 +389,23 @@
 			buildRules = (
 			);
 			dependencies = (
+				437D7FE327CC1C0F00B0B82C /* PBXTargetDependency */,
 			);
 			name = Moc;
 			packageProductDependencies = (
 				43DD9642277E7558000CE509 /* Resolver */,
 				4386E45A2782FFEB0084F809 /* Resolver-Static */,
-				4386E46F27837A810084F809 /* SwiftUIUtils */,
 				430B983E278B680600420D75 /* Lottie */,
 				4357F91F278E35F700154012 /* AlertToast */,
 				43425E11279C682C003E9493 /* KeychainSwift */,
 				43B1697D279E8A5E00AEBAE0 /* TDLibKit */,
 				431AE22C27A3619C00F5A609 /* Introspect */,
 				43C309C127B67BDC00194209 /* SPSafeSymbols */,
-				437D7E6027C9AB2F00B0B82C /* Utils */,
 				437D7E6227C9AB3300B0B82C /* Generated */,
 				437D7EB627C9ABB200B0B82C /* Backend */,
 				437D7EB827C9ABB200B0B82C /* Caching */,
 				437D7EBE27CAA68B00B0B82C /* Logging */,
+				437D7FE027CC1BF900B0B82C /* Utils */,
 			);
 			productName = Moc;
 			productReference = 43DD9560277E50C0000CE509 /* Moc.app */;
@@ -450,7 +459,6 @@
 			mainGroup = 43DD9557277E50C0000CE509;
 			packageReferences = (
 				43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */,
-				4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */,
 				430B983D278B680600420D75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				43425E10279C682C003E9493 /* XCRemoteSwiftPackageReference "keychain-swift" */,
@@ -579,6 +587,7 @@
 				437D7EA627C9AB7B00B0B82C /* ChatItemView.swift in Sources */,
 				437D7EA027C9AB7B00B0B82C /* NotificationsAndSoundsPrefView.swift in Sources */,
 				437D7EB527C9AB7B00B0B82C /* MainViewModel.swift in Sources */,
+				43E7221627CC1FD600FD44A9 /* Chat+Identifiable.swift in Sources */,
 				437D7E9927C9AB7B00B0B82C /* DataAndStoragePrefView.swift in Sources */,
 				437D7EA527C9AB7B00B0B82C /* LoginView.swift in Sources */,
 				437D7EA427C9AB7B00B0B82C /* ChatView.swift in Sources */,
@@ -601,6 +610,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		437D7FE327CC1C0F00B0B82C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 437D7FE227CC1C0F00B0B82C /* Utils */;
+		};
 		43DD9573277E50C3000CE509 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43DD955F277E50C0000CE509 /* Moc */;
@@ -750,7 +763,9 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.Moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -782,6 +797,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.Moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
 				SWIFT_VERSION = 5.0;
 			};
@@ -906,14 +922,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ggoraa/SwiftUIUtils.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -945,10 +953,6 @@
 			package = 4357F91E278E35F700154012 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
 		};
-		437D7E6027C9AB2F00B0B82C /* Utils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Utils;
-		};
 		437D7E6227C9AB3300B0B82C /* Generated */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Generated;
@@ -965,15 +969,18 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Logging;
 		};
+		437D7FE027CC1BF900B0B82C /* Utils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Utils;
+		};
+		437D7FE227CC1C0F00B0B82C /* Utils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Utils;
+		};
 		4386E45A2782FFEB0084F809 /* Resolver-Static */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43DD9641277E7558000CE509 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = "Resolver-Static";
-		};
-		4386E46F27837A810084F809 /* SwiftUIUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4386E46E27837A810084F809 /* XCRemoteSwiftPackageReference "SwiftUIUtils" */;
-			productName = SwiftUIUtils;
 		};
 		43B1697D279E8A5E00AEBAE0 /* TDLibKit */ = {
 			isa = XCSwiftPackageProductDependency;
