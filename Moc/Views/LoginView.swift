@@ -11,7 +11,6 @@ import Logging
 import Resolver
 import SPSafeSymbols
 import SwiftUI
-import SwiftUIUtils
 import TDLibKit
 
 private enum OpenedScreen {

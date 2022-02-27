@@ -10,7 +10,6 @@ import Introspect
 import Resolver
 import SPSafeSymbols
 import SwiftUI
-import SwiftUIUtils
 import Utils
 import TDLibKit
 

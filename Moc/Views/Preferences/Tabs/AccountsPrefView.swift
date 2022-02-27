@@ -13,7 +13,6 @@ import Logging
 import Resolver
 import SPSafeSymbols
 import SwiftUI
-import SwiftUIUtils
 import TDLibKit
 
 // swiftlint:disable type_body_length

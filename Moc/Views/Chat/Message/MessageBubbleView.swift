@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIUtils
 
 struct MessageBubbleView<Content: View>: View {
     @State var sender: String
