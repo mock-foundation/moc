@@ -12,8 +12,14 @@ import Resolver
 import Utils
 import TDLibKit
 
+private enum Event {
+    case updateNewMessage
+}
+
 class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
+    
+    typealias NCOutput = NotificationCenter.Publisher.Output
 
     // MARK: - UI state
 
@@ -23,7 +29,44 @@ class ChatViewModel: ObservableObject {
 
     @Published var chatTitle = "mock"
     @Published var chatMemberCount: Int?
-
+    
+    private var publishers: [Event: NotificationCenter.Publisher] = [:]
+    private var subscribers: [Event: AnyCancellable] = [:]
+    
+    init() {
+        publishers[.updateNewMessage] = SystemUtils.ncPublisher(for: .updateNewMessage)
+        subscribers[.updateNewMessage] = publishers[.updateNewMessage]?
+            .sink(receiveValue: updateNewMessage(notification:))
+    }
+    
+    deinit {
+        for subscriber in subscribers {
+            subscriber.value.cancel()
+        }
+    }
+    
+    func updateNewMessage(notification: NCOutput) {
+        let tdMessage = (notification.object as? UpdateNewMessage)!.message
+        Task {
+            do {
+                let sender = try await self.service.getUser(byId: tdMessage.id)
+                let message = Message(
+                    id: tdMessage.id,
+                    sender: MessageSender(
+                        name: "\(sender.firstName) \(sender.lastName)",
+                        type: .user,
+                        id: sender.id),
+                    content: MessageContent(tdMessage.content),
+                    isOutgoing: tdMessage.isOutgoing,
+                    date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
+                )
+                messages.append(message)
+            } catch {
+                
+            }
+        }
+    }
+    
     func update(chat: Chat) async throws {
         service.set(chatId: chat.id)
         objectWillChange.send()
@@ -68,12 +111,6 @@ class ChatViewModel: ObservableObject {
     }
 
 //        .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
-//            let message = (notification.object as? UpdateNewMessage)!.message
-//
-//            //                guard viewRouter.openedChat != nil else { return }
-//
-//            //            if message.chatId == viewRouter.openedChat!.id {
-//            //                chatViewModel.messages?.append(message)
-//            //            }
+
 //        }
 }
