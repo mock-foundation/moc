@@ -37,7 +37,7 @@ final class TdLogger: TDLibKit.Logger {
                     typeStr = "\(data):"
             }
 
-            self.logger.info("\(typeStr) \(message)")
+            self.logger.debug("\(typeStr) \(message)")
         }
     }
 

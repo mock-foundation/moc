@@ -19,8 +19,6 @@ private enum Event {
 class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
     
-    typealias NCOutput = NotificationCenter.Publisher.Output
-
     // MARK: - UI state
 
     @Published var inputMessage = ""
@@ -43,7 +41,7 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    func updateNewMessage(notification: NCOutput) {
+    func updateNewMessage(notification: NCPO) {
         let tdMessage = (notification.object as? UpdateNewMessage)!.message
         Task {
             do {

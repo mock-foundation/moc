@@ -12,6 +12,7 @@ import KeychainSwift
 import Logging
 import Utils
 import TDLibKit
+import Caching
 
 public extension TdApi {
     /// A list of shared instances. Why list? There could be multiple `TDLib` instances
@@ -108,10 +109,12 @@ public extension TdApi {
                     case let .updateChatLastMessage(info):
                         SystemUtils.post(notification: .updateChatLastMessage, withObject: info)
                     case let .updateNewChat(info):
-                        
+                        Chat.cache[info.chat.id] = info.chat
                         SystemUtils.post(notification: .updateNewChat, withObject: info)
                     case let .updateFile(info):
                         SystemUtils.post(notification: .updateFile, withObject: info)
+                    case let .updateUser(info):
+                        User.cache[info.user.id] = info.user
                     default:
                         TdApi.logger.warning("Unhandled TDLib update \(update)")
                 }
