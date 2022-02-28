@@ -1,7 +1,7 @@
 import Foundation
 import os
 
-/// Logging implementation. Uses NSLog under the hood.
+/// Logging implementation. Uses os.Logger under the hood.
 public struct Logger {
     private let logger: os.Logger
 
@@ -26,11 +26,6 @@ public struct Logger {
         case .critical:
             logger.critical("\(String(describing: message))")
         }
-//        if let message = message {
-//            NSLog("\(label): \(level.rawValue): \(message)")
-//        } else {
-//            NSLog("\(label): \(level.rawValue)")
-//        }
     }
 
     public func trace(_ message: String?) {
