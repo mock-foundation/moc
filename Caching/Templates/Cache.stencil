@@ -1,25 +1,26 @@
-//
-//  Cache.swift
-//  
-//
-//  Created by Егор Яковенко on 19.02.2022.
-//
 
-import Foundation
+// swiftlint:disable all
 import Cache
+import TDLibKit
 
-public class Cache<Key: Hashable, Value: Codable> {
+
+{% for type in types.implementing.AutoCacheable %}
+// MARK: - {{type.name}}
+public class {{type.name}}Cache {
+    public typealias Key = {{type.typealiases.CacheKey.typeName}}
+    public typealias Value = {{type.name}}
+    
     private let storage: Storage<Key, Value>?
 
-    init(name: String) {
+    init() {
         self.storage = try? Storage(
-            diskConfig: DiskConfig(name: name),
+            diskConfig: DiskConfig(name: "{{type.name}}Cache"),
             memoryConfig: MemoryConfig(),
             transformer: TransformerFactory.forCodable(ofType: Value.self)
         )
     }
 
-    subscript(key: Key) -> Value? {
+    public subscript(key: Key) -> Value? {
         get {
             return try? self.storage?.object(forKey: key)
         }
@@ -32,3 +33,5 @@ public class Cache<Key: Hashable, Value: Codable> {
         }
     }
 }
+
+{% endfor %}
