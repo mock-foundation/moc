@@ -292,9 +292,9 @@
 			isa = PBXGroup;
 			children = (
 				43DD9562277E50C0000CE509 /* Moc */,
-				437D7E5F27C99C5900B0B82C /* Utils */,
 				436207A42796A1D1008C7FFE /* Backend */,
 				4390A0E027BB002E00C67F7F /* Caching */,
+				437D7E5F27C99C5900B0B82C /* Utils */,
 				437D7EBD27CA32E400B0B82C /* Logging */,
 				4362079D2794E21B008C7FFE /* Generated */,
 				43AADCE027CD5C9B00DC36AD /* Calls */,
@@ -556,7 +556,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# SwiftGen\nif which swiftgen >/dev/null; then\n    echo \"SwiftGen is available, skipping installation\"\nelse\n    brew install swiftgen\nfi\n\n# Sourcery\nif which swiftgen >/dev/null; then\n    echo \"SwiftGen is available, skipping installation\"\nelse\n    brew install sourcery\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
+			shellScript = "echo \"Checking build dependencies availability...\"\n\n# SwiftFormat\nif which swiftformat >/dev/null; then\n    echo \"SwiftFormat is available, skipping installation\"\nelse\n    brew install swiftformat\nfi\n\n# SwiftLint\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint is available, skipping installation\"\nelse\n    brew install swiftlint\nfi\n\n# GYB\nif which gyb >/dev/null; then\n    echo \"GYB is available, skipping installation\"\nelse\n    brew install nshipster/formulae/gyb\nfi\n\n# SwiftGen\nif which swiftgen >/dev/null; then\n    echo \"SwiftGen is available, skipping installation\"\nelse\n    brew install swiftgen\nfi\n\n# Sourcery\nif which sourcery >/dev/null; then\n    echo \"Sourcery is available, skipping installation\"\nelse\n    brew install sourcery\nfi\n\n# Python plistlib\nPIP_OUTPUT=`pip3 list | grep plistlib`\nif [$PIP_OUTPUT -ne \"\"]; then\n    echo \"Python plistlib library is available, skipping installation\"\nelse\n    pip3 install plistlib\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		43FB9654278B051E00FB86FF /* Run SwiftLint */ = {
