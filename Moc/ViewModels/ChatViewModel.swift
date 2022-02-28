@@ -30,12 +30,10 @@ class ChatViewModel: ObservableObject {
     @Published var chatTitle = "mock"
     @Published var chatMemberCount: Int?
     
-    private var publishers: [Event: NotificationCenter.Publisher] = [:]
     private var subscribers: [Event: AnyCancellable] = [:]
     
     init() {
-        publishers[.updateNewMessage] = SystemUtils.ncPublisher(for: .updateNewMessage)
-        subscribers[.updateNewMessage] = publishers[.updateNewMessage]?
+        subscribers[.updateNewMessage] = SystemUtils.ncPublisher(for: .updateNewMessage)
             .sink(receiveValue: updateNewMessage(notification:))
     }
     
