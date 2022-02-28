@@ -123,6 +123,7 @@
 		437D7EBB27C9B41000B0B82C /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		437D7EBD27CA32E400B0B82C /* Logging */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logging; sourceTree = "<group>"; };
 		4390A0E027BB002E00C67F7F /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
+		43AADCE027CD5C9B00DC36AD /* Calls */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Calls; sourceTree = "<group>"; };
 		43DD9560277E50C0000CE509 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43DD9567277E50C3000CE509 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43DD956A277E50C3000CE509 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -296,6 +297,7 @@
 				4390A0E027BB002E00C67F7F /* Caching */,
 				437D7EBD27CA32E400B0B82C /* Logging */,
 				4362079D2794E21B008C7FFE /* Generated */,
+				43AADCE027CD5C9B00DC36AD /* Calls */,
 				43DD9574277E50C3000CE509 /* MocTests */,
 				43DD9561277E50C0000CE509 /* Products */,
 				43DD9644277E7578000CE509 /* Frameworks */,
