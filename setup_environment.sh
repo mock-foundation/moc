@@ -74,7 +74,7 @@ info "PWD:"
 echo $PWD
 info "Directories:"
 ls
-mkdir Generated
+mkdir ../Sources/Utils/Generated
 find . -name "*.gyb" |
 while read file; do
     filename=$(echo "$file" | sed 's/.\///')
