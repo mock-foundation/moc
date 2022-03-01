@@ -70,10 +70,11 @@ check_dependency sourcery sourcery Sourcery
 
 cd Utils/Templates
 info "Running GYB..."
-
+mkdir ../Sources/Utils/Generated
 find . -name "*.gyb" |
 while read file; do
-    gyb --line-directive '' -o "../Sources/Utils/Generated/${file%.gyb}" "$file";
+    filename=$(echo "$file" | sed 's/.\///')
+    gyb --line-directive '' -o "../Sources/Utils/Generated/${filename%.gyb}" "$filename";
 done
 
 info "Running Sourcery..."

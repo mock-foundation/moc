@@ -27,7 +27,9 @@ jobs:
               API_ID=${{ secrets.API_ID }}
               API_HASH=${{ secrets.API_HASH }}
           fi
+          echo $PWD
           HOMEBREW_NO_INSTALL_CLEANUP=1 API_ID=$API_ID API_HASH=$API_HASH ./setup_environment.sh
+          echo $PWD
 
       - name: Build
         env:
