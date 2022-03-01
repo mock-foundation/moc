@@ -70,10 +70,6 @@ check_dependency sourcery sourcery Sourcery
 
 cd Utils/Templates
 info "Running GYB..."
-info "PWD:"
-echo $PWD
-info "Directories:"
-ls
 mkdir ../Sources/Utils/Generated
 find . -name "*.gyb" |
 while read file; do
