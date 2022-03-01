@@ -49,8 +49,7 @@ check_dependency() {
 }
 
 section_start "This script will set up the development environment by downloading all dependencies and generating all code."
-if [[ -z $API_ID || -z $API_HASH ]]
-then
+if [[ -z $API_ID || -z $API_HASH ]]; then
     error "No API_ID or API_HAS were provided."
     error "Please specify them as environmental variables."
     error "Example of calling this script the right way:
@@ -58,6 +57,15 @@ then
     echo
     error "Exiting..."
     exit
+fi
+
+if which brew >/dev/null; then
+    ok "Homebrew available"
+else
+    warning "No Homebrew installation found. Installing..."
+    section_start "Installer output"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    section_end
 fi
 
 info "Checking dependencies...\n"
