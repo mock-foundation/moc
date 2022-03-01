@@ -14,3 +14,5 @@ StringExtension.swift
 Moc.app
 Moc.dmg
 dmgsrc/
+*.generated.swift
+String+Td.swift
