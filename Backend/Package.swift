@@ -22,6 +22,8 @@ let package = Package(
     ],
     targets: [.target(
         name: "Backend",
-        dependencies: ["TDLibKit"]
+        dependencies: [
+            "TDLibKit"
+        ]
     )]
 )

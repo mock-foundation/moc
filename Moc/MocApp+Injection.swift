@@ -7,7 +7,6 @@
 
 import Backend
 import CryptoKit
-import Generated
 import Resolver
 import SwiftUI
 import Utils

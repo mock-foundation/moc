@@ -2,4 +2,4 @@
 sourcery \
    --sources Caching/Sources/Caching \
    --templates Caching/Templates \
-   --output Caching/Sources/Caching/Generated
+   --output Caching/Sources/Caching

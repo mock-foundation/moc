@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/zsh
+
 #
 # This script will set up development environment.
 #
@@ -49,11 +50,11 @@ check_dependency() {
 }
 
 section_start "This script will set up the development environment by downloading all dependencies and generating all code."
-if [[ -z $API_ID || -z $API_HASH ]]; then
-    error "No API_ID or API_HAS were provided."
-    error "Please specify them as environmental variables."
+if [[ -z $1 || -z $2 ]]; then
+    error "No API ID or API hash were provided."
+    error "Please specify them as arguments."
     error "Example of calling this script the right way:
-        API_ID=10007 API_HASH=yaumerprosti10007 ./setup_environment.sh"
+        ./setup_environment.sh <api_id> <api_hash>"
     echo
     error "Exiting..."
     exit
@@ -72,21 +73,10 @@ info "Checking dependencies...\n"
 
 check_dependency swiftformat swiftformat SwiftFormat
 check_dependency swiftlint swiftlint SwiftLint
-check_dependency gyb nshipster/formulae/gyb GYB
 check_dependency swiftgen swiftgen SwiftGen
 check_dependency sourcery sourcery Sourcery
 
-cd Utils/Templates
-info "Running GYB..."
-mkdir ../Sources/Utils/Generated
-find . -name "*.gyb" |
-while read file; do
-    filename=$(echo "$file" | sed 's/.\///')
-    gyb --line-directive '' -o "../Sources/Utils/Generated/${filename%.gyb}" "$filename";
-done
-
 info "Running Sourcery..."
-cd ../..
 info "If you get a password input prompt, it is for making sourcery.sh file executable"
 sudo chmod +x sourcery.sh
 section_start "Sourcery output"

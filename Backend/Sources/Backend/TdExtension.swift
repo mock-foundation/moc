@@ -7,7 +7,6 @@
 
 import CryptoKit
 import Foundation
-import Generated
 import KeychainSwift
 import Logging
 import Utils
@@ -22,7 +21,7 @@ public extension TdApi {
     static var shared: [TdApi] = []
 
     private static let logger = Logging.Logger(label: "TDLib", category: "Updates")
-
+    
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
         Task {
@@ -35,6 +34,7 @@ public extension TdApi {
         client.run {
             do {
                 let update = try self.decoder.decode(Update.self, from: $0)
+            
                 switch update {
                     // MARK: - Authorization state
                     case let .updateAuthorizationState(state):
@@ -43,8 +43,8 @@ public extension TdApi {
                                 SystemUtils.post(notification: .authorizationStateWaitTdlibParameters)
                                 Task {
                                     try? await self.setTdlibParameters(parameters: TdlibParameters(
-                                        apiHash: Secret.apiHash,
-                                        apiId: Secret.apiId,
+                                        apiHash: /* Secret.apiHash */ "",
+                                        apiId: /* Secret.apiId */ 0,
                                         applicationVersion: (
                                             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                                         ) ?? "Unknown",
@@ -109,12 +109,18 @@ public extension TdApi {
                     case let .updateChatLastMessage(info):
                         SystemUtils.post(notification: .updateChatLastMessage, withObject: info)
                     case let .updateNewChat(info):
-                        Chat.cache[info.chat.id] = info.chat
+//                        Chat.cache[info.chat.id] = info.chat
                         SystemUtils.post(notification: .updateNewChat, withObject: info)
-                    case let .updateFile(info):
-                        SystemUtils.post(notification: .updateFile, withObject: info)
-                    case let .updateUser(info):
-                        User.cache[info.user.id] = info.user
+//                    case let .updateFile(info):
+//                        SystemUtils.post(notification: .updateFile, withObject: info)
+//                    case let .updateBasicGroup(info):
+//                        BasicGroup.cache[info.basicGroup.id] = info.basicGroup
+//                    case let .updateBasicGroupFullInfo(info):
+//                        BasicGroupFullInfo.cache[info.basicGroupId] = info.basicGroupFullInfo
+//                    case let .updateSupergroup(info):
+//                        Supergroup.cache[info.supergroup.id] = info.supergroup
+//                    case let .updateUser(info):
+//                        User.cache[info.user.id] = info.user
                     default:
                         TdApi.logger.warning("Unhandled TDLib update \(update)")
                 }

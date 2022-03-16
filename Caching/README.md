@@ -1,3 +1,3 @@
 # Caching
 
-Module that manages caching in Moc.
+A description of this package.
