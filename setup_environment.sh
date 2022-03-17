@@ -1,5 +1,4 @@
-#!/bin/zsh
-
+#!/bin/sh
 #
 # This script will set up development environment.
 #
@@ -73,10 +72,28 @@ info "Checking dependencies...\n"
 
 check_dependency swiftformat swiftformat SwiftFormat
 check_dependency swiftlint swiftlint SwiftLint
+check_dependency gyb ggoraa/brew/gyb GYB
 check_dependency swiftgen swiftgen SwiftGen
 check_dependency sourcery sourcery Sourcery
 
+PIP_OUTPUT=`pip3 list | grep plistlib`
+if [$PIP_OUTPUT -ne ""]; then
+    echo "Python plistlib library is available, skipping installation"
+else
+    pip3 install plistlib
+fi
+
+cd Utils/Templates
+info "Running GYB..."
+mkdir ../Sources/Utils/Generated
+find . -name "*.gyb" |
+while read file; do
+    filename=$(echo "$file" | sed 's/.\///')
+    API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utils/Generated/${filename%.gyb}" "$filename";
+done
+
 info "Running Sourcery..."
+cd ../..
 info "If you get a password input prompt, it is for making sourcery.sh file executable"
 sudo chmod +x sourcery.sh
 section_start "Sourcery output"
