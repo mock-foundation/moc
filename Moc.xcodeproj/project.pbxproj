@@ -180,12 +180,12 @@
 			isa = PBXGroup;
 			children = (
 				43807D4A27E213350056A3D3 /* Models */,
-				43807D7627E213350056A3D3 /* Utils */,
-				43807D7427E213350056A3D3 /* SwiftGen */,
 				43807D7827E213350056A3D3 /* ViewModels */,
 				43807D5527E213350056A3D3 /* Views */,
+				43807D7427E213350056A3D3 /* SwiftGen */,
 				43807D4927E213350056A3D3 /* AppDelegate.swift */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
+				43807D7727E213350056A3D3 /* Chat+Identifiable.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
 				43807D5427E213350056A3D3 /* Info.plist */,
@@ -219,15 +219,15 @@
 			isa = PBXGroup;
 			children = (
 				43807D5627E213350056A3D3 /* Preferences */,
+				43807D6C27E213350056A3D3 /* Commands */,
+				43807D7127E213350056A3D3 /* AppKitBindings */,
 				43807D6327E213350056A3D3 /* Chat */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
-				43807D6C27E213350056A3D3 /* Commands */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
-				43807D7127E213350056A3D3 /* AppKitBindings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,14 +306,6 @@
 				43807D7527E213350056A3D3 /* XCAssets+Generated.swift */,
 			);
 			path = SwiftGen;
-			sourceTree = "<group>";
-		};
-		43807D7627E213350056A3D3 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				43807D7727E213350056A3D3 /* Chat+Identifiable.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		43807D7827E213350056A3D3 /* ViewModels */ = {

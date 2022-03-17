@@ -43,8 +43,8 @@ public extension TdApi {
                                 SystemUtils.post(notification: .authorizationStateWaitTdlibParameters)
                                 Task {
                                     try? await self.setTdlibParameters(parameters: TdlibParameters(
-                                        apiHash: /* Secret.apiHash */ "",
-                                        apiId: /* Secret.apiId */ 0,
+                                        apiHash: Secret.apiHash,
+                                        apiId: Secret.apiId,
                                         applicationVersion: (
                                             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
                                         ) ?? "Unknown",
