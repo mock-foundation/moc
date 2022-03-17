@@ -1,7 +1,7 @@
 %{
 import plistlib
-file = open("Settings.plist")
-plist = plistlib.readPlist(file)
+file = open("Settings.plist", "rb")
+plist = plistlib.load(file)
 }%
 public extension String {
     // swiftlint:disable cyclomatic_complexity
