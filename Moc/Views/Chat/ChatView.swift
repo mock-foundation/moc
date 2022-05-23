@@ -165,10 +165,20 @@ struct ChatView: View {
         ScrollView {
             LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
                 // Header
-                Image("MockChatPhoto")
-                    .resizable()
-                    .frame(minWidth: 0, maxWidth: 86, minHeight: 0, maxHeight: 86)
+                if viewModel.chatPhoto != nil {
+                    TDImage(file: viewModel.chatPhoto!)
+                        .frame(width: 86, height: 86)
+                        .clipShape(Circle())
+                } else {
+                    ProfilePlaceholderView(
+                        userId: viewModel.chatID,
+                        firstName: viewModel.chatTitle,
+                        lastName: "",
+                        style: .medium
+                    )
+                    .frame(width: 86, height: 86)
                     .clipShape(Circle())
+                }
                 Text(viewModel.chatTitle)
                     .font(.title2)
                     .fontWeight(.bold)
@@ -200,7 +210,7 @@ struct ChatView: View {
                 .frame(minWidth: 0, idealWidth: nil)
 
                 // More info
-                Section(content: {
+                Section {
                     ScrollView {
                         switch selectedInspectorTab {
                         case .users:
@@ -223,7 +233,7 @@ struct ChatView: View {
                             Text("Voice")
                         }
                     }
-                }, header: {
+                } header: {
                     Picker("", selection: $selectedInspectorTab) {
                         Text("Users").tag(InspectorTab.users)
                         Text("Media").tag(InspectorTab.media)
@@ -235,30 +245,40 @@ struct ChatView: View {
                     .padding()
                     .frame(minWidth: 0, idealWidth: nil)
                     .background(.ultraThinMaterial, in: RoundedCorners(tl: 0, tr: 0, bl: 8, br: 8))
-                })
+                }
             }
             .padding(.top)
         }
     }
 
     var body: some View {
-        ChatSplitView(leftView: {
+        ChatSplitView(isRightViewVisible: isInspectorShown) {
             chatView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }, rightView: {
+        } rightView: {
             chatInspector
                 .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
-        }, isRightViewVisible: isInspectorShown)
-            .navigationTitle("")
+        }.navigationTitle("")
 
             // MARK: - Toolbar
 
             .toolbar {
                 ToolbarItem(placement: .navigation) {
-                    Image("MockChatPhoto")
-                        .resizable()
+                    if viewModel.chatPhoto != nil {
+                        TDImage(file: viewModel.chatPhoto!)
+                            .frame(width: 32, height: 32)
+                            .clipShape(Circle())
+                    } else {
+                        ProfilePlaceholderView(
+                            userId: viewModel.chatID,
+                            firstName: viewModel.chatTitle,
+                            lastName: "",
+                            style: .small
+                        )
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
+                    }
+                        
                 }
                 ToolbarItem(placement: .navigation) {
                     VStack(alignment: .leading) {

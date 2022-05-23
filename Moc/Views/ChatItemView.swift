@@ -8,6 +8,7 @@
 import SPSafeSymbols
 import SwiftUI
 import TDLibKit
+import Utils
 
 extension Foundation.Date {
     var hoursAndMinutes: String {
@@ -19,12 +20,20 @@ extension Foundation.Date {
 
 struct ChatItemView: View {
     @State var chat: Chat
+        
+    @ViewBuilder
+    private var chatPhoto: some View {
+        if chat.photo != nil {
+            TDImage(file: chat.photo!.small)
+        } else {
+            ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
+        }
+    }
 
     var body: some View {
         HStack(alignment: .top) {
             //                chat.chatIcon
-            Image("MockChatPhoto")
-                .resizable()
+            chatPhoto
                 .frame(width: 56, height: 56)
                 .clipShape(Circle())
                 .fixedSize()

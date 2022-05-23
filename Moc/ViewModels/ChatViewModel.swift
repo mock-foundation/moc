@@ -25,8 +25,10 @@ class ChatViewModel: ObservableObject {
     @Published var isInspectorShown = false
     @Published var messages: [Message] = []
 
-    @Published var chatTitle = "mock"
+    @Published var chatID: Int64 = 0
+    @Published var chatTitle = ""
     @Published var chatMemberCount: Int?
+    @Published var chatPhoto: File?
     
     private var subscribers: [Event: AnyCancellable] = [:]
     
@@ -44,7 +46,7 @@ class ChatViewModel: ObservableObject {
     func updateNewMessage(notification: NCPO) {
         let tdMessage = (notification.object as? UpdateNewMessage)!.message
         Task {
-            do {
+//            do {
                 let sender = try await self.service.getUser(byId: tdMessage.id)
                 let message = Message(
                     id: tdMessage.id,
@@ -56,18 +58,26 @@ class ChatViewModel: ObservableObject {
                     isOutgoing: tdMessage.isOutgoing,
                     date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
                 )
-                messages.append(message)
-            } catch {
                 
-            }
+                objectWillChange.send()
+                messages.append(message)
+//            } catch {
+//                NSLog("ded")
+//            }
         }
     }
     
     func update(chat: Chat) async throws {
         service.set(chatId: chat.id)
+        chatID = chat.id
         objectWillChange.send()
         chatTitle = chat.title
         let memberCount = try await service.chatMemberCount
+        DispatchQueue.main.async {
+            Task {
+                self.chatPhoto = try await self.service.chatPhoto
+            }
+        }
         let messageHistory: [Message] = try await service.messageHistory.asyncMap { tdMessage in
             switch tdMessage.senderId {
                 case let .messageSenderUser(user):
