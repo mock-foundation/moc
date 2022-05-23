@@ -21,6 +21,9 @@ struct FolderItemView: View {
             Text(item.name)
         }
         .padding(.vertical)
+        .frame(width: 64, height: 64)
+        .background(selected ? selectedColor : backgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .onHover { isHovered in
             if isHovered {
                 backgroundColor = Color("OnHoverColor")
@@ -42,9 +45,6 @@ struct FolderItemView: View {
         //			print("hey lol")
         //			print(notification.object as! Int)
         //		})
-        .frame(width: 64, height: 64)
-        .background(selected ? selectedColor : backgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 
     var body: some View {
