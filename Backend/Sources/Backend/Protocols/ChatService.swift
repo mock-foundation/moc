@@ -22,6 +22,7 @@ public protocol ChatService {
     var chatId: Int64? { get async throws }
     var chatTitle: String { get async throws }
     var chatType: ChatType { get async throws }
+    var chatPhoto: File? { get async throws }
     /// Can be nil if it is a secret/private chat. If nil, a user status (online, offline,
     /// last seen a minute ago etc) will be displayed.
     var chatMemberCount: Int? { get async throws }
