@@ -7,7 +7,8 @@
 
 import PackagePlugin
 
-@main struct SwiftGenPlugin: BuildToolPlugin {
+@main
+struct SwiftGenPlugin: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
         print(context.pluginWorkDirectory)
         return [

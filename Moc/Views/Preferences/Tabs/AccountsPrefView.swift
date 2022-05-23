@@ -76,7 +76,7 @@ struct AccountsPrefView: View {
                         photoSwitcher
                         VStack {
                             HStack {
-                                ForEach(0 ..< photos.count) { _ in
+                                ForEach(0..<photos.count) { _ in
                                     Capsule(style: .continuous)
                                         .frame(height: 4)
                                         .background(Color.white)

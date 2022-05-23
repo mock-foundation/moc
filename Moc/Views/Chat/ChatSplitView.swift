@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ChatSplitView<Left: View, Right: View>: View {
+    var isRightViewVisible: Bool = true
     @ViewBuilder var leftView: () -> Left
     @ViewBuilder var rightView: () -> Right
-    var isRightViewVisible: Bool = true
 
     var body: some View {
         HSplitView {
@@ -27,10 +27,10 @@ struct ChatSplitView<Left: View, Right: View>: View {
 
 struct ChatSplitView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatSplitView(leftView: {
+        ChatSplitView {
             Text("Left")
-        }, rightView: {
+        } rightView: {
             Text("Right")
-        })
+        }
     }
 }
