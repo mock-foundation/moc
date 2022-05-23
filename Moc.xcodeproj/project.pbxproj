@@ -820,7 +820,7 @@
 			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = "1.2.1-tdlib-1.8.1-1e1ab5d1";
+				version = "1.2.1-tdlib-1.8.3-9c9a74c5";
 			};
 		};
 		43807DB527E214270056A3D3 /* XCRemoteSwiftPackageReference "SPSafeSymbols" */ = {
