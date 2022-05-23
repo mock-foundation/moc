@@ -43,16 +43,14 @@ public class MockAccountsPrefService: AccountsPrefService {
     public func getFullInfo() async throws -> UserFullInfo {
         UserFullInfo(
             bio: "Bio",
+            botInfo: nil,
             canBeCalled: false,
-            commands: [],
-            description: "Descripion",
             groupInCommonCount: 2,
             hasPrivateCalls: false,
             hasPrivateForwards: false,
             isBlocked: true,
             needPhoneNumberPrivacyException: true,
             photo: nil,
-            shareText: "Share text",
             supportsVideoCalls: true
         )
     }

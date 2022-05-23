@@ -126,15 +126,25 @@ public class TdChatService: ChatService {
     public var chatMemberCount: Int? {
         get async throws {
             switch try await chatType {
-            case let .chatTypeBasicGroup(info):
-                return try await tdApi.getBasicGroupFullInfo(
-                    basicGroupId: info.basicGroupId
-                ).members.count
-            case let .chatTypeSupergroup(info):
-                return try await tdApi.getSupergroupFullInfo(
-                    supergroupId: info.supergroupId
-                ).memberCount
-            default:
+                case let .chatTypeBasicGroup(info):
+                    return try await tdApi.getBasicGroupFullInfo(
+                        basicGroupId: info.basicGroupId
+                    ).members.count
+                case let .chatTypeSupergroup(info):
+                    return try await tdApi.getSupergroupFullInfo(
+                        supergroupId: info.supergroupId
+                    ).memberCount
+                default:
+                    return nil
+            }
+        }
+    }
+    
+    public var chatPhoto: File? {
+        get async throws {
+            if let photo = try await getChat(id: chatId!).photo {
+                return photo.small
+            } else {
                 return nil
             }
         }

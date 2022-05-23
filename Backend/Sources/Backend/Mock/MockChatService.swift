@@ -10,6 +10,8 @@ import TDLibKit
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
+    public var chatPhoto: File?
+    
     public func getUser(byId: Int64) async throws -> User {
         User(
             firstName: "First",
@@ -57,7 +59,7 @@ public class MockChatService: ChatService {
                 disablePinnedMessageNotifications: true,
                 muteFor: 0,
                 showPreview: false,
-                sound: "",
+                soundId: 0,
                 useDefaultDisableMentionNotifications: false,
                 useDefaultDisablePinnedMessageNotifications: false,
                 useDefaultMuteFor: false,
