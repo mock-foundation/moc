@@ -32,8 +32,6 @@ jobs:
           echo $PWD
 
       - name: Build
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
         run: |
           xcodebuild -scheme Moc -configuration Release clean build
 
