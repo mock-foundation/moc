@@ -26,7 +26,7 @@ public extension TdApi {
     func startTdLibUpdateHandler() {
         Task {
             #if DEBUG
-            try? await self.setLogVerbosityLevel(newVerbosityLevel: 5)
+            try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #else
             try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif
@@ -111,8 +111,8 @@ public extension TdApi {
                     case let .updateNewChat(info):
 //                        Chat.cache[info.chat.id] = info.chat
                         SystemUtils.post(notification: .updateNewChat, withObject: info)
-//                    case let .updateFile(info):
-//                        SystemUtils.post(notification: .updateFile, withObject: info)
+                    case let .updateFile(info):
+                        SystemUtils.post(notification: .updateFile, withObject: info)
 //                    case let .updateBasicGroup(info):
 //                        BasicGroup.cache[info.basicGroup.id] = info.basicGroup
 //                    case let .updateBasicGroupFullInfo(info):
@@ -122,10 +122,10 @@ public extension TdApi {
 //                    case let .updateUser(info):
 //                        User.cache[info.user.id] = info.user
                     default:
-                        TdApi.logger.warning("Unhandled TDLib update \(update)")
+                        break
                 }
             } catch {
-                TdApi.logger.error("Error in TDLib update handler \(error.localizedDescription)")
+                
             }
         }
     }

@@ -13,38 +13,6 @@ import Utils
 import TDLibKit
 import Logging
 
-final class TdLogger: TDLibKit.Logger {
-    private let queue: DispatchQueue
-    private let logger = Logging.Logger(label: "TDLib", category: "TDLibKit")
-
-    func log(_ message: String, type: LoggerMessageType?) {
-        queue.async {
-            guard type != nil else {
-                self.logger.info("\(message)")
-                return
-            }
-
-            var typeStr = ""
-            switch type! {
-                case .receive:
-                    typeStr = "receive:"
-                case .send:
-                    typeStr = "send:"
-                case .execute:
-                    typeStr = "execute:"
-                case let .custom(data):
-                    typeStr = "\(data):"
-            }
-
-            self.logger.debug("\(typeStr) \(message)")
-        }
-    }
-
-    init() {
-        queue = DispatchQueue(label: "TDLibKitLog", qos: .userInitiated)
-    }
-}
-
 public extension Resolver {
     static func registerUI() {
         register { MainViewModel() }.scope(.shared)
@@ -70,10 +38,7 @@ struct MocApp: App {
         Resolver.registerUI()
         Resolver.registerBackend()
         TdApi.shared.append(TdApi(
-            client: TdClientImpl(
-                completionQueue: .global(),
-                logger: TdLogger()
-            )
+            client: TdClientImpl(completionQueue: .global())
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
     }
