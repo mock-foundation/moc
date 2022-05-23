@@ -27,13 +27,15 @@ public struct ProfilePlaceholderView: View {
 
     public var body: some View {
         ZStack {
-            if lastName.isEmpty {
-                Text("\(String(firstName.prefix(1)))")
-                    .font(style == .normal ? .largeTitle : .system(size: 130, design: .rounded))
-            } else {
-                Text("\(String(firstName.prefix(1))) \(String(lastName.prefix(1)))")
-                    .font(style == .normal ? .largeTitle : .system(size: 130, design: .rounded))
+            Group {
+                if lastName.isEmpty {
+                    Text("\(String(firstName.prefix(1)))")
+                } else {
+                    Text("\(String(firstName.prefix(1))) \(String(lastName.prefix(1)))")
+                }
             }
+            .font(style.font)
+            .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(fromUserId: userId))
@@ -42,6 +44,6 @@ public struct ProfilePlaceholderView: View {
 
 struct ProfilePlaceholderView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfilePlaceholderView(userId: 736_211_268, firstName: "Андрей", lastName: "Shooting at Knee", style: .large)
+        ProfilePlaceholderView(userId: 736211268, firstName: "Андрей", lastName: "Shooting at Knee", style: .large)
     }
 }
