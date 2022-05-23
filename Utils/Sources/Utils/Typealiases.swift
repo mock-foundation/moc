@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Typealiases.swift
 //  
 //
 //  Created by Егор Яковенко on 28.02.2022.
