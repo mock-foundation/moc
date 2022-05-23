@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Swiftgram/TDLibKit.git",
-            .exact("1.2.1-tdlib-1.8.1-1e1ab5d1")
+            .exact("1.2.1-tdlib-1.8.3-9c9a74c5")
         ),
         .package(url: "https://github.com/hyperoslo/Cache.git", .exactItem("6.0.0"))
     ],
