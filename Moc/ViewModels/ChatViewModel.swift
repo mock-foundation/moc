@@ -11,6 +11,8 @@ import Foundation
 import Resolver
 import Utils
 import TDLibKit
+import Algorithms
+import AppKit
 
 private enum Event {
     case updateNewMessage
@@ -18,6 +20,8 @@ private enum Event {
 
 class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
+    
+    var scrollView: NSScrollView?
     
     // MARK: - UI state
 
@@ -30,24 +34,27 @@ class ChatViewModel: ObservableObject {
     @Published var chatMemberCount: Int?
     @Published var chatPhoto: File?
     
-    private var subscribers: [Event: AnyCancellable] = [:]
+    private var subscribers: [AnyCancellable] = []
     
     init() {
-        subscribers[.updateNewMessage] = SystemUtils.ncPublisher(for: .updateNewMessage)
-            .sink(receiveValue: updateNewMessage(notification:))
+        subscribers.append(SystemUtils.ncPublisher(for: .updateNewMessage)
+            .sink(receiveValue: updateNewMessage(notification:)))
+//        subscribers.append(contentsOf: SystemUtils.ncPublisher(for: .update))
+        
     }
     
     deinit {
         for subscriber in subscribers {
-            subscriber.value.cancel()
+            subscriber.cancel()
         }
     }
     
     func updateNewMessage(notification: NCPO) {
         let tdMessage = (notification.object as? UpdateNewMessage)!.message
+        guard tdMessage.chatId == chatID else { return }
         Task {
-//            do {
-                let sender = try await self.service.getUser(byId: tdMessage.id)
+            do {
+                let sender = try await self.service.getUser(byId: tdMessage.chatId)
                 let message = Message(
                     id: tdMessage.id,
                     sender: MessageSender(

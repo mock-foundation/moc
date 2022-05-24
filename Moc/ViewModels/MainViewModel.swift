@@ -89,7 +89,6 @@ class MainViewModel: ObservableObject {
     }
 
     func updateNewChat(notification: NotificationCenter.Publisher.Output) {
-        logger.info("Received new chat update")
         guard notification.object != nil else {
             return
         }
@@ -102,8 +101,6 @@ class MainViewModel: ObservableObject {
         if !hasChat {
             unorderedChatList.append(chat)
         }
-
-        logger.info("\(chat)")
     }
 
     deinit {
