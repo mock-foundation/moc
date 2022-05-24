@@ -7,16 +7,68 @@
 
 import Combine
 import Foundation
-import Logging
-import SystemUtils
+import SwiftUI
+import Utils
 import TDLibKit
+import Logging
 
 public class TdChatService: ChatService {
-    private var logger = Logger(label: "TdChatDataSource")
+    public func sendMessage(_ message: String) async throws {
+        try await tdApi.sendMessage(
+            chatId: chatId!,
+            inputMessageContent: .inputMessageText(
+                InputMessageText(
+                    clearDraft: true,
+                    disableWebPagePreview: false,
+                    text: FormattedText(entities: [], text: message)
+                )),
+            messageThreadId: nil,
+            options: nil,
+            replyMarkup: nil,
+            replyToMessageId: nil
+        )
+    }
+    
+    private var logger = Logging.Logger(label: "Services", category: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 
     public func set(protected _: Bool) async throws {
         logger.error("set(protected:) not implemented")
+    }
+
+    public func getUser(byId: Int64) async throws -> User {
+        try await self.tdApi.getUser(userId: byId)
+    }
+
+    public func getChat(id: Int64) async throws -> Chat {
+        try await self.tdApi.getChat(chatId: id)
+    }
+
+    public func getMessageSenderName(_ sender: MessageSender) throws -> String {
+        switch sender {
+        case let .messageSenderUser(messageSenderUser):
+            var str = ""
+            try tdApi.getUser(userId: messageSenderUser.userId) { result in
+                switch result {
+                case let .success(data):
+                    str = "\(data.firstName) \(data.lastName)"
+                case .failure:
+                    str = "Failure"
+                }
+            }
+            return str
+        case let .messageSenderChat(messageSenderChat):
+            var str = ""
+            try tdApi.getChat(chatId: messageSenderChat.chatId) {
+                switch $0 {
+                case let .success(data):
+                    str = data.title
+                case .failure:
+                    str = "Failure"
+                }
+            }
+            return str
+        }
     }
 
     public func set(blocked: Bool) async throws {
@@ -46,7 +98,17 @@ public class TdChatService: ChatService {
 
     // MARK: - Messages
 
-    public var messageHistory: [Message] = []
+    public var messageHistory: [Message] {
+        get async throws {
+            try await tdApi.getChatHistory(
+                chatId: chatId,
+                fromMessageId: 0,
+                limit: 50,
+                offset: 0,
+                onlyLocal: false
+            ).messages ?? []
+        }
+    }
 
     // MARK: - Chat info
 
@@ -65,6 +127,12 @@ public class TdChatService: ChatService {
     }
 
     public var chatId: Int64?
+
+    public func set(chatId: Int64) {
+        self.chatId = chatId
+        SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
+    }
+
     public var chatType: ChatType {
         get async throws {
             try await tdApi.getChat(chatId: chatId).type
@@ -74,15 +142,25 @@ public class TdChatService: ChatService {
     public var chatMemberCount: Int? {
         get async throws {
             switch try await chatType {
-            case let .chatTypeBasicGroup(info):
-                return try await tdApi.getBasicGroupFullInfo(
-                    basicGroupId: info.basicGroupId
-                ).members.count
-            case let .chatTypeSupergroup(info):
-                return try await tdApi.getSupergroupFullInfo(
-                    supergroupId: info.supergroupId
-                ).memberCount
-            default:
+                case let .chatTypeBasicGroup(info):
+                    return try await tdApi.getBasicGroupFullInfo(
+                        basicGroupId: info.basicGroupId
+                    ).members.count
+                case let .chatTypeSupergroup(info):
+                    return try await tdApi.getSupergroupFullInfo(
+                        supergroupId: info.supergroupId
+                    ).memberCount
+                default:
+                    return nil
+            }
+        }
+    }
+    
+    public var chatPhoto: File? {
+        get async throws {
+            if let photo = try await getChat(id: chatId!).photo {
+                return photo.small
+            } else {
                 return nil
             }
         }
@@ -101,9 +179,4 @@ public class TdChatService: ChatService {
     }
 
     public init() {}
-
-    public func set(chat: Chat) {
-        chatId = chat.id
-        SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
-    }
 }

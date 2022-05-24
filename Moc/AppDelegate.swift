@@ -11,6 +11,6 @@ import TDLibKit
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private func applicationWillTerminate(_: NSNotification) {
-        TdApi.shared[0].client.close()
+//        TdApi.shared[0].client.close()
     }
 }

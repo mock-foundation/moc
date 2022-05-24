@@ -46,9 +46,9 @@ at the bottom of the page. Leave the page open, this will be needed in the next 
 
 ## Step 3 - Set up development environment
 
-Generate Secrets file using a command
+Run this command:
 ```shell
-API_ID=<api_id> API_HASH=<api_hash> Moc/SupportFiles/generate_secrets.sh
+API_ID=<api_id> API_HASH=<api_hash> ./setup_environment.sh
 ```
 
 **Done!** You have everything set up. You can now build Moc 😁

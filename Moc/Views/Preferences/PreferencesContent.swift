@@ -5,7 +5,7 @@
 //  Created by Егор Яковенко on 21.01.2022.
 //
 
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
 
 public struct PreferencesContent: View {
@@ -15,43 +15,43 @@ public struct PreferencesContent: View {
         TabView {
             GeneralPrefView()
                 .tabItem {
-                    Label("General", systemImage: SFSymbol.gear.name)
+                    Label("General", systemImage: SPSafeSymbol.gear.name)
                 }
             NotificationsAndSoundsPrefView()
                 .tabItem {
-                    Label("Notifications and Sounds", systemImage: SFSymbol.bell.name)
+                    Label("Notifications and Sounds", systemImage: SPSafeSymbol.bell.name)
                 }
             PrivacyView()
                 .tabItem {
-                    Label("Privacy", systemImage: SFSymbol.lock.name)
+                    Label("Privacy", systemImage: SPSafeSymbol.lock.name)
                 }
             DataAndStoragePrefView()
                 .tabItem {
-                    Label("Data and Storage", systemImage: SFSymbol.externaldrive.name)
+                    Label("Data and Storage", systemImage: SPSafeSymbol.externaldrive.name)
                 }
             DevicesPrefView()
                 .tabItem {
-                    Label("Devices", systemImage: SFSymbol.laptopcomputer.andIphone.name)
+                    Label("Devices", systemImage: SPSafeSymbol.laptopcomputer.andIphone.name)
                 }
             AppearancePrefView()
                 .tabItem {
-                    Label("Appearance", systemImage: SFSymbol.paintbrush.name)
+                    Label("Appearance", systemImage: SPSafeSymbol.paintbrush.name)
                 }
             LanguagePrefView()
                 .tabItem {
-                    Label("Language", systemImage: SFSymbol.globe.name)
+                    Label("Language", systemImage: SPSafeSymbol.globe.name)
                 }
             StickersPrefView()
                 .tabItem {
-                    Label("Stickers", systemImage: SFSymbol.rectangle._3GroupBubbleLeft.name)
+                    Label("Stickers", systemImage: SPSafeSymbol.rectangle._3GroupBubbleLeft.name)
                 }
             FoldersPrefView()
                 .tabItem {
-                    Label("Folders", systemImage: SFSymbol.folder.name)
+                    Label("Folders", systemImage: SPSafeSymbol.folder.name)
                 }
             AccountsPrefView()
                 .tabItem {
-                    Label("Accounts", systemImage: SFSymbol.person.circle.name)
+                    Label("Accounts", systemImage: SPSafeSymbol.person.circle.name)
                 }
         }
         .frame(width: 800)

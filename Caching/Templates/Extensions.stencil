@@ -1,0 +1,11 @@
+
+// swiftlint:disable all
+import TDLibKit
+
+{% for type in types.implementing.AutoCacheable %}
+// MARK: - {{type.name}}
+public extension {{type.name}} {
+    static let cache = {{type.name}}Cache()
+}
+
+{% endfor %}

@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ChatSplitView<Left: View, Right: View>: View {
+    var isRightViewVisible: Bool = true
     @ViewBuilder var leftView: () -> Left
     @ViewBuilder var rightView: () -> Right
-    var isRightViewVisible: Bool = true
 
     var body: some View {
         HSplitView {
             leftView()
             rightView()
                 .frame(
-                    minWidth: isRightViewVisible ? 256 : 0,
-                    idealWidth: isRightViewVisible ? 256 : 0,
+                    minWidth: isRightViewVisible ? 316 : 0,
+                    idealWidth: isRightViewVisible ? 316 : 0,
                     maxWidth: isRightViewVisible ? nil : 0
                 )
         }
@@ -27,10 +27,10 @@ struct ChatSplitView<Left: View, Right: View>: View {
 
 struct ChatSplitView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatSplitView(leftView: {
+        ChatSplitView {
             Text("Left")
-        }, rightView: {
+        } rightView: {
             Text("Right")
-        })
+        }
     }
 }

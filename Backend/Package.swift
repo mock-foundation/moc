@@ -17,11 +17,19 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Swiftgram/TDLibKit.git",
-            .revisionItem("e78aef926cdd92323755bcb72309aa5afed1f02a")
+            .exact("1.2.1-tdlib-1.8.3-9c9a74c5")
         ),
+        .package(path: "../Caching"),
+        .package(path: "../Utils"),
+        .package(path: "../Logging")
     ],
     targets: [.target(
         name: "Backend",
-        dependencies: ["TDLibKit"]
+        dependencies: [
+            "TDLibKit",
+            "Caching",
+            "Utils",
+            "Logging"
+        ]
     )]
 )

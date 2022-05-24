@@ -8,17 +8,16 @@
 import AlertToast
 import Backend
 import Combine
-import ImageUtils
+import Utils
 import Logging
 import Resolver
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
-import SwiftUIUtils
-import SystemUtils
 import TDLibKit
 
+// swiftlint:disable type_body_length
 struct AccountsPrefView: View {
-    private var logger = Logging.Logger(label: "AccountsPrefView")
+    private var logger = Logging.Logger(label: "Preferences", category: "AccountPaneUI")
     @StateObject private var viewModel = AccountsPrefViewModel()
 
     @State private var photos: [File] = []
@@ -39,32 +38,19 @@ struct AccountsPrefView: View {
     @State private var showLogOutFailedToast = false
 
     private var photoSwitcher: some View {
-        ZStack {
-            VStack {
-                HStack {
-                    ForEach(0 ..< photos.count) { _ in
-                        RoundedRectangle(cornerRadius: 2, style: .continuous)
-                            .padding(4)
-                            .frame(maxWidth: .infinity, maxHeight: 4)
-                            .background(Color.white)
-                    }
-                }
-                .padding()
-                Spacer()
-            }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(photos, id: \.id) { photo in
-                        Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
-                            .resizable()
-                            .scaledToFit()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 256, height: 256)
-                    }
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(photos, id: \.id) { photo in
+                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
+                        .resizable()
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 256, height: 256)
+                        .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
                 }
             }
-            .frame(width: 256, height: 256, alignment: .leading)
-        }.frame(width: 256, height: 256)
+        }
+        .frame(width: 256, height: 256, alignment: .leading)
     }
 
     private var background: some View {
@@ -87,19 +73,18 @@ struct AccountsPrefView: View {
                     }
                 } else {
                     ZStack {
+                        photoSwitcher
                         VStack {
                             HStack {
-                                ForEach(0 ..< photos.count) { _ in
-                                    RoundedRectangle(cornerRadius: 2, style: .continuous)
-                                        .padding(2)
-                                        .frame(height: 2)
+                                ForEach(0..<photos.count) { _ in
+                                    Capsule(style: .continuous)
+                                        .frame(height: 4)
                                         .background(Color.white)
                                 }
                             }
                             .padding()
                             Spacer()
                         }
-                        photoSwitcher
                     }
                 }
             }
@@ -145,7 +130,7 @@ struct AccountsPrefView: View {
             // swiftlint:disable multiple_closures_with_trailing_closure
             HStack {
                 Button(action: {}) {
-                    Label("Add account", systemImage: SFSymbol.person.badgePlus.name)
+                    Label("Add account", systemImage: SPSafeSymbol.person.badgePlus.name)
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderless)
@@ -164,7 +149,7 @@ struct AccountsPrefView: View {
                 }) {
                     // rectangle.portrait.and.arrow.right
                     Label("Log out",
-                          systemImage: SFSymbol.rectangle.portraitAndArrowRight.name)
+                          systemImage: SPSafeSymbol.rectangle.portraitAndArrowRight.name)
                 }
                 .tint(.red)
                 .controlSize(.large)
@@ -185,7 +170,7 @@ struct AccountsPrefView: View {
                         .clipShape(Circle())
                     Button(action: {}) {
                         Label("Update profile photo",
-                              systemImage: SFSymbol.square.andPencil.name)
+                              systemImage: SPSafeSymbol.square.andPencil.name)
                     }
                 }
             } footer: {
@@ -232,7 +217,7 @@ struct AccountsPrefView: View {
             HStack {
                 Text(phoneNumber)
                 Button(action: {}) {
-                    Label("Change", systemImage: SFSymbol.square.andPencil.name)
+                    Label("Change", systemImage: SPSafeSymbol.square.andPencil.name)
                 }
             }
         }

@@ -7,50 +7,13 @@
 
 import Backend
 import CryptoKit
-import Generated
-import Logging
 import Resolver
 import SwiftUI
-import SystemUtils
+import Utils
 import TDLibKit
-
-final class TdLogger: TDLibKit.Logger {
-    private let logger = Logging.Logger(label: "TDLib")
-    let queue: DispatchQueue
-
-    func log(_ message: String, type: LoggerMessageType?) {
-        queue.async {
-            guard type != nil else {
-                self.logger.info("\(message)")
-                return
-            }
-
-            var typeStr = ""
-            switch type! {
-            case .receive:
-                typeStr = "receive:"
-            case .send:
-                typeStr = "send:"
-            case .execute:
-                typeStr = "execute:"
-            case let .custom(data):
-                typeStr = "\(data):"
-            }
-
-            #if DEBUG
-                self.logger.info("\(typeStr) \(message)")
-            #endif
-        }
-    }
-
-    init() {
-        queue = DispatchQueue(label: "TDLibKitLog", qos: .userInitiated)
-    }
-}
+import Logging
 
 public extension Resolver {
-    private static let logger = Logging.Logger(label: "TDLibUpdates")
-
     static func registerUI() {
         register { MainViewModel() }.scope(.shared)
         register { ChatViewModel() }.scope(.shared)
@@ -70,19 +33,12 @@ public extension Resolver {
 @main
 struct MocApp: App {
     @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
-    private let logger = Logging.Logger(label: "TDLibUpdates")
 
     init() {
         Resolver.registerUI()
         Resolver.registerBackend()
         TdApi.shared.append(TdApi(
-            client: TdClientImpl(
-                completionQueue: DispatchQueue(
-                    label: tdCompletionQueueLabel,
-                    qos: .userInteractive
-                ),
-                logger: TdLogger()
-            )
+            client: TdClientImpl(completionQueue: .global())
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
     }
@@ -90,6 +46,8 @@ struct MocApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }.commands {
+            AppCommands()
         }
 
         Settings {

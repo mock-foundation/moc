@@ -10,16 +10,16 @@ on:
 jobs:
   build:
     name: Build and Upload Moc.app
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate Secret.swift
+      - name: Set up environment
         run: |
           if [[ -z "${{ secrets.API_ID }}" || -z "${{ secrets.API_HASH }}" ]]
           then
-              echo "\$API_ID or \$API_HASH is empty. Setting to default macOS app"
+              echo "\$API_ID or \$API_HASH is empty. Reverting to default macOS client's credentials."
               API_ID=2834
               API_HASH=68875f756c9b437a8b916ca3de215815
           else
@@ -27,11 +27,11 @@ jobs:
               API_ID=${{ secrets.API_ID }}
               API_HASH=${{ secrets.API_HASH }}
           fi
-          HOMEBREW_NO_INSTALL_CLEANUP=1 API_ID=$API_ID API_HASH=$API_HASH ./Moc/SupportFiles/generate_secrets.sh
+          echo $PWD
+          HOMEBREW_NO_INSTALL_CLEANUP=1 API_ID=$API_ID API_HASH=$API_HASH ./setup_environment.sh
+          echo $PWD
 
       - name: Build
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
         run: |
           xcodebuild -scheme Moc -configuration Release clean build
 

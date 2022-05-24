@@ -9,9 +9,8 @@ import Backend
 import CoreImage.CIFilterBuiltins
 import Logging
 import Resolver
-import SFSymbols
+import SPSafeSymbols
 import SwiftUI
-import SwiftUIUtils
 import TDLibKit
 
 private enum OpenedScreen {
@@ -41,7 +40,7 @@ private extension String {
 }
 
 struct LoginView: View {
-    private let logger = Logging.Logger(label: "LoginView")
+    private let logger = Logging.Logger(label: "Login", category: "UI")
     @Injected private var dataSource: LoginService
 
     func stepView(number: Int, text: String) -> some View {
@@ -118,7 +117,7 @@ struct LoginView: View {
                     Button(action: {
                         openedScreen = .phoneNumber
                     }) {
-                        Label("Continue using phone number", systemImage: SFSymbol.phone.name)
+                        Label("Continue using phone number", systemImage: SPSafeSymbol.phone.name)
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
