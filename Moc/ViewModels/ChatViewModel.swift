@@ -53,25 +53,28 @@ class ChatViewModel: ObservableObject {
         let tdMessage = (notification.object as? UpdateNewMessage)!.message
         guard tdMessage.chatId == chatID else { return }
         Task {
-            do {
-                let sender = try await self.service.getUser(byId: tdMessage.chatId)
-                let message = Message(
-                    id: tdMessage.id,
-                    sender: MessageSender(
-                        name: "\(sender.firstName) \(sender.lastName)",
-                        type: .user,
-                        id: sender.id),
-                    content: MessageContent(tdMessage.content),
-                    isOutgoing: tdMessage.isOutgoing,
-                    date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
-                )
-                
-                messages.append(message)
-                print(message, "bruh")
-            } catch {
-                print(error, "error happened")
-            }
+            let sender = try await self.service.getUser(byId: tdMessage.chatId)
+            let message = Message(
+                id: tdMessage.id,
+                sender: MessageSender(
+                    name: "\(sender.firstName) \(sender.lastName)",
+                    type: .user,
+                    id: sender.id),
+                content: MessageContent(tdMessage.content),
+                isOutgoing: tdMessage.isOutgoing,
+                date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
+            )
             
+            DispatchQueue.main.async { [weak self] in
+                self?.messages.append(message)
+                if abs(self?.scrollView?.contentView.bounds.origin.y ?? 0)
+                    == abs(self?.scrollView?.documentView?.frame.height ?? 0) {
+                    self?.scrollView?.documentView?.scroll(CGPoint(
+                        x: 0,
+                        y: self?.scrollView?.documentView?.frame.height ?? 0
+                    ))
+                }
+            }
         }
         
 //            .chunked {
