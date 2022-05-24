@@ -10,6 +10,10 @@ import TDLibKit
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
+    public func sendMessage(_ message: String) async throws {
+        
+    }
+    
     public var chatPhoto: File?
     
     public func getUser(byId: Int64) async throws -> User {

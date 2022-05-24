@@ -15,6 +15,7 @@ public protocol ChatService {
     func set(draft: DraftMessage?) async throws
     func getUser(byId: Int64) async throws -> User
     func getChat(id: Int64) async throws -> Chat
+    func sendMessage(_ message: String) async throws
 
     // MARK: - Chat info
 

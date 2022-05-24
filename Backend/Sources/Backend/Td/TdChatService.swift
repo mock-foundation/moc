@@ -13,6 +13,22 @@ import TDLibKit
 import Logging
 
 public class TdChatService: ChatService {
+    public func sendMessage(_ message: String) async throws {
+        try await tdApi.sendMessage(
+            chatId: chatId!,
+            inputMessageContent: .inputMessageText(
+                InputMessageText(
+                    clearDraft: true,
+                    disableWebPagePreview: false,
+                    text: FormattedText(entities: [], text: message)
+                )),
+            messageThreadId: nil,
+            options: nil,
+            replyMarkup: nil,
+            replyToMessageId: nil
+        )
+    }
+    
     private var logger = Logging.Logger(label: "Services", category: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 

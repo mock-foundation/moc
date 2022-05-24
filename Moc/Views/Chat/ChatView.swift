@@ -89,6 +89,13 @@ struct ChatView: View {
                             lineWidth: 1
                         )
                 )
+                .onReceive(inputMessage.publisher) { _ in
+                    // TODO: handle drafts
+                }
+                .onSubmit {
+                    viewModel.sendMessage(inputMessage)
+                    inputMessage = ""
+                }
             Image(.face.smiling)
                 .font(.system(size: 16))
             Image(.mic)
