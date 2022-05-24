@@ -17,8 +17,8 @@ struct ChatSplitView<Left: View, Right: View>: View {
             leftView()
             rightView()
                 .frame(
-                    minWidth: isRightViewVisible ? 256 : 0,
-                    idealWidth: isRightViewVisible ? 256 : 0,
+                    minWidth: isRightViewVisible ? 316 : 0,
+                    idealWidth: isRightViewVisible ? 316 : 0,
                     maxWidth: isRightViewVisible ? nil : 0
                 )
         }
