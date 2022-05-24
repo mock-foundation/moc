@@ -13,11 +13,11 @@ struct MessageView: View {
     var body: some View {
         switch message.content {
             case .text(let text):
-                MessageBubbleView(sender: message.sender.name) {
+                MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
                     Text(text.text.text)
                 }
             case .unsupported:
-                MessageBubbleView(sender: message.sender.name) {
+                MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
                     Text("Sorry, this message is unsupported.")
                 }
         }

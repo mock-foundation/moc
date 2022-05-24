@@ -95,6 +95,7 @@ struct ChatView: View {
                 .onSubmit {
                     viewModel.sendMessage(inputMessage)
                     inputMessage = ""
+                    viewModel.scrollViewProxy?.scrollTo(viewModel.messages.last?.id ?? 0)
                 }
             Image(.face.smiling)
                 .font(.system(size: 16))
@@ -108,21 +109,28 @@ struct ChatView: View {
     private var chatView: some View {
         VStack {
             ZStack {
-                ScrollView {
-                    ForEach(viewModel.messages) { message in
-                        MessageView(message: message)
-                            .frame(idealWidth: nil, maxWidth: 300)
-                            .hLeading()
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        ForEach(viewModel.messages) { message in
+                            HStack {
+                                if message.isOutgoing { Spacer().border(.white) }
+                                MessageView(message: message)
+                                    .frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
+                                if !message.isOutgoing { Spacer().border(.orange) }
+                            }
+                        }
                     }
-//                    .border(.green)
+                    .introspectScrollView { scrollView in
+                        scrollView.documentView?.bottomAnchor.constraint(
+                            equalTo: scrollView.bottomAnchor).isActive = true
+                        
+                        viewModel.scrollView = scrollView
+                    }
+                    .onAppear {
+                        viewModel.scrollViewProxy = proxy
+                        viewModel.scrollToEnd()
+                    }
                 }
-                .introspectScrollView { scrollView in
-                    scrollView.documentView?.bottomAnchor.constraint(
-                        equalTo: scrollView.bottomAnchor).isActive = true
-                    
-                    viewModel.scrollView = scrollView
-                }
-//                .border(.blue)
                 Button {
                     viewModel.scrollView?.documentView?.scroll(CGPoint(
                         x: 0,

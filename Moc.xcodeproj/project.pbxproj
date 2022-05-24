@@ -10,6 +10,7 @@
 		43008540283ABCA300ED5961 /* TDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4300853F283ABCA300ED5961 /* TDImage.swift */; };
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
 		43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008545283C0D9F00ED5961 /* Image+Blank.swift */; };
+		4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309BCF5283D6E6A00F43170 /* View+If.swift */; };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
 		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; };
@@ -79,6 +80,7 @@
 		4300853F283ABCA300ED5961 /* TDImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDImage.swift; sourceTree = "<group>"; };
 		43008543283B59D500ED5961 /* Image+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+File.swift"; sourceTree = "<group>"; };
 		43008545283C0D9F00ED5961 /* Image+Blank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Blank.swift"; sourceTree = "<group>"; };
+		4309BCF5283D6E6A00F43170 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		43807CF527E1FCEC0056A3D3 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0627E1FCEF0056A3D3 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0A27E1FCEF0056A3D3 /* MocTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocTests.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				43807D7727E213350056A3D3 /* Chat+Identifiable.swift */,
 				43008543283B59D500ED5961 /* Image+File.swift */,
 				43008545283C0D9F00ED5961 /* Image+Blank.swift */,
+				4309BCF5283D6E6A00F43170 /* View+If.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -208,7 +211,6 @@
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
 				43807D5427E213350056A3D3 /* Info.plist */,
 				43807D5327E213350056A3D3 /* Moc.entitlements */,
-				43807D7327E213350056A3D3 /* Preview Content */,
 			);
 			path = Moc;
 			sourceTree = "<group>";
@@ -310,13 +312,6 @@
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 			);
 			path = AppKitBindings;
-			sourceTree = "<group>";
-		};
-		43807D7327E213350056A3D3 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		43807D7427E213350056A3D3 /* SwiftGen */ = {
@@ -534,6 +529,7 @@
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
 				43008540283ABCA300ED5961 /* TDImage.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
+				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
