@@ -107,17 +107,45 @@ struct ChatView: View {
 
     private var chatView: some View {
         VStack {
-            ScrollView {
-                ForEach(viewModel.messages.sorted { item1, item2 in
-                    item1.id > item2.id ? false : true
-                }) { message in
-                    MessageView(message: message)
-                    .frame(idealWidth: nil, maxWidth: 300)
-                    .hLeading()
+            ZStack {
+                ScrollView {
+                    ForEach(viewModel.messages) { message in
+                        MessageView(message: message)
+                            .frame(idealWidth: nil, maxWidth: 300)
+                            .hLeading()
+                    }
+//                    .border(.green)
                 }
-            }
-            .introspectScrollView { scrollView in
-                scrollView.documentView?.scroll(CGPoint(x: 0, y: scrollView.documentView?.frame.height ?? 5))
+                .introspectScrollView { scrollView in
+                    scrollView.documentView?.bottomAnchor.constraint(
+                        equalTo: scrollView.bottomAnchor).isActive = true
+                    
+                    viewModel.scrollView = scrollView
+                }
+//                .border(.blue)
+                Button {
+                    viewModel.scrollView?.documentView?.scroll(CGPoint(
+                        x: 0,
+                        y: viewModel.scrollView?.documentView?.frame.height ?? 0
+                    ))
+                } label: {
+                    Image(systemName: "arrow.down")
+                        .padding(12)
+                }
+                .buttonStyle(.plain)
+                .background(.ultraThinMaterial, in: Circle())
+                .clipShape(Circle())
+                .background(
+                    RoundedRectangle(
+                        cornerRadius: 50)
+                    .strokeBorder(
+                        Color.gray,
+                        lineWidth: 1
+                    )
+                )
+                .vBottom()
+                .hTrailing()
+                .padding()
             }
             inputField
                 .padding()

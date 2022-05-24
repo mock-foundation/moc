@@ -59,12 +59,22 @@ class ChatViewModel: ObservableObject {
                     date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
                 )
                 
-                objectWillChange.send()
                 messages.append(message)
-//            } catch {
-//                NSLog("ded")
-//            }
+                print(message, "bruh")
+            } catch {
+                print(error, "error happened")
+            }
+            
         }
+        
+//            .chunked {
+//                let firstDay = Calendar.current.dateComponents([.day], from: $0.date).day
+//                let secondDay = Calendar.current.dateComponents([.day], from: $1.date).day
+//                guard firstDay != nil else { false }
+//                guard secondDay != nil else { false }
+//
+//                return firstDay! < secondDay!
+//            }
     }
     
     func update(chat: Chat) async throws {
@@ -72,47 +82,53 @@ class ChatViewModel: ObservableObject {
         chatID = chat.id
         objectWillChange.send()
         chatTitle = chat.title
-        let memberCount = try await service.chatMemberCount
-        DispatchQueue.main.async {
-            Task {
-                self.chatPhoto = try await self.service.chatPhoto
+        let messageHistory: [Message] = try await service.messageHistory
+            .asyncMap { tdMessage in
+                switch tdMessage.senderId {
+                    case let .messageSenderUser(user):
+                        let user = try await self.service.getUser(byId: user.userId)
+                        return Message(
+                            id: tdMessage.id,
+                            sender: .init(
+                                name: "\(user.firstName) \(user.lastName)",
+                                type: .user,
+                                id: user.id
+                            ),
+                            content: MessageContent(tdMessage.content),
+                            isOutgoing: tdMessage.isOutgoing,
+                            date: Date(timeIntervalSince1970: Double(tdMessage.date))
+                        )
+                    case let .messageSenderChat(chat):
+                        let chat = try await self.service.getChat(id: chat.chatId)
+                        return Message(
+                            id: tdMessage.id,
+                            sender: .init(
+                                name: chat.title,
+                                type: .chat,
+                                id: chat.id
+                            ),
+                            content: MessageContent(tdMessage.content),
+                            isOutgoing: tdMessage.isOutgoing,
+                            date: Date(timeIntervalSince1970: Double(tdMessage.date))
+                        )
+                }
             }
-        }
-        let messageHistory: [Message] = try await service.messageHistory.asyncMap { tdMessage in
-            switch tdMessage.senderId {
-                case let .messageSenderUser(user):
-                    let user = try await self.service.getUser(byId: user.userId)
-                    return Message(
-                        id: tdMessage.id,
-                        sender: .init(
-                            name: "\(user.firstName) \(user.lastName)",
-                            type: .user,
-                            id: user.id
-                        ),
-                        content: MessageContent(tdMessage.content),
-                        isOutgoing: tdMessage.isOutgoing,
-                        date: Date(timeIntervalSince1970: 0)
-                    )
-                case let .messageSenderChat(chat):
-                    let chat = try await self.service.getChat(id: chat.chatId)
-                    return Message(
-                        id: tdMessage.id,
-                        sender: .init(
-                            name: chat.title,
-                            type: .chat,
-                            id: chat.id
-                        ),
-                        content: MessageContent(tdMessage.content),
-                        isOutgoing: tdMessage.isOutgoing,
-                        date: Date(timeIntervalSince1970: 0)
-                    )
-            }
-        }
+            .sorted { $0.id < $1.id }
 
         DispatchQueue.main.async {
-            self.chatMemberCount = memberCount
+            Task {
+                self.objectWillChange.send()
+                self.chatPhoto = try await self.service.chatPhoto
+                self.chatMemberCount = try await self.service.chatMemberCount
+            }
             self.objectWillChange.send()
             self.messages = messageHistory
+        }
+    }
+    
+    func sendMessage(_ message: String) {
+        Task {
+            try await service.sendMessage(message)
         }
     }
 
