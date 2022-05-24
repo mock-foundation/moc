@@ -12,7 +12,7 @@ import Resolver
 import Utils
 import TDLibKit
 import Algorithms
-import AppKit
+import SwiftUI
 
 private enum Event {
     case updateNewMessage
@@ -22,6 +22,7 @@ class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
     
     var scrollView: NSScrollView?
+    var scrollViewProxy: ScrollViewProxy?
     
     // MARK: - UI state
 
@@ -65,15 +66,9 @@ class ChatViewModel: ObservableObject {
                 date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
             )
             
-            DispatchQueue.main.async { [weak self] in
-                self?.messages.append(message)
-                if abs(self?.scrollView?.contentView.bounds.origin.y ?? 0)
-                    == abs(self?.scrollView?.documentView?.frame.height ?? 0) {
-                    self?.scrollView?.documentView?.scroll(CGPoint(
-                        x: 0,
-                        y: self?.scrollView?.documentView?.frame.height ?? 0
-                    ))
-                }
+            DispatchQueue.main.async {
+                self.messages.append(message)
+                self.scrollToEnd()
             }
         }
         
@@ -85,6 +80,10 @@ class ChatViewModel: ObservableObject {
 //
 //                return firstDay! < secondDay!
 //            }
+    }
+    
+    func scrollToEnd() {
+        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
     }
     
     func update(chat: Chat) async throws {
@@ -133,6 +132,7 @@ class ChatViewModel: ObservableObject {
             }
             self.objectWillChange.send()
             self.messages = messageHistory
+            self.scrollToEnd()
         }
     }
     
