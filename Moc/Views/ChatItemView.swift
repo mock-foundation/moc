@@ -34,7 +34,7 @@ struct ChatItemView: View {
         HStack(alignment: .top) {
             //                chat.chatIcon
             chatPhoto
-                .frame(width: 56, height: 56)
+                .frame(width: 48, height: 48)
                 .clipShape(Circle())
                 .fixedSize()
             VStack(alignment: .leading) {

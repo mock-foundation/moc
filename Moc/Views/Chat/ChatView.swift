@@ -130,9 +130,9 @@ struct ChatView: View {
                     ))
                 } label: {
                     Image(systemName: "arrow.down")
-                        .padding(12)
                 }
                 .buttonStyle(.plain)
+                .padding(12)
                 .background(.ultraThinMaterial, in: Circle())
                 .clipShape(Circle())
                 .background(

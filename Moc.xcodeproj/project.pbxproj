@@ -240,13 +240,13 @@
 				43807D6C27E213350056A3D3 /* Commands */,
 				43807D7127E213350056A3D3 /* AppKitBindings */,
 				43807D6327E213350056A3D3 /* Chat */,
+				4300853F283ABCA300ED5961 /* TDImage.swift */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
-				4300853F283ABCA300ED5961 /* TDImage.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
