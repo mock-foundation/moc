@@ -10,6 +10,7 @@
 		43008540283ABCA300ED5961 /* TDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4300853F283ABCA300ED5961 /* TDImage.swift */; };
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
 		43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008545283C0D9F00ED5961 /* Image+Blank.swift */; };
+		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
 		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; };
 		43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4B27E213350056A3D3 /* MessageSender.swift */; };
@@ -141,6 +142,7 @@
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43807DAE27E213B00056A3D3 /* KeychainSwift in Frameworks */,
 				43807DBE27E2149A0056A3D3 /* Caching in Frameworks */,
+				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				43807DA827E2138A0056A3D3 /* Lottie in Frameworks */,
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
@@ -162,6 +164,7 @@
 		43008542283B59C200ED5961 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				43807D7727E213350056A3D3 /* Chat+Identifiable.swift */,
 				43008543283B59D500ED5961 /* Image+File.swift */,
 				43008545283C0D9F00ED5961 /* Image+Blank.swift */,
 			);
@@ -201,7 +204,6 @@
 				43807D7427E213350056A3D3 /* SwiftGen */,
 				43807D4927E213350056A3D3 /* AppDelegate.swift */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
-				43807D7727E213350056A3D3 /* Chat+Identifiable.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
 				43807D5427E213350056A3D3 /* Info.plist */,
@@ -381,6 +383,7 @@
 				43807DBF27E2149E0056A3D3 /* Logging */,
 				43807DC127E214A10056A3D3 /* Utils */,
 				43807DC327E214BC0056A3D3 /* SPSafeSymbols */,
+				434203B7283CB01D003E344C /* Algorithms */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -441,6 +444,7 @@
 				43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				43807DB527E214270056A3D3 /* XCRemoteSwiftPackageReference "SPSafeSymbols" */,
 				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -695,7 +699,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc.Moc;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -725,7 +729,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc.Moc;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -803,6 +807,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -862,6 +874,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		434203B7283CB01D003E344C /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
 		43807DA427E2137A0056A3D3 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */;
