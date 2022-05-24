@@ -26,7 +26,7 @@ public extension TdApi {
     func startTdLibUpdateHandler() {
         Task {
             #if DEBUG
-            try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
+            try? await self.setLogVerbosityLevel(newVerbosityLevel: 2)
             #else
             try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif

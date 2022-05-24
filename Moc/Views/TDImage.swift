@@ -54,6 +54,7 @@ struct TDImage: View {
             
             if update.file.id == file.id {
                 self.downloadingComplete = update.file.local.isDownloadingCompleted
+                self.file = update.file
             }
         }
     }
