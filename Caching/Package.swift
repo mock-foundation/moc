@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.6
 
 import PackageDescription
 
@@ -15,16 +15,16 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Swiftgram/TDLibKit.git",
-            .exact("1.2.1-tdlib-1.8.3-9c9a74c5")
-        ),
-        .package(url: "https://github.com/hyperoslo/Cache.git", .exactItem("6.0.0"))
+            exact: "1.2.1-tdlib-1.8.3-9c9a74c5"
+        )
+//        .package(url: "https://github.com/hyperoslo/Cache.git", exact: "6.0.0")
     ],
     targets: [
         .target(
             name: "Caching",
             dependencies: [
-                "TDLibKit",
-                "Cache"
+                "TDLibKit"
+//                "Cache"
             ]
         ),
     ]

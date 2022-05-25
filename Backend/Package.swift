@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -17,9 +17,10 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Swiftgram/TDLibKit.git",
-            .exact("1.2.1-tdlib-1.8.3-9c9a74c5")
+            exact: "1.2.1-tdlib-1.8.3-9c9a74c5"
         ),
-        .package(path: "../Caching"),
+        .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
+//        .package(path: "../Caching"),
         .package(path: "../Utils"),
         .package(path: "../Logging")
     ],
@@ -27,9 +28,10 @@ let package = Package(
         name: "Backend",
         dependencies: [
             "TDLibKit",
-            "Caching",
+//            "Caching",
             "Utils",
-            "Logging"
+            "Logging",
+            "Resolver"
         ]
     )]
 )

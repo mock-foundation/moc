@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.6
 
 import PackageDescription
 
@@ -16,9 +16,6 @@ let package = Package(
     targets: [
         .target(
             name: "Logging",
-            dependencies: []),
-        .testTarget(
-            name: "LoggingTests",
-            dependencies: ["Logging"]),
+            dependencies: [])
     ]
 )
