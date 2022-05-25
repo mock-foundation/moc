@@ -48,7 +48,7 @@ at the bottom of the page. Leave the page open, this will be needed in the next 
 
 Run this command:
 ```shell
-API_ID=<api_id> API_HASH=<api_hash> ./setup_environment.sh
+./setup_environment.sh <api_id> <api_hash>
 ```
 
 **Done!** You have everything set up. You can now build Moc 😁
