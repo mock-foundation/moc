@@ -6,11 +6,10 @@
 //
 
 import Backend
-import Logging
+import Logs
 import Resolver
-import SPSafeSymbols
 import SwiftUI
-import Utils
+import Utilities
 import TDLibKit
 
 private enum Tab {
@@ -20,7 +19,7 @@ private enum Tab {
 }
 
 struct ContentView: View {
-    private let logger = Logging.Logger(label: "UI", category: "ContentView")
+    private let logger = Logs.Logger(label: "UI", category: "ContentView")
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
@@ -63,7 +62,7 @@ struct ContentView: View {
                     Button(role: .destructive) {
                         logger.info("Pressed Delete button")
                     } label: {
-                        Label("Delete chat", systemImage: SPSafeSymbol.trash.name)
+                        Label("Delete chat", systemImage: "trash")
                     }
                 }
         }
@@ -81,15 +80,16 @@ struct ContentView: View {
                                         FolderItemView()
                                     })
                                 case .contacts:
-                                    Image(.person._2)
+                                    Image(systemName: "person.2")
                                 case .calls:
-                                    Image(.phone.andWaveform)
+                                    Image(systemName: "phone.and.waveform")
                             }
                         }.frame(alignment: .center)
                     }
                     .frame(minWidth: 70)
                     VStack {
                         SearchField()
+                            .controlSize(.large)
                             .padding([.leading, .bottom, .trailing], 15.0)
                         Group {
                             switch selectedTab {
@@ -107,9 +107,9 @@ struct ContentView: View {
                     }.toolbar {
                         ToolbarItem(placement: .status) {
                             Picker("", selection: $selectedTab) {
-                                Image(.bubble.leftAndBubbleRight).tag(Tab.chat)
-                                Image(.phone.andWaveform).tag(Tab.calls)
-                                Image(.person._2).tag(Tab.contacts)
+                                Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
+                                Image(systemName: "phone.and.waveform").tag(Tab.calls)
+                                Image(systemName: "person.2").tag(Tab.contacts)
                             }.pickerStyle(.segmented)
                         }
                         ToolbarItem(placement: .status) {
@@ -117,13 +117,13 @@ struct ContentView: View {
                         }
                         ToolbarItem(placement: .status) {
                             Toggle(isOn: $isArchiveChatListOpen) {
-                                Image(isArchiveChatListOpen ? .archivebox.fill : .archivebox)
+                                Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
                             }
                         }
                         ToolbarItem(placement: .status) {
                             // swiftlint:disable multiple_closures_with_trailing_closure
                             Button(action: { logger.info("Pressed add chat") }) {
-                                Image(.square.andPencil)
+                                Image(systemName: "square.and.pencil")
                             }
                         }
                     }
@@ -147,7 +147,7 @@ struct ContentView: View {
 
     private var chatPlaceholder: some View {
         VStack {
-            Image(.bubble.leftAndBubbleRight)
+            Image(systemName: "bubble.left.and.bubble.right")
                 .font(.system(size: 96))
                 .foregroundColor(.gray)
             Text("Open a chat or start a new one!")

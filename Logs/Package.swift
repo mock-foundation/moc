@@ -1,21 +1,21 @@
-// swift-tools-version:5.6
+// swift-tools-version: 5.6
 
 import PackageDescription
 
 let package = Package(
-    name: "Logging",
+    name: "Logs",
     platforms: [
         .macOS(.v12)
     ],
     products: [
         .library(
-            name: "Logging",
-            targets: ["Logging"]),
+            name: "Logs",
+            targets: ["Logs"]),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Logging",
+            name: "Logs",
             dependencies: [])
     ]
 )

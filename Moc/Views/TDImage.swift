@@ -7,7 +7,7 @@
 
 import SwiftUI
 import TDLibKit
-import Utils
+import Utilities
 
 struct TDImage: View {
     @State var file: File

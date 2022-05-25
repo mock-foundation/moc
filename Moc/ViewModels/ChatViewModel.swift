@@ -9,7 +9,7 @@ import Backend
 import Combine
 import Foundation
 import Resolver
-import Utils
+import Utilities
 import TDLibKit
 import Algorithms
 import SwiftUI

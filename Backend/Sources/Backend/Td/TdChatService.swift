@@ -8,9 +8,9 @@
 import Combine
 import Foundation
 import SwiftUI
-import Utils
+import Utilities
 import TDLibKit
-import Logging
+import Logs
 
 public class TdChatService: ChatService {
     public func sendMessage(_ message: String) async throws {
@@ -29,7 +29,7 @@ public class TdChatService: ChatService {
         )
     }
     
-    private var logger = Logging.Logger(label: "Services", category: "TdChatDataSource")
+    private var logger = Logs.Logger(label: "Services", category: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 
     public func set(protected _: Bool) async throws {

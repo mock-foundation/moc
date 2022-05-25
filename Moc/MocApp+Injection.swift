@@ -9,9 +9,9 @@ import Backend
 import CryptoKit
 import Resolver
 import SwiftUI
-import Utils
+import Utilities
 import TDLibKit
-import Logging
+import Logs
 
 public extension Resolver {
     static func registerUI() {

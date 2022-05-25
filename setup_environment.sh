@@ -83,21 +83,21 @@ else
     pip3 install plistlib
 fi
 
-cd Utils/Templates
+cd Utilities/Templates
 info "Running GYB..."
-mkdir ../Sources/Utils/Generated
+mkdir ../Sources/Utilities/Generated
 find . -name "*.gyb" |
 while read file; do
     filename=$(echo "$file" | sed 's/.\///')
-    API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utils/Generated/${filename%.gyb}" "$filename";
+    API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utilities/Generated/${filename%.gyb}" "$filename";
 done
 
-info "Running Sourcery..."
-cd ../..
-info "If you get a password input prompt, it is for making sourcery.sh file executable"
-sudo chmod +x sourcery.sh
-section_start "Sourcery output"
-./sourcery.sh
-section_end
+#info "Running Sourcery..."
+#cd ../..
+#info "If you get a password input prompt, it is for making sourcery.sh file executable"
+#sudo chmod +x sourcery.sh
+#section_start "Sourcery output"
+#./sourcery.sh
+#section_end
 
 ok "Finished environment setup!"

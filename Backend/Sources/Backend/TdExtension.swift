@@ -8,10 +8,9 @@
 import CryptoKit
 import Foundation
 import KeychainSwift
-import Logging
-import Utils
+import Logs
+import Utilities
 import TDLibKit
-import Caching
 
 public extension TdApi {
     /// A list of shared instances. Why list? There could be multiple `TDLib` instances
@@ -20,7 +19,7 @@ public extension TdApi {
     /// use `shared[0]`.
     static var shared: [TdApi] = []
 
-    private static let logger = Logging.Logger(label: "TDLib", category: "Updates")
+    private static let logger = Logs.Logger(label: "TDLib", category: "Updates")
     
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
@@ -109,18 +108,9 @@ public extension TdApi {
                     case let .updateChatLastMessage(info):
                         SystemUtils.post(notification: .updateChatLastMessage, withObject: info)
                     case let .updateNewChat(info):
-//                        Chat.cache[info.chat.id] = info.chat
                         SystemUtils.post(notification: .updateNewChat, withObject: info)
                     case let .updateFile(info):
                         SystemUtils.post(notification: .updateFile, withObject: info)
-//                    case let .updateBasicGroup(info):
-//                        BasicGroup.cache[info.basicGroup.id] = info.basicGroup
-//                    case let .updateBasicGroupFullInfo(info):
-//                        BasicGroupFullInfo.cache[info.basicGroupId] = info.basicGroupFullInfo
-//                    case let .updateSupergroup(info):
-//                        Supergroup.cache[info.supergroup.id] = info.supergroup
-//                    case let .updateUser(info):
-//                        User.cache[info.user.id] = info.user
                     default:
                         break
                 }

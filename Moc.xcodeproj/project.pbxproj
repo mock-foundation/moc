@@ -58,10 +58,6 @@
 		43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB027E213C50056A3D3 /* TDLibKit */; };
 		43807DB827E214440056A3D3 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB727E214440056A3D3 /* Introspect */; };
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
-		43807DBE27E2149A0056A3D3 /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBD27E2149A0056A3D3 /* Caching */; };
-		43807DC027E2149E0056A3D3 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBF27E2149E0056A3D3 /* Logging */; };
-		43807DC227E214A10056A3D3 /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DC127E214A10056A3D3 /* Utils */; };
-		43807DC427E214BC0056A3D3 /* SPSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DC327E214BC0056A3D3 /* SPSafeSymbols */; };
 		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
 		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
 /* End PBXBuildFile section */
@@ -85,9 +81,6 @@
 		43807D0627E1FCEF0056A3D3 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0A27E1FCEF0056A3D3 /* MocTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocTests.swift; sourceTree = "<group>"; };
 		43807D2327E2129C0056A3D3 /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
-		43807D2427E2129F0056A3D3 /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
-		43807D2527E212A70056A3D3 /* Logging */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logging; sourceTree = "<group>"; };
-		43807D2627E212AA0056A3D3 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utils; sourceTree = "<group>"; };
 		43807D4927E213350056A3D3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43807D4B27E213350056A3D3 /* MessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
 		43807D4C27E213350056A3D3 /* MessageContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContent.swift; sourceTree = "<group>"; };
@@ -129,6 +122,8 @@
 		43807D7C27E213350056A3D3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		43807DC527E214D30056A3D3 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43807DC627E214DD0056A3D3 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
+		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
+		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,14 +131,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43807DC027E2149E0056A3D3 /* Logging in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
-				43807DC227E214A10056A3D3 /* Utils in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
-				43807DC427E214BC0056A3D3 /* SPSafeSymbols in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43807DAE27E213B00056A3D3 /* KeychainSwift in Frameworks */,
-				43807DBE27E2149A0056A3D3 /* Caching in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				43807DA827E2138A0056A3D3 /* Lottie in Frameworks */,
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
@@ -179,9 +170,8 @@
 			children = (
 				43807CF727E1FCEC0056A3D3 /* Moc */,
 				43807D2327E2129C0056A3D3 /* Backend */,
-				43807D2427E2129F0056A3D3 /* Caching */,
-				43807D2527E212A70056A3D3 /* Logging */,
-				43807D2627E212AA0056A3D3 /* Utils */,
+				43F871B7283E21C700B6C717 /* Logs */,
+				43CA7FC9283E3988006E7AC9 /* Utilities */,
 				43807D0927E1FCEF0056A3D3 /* MocTests */,
 				43807CF627E1FCEC0056A3D3 /* Products */,
 				43807DBA27E214970056A3D3 /* Frameworks */,
@@ -240,12 +230,11 @@
 			children = (
 				43807D5627E213350056A3D3 /* Preferences */,
 				43807D6C27E213350056A3D3 /* Commands */,
-				43807D7127E213350056A3D3 /* AppKitBindings */,
+				43807D7127E213350056A3D3 /* AppKit */,
 				43807D6327E213350056A3D3 /* Chat */,
 				4300853F283ABCA300ED5961 /* TDImage.swift */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
-				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
@@ -306,12 +295,13 @@
 			path = Commands;
 			sourceTree = "<group>";
 		};
-		43807D7127E213350056A3D3 /* AppKitBindings */ = {
+		43807D7127E213350056A3D3 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 			);
-			path = AppKitBindings;
+			path = AppKit;
 			sourceTree = "<group>";
 		};
 		43807D7427E213350056A3D3 /* SwiftGen */ = {
@@ -374,10 +364,6 @@
 				43807DB027E213C50056A3D3 /* TDLibKit */,
 				43807DB727E214440056A3D3 /* Introspect */,
 				43807DBB27E214970056A3D3 /* Backend */,
-				43807DBD27E2149A0056A3D3 /* Caching */,
-				43807DBF27E2149E0056A3D3 /* Logging */,
-				43807DC127E214A10056A3D3 /* Utils */,
-				43807DC327E214BC0056A3D3 /* SPSafeSymbols */,
 				434203B7283CB01D003E344C /* Algorithms */,
 			);
 			productName = Moc;
@@ -437,7 +423,6 @@
 				43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				43807DAC27E213B00056A3D3 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */,
-				43807DB527E214270056A3D3 /* XCRemoteSwiftPackageReference "SPSafeSymbols" */,
 				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
@@ -610,7 +595,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -664,7 +649,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -780,7 +765,7 @@
 				43807D1927E1FCEF0056A3D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		43807D1A27E1FCEF0056A3D3 /* Build configuration list for PBXNativeTarget "Moc" */ = {
 			isa = XCConfigurationList;
@@ -789,7 +774,7 @@
 				43807D1C27E1FCEF0056A3D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		43807D1D27E1FCEF0056A3D3 /* Build configuration list for PBXNativeTarget "MocTests" */ = {
 			isa = XCConfigurationList;
@@ -798,7 +783,7 @@
 				43807D1F27E1FCEF0056A3D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
@@ -851,14 +836,6 @@
 				version = "1.2.1-tdlib-1.8.3-9c9a74c5";
 			};
 		};
-		43807DB527E214270056A3D3 /* XCRemoteSwiftPackageReference "SPSafeSymbols" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ivanvorobei/SPSafeSymbols.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
@@ -908,23 +885,6 @@
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
-		};
-		43807DBD27E2149A0056A3D3 /* Caching */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Caching;
-		};
-		43807DBF27E2149E0056A3D3 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Logging;
-		};
-		43807DC127E214A10056A3D3 /* Utils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Utils;
-		};
-		43807DC327E214BC0056A3D3 /* SPSafeSymbols */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43807DB527E214270056A3D3 /* XCRemoteSwiftPackageReference "SPSafeSymbols" */;
-			productName = SPSafeSymbols;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

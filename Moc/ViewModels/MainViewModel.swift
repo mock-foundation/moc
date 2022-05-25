@@ -7,10 +7,10 @@
 
 import Resolver
 import SwiftUI
-import Utils
+import Utilities
 import Combine
 import TDLibKit
-import Logging
+import Logs
 
 private enum Event {
     case updateChatPosition
@@ -33,7 +33,7 @@ class MainViewModel: ObservableObject {
     private var publishers: [Event: NotificationCenter.Publisher] = [:]
     private var subscribers: [Event: AnyCancellable] = [:]
 
-    private var logger = Logging.Logger(label: "UI", category: "MainViewModel")
+    private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
 
     init() {
         publishers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition)

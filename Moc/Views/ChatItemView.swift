@@ -5,10 +5,9 @@
 //  Created by Егор Яковенко on 25.12.2021.
 //
 
-import SPSafeSymbols
 import SwiftUI
 import TDLibKit
-import Utils
+import Utilities
 
 extension Foundation.Date {
     var hoursAndMinutes: String {

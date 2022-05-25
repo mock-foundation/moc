@@ -7,9 +7,8 @@
 
 import Backend
 import CoreImage.CIFilterBuiltins
-import Logging
+import Logs
 import Resolver
-import SPSafeSymbols
 import SwiftUI
 import TDLibKit
 
@@ -40,7 +39,7 @@ private extension String {
 }
 
 struct LoginView: View {
-    private let logger = Logging.Logger(label: "Login", category: "UI")
+    private let logger = Logs.Logger(label: "Login", category: "UI")
     @Injected private var dataSource: LoginService
 
     func stepView(number: Int, text: String) -> some View {
@@ -85,8 +84,8 @@ struct LoginView: View {
                 return NSImage(cgImage: cgimg, size: NSSize(width: 32, height: 32))
             }
         }
-
-        return NSImage(.xmark.circle)
+        
+        return NSImage(systemSymbolName: "xmark.circle", accessibilityDescription: nil)!
     }
 
     var body: some View {
@@ -95,7 +94,7 @@ struct LoginView: View {
             Button(action: {
                 showExitAlert = true
             }) {
-                Image(.xmark)
+                Image(systemName: "xmark")
             }
             .buttonStyle(.plain)
             .keyboardShortcut(.escape, modifiers: [])
@@ -117,7 +116,7 @@ struct LoginView: View {
                     Button(action: {
                         openedScreen = .phoneNumber
                     }) {
-                        Label("Continue using phone number", systemImage: SPSafeSymbol.phone.name)
+                        Label("Continue using phone number", systemImage: "phone.name")
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)

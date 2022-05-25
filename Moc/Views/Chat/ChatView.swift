@@ -8,9 +8,8 @@
 import Backend
 import Introspect
 import Resolver
-import SPSafeSymbols
 import SwiftUI
-import Utils
+import Utilities
 import TDLibKit
 
 public extension MessageContent {
@@ -75,7 +74,7 @@ struct ChatView: View {
 
     private var inputField: some View {
         HStack(spacing: 16) {
-            Image(.paperclip)
+            Image(systemName: "paperclip")
                 .font(.system(size: 16))
             TextField("Write a message...", text: $inputMessage)
                 .textFieldStyle(.plain)
@@ -97,9 +96,9 @@ struct ChatView: View {
                     inputMessage = ""
                     viewModel.scrollViewProxy?.scrollTo(viewModel.messages.last?.id ?? 0)
                 }
-            Image(.face.smiling)
+            Image(systemName: "face.smiling")
                 .font(.system(size: 16))
-            Image(.mic)
+            Image(systemName: "mic")
                 .font(.system(size: 16))
         }
     }
@@ -162,10 +161,10 @@ struct ChatView: View {
 
     // MARK: - Additional inspector stuff
 
-    private func makeInspectorButton(action: @escaping () -> Void, imageName: SPSafeSymbol, text: String) -> some View {
+    private func makeInspectorButton(action: @escaping () -> Void, imageName: String, text: String) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
-                Image(systemName: imageName.name)
+                Image(systemName: imageName)
                     .font(.system(size: 24))
                     .padding(4)
                 Text(text)
@@ -234,17 +233,17 @@ struct ChatView: View {
                 HStack(spacing: 24) {
                     makeInspectorButton(
                         action: {},
-                        imageName: .person.cropCircleBadgePlus,
+                        imageName: "person.crop.circle.badge.plus",
                         text: "Add"
                     )
                     makeInspectorButton(
                         action: {},
-                        imageName: .bell.slash,
+                        imageName: "bell.slash",
                         text: "Mute"
                     )
                     makeInspectorButton(
                         action: {},
-                        imageName: .arrow.turnUpRight,
+                        imageName: "arrow.turn.up.right",
                         text: "Leave"
                     )
                     .tint(.red)
@@ -335,7 +334,7 @@ struct ChatView: View {
                     Button(action: {
                         print("search")
                     }, label: {
-                        Image(.magnifyingglass)
+                        Image(systemName: "magnifyingglass")
                     })
                     Button(action: { isInspectorShown.toggle() }, label: {
                         Image(systemName: "sidebar.right")
@@ -343,7 +342,7 @@ struct ChatView: View {
                     Button(action: {
                         print("more")
                     }, label: {
-                        Image(.ellipsis)
+                        Image(systemName: "ellipsis")
                     })
                 }
             }

@@ -20,17 +20,15 @@ let package = Package(
             exact: "1.2.1-tdlib-1.8.3-9c9a74c5"
         ),
         .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
-//        .package(path: "../Caching"),
-        .package(path: "../Utils"),
-        .package(path: "../Logging")
+        .package(path: "../Utilities"),
+        .package(path: "../Logs")
     ],
     targets: [.target(
         name: "Backend",
         dependencies: [
             "TDLibKit",
-//            "Caching",
-            "Utils",
-            "Logging",
+            "Utilities",
+            "Logs",
             "Resolver"
         ]
     )]

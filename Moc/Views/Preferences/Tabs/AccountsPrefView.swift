@@ -8,16 +8,15 @@
 import AlertToast
 import Backend
 import Combine
-import Utils
-import Logging
+import Utilities
+import Logs
 import Resolver
-import SPSafeSymbols
 import SwiftUI
 import TDLibKit
 
 // swiftlint:disable type_body_length
 struct AccountsPrefView: View {
-    private var logger = Logging.Logger(label: "Preferences", category: "AccountPaneUI")
+    private var logger = Logs.Logger(label: "Preferences", category: "AccountPaneUI")
     @StateObject private var viewModel = AccountsPrefViewModel()
 
     @State private var photos: [File] = []
@@ -130,7 +129,7 @@ struct AccountsPrefView: View {
             // swiftlint:disable multiple_closures_with_trailing_closure
             HStack {
                 Button(action: {}) {
-                    Label("Add account", systemImage: SPSafeSymbol.person.badgePlus.name)
+                    Label("Add account", systemImage: "person.badge.plus")
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderless)
@@ -149,7 +148,7 @@ struct AccountsPrefView: View {
                 }) {
                     // rectangle.portrait.and.arrow.right
                     Label("Log out",
-                          systemImage: SPSafeSymbol.rectangle.portraitAndArrowRight.name)
+                          systemImage: "rectangle.portrait.and.arrow.right")
                 }
                 .tint(.red)
                 .controlSize(.large)
@@ -170,7 +169,7 @@ struct AccountsPrefView: View {
                         .clipShape(Circle())
                     Button(action: {}) {
                         Label("Update profile photo",
-                              systemImage: SPSafeSymbol.square.andPencil.name)
+                              systemImage: "square.and.pencil")
                     }
                 }
             } footer: {
@@ -217,7 +216,7 @@ struct AccountsPrefView: View {
             HStack {
                 Text(phoneNumber)
                 Button(action: {}) {
-                    Label("Change", systemImage: SPSafeSymbol.square.andPencil.name)
+                    Label("Change", systemImage: "square.and.pencil")
                 }
             }
         }

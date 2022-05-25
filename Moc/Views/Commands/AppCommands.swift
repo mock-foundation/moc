@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SPSafeSymbols
 
 struct AppCommands: Commands {
     var body: some Commands {
@@ -14,26 +13,26 @@ struct AppCommands: Commands {
             Button(action: {
 
             }, label: {
-                Image(.bookmark)
+                Image(systemName: "bookmark")
                 Text("Saved messages")
             }).keyboardShortcut("0")
             Button(action: {
 
             }, label: {
-                Image(.person.wave_2)
+                Image(systemName: "person.wave.2")
                 Text("Find people nearby")
             })
             Divider()
             Button(action: {
 
             }, label: {
-                Image(.text.bookClosed)
+                Image(systemName: "text.book.closed")
                 Text("Telegram Tips")
             })
             Button(action: {
 
             }, label: {
-                Image(.newspaper)
+                Image(systemName: "newspaper")
                 Text("Moc Updates")
             })
             Divider()
