@@ -116,6 +116,8 @@ struct ChatView: View {
                                 MessageView(message: message)
                                     .frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
                                 if !message.isOutgoing { Spacer().border(.orange) }
+                            }.if(message.isOutgoing) { view in
+                                view.padding(.trailing, 6)
                             }
                         }
                     }

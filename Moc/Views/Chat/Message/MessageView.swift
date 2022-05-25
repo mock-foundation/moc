@@ -15,10 +15,17 @@ struct MessageView: View {
             case .text(let text):
                 MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
                     Text(text.text.text)
+                        .if(message.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
+                        
                 }
             case .unsupported:
                 MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
                     Text("Sorry, this message is unsupported.")
+                        .if(message.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
                 }
         }
     }
