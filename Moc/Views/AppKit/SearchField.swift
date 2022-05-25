@@ -19,7 +19,7 @@ struct SearchField: NSViewRepresentable {
     
     func controlSize(_ size: NSControl.ControlSize) -> Self {
         view.cell?.controlSize = size
-        return view
+        return self
     }
 
     typealias NSViewType = NSSearchField
