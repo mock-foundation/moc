@@ -36,98 +36,115 @@ struct ContentView: View {
     }
     
     private func makeChatList(_ list: [Chat]) -> some View {
-        List(list) { chat in
-            ChatItemView(chat: chat)
-                .frame(height: 52)
-                .onTapGesture {
-                    Task {
-                        do {
-                            try await chatViewModel.update(chat: chat)
-                        } catch {
-                            logger.error("Error in \(error.localizedDescription)")
+        ScrollView {
+            ForEach(list) { chat in
+                ChatItemView(chat: chat)
+                    .frame(height: 52)
+                    .onTapGesture {
+                        Task {
+                            do {
+                                try await chatViewModel.update(chat: chat)
+                            } catch {
+                                logger.error("Error in \(error.localizedDescription)")
+                            }
                         }
+                        viewRouter.openedChat = chat
+                        viewRouter.currentView = .chat
                     }
-                    viewRouter.openedChat = chat
-                    viewRouter.currentView = .chat
+                    .padding(6)
+                    .background(
+                        (viewRouter.currentView == .chat
+                         && viewRouter.openedChat! == chat)
+                        ? Color.accentColor.opacity(0.6)
+                        : nil
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+
+                //                .swipeActions {
+                //                    Button(role: .destructive) {
+                //                        logger.info("Pressed Delete button")
+                //                    } label: {
+                //                        Label("Delete chat", systemImage: "trash")
+                //                    }
+                //                }
+            }
+        }
+    }
+    
+    private var chatListToolbar: some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .status) {
+                Picker("", selection: $selectedTab) {
+                    Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
+                    Image(systemName: "phone.and.waveform").tag(Tab.calls)
+                    Image(systemName: "person.2").tag(Tab.contacts)
+                }.pickerStyle(.segmented)
+            }
+            ToolbarItem(placement: .status) {
+                Spacer()
+            }
+            ToolbarItem(placement: .status) {
+                Toggle(isOn: $isArchiveChatListOpen) {
+                    Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
                 }
-                .padding(6)
-                .background(
-                    (viewRouter.currentView == .chat
-                     && viewRouter.openedChat! == chat)
-                    ? Color.accentColor.opacity(0.6)
-                    : nil
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .swipeActions {
-                    Button(role: .destructive) {
-                        logger.info("Pressed Delete button")
-                    } label: {
-                        Label("Delete chat", systemImage: "trash")
-                    }
+            }
+            ToolbarItem(placement: .status) {
+                // swiftlint:disable multiple_closures_with_trailing_closure
+                Button(action: { logger.info("Pressed add chat") }) {
+                    Image(systemName: "square.and.pencil")
                 }
+            }
+        }
+    }
+    
+    private var filterBar: some View {
+        ScrollView(showsIndicators: false) {
+            Group {
+                switch selectedTab {
+                    case .chat:
+                        ForEach(0 ..< 10, content: { _ in
+                            FolderItemView()
+                        })
+                    case .contacts:
+                        Image(systemName: "person.2")
+                    case .calls:
+                        Image(systemName: "phone.and.waveform")
+                }
+            }.frame(alignment: .center)
+        }
+        .frame(width: 90)
+    }
+    
+    private var chatList: some View {
+        VStack {
+            SearchField()
+                .controlSize(.large)
+            //                            .padding([.trailing, .bottom], 8)
+            Group {
+                switch selectedTab {
+                    case .chat:
+                        isArchiveChatListOpen
+                        ? makeChatList(mainViewModel.archiveChatList)
+                        : makeChatList(mainViewModel.mainChatList)
+                    case .contacts:
+                        Text("Contacts")
+                    case .calls:
+                        Text("Calls")
+                }
+            }
+            .frame(minWidth: 300, maxHeight: .infinity)
+        }
+        .padding(.trailing, 8)
+        .toolbar {
+            chatListToolbar
         }
     }
 
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    ScrollView(showsIndicators: false) {
-                        Group {
-                            switch selectedTab {
-                                case .chat:
-                                    ForEach(0 ..< 10, content: { _ in
-                                        FolderItemView()
-                                    })
-                                case .contacts:
-                                    Image(systemName: "person.2")
-                                case .calls:
-                                    Image(systemName: "phone.and.waveform")
-                            }
-                        }.frame(alignment: .center)
-                    }
-                    .frame(minWidth: 70)
-                    VStack {
-                        SearchField()
-                            .controlSize(.large)
-                            .padding([.leading, .bottom, .trailing], 15.0)
-                        Group {
-                            switch selectedTab {
-                                case .chat:
-                                    isArchiveChatListOpen
-                                    ? makeChatList(mainViewModel.archiveChatList)
-                                    : makeChatList(mainViewModel.mainChatList)
-                                case .contacts:
-                                    Text("Contacts")
-                                case .calls:
-                                    Text("Calls")
-                            }
-                        }
-                        .frame(minWidth: 320, maxHeight: .infinity)
-                    }.toolbar {
-                        ToolbarItem(placement: .status) {
-                            Picker("", selection: $selectedTab) {
-                                Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
-                                Image(systemName: "phone.and.waveform").tag(Tab.calls)
-                                Image(systemName: "person.2").tag(Tab.contacts)
-                            }.pickerStyle(.segmented)
-                        }
-                        ToolbarItem(placement: .status) {
-                            Spacer()
-                        }
-                        ToolbarItem(placement: .status) {
-                            Toggle(isOn: $isArchiveChatListOpen) {
-                                Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
-                            }
-                        }
-                        ToolbarItem(placement: .status) {
-                            // swiftlint:disable multiple_closures_with_trailing_closure
-                            Button(action: { logger.info("Pressed add chat") }) {
-                                Image(systemName: "square.and.pencil")
-                            }
-                        }
-                    }
-                }
+            HStack {
+                filterBar
+                chatList
             }
             .listStyle(.sidebar)
 
