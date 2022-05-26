@@ -62,7 +62,7 @@ public extension TdApi {
                                     ))
                                 }
                             case let .authorizationStateWaitEncryptionKey(info):
-                                SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, withObject: info)
+                                SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, with: info)
                                 Task {
                                     try? await self.checkDatabaseEncryptionKey(
                                         encryptionKey: TdApi.tdDatabaseEncryptionKey
@@ -71,11 +71,11 @@ public extension TdApi {
                             case .authorizationStateWaitPhoneNumber:
                                 SystemUtils.post(notification: .authorizationStateWaitPhoneNumber)
                             case let .authorizationStateWaitCode(info):
-                                SystemUtils.post(notification: .authorizationStateWaitCode, withObject: info)
+                                SystemUtils.post(notification: .authorizationStateWaitCode, with: info)
                             case let .authorizationStateWaitRegistration(info):
-                                SystemUtils.post(notification: .authorizationStateWaitRegistration, withObject: info)
+                                SystemUtils.post(notification: .authorizationStateWaitRegistration, with: info)
                             case let .authorizationStateWaitPassword(info):
-                                SystemUtils.post(notification: .authorizationStateWaitPassword, withObject: info)
+                                SystemUtils.post(notification: .authorizationStateWaitPassword, with: info)
                             case .authorizationStateReady:
                                 Task {
                                     do {
@@ -89,7 +89,7 @@ public extension TdApi {
                             case let .authorizationStateWaitOtherDeviceConfirmation(info):
                                 SystemUtils.post(
                                     notification: .authorizationStateWaitOtherDeviceConfirmation,
-                                    withObject: info
+                                    with: info
                                 )
                             case .authorizationStateLoggingOut:
                                 SystemUtils.post(notification: .authorizationStateLoggingOut)
@@ -102,15 +102,15 @@ public extension TdApi {
                     // MARK: - Chat updates
 
                     case let .updateChatPosition(info):
-                        SystemUtils.post(notification: .updateChatPosition, withObject: info)
+                        SystemUtils.post(notification: .updateChatPosition, with: info)
                     case let .updateNewMessage(info):
-                        SystemUtils.post(notification: .updateNewMessage, withObject: info)
+                        SystemUtils.post(notification: .updateNewMessage, with: info)
                     case let .updateChatLastMessage(info):
-                        SystemUtils.post(notification: .updateChatLastMessage, withObject: info)
+                        SystemUtils.post(notification: .updateChatLastMessage, with: info)
                     case let .updateNewChat(info):
-                        SystemUtils.post(notification: .updateNewChat, withObject: info)
+                        SystemUtils.post(notification: .updateNewChat, with: info)
                     case let .updateFile(info):
-                        SystemUtils.post(notification: .updateFile, withObject: info)
+                        SystemUtils.post(notification: .updateFile, with: info)
                     default:
                         break
                 }

@@ -6,12 +6,10 @@ public enum SystemUtils {
     private static let notificationQueue = DispatchQueue.main
 
     public static func post(notification: NSNotification.Name) {
-        notificationQueue.async {
-            NotificationCenter.default.post(name: notification, object: nil)
-        }
+        post(notification: notification, with: nil)
     }
 
-    public static func post(notification: NSNotification.Name, withObject obj: Any?) {
+    public static func post(notification: NSNotification.Name, with obj: Any?) {
         notificationQueue.async {
             NotificationCenter.default.post(name: notification, object: obj)
         }
