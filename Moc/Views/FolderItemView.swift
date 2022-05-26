@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FolderItemView: View {
+    @State var name: String
+    @State var icon: Image
+    
     @State private var backgroundColor: Color = .init(.sRGB, red: 0, green: 0, blue: 0, opacity: 0)
     @State private var selected = false
     private let selectedColor = Color("FolderItemSelectedColor")
@@ -17,6 +20,7 @@ struct FolderItemView: View {
     func folderItem(item: FolderItem) -> some View {
         VStack {
             item.icon
+                .font(.system(size: 20))
                 .padding(4)
             Text(item.name)
         }
@@ -48,12 +52,12 @@ struct FolderItemView: View {
     }
 
     var body: some View {
-        folderItem(item: FolderItem(name: "Name", icon: Image(systemName: "folder")))
+        folderItem(item: FolderItem(name: name, icon: icon))
     }
 }
 
 struct FolderView_Previews: PreviewProvider {
     static var previews: some View {
-        FolderItemView()
+        FolderItemView(name: "Name", icon: Image(systemName: "folder"))
     }
 }
