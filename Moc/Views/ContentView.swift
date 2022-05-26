@@ -61,7 +61,7 @@ struct ContentView: View {
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
-            }
+            }.padding(.trailing, 12)
         }
     }
     
@@ -113,7 +113,7 @@ struct ContentView: View {
         VStack {
             SearchField()
                 .controlSize(.large)
-            //                            .padding([.trailing, .bottom], 8)
+                .padding(.trailing, 12)
             Group {
                 switch selectedTab {
                     case .chat:
@@ -128,7 +128,6 @@ struct ContentView: View {
             }
             .frame(minWidth: 300, maxHeight: .infinity)
         }
-        .padding(.trailing, 8)
         .toolbar {
             chatListToolbar
         }
