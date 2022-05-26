@@ -1,5 +1,5 @@
 //
-//  Chat+Identifiable.swift
+//  TDLibKit+Identifiable.swift
 //  
 //
 //  Created by Егор Яковенко on 26.02.2022.
