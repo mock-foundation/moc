@@ -12,6 +12,9 @@
 		43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008545283C0D9F00ED5961 /* Image+Blank.swift */; };
 		4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309BCF5283D6E6A00F43170 /* View+If.swift */; };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
+		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
+		4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E4283FE2BE00D3378F /* DequeModule */; };
+		4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E6283FE2BE00D3378F /* OrderedCollections */; };
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
 		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; };
 		43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4B27E213350056A3D3 /* MessageSender.swift */; };
@@ -135,11 +138,14 @@
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43807DAE27E213B00056A3D3 /* KeychainSwift in Frameworks */,
+				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
+				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				43807DA827E2138A0056A3D3 /* Lottie in Frameworks */,
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
 				43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */,
+				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
 				43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +371,9 @@
 				43807DB727E214440056A3D3 /* Introspect */,
 				43807DBB27E214970056A3D3 /* Backend */,
 				434203B7283CB01D003E344C /* Algorithms */,
+				4360D6E2283FE2BE00D3378F /* Collections */,
+				4360D6E4283FE2BE00D3378F /* DequeModule */,
+				4360D6E6283FE2BE00D3378F /* OrderedCollections */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -425,6 +434,7 @@
 				43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+				4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -798,6 +808,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -853,6 +871,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
+		};
+		4360D6E2283FE2BE00D3378F /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		4360D6E4283FE2BE00D3378F /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		4360D6E6283FE2BE00D3378F /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		43807DA427E2137A0056A3D3 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
