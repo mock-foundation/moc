@@ -50,11 +50,11 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <PostActions>
+      <PreActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Run Script"
+               title = "Bump build number"
                scriptText = "cd &quot;${PROJECT_DIR}&quot;&#10;agvtool bump&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
@@ -67,7 +67,7 @@
                </EnvironmentBuildable>
             </ActionContent>
          </ExecutionAction>
-      </PostActions>
+      </PreActions>
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
@@ -102,5 +102,14 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Bump build number"
+               scriptText = "cd &quot;${PROJECT_DIR}&quot;&#10;agvtool bump&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>
