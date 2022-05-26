@@ -7,20 +7,12 @@
 
 import SwiftUI
 
-struct SearchField: NSViewRepresentable {
-    private var view = NSSearchField()
-    
+struct SearchField: NSViewRepresentable {    
     func makeNSView(context _: Context) -> NSViewType {
-        view.cell?.controlSize = .large
-        return view
+        return NSSearchField()
     }
 
     func updateNSView(_: NSViewType, context _: Context) {}
-    
-    func controlSize(_ size: NSControl.ControlSize) -> Self {
-        view.cell?.controlSize = size
-        return self
-    }
 
     typealias NSViewType = NSSearchField
 }

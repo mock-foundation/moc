@@ -77,6 +77,8 @@ struct ChatView: View {
             Image(systemName: "paperclip")
                 .font(.system(size: 16))
             TextField("Write a message...", text: $inputMessage)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
                 .textFieldStyle(.plain)
                 .padding(6)
                 .padding(.horizontal, 8)
