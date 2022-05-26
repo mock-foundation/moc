@@ -111,6 +111,8 @@ public extension TdApi {
                         SystemUtils.post(notification: .updateNewChat, with: info)
                     case let .updateFile(info):
                         SystemUtils.post(notification: .updateFile, with: info)
+                    case let .updateChatFilters(info):
+                        SystemUtils.post(notification: .updateChatFilters, with: info)
                     default:
                         break
                 }

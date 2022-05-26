@@ -11,12 +11,7 @@ import Utilities
 import Combine
 import TDLibKit
 import Logs
-
-private enum Event {
-    case updateChatPosition
-    case authorization
-    case updateNewChat
-}
+import OrderedCollections
 
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
@@ -24,32 +19,43 @@ class MainViewModel: ObservableObject {
     @Published var mainChatList: [Chat] = []
     @Published var archiveChatList: [Chat] = []
     @Published var folderChatLists: [Int: [Chat]] = [:]
+    @Published var chatFilters: OrderedSet<ChatFilterInfo> = []
 
     @Published var showingLoginScreen = false
 
     /// For chats that have not received updateChatPosition update, and are waiting for distribution.
     var unorderedChatList: [Chat] = []
 
-    private var publishers: [Event: NotificationCenter.Publisher] = [:]
-    private var subscribers: [Event: AnyCancellable] = [:]
+    private var publishers: [NSNotification.Name: NotificationCenter.Publisher] = [:]
+    private var subscribers: [NSNotification.Name: AnyCancellable] = [:]
 
     private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
 
     init() {
-        publishers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition)
-        publishers[.authorization] = SystemUtils.ncPublisher(for: .authorizationStateWaitPhoneNumber)
-        publishers[.updateNewChat] = SystemUtils.ncPublisher(for: .updateNewChat)
-    }
-
-    func registerSubscriptions() {
-        subscribers[.updateChatPosition] = publishers[.updateChatPosition]?.sink(
+        subscribers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition).sink(
             receiveValue: updateChatPosition(notification:)
         )
-        subscribers[.authorization] = publishers[.authorization]?.sink(receiveValue: authorization(notification:))
-        subscribers[.updateNewChat] = publishers[.updateNewChat]?.sink(receiveValue: updateNewChat(notification:))
+        subscribers[.authorizationStateWaitPhoneNumber] = SystemUtils.ncPublisher(
+            for: .authorizationStateWaitPhoneNumber)
+        .sink(receiveValue: authorization(notification:))
+        subscribers[.updateNewChat] = SystemUtils.ncPublisher(for: .updateNewChat)
+            .sink(receiveValue: updateNewChat(notification:))
+        subscribers[.updateChatFilters] = SystemUtils.ncPublisher(for: .updateChatFilters)
+            .sink(receiveValue: updateChatFilters(_:))
+    }
+    
+    func updateChatFilters(_ notification: NCPO) {
+        let update = notification.object as! UpdateChatFilters
+        
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+            self.chatFilters = OrderedSet(update.chatFilters)
+        }
+        
+        print(update.chatFilters, chatFilters)
     }
 
-    func updateChatPosition(notification: NotificationCenter.Publisher.Output) {
+    func updateChatPosition(notification: NCPO) {
         let update = (notification.object as? UpdateChatPosition)!
         let position = update.position
         let chatId = update.chatId
@@ -84,11 +90,11 @@ class MainViewModel: ObservableObject {
         }
     }
 
-    func authorization(notification: NotificationCenter.Publisher.Output) {
+    func authorization(notification: NCPO) {
         showingLoginScreen = true
     }
 
-    func updateNewChat(notification: NotificationCenter.Publisher.Output) {
+    func updateNewChat(notification: NCPO) {
         guard notification.object != nil else {
             return
         }

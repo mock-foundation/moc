@@ -77,4 +77,8 @@ public extension NSNotification.Name {
     static var updateFile: NSNotification.Name {
         .init(rawValue: "UpdateFile")
     }
+    
+    static var updateChatFilters: Notification.Name {
+        .init(rawValue: "UpdateChatFilters")
+    }
 }

@@ -30,10 +30,6 @@ struct ContentView: View {
 
     @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
-
-    init() {
-        mainViewModel.registerSubscriptions()
-    }
     
     private func makeChatList(_ list: [Chat]) -> some View {
         ScrollView {
@@ -96,15 +92,18 @@ struct ContentView: View {
             Group {
                 switch selectedTab {
                     case .chat:
-                        ForEach(0 ..< 10, content: { _ in
-                            FolderItemView()
-                        })
+                        FolderItemView(name: "All chats", icon: Image(systemName: "bubble.left.and.bubble.right"))
+                        ForEach(mainViewModel.chatFilters) { filter in
+                            FolderItemView(name: filter.title, icon: Image(tdIcon: filter.iconName))
+                        }
                     case .contacts:
                         Image(systemName: "person.2")
                     case .calls:
                         Image(systemName: "phone.and.waveform")
                 }
-            }.frame(alignment: .center)
+            }
+            .frame(alignment: .center)
+            .padding(.bottom)
         }
         .frame(width: 90)
     }
