@@ -37,36 +37,30 @@ struct ContentView: View {
     
     private func makeChatList(_ list: [Chat]) -> some View {
         ScrollView {
-            ForEach(list) { chat in
-                ChatItemView(chat: chat)
-                    .frame(height: 52)
-                    .onTapGesture {
-                        Task {
-                            do {
-                                try await chatViewModel.update(chat: chat)
-                            } catch {
-                                logger.error("Error in \(error.localizedDescription)")
+            LazyVStack {
+                ForEach(list) { chat in
+                    ChatItemView(chat: chat)
+                        .frame(height: 52)
+                        .onTapGesture {
+                            Task {
+                                do {
+                                    try await chatViewModel.update(chat: chat)
+                                } catch {
+                                    logger.error("Error in \(error.localizedDescription)")
+                                }
                             }
+                            viewRouter.openedChat = chat
+                            viewRouter.currentView = .chat
                         }
-                        viewRouter.openedChat = chat
-                        viewRouter.currentView = .chat
-                    }
-                    .padding(6)
-                    .background(
-                        (viewRouter.currentView == .chat
-                         && viewRouter.openedChat! == chat)
-                        ? Color.accentColor.opacity(0.6)
-                        : nil
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-
-                //                .swipeActions {
-                //                    Button(role: .destructive) {
-                //                        logger.info("Pressed Delete button")
-                //                    } label: {
-                //                        Label("Delete chat", systemImage: "trash")
-                //                    }
-                //                }
+                        .padding(6)
+                        .background(
+                            (viewRouter.currentView == .chat
+                             && viewRouter.openedChat! == chat)
+                            ? Color.accentColor.opacity(0.6)
+                            : nil
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                }
             }
         }
     }
