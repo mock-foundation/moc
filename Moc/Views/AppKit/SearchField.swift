@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchField: NSViewRepresentable {    
+struct SearchField: NSViewRepresentable {
     func makeNSView(context _: Context) -> NSViewType {
         return NSSearchField()
     }
