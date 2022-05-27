@@ -19,12 +19,36 @@ struct FolderItemView<Icon: View>: View {
         self.name = name
         self.icon = icon()
     }
-
+    
     var body: some View {
         VStack {
             icon
-                .font(.system(size: 20))
-                .padding(4)
+                .font(.system(size: 22))
+                .reverseMask(alignment: .topTrailing, {
+                    Text("1")
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Circle()
+                            .fill(.black))
+                        .alignmentGuide(VerticalAlignment.top) { $0[VerticalAlignment.center] }
+                        .alignmentGuide(HorizontalAlignment.trailing) { $0[HorizontalAlignment.center] }
+                })
+                .overlay(
+                    Text("1")
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Circle()
+                            .fill(.blue)
+                            .padding(4)
+                        )
+                        .alignmentGuide(VerticalAlignment.top) {
+                            $0[VerticalAlignment.center]
+                        }
+                        .alignmentGuide(HorizontalAlignment.trailing) {
+                            $0[HorizontalAlignment.center]
+                            
+                        }, alignment: .topTrailing)
+//                .padding(4)
             Text(name)
         }
         .padding(.vertical)
@@ -40,8 +64,25 @@ struct FolderItemView<Icon: View>: View {
     }
 }
 
+extension View {
+    public func reverseMask<Mask: View>(
+        alignment: Alignment = .center,
+        @ViewBuilder _ mask: () -> Mask
+    ) -> some View {
+        self.mask {
+            Rectangle()
+                .overlay(alignment: alignment) {
+                    mask()
+                        .blendMode(.destinationOut)
+                }
+        }
+    }
+}
+
+
 struct FolderView_Previews: PreviewProvider {
     static var previews: some View {
-        FolderItemView(name: "Name", icon: Image(systemName: "folder"))
+        FolderItemView(name: "Name", icon: Image("bot"))
+            .preferredColorScheme(.light)
     }
 }
