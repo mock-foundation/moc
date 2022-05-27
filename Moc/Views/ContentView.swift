@@ -11,6 +11,7 @@ import Resolver
 import SwiftUI
 import Utilities
 import TDLibKit
+import OrderedCollections
 
 private enum Tab {
     case chat
@@ -31,7 +32,7 @@ struct ContentView: View {
     @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
     
-    private func makeChatList(_ list: [Chat]) -> some View {
+    private func makeChatList(_ list: OrderedSet<Chat>) -> some View {
         ScrollView {
             LazyVStack {
                 ForEach(list) { chat in

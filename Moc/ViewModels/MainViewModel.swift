@@ -16,8 +16,8 @@ import OrderedCollections
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
 
-    @Published var mainChatList: [Chat] = []
-    @Published var archiveChatList: [Chat] = []
+    @Published var mainChatList: OrderedSet<Chat> = []
+    @Published var archiveChatList: OrderedSet<Chat> = []
     @Published var folderChatLists: [Int: [Chat]] = [:]
     
     /// ID of the filter open. 999999 is the main chat list.
@@ -125,7 +125,7 @@ class MainViewModel: ObservableObject {
     }
 
     private func sortMainChatList() {
-        mainChatList = mainChatList.sorted {
+        mainChatList.sort {
             if !$0.positions.isEmpty, !$1.positions.isEmpty {
                 return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             } else {
@@ -140,7 +140,7 @@ class MainViewModel: ObservableObject {
     }
 
     private func sortArchiveChatList() {
-        archiveChatList = archiveChatList.sorted {
+        archiveChatList.sort {
             if !$0.positions.isEmpty, !$1.positions.isEmpty {
                 return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
             } else {
