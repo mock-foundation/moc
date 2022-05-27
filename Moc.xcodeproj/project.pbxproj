@@ -27,7 +27,7 @@
 		43807D8527E213350056A3D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5227E213350056A3D3 /* Preview Assets.xcassets */; };
 		43807D8627E213350056A3D3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5427E213350056A3D3 /* Info.plist */; };
 		43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5827E213350056A3D3 /* AccountsPrefView.swift */; };
-		43807D8827E213350056A3D3 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5927E213350056A3D3 /* PrivacyView.swift */; };
+		43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5927E213350056A3D3 /* PrivacyPrefView.swift */; };
 		43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */; };
 		43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5B27E213350056A3D3 /* AppearancePrefView.swift */; };
 		43807D8B27E213350056A3D3 /* StickersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5C27E213350056A3D3 /* StickersPrefView.swift */; };
@@ -96,7 +96,7 @@
 		43807D5327E213350056A3D3 /* Moc.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Moc.entitlements; sourceTree = "<group>"; };
 		43807D5427E213350056A3D3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43807D5827E213350056A3D3 /* AccountsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
-		43807D5927E213350056A3D3 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		43807D5927E213350056A3D3 /* PrivacyPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPrefView.swift; sourceTree = "<group>"; };
 		43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAndStoragePrefView.swift; sourceTree = "<group>"; };
 		43807D5B27E213350056A3D3 /* AppearancePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefView.swift; sourceTree = "<group>"; };
 		43807D5C27E213350056A3D3 /* StickersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersPrefView.swift; sourceTree = "<group>"; };
@@ -268,16 +268,16 @@
 		43807D5727E213350056A3D3 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				43807D5827E213350056A3D3 /* AccountsPrefView.swift */,
-				43807D5927E213350056A3D3 /* PrivacyView.swift */,
-				43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */,
-				43807D5B27E213350056A3D3 /* AppearancePrefView.swift */,
-				43807D5C27E213350056A3D3 /* StickersPrefView.swift */,
-				43807D5D27E213350056A3D3 /* FoldersPrefView.swift */,
-				43807D5E27E213350056A3D3 /* LanguagePrefView.swift */,
-				43807D5F27E213350056A3D3 /* DevicesPrefView.swift */,
 				43807D6027E213350056A3D3 /* GeneralPrefView.swift */,
 				43807D6127E213350056A3D3 /* NotificationsAndSoundsPrefView.swift */,
+				43807D5927E213350056A3D3 /* PrivacyPrefView.swift */,
+				43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */,
+				43807D5F27E213350056A3D3 /* DevicesPrefView.swift */,
+				43807D5B27E213350056A3D3 /* AppearancePrefView.swift */,
+				43807D5E27E213350056A3D3 /* LanguagePrefView.swift */,
+				43807D5C27E213350056A3D3 /* StickersPrefView.swift */,
+				43807D5D27E213350056A3D3 /* FoldersPrefView.swift */,
+				43807D5827E213350056A3D3 /* AccountsPrefView.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -508,7 +508,7 @@
 				43807D9827E213350056A3D3 /* LottieView.swift in Sources */,
 				43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */,
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
-				43807D8827E213350056A3D3 /* PrivacyView.swift in Sources */,
+				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
 				43807DA127E213350056A3D3 /* ChatViewModel.swift in Sources */,
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,
 				43807D9D27E213350056A3D3 /* SearchField.swift in Sources */,

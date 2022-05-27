@@ -20,7 +20,7 @@ public struct PreferencesContent: View {
                 .tabItem {
                     Label("Notifications and Sounds", systemImage: "bell")
                 }
-            PrivacyView()
+            PrivacyPrefView()
                 .tabItem {
                     Label("Privacy", systemImage: "lock")
                 }
