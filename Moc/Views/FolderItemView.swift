@@ -12,7 +12,6 @@ struct FolderItemView<Icon: View>: View {
     let icon: Icon
     
     @State private var backgroundColor: Color = .clear
-    @State private var selected = false
     private let selectedColor = Color("FolderItemSelectedColor")
     
     init(name: String, icon: @autoclosure () -> Icon) {
@@ -24,7 +23,7 @@ struct FolderItemView<Icon: View>: View {
         VStack {
             icon
                 .font(.system(size: 22))
-                .reverseMask(alignment: .topTrailing, {
+                .reverseMask(alignment: .topTrailing) {
                     Text("1")
                         .foregroundColor(.white)
                         .padding(10)
@@ -32,7 +31,7 @@ struct FolderItemView<Icon: View>: View {
                             .fill(.black))
                         .alignmentGuide(VerticalAlignment.top) { $0[VerticalAlignment.center] }
                         .alignmentGuide(HorizontalAlignment.trailing) { $0[HorizontalAlignment.center] }
-                })
+                }
                 .overlay(
                     Text("1")
                         .foregroundColor(.white)
@@ -53,7 +52,7 @@ struct FolderItemView<Icon: View>: View {
         }
         .padding(.vertical)
         .frame(width: 80, height: 64)
-        .background(selected ? selectedColor : backgroundColor)
+        .background(backgroundColor)
         .onHover { isHovered in
             if isHovered {
                 backgroundColor = Color("OnHoverColor")
@@ -78,7 +77,6 @@ extension View {
         }
     }
 }
-
 
 struct FolderView_Previews: PreviewProvider {
     static var previews: some View {

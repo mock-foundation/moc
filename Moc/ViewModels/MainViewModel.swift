@@ -16,38 +16,64 @@ import OrderedCollections
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
     
-    var chatList: OrderedSet<Chat> {
+    var chatList: [Chat] {
         if isArchiveChatListOpen {
-            return []
+            let chats = allChats.filter { chat in
+                chatPositions[chat.id]?.list == .chatListArchive
+            }
+            
+            return chats.sorted { previous, next in
+                guard let previousPosition = chatPositions[previous.id]?.order else { return false }
+                guard let nextPosition = chatPositions[next.id]?.order else { return false }
+
+                return previousPosition > nextPosition
+            }
         } else {
             if selectedChatFilter == 999999 {
-                return []
+                let chats = allChats.filter { chat in
+                    chatPositions[chat.id]?.list == .chatListMain
+                }
+                
+                return chats.sorted { previous, next in
+                    guard let previousPosition = chatPositions[previous.id]?.order else { return false }
+                    guard let nextPosition = chatPositions[next.id]?.order else { return false }
+                    
+                    return previousPosition > nextPosition
+                }
             } else {
-                return []
+                let chats = allChats.filter { chat in
+                    chatPositions[chat.id]?.list == .chatListFilter(
+                        ChatListFilter(chatFilterId: selectedChatFilter))
+                }
+                
+                return chats.sorted { previous, next in
+                    guard let previousPosition = chatPositions[previous.id]?.order else { return false }
+                    guard let nextPosition = chatPositions[next.id]?.order else { return false }
+                    
+                    return previousPosition > nextPosition
+                }
             }
         }
     }
-
-    @Published var mainChatList: OrderedSet<Chat> = []
-    @Published var archiveChatList: OrderedSet<Chat> = []
-    @Published var folderChatLists: [Int: OrderedSet<Chat>] = [:]
+    
+    @Published var allChats: OrderedSet<Chat> = []
+    @Published var chatPositions: [Int64: ChatPosition] = [:]
     
     /// ID of the filter open. 999999 is the main chat list.
     @Published var selectedChatFilter: Int = 999999 {
         didSet {
             Task {
-                try await TdApi.shared[0].loadChats(chatList:
-                        .chatListFilter(ChatListFilter(chatFilterId: selectedChatFilter)), limit: 15)
+                try await TdApi.shared[0].loadChats(
+                    chatList: .chatListFilter(.init(chatFilterId: selectedChatFilter)),
+                    limit: 30)
             }
         }
     }
+    
     @Published var chatFilters: OrderedSet<ChatFilterInfo> = []
 
     @Published var showingLoginScreen = false
     @Published var isArchiveChatListOpen = false
-
-    /// For chats that have not received updateChatPosition update, and are waiting for distribution.
-    var unorderedChatList: OrderedSet<Chat> = []
 
     private var publishers: [NSNotification.Name: NotificationCenter.Publisher] = [:]
     private var subscribers: [NSNotification.Name: AnyCancellable] = [:]
@@ -68,14 +94,13 @@ class MainViewModel: ObservableObject {
     }
     
     func updateChatFilters(_ notification: NCPO) {
+        // swiftlint:disable force_cast
         let update = notification.object as! UpdateChatFilters
         
         DispatchQueue.main.async {
             self.objectWillChange.send()
             self.chatFilters = OrderedSet(update.chatFilters)
         }
-        
-        print(update.chatFilters, chatFilters)
     }
 
     func updateChatPosition(notification: NCPO) {
@@ -83,48 +108,11 @@ class MainViewModel: ObservableObject {
         let position = update.position
         let chatId = update.chatId
 
-        if self.unorderedChatList.contains(where: { $0.id == chatId }) {
-            switch position.list {
-                case .chatListMain:
-                    let chats = self.unorderedChatList.filter { chat in
-                        chat.id == chatId
-                    }
-                    for chat in chats {
-                        self.mainChatList.append(chat)
-                    }
-                    self.unorderedChatList = OrderedSet(self.unorderedChatList.filter {
-                        return $0.id != chatId
-                    })
-                    sortMainChatList()
-                case .chatListArchive:
-                    let chats = self.unorderedChatList.filter { chat in
-                        chat.id == chatId
-                    }
-                    for chat in chats {
-                        self.archiveChatList.append(chat)
-                    }
-                    self.unorderedChatList = OrderedSet(self.unorderedChatList.filter {
-                        return $0.id != chatId
-                    })
-                    sortArchiveChatList()
-                case .chatListFilter(let filter):
-                    print("filter")
-                    let chats = self.unorderedChatList.filter { chat in
-                        chat.id == chatId
-                    }
-                    for chat in chats {
-                        self.folderChatLists[filter.chatFilterId]?.append(chat)
-                    }
-                    self.unorderedChatList = OrderedSet(self.unorderedChatList.filter {
-                        return $0.id != chatId
-                    })
-//                    sortMainChatList()
-            }
+        if !chatPositions.contains(where: { (key, value) in
+            key == chatId && value == position
+        }) {
+            chatPositions[chatId] = position
         }
-    }
-
-    func authorization(notification: NCPO) {
-        showingLoginScreen = true
     }
 
     func updateNewChat(notification: NCPO) {
@@ -133,32 +121,16 @@ class MainViewModel: ObservableObject {
         }
         let chat: Chat = (notification.object as? UpdateNewChat)!.chat
 
-        unorderedChatList.updateOrAppend(chat)
+        allChats.updateOrAppend(chat)
+    }
+    
+    func authorization(notification: NCPO) {
+        showingLoginScreen = true
     }
 
     deinit {
         for subscriber in subscribers {
             subscriber.value.cancel()
-        }
-    }
-
-    private func sortMainChatList() {
-        mainChatList.sort {
-            if !$0.positions.isEmpty, !$1.positions.isEmpty {
-                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-            } else {
-                return true
-            }
-        }
-    }
-
-    private func sortArchiveChatList() {
-        archiveChatList.sort {
-            if !$0.positions.isEmpty, !$1.positions.isEmpty {
-                return $0.positions[0].order.rawValue > $1.positions[0].order.rawValue
-            } else {
-                return true
-            }
         }
     }
 }
