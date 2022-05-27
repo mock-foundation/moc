@@ -116,7 +116,7 @@ struct LoginView: View {
                     Button(action: {
                         openedScreen = .phoneNumber
                     }) {
-                        Label("Continue using phone number", systemImage: "phone.name")
+                        Label("Continue using phone number", systemImage: "phone")
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
