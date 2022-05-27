@@ -8,19 +8,29 @@
 import SwiftUI
 import TDLibKit
 
+private enum FolderManipulationMode {
+    case edit
+    case create
+}
+
 struct FoldersPrefView: View {
     @State private var selectedFolders: Set<ChatFilterInfo> = []
     @State private var showDeleteConfirmationAlert = false
     @State private var showCreateFolderSheet = false
+    @State private var showEditFolderSheet = false
+    
+    @State private var folderIdToEdit = 0
     
     @State private var createFolderName = ""
     
-    fileprivate var createFolder: some View {
+    fileprivate func makeFolderManipulationView(_ mode: FolderManipulationMode) -> some View {
         VStack {
             Image("MockChatPhoto")
                 .resizable()
                 .frame(width: 80, height: 80)
                 .padding()
+            Text(mode == .edit ? "Edit folder" : "Create a new folder")
+                .font(.title)
             
             Form {
                 TextField("Folder name", text: $createFolderName)
@@ -47,7 +57,7 @@ struct FoldersPrefView: View {
                 Button {
                     //                showCreateFolderSheet = false
                 } label: {
-                    Text("Create folder")
+                    Text(mode == .edit ? "Finish" : "Create folder")
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -71,9 +81,23 @@ struct FoldersPrefView: View {
                             Image(tdIcon: "Love")
                         }
                         .padding(4)
+                        .contextMenu {
+                            Button {
+                                showEditFolderSheet = true
+                            } label: {
+                                Image(systemName: "pencil")
+                                Text("Edit")
+                            }
+                            Button(role: .destructive) {                                showDeleteConfirmationAlert = true
+                                showDeleteConfirmationAlert = true
+                            } label: {
+                                Image(systemName: "trash")
+                                Text("Delete")
+                            }
+                        }
                         .swipeActions(edge: .leading) {
                             Button {
-                                
+                                showEditFolderSheet true
                             } label: {
                                 Text("Edit")
                             }
@@ -104,7 +128,7 @@ struct FoldersPrefView: View {
                     }
                 }
                 .sheet(isPresented: $showCreateFolderSheet) {
-                    createFolder
+                    makeFolderManipulationView(.create)
                         .frame(width: 500)
                 }
                 HStack {
@@ -140,6 +164,7 @@ struct FoldersPrefView: View {
 struct FoldersPrefView_Previews: PreviewProvider {
     static var previews: some View {
         FoldersPrefView()
-        FoldersPrefView().createFolder
+        FoldersPrefView().makeFolderManipulationView(.create)
+        FoldersPrefView().makeFolderManipulationView(.edit)
     }
 }
