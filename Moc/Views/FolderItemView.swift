@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct FolderItemView: View {
+struct FolderItemView<Icon: View>: View {
     let name: String
-    let icon: Image
+    let icon: Icon
     
     @State private var backgroundColor: Color = .clear
     @State private var selected = false
     private let selectedColor = Color("FolderItemSelectedColor")
     
-    init(name: String, icon: Image) {
+    init(name: String, icon: @autoclosure () -> Icon) {
         self.name = name
-        self.icon = icon
+        self.icon = icon()
     }
 
     var body: some View {
@@ -30,7 +30,6 @@ struct FolderItemView: View {
         .padding(.vertical)
         .frame(width: 80, height: 64)
         .background(selected ? selectedColor : backgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .onHover { isHovered in
             if isHovered {
                 backgroundColor = Color("OnHoverColor")

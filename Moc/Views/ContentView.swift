@@ -93,13 +93,34 @@ struct ContentView: View {
                 switch selectedTab {
                     case .chat:
                         FolderItemView(name: "All chats", icon: Image(systemName: "bubble.left.and.bubble.right"))
+                            .background(mainViewModel.selectedChatFilter == 999999
+                                        ? Color("SelectedColor") : Color.clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            .onTapGesture {
+                                mainViewModel.selectedChatFilter = 999999
+                            }
                         ForEach(mainViewModel.chatFilters) { filter in
                             FolderItemView(name: filter.title, icon: Image(tdIcon: filter.iconName))
+                                .background(mainViewModel.selectedChatFilter == filter.id
+                                            ? Color("SelectedColor") : Color.clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                .onTapGesture {
+                                    mainViewModel.selectedChatFilter = filter.id
+                                }
                         }
                     case .contacts:
                         Image(systemName: "person.2")
                     case .calls:
-                        Image(systemName: "phone.and.waveform")
+                        FolderItemView(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.green, .primary))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        FolderItemView(name: "Outgoing", icon: Image(systemName: "phone.arrow.up.right"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        FolderItemView(name: "Missed", icon: Image(systemName: "phone.arrow.down.left")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.red, .primary))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }
             }
             .frame(alignment: .center)

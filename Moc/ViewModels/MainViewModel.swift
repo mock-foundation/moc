@@ -19,6 +19,15 @@ class MainViewModel: ObservableObject {
     @Published var mainChatList: [Chat] = []
     @Published var archiveChatList: [Chat] = []
     @Published var folderChatLists: [Int: [Chat]] = [:]
+    
+    /// ID of the filter open. 999999 is the main chat list.
+    @Published var selectedChatFilter: Int = 999999 {
+        didSet {
+            Task {
+                try await TdApi.shared[0].loadChats(chatList: .chatListFilter(ChatListFilter(chatFilterId: selectedChatFilter)), limit: nil)
+            }
+        }
+    }
     @Published var chatFilters: OrderedSet<ChatFilterInfo> = []
 
     @Published var showingLoginScreen = false
