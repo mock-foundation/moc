@@ -24,7 +24,6 @@ struct ContentView: View {
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
-    @State private var isArchiveChatListOpen = false
     @State private var selectedTab: Tab = .chat
 
     @InjectedObject private var chatViewModel: ChatViewModel
@@ -75,8 +74,8 @@ struct ContentView: View {
                 Spacer()
             }
             ToolbarItem(placement: .status) {
-                Toggle(isOn: $isArchiveChatListOpen) {
-                    Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
+                Toggle(isOn: $mainViewModel.isArchiveChatListOpen) {
+                    Image(systemName: mainViewModel.isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
                 }
             }
             ToolbarItem(placement: .status) {
@@ -138,9 +137,15 @@ struct ContentView: View {
             Group {
                 switch selectedTab {
                     case .chat:
-                        isArchiveChatListOpen
-                        ? makeChatList(mainViewModel.archiveChatList)
-                        : makeChatList(mainViewModel.mainChatList)
+                        if mainViewModel.isArchiveChatListOpen {
+                            makeChatList(mainViewModel.archiveChatList)
+                        } else {
+                            if mainViewModel.selectedChatFilter != 999999 {
+                                makeChatList(mainViewModel.folderChatLists[mainViewModel.selectedChatFilter] ?? [])
+                            } else {
+                                makeChatList(mainViewModel.mainChatList)
+                            }
+                        }
                     case .contacts:
                         Text("Contacts")
                     case .calls:

@@ -15,25 +15,39 @@ import OrderedCollections
 
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
+    
+    var chatList: OrderedSet<Chat> {
+        if isArchiveChatListOpen {
+            return []
+        } else {
+            if selectedChatFilter == 999999 {
+                return []
+            } else {
+                return []
+            }
+        }
+    }
 
     @Published var mainChatList: OrderedSet<Chat> = []
     @Published var archiveChatList: OrderedSet<Chat> = []
-    @Published var folderChatLists: [Int: [Chat]] = [:]
+    @Published var folderChatLists: [Int: OrderedSet<Chat>] = [:]
     
     /// ID of the filter open. 999999 is the main chat list.
     @Published var selectedChatFilter: Int = 999999 {
         didSet {
             Task {
-                try await TdApi.shared[0].loadChats(chatList: .chatListFilter(ChatListFilter(chatFilterId: selectedChatFilter)), limit: nil)
+                try await TdApi.shared[0].loadChats(chatList:
+                        .chatListFilter(ChatListFilter(chatFilterId: selectedChatFilter)), limit: 15)
             }
         }
     }
     @Published var chatFilters: OrderedSet<ChatFilterInfo> = []
 
     @Published var showingLoginScreen = false
+    @Published var isArchiveChatListOpen = false
 
     /// For chats that have not received updateChatPosition update, and are waiting for distribution.
-    var unorderedChatList: [Chat] = []
+    var unorderedChatList: OrderedSet<Chat> = []
 
     private var publishers: [NSNotification.Name: NotificationCenter.Publisher] = [:]
     private var subscribers: [NSNotification.Name: AnyCancellable] = [:]
@@ -78,9 +92,9 @@ class MainViewModel: ObservableObject {
                     for chat in chats {
                         self.mainChatList.append(chat)
                     }
-                    self.unorderedChatList = self.unorderedChatList.filter {
+                    self.unorderedChatList = OrderedSet(self.unorderedChatList.filter {
                         return $0.id != chatId
-                    }
+                    })
                     sortMainChatList()
                 case .chatListArchive:
                     let chats = self.unorderedChatList.filter { chat in
@@ -89,12 +103,22 @@ class MainViewModel: ObservableObject {
                     for chat in chats {
                         self.archiveChatList.append(chat)
                     }
-                    self.unorderedChatList = self.unorderedChatList.filter {
+                    self.unorderedChatList = OrderedSet(self.unorderedChatList.filter {
                         return $0.id != chatId
-                    }
+                    })
                     sortArchiveChatList()
-                default:
-                    break
+                case .chatListFilter(let filter):
+                    print("filter")
+                    let chats = self.unorderedChatList.filter { chat in
+                        chat.id == chatId
+                    }
+                    for chat in chats {
+                        self.folderChatLists[filter.chatFilterId]?.append(chat)
+                    }
+                    self.unorderedChatList = OrderedSet(self.unorderedChatList.filter {
+                        return $0.id != chatId
+                    })
+//                    sortMainChatList()
             }
         }
     }
@@ -109,13 +133,7 @@ class MainViewModel: ObservableObject {
         }
         let chat: Chat = (notification.object as? UpdateNewChat)!.chat
 
-        let hasChat = unorderedChatList.contains(where: {
-            $0.id == chat.id
-        })
-
-        if !hasChat {
-            unorderedChatList.append(chat)
-        }
+        unorderedChatList.updateOrAppend(chat)
     }
 
     deinit {
@@ -131,11 +149,6 @@ class MainViewModel: ObservableObject {
             } else {
                 return true
             }
-            //            if $0.lastMessage?.date ?? 1 > $1.lastMessage?.date ?? 0 {
-            //                return true
-            //            } else {
-            //                return false
-            //            }
         }
     }
 
