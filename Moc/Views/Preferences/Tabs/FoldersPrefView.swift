@@ -6,17 +6,58 @@
 //
 
 import SwiftUI
+import TDLibKit
 
 struct FoldersPrefView: View {
+    @State private var selectedFolders: Set<ChatFilterInfo> = []
+    @State private var showDeleteConfirmationAlert = false
+    
     var body: some View {
         HStack {
             VStack {
                 Image("MockChatPhoto")
                     .resizable()
-                    .frame(width: 50, height: 60)
+                    .frame(width: 70, height: 70)
                 Text("Create folders for different groups of chats and quickly switch between them.")
                     .padding()
                     .multilineTextAlignment(.center)
+                    .foregroundColor(.gray)
+                List(selection: $selectedFolders) {
+                    ForEach(0..<10) { index in
+                        Label { Text("Folder \(index)") } icon: {
+                            Image(tdIcon: "Love")
+                        }
+                        .padding(4)
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                
+                            } label: {
+                                Text("Edit")
+                            }
+                        }
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                showDeleteConfirmationAlert = true
+                            } label: {
+                                Text("Delete")
+                            }
+                            .alert("You sure?", isPresented: $showDeleteConfirmationAlert) {
+                                Button(role: .cancel) {
+                                    
+                                } label: {
+                                    Text("Nope")
+                                }
+                                Button(role: .destructive) {
+                                    
+                                } label: {
+                                    Text("I am!")
+                                }
+                            }
+                        }
+                    }
+                }
+                .listStyle(.bordered(alternatesRowBackgrounds: true))
+                .frame(minHeight: 150)
                 HStack {
                     Spacer()
                     Button {
@@ -24,14 +65,7 @@ struct FoldersPrefView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                }.padding(.horizontal)
-                List {
-                    ForEach(0..<10) { index in
-                        Label { Text("Folder \(index)") } icon: {
-                            Image(tdIcon: "Love")
-                        }.padding(4)
-                    }
-                }.listStyle(.bordered(alternatesRowBackgrounds: true))
+                }
             }
             List {
                 Section("Recommended") {
