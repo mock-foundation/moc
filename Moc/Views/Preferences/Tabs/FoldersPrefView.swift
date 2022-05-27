@@ -30,7 +30,8 @@ struct FoldersPrefView: View {
                 .frame(width: 80, height: 80)
                 .padding()
             Text(mode == .edit ? "Edit folder" : "Create a new folder")
-                .font(.title)
+                .font(.largeTitle)
+                .fontWeight(.bold)
             
             Form {
                 TextField("Folder name", text: $createFolderName)
@@ -68,11 +69,11 @@ struct FoldersPrefView: View {
     var body: some View {
         HStack {
             VStack {
-                Image("MockChatPhoto")
-                    .resizable()
-                    .frame(width: 80, height: 80)
+                Text("Chat folders")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
                 Text("Create folders for different groups of chats and quickly switch between them.")
-                    .padding()
+                    .padding([.bottom, .horizontal])
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray)
                 List(selection: $selectedFolders) {
@@ -80,6 +81,7 @@ struct FoldersPrefView: View {
                         Label { Text("Folder \(index)") } icon: {
                             Image(tdIcon: "Love")
                         }
+                        .font(.title2)
                         .padding(4)
                         .contextMenu {
                             Button {
@@ -88,7 +90,7 @@ struct FoldersPrefView: View {
                                 Image(systemName: "pencil")
                                 Text("Edit")
                             }
-                            Button(role: .destructive) {                                showDeleteConfirmationAlert = true
+                            Button(role: .destructive) {
                                 showDeleteConfirmationAlert = true
                             } label: {
                                 Image(systemName: "trash")
@@ -97,7 +99,7 @@ struct FoldersPrefView: View {
                         }
                         .swipeActions(edge: .leading) {
                             Button {
-                                showEditFolderSheet true
+                                showEditFolderSheet = true
                             } label: {
                                 Text("Edit")
                             }
