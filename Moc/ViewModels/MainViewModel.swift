@@ -16,42 +16,27 @@ import OrderedCollections
 class MainViewModel: ObservableObject {
     // MARK: - Chat lists
     
+    private func chats(from chatList: ChatList) -> [Chat] {
+        let chats = allChats.filter { chat in
+            chatPositions[chat.id]?.list == chatList
+        }
+        
+        return chats.sorted { previous, next in
+            guard let previousPosition = chatPositions[previous.id]?.order else { return false }
+            guard let nextPosition = chatPositions[next.id]?.order else { return false }
+            
+            return previousPosition > nextPosition
+        }
+    }
+    
     var chatList: [Chat] {
         if isArchiveChatListOpen {
-            let chats = allChats.filter { chat in
-                chatPositions[chat.id]?.list == .chatListArchive
-            }
-            
-            return chats.sorted { previous, next in
-                guard let previousPosition = chatPositions[previous.id]?.order else { return false }
-                guard let nextPosition = chatPositions[next.id]?.order else { return false }
-
-                return previousPosition > nextPosition
-            }
+            return chats(from: .chatListArchive)
         } else {
             if selectedChatFilter == 999999 {
-                let chats = allChats.filter { chat in
-                    chatPositions[chat.id]?.list == .chatListMain
-                }
-                
-                return chats.sorted { previous, next in
-                    guard let previousPosition = chatPositions[previous.id]?.order else { return false }
-                    guard let nextPosition = chatPositions[next.id]?.order else { return false }
-                    
-                    return previousPosition > nextPosition
-                }
+                return chats(from: .chatListMain)
             } else {
-                let chats = allChats.filter { chat in
-                    chatPositions[chat.id]?.list == .chatListFilter(
-                        ChatListFilter(chatFilterId: selectedChatFilter))
-                }
-                
-                return chats.sorted { previous, next in
-                    guard let previousPosition = chatPositions[previous.id]?.order else { return false }
-                    guard let nextPosition = chatPositions[next.id]?.order else { return false }
-                    
-                    return previousPosition > nextPosition
-                }
+                return chats(from: .chatListFilter(.init(chatFilterId: selectedChatFilter)))
             }
         }
     }
