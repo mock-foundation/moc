@@ -92,12 +92,10 @@ while read file; do
     API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utilities/Generated/${filename%.gyb}" "$filename";
 done
 
-#info "Running Sourcery..."
-#cd ../..
-#info "If you get a password input prompt, it is for making sourcery.sh file executable"
-#sudo chmod +x sourcery.sh
-#section_start "Sourcery output"
-#./sourcery.sh
-#section_end
+info "Running Sourcery..."
+cd ../..
+section_start "Sourcery output"
+sourcery
+section_end
 
 ok "Finished environment setup!"
