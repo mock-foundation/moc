@@ -26,6 +26,7 @@ public extension Resolver {
             .scope(.shared)
         register { TdAccountsPrefService() as AccountsPrefService }
             .scope(.shared)
+        register { TdFoldersPrefService() as FoldersPrefService }
     }
 }
 

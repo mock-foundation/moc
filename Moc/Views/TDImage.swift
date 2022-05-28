@@ -10,25 +10,15 @@ import TDLibKit
 import Utilities
 
 struct TDImage: View {
-    @State var file: File
+    let file: File
     
+    @State private var displayedFile: File
     @State private var downloadingComplete: Bool
     
     init(file: File) {
         self.file = file
+        self.displayedFile = file
         self.downloadingComplete = file.local.isDownloadingCompleted
-        
-        if !file.local.isDownloadingCompleted {
-            Task {
-                try await TdApi.shared[0].downloadFile(
-                    fileId: file.id,
-                    limit: 0,
-                    offset: 0,
-                    priority: 12,
-                    synchronous: false
-                )
-            }
-        }
     }
     
     @ViewBuilder
@@ -54,8 +44,26 @@ struct TDImage: View {
             
             if update.file.id == file.id {
                 self.downloadingComplete = update.file.local.isDownloadingCompleted
-                self.file = update.file
+                self.displayedFile = update.file
             }
+        }
+        .onChange(of: file) { _ in
+            Task { try await downloadIfNotAlready() }
+        }
+        .onAppear {
+            Task { try await downloadIfNotAlready() }
+        }
+    }
+    
+    private func downloadIfNotAlready() async throws {
+        if !file.local.isDownloadingCompleted {
+            displayedFile = try await TdApi.shared[0].downloadFile(
+                fileId: file.id,
+                limit: 0,
+                offset: 0,
+                priority: 12,
+                synchronous: false
+            )
         }
     }
 }

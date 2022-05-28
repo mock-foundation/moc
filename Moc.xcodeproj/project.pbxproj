@@ -12,6 +12,8 @@
 		43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008545283C0D9F00ED5961 /* Image+Blank.swift */; };
 		4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309BCF5283D6E6A00F43170 /* View+If.swift */; };
 		433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E5284078E20010406F /* AutoHashable.generated.swift */; };
+		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
+		433464EC2842490A0010406F /* .sourcery.yml in Resources */ = {isa = PBXBuildFile; fileRef = 433464EB284249090010406F /* .sourcery.yml */; };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
 		4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E4283FE2BE00D3378F /* DequeModule */; };
@@ -27,7 +29,7 @@
 		43807D8527E213350056A3D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5227E213350056A3D3 /* Preview Assets.xcassets */; };
 		43807D8627E213350056A3D3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5427E213350056A3D3 /* Info.plist */; };
 		43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5827E213350056A3D3 /* AccountsPrefView.swift */; };
-		43807D8827E213350056A3D3 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5927E213350056A3D3 /* PrivacyView.swift */; };
+		43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5927E213350056A3D3 /* PrivacyPrefView.swift */; };
 		43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */; };
 		43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5B27E213350056A3D3 /* AppearancePrefView.swift */; };
 		43807D8B27E213350056A3D3 /* StickersPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5C27E213350056A3D3 /* StickersPrefView.swift */; };
@@ -81,6 +83,8 @@
 		43008545283C0D9F00ED5961 /* Image+Blank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Blank.swift"; sourceTree = "<group>"; };
 		4309BCF5283D6E6A00F43170 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		433464E5284078E20010406F /* AutoHashable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoHashable.generated.swift; sourceTree = "<group>"; };
+		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
+		433464EB284249090010406F /* .sourcery.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .sourcery.yml; sourceTree = "<group>"; };
 		43807CF527E1FCEC0056A3D3 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0627E1FCEF0056A3D3 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0A27E1FCEF0056A3D3 /* MocTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocTests.swift; sourceTree = "<group>"; };
@@ -96,7 +100,7 @@
 		43807D5327E213350056A3D3 /* Moc.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Moc.entitlements; sourceTree = "<group>"; };
 		43807D5427E213350056A3D3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43807D5827E213350056A3D3 /* AccountsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsPrefView.swift; sourceTree = "<group>"; };
-		43807D5927E213350056A3D3 /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		43807D5927E213350056A3D3 /* PrivacyPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPrefView.swift; sourceTree = "<group>"; };
 		43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAndStoragePrefView.swift; sourceTree = "<group>"; };
 		43807D5B27E213350056A3D3 /* AppearancePrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefView.swift; sourceTree = "<group>"; };
 		43807D5C27E213350056A3D3 /* StickersPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersPrefView.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		43807CEC27E1FCEC0056A3D3 = {
 			isa = PBXGroup;
 			children = (
+				433464EB284249090010406F /* .sourcery.yml */,
 				43807CF727E1FCEC0056A3D3 /* Moc */,
 				43807D2327E2129C0056A3D3 /* Backend */,
 				43F871B7283E21C700B6C717 /* Logs */,
@@ -268,16 +273,16 @@
 		43807D5727E213350056A3D3 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				43807D5827E213350056A3D3 /* AccountsPrefView.swift */,
-				43807D5927E213350056A3D3 /* PrivacyView.swift */,
-				43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */,
-				43807D5B27E213350056A3D3 /* AppearancePrefView.swift */,
-				43807D5C27E213350056A3D3 /* StickersPrefView.swift */,
-				43807D5D27E213350056A3D3 /* FoldersPrefView.swift */,
-				43807D5E27E213350056A3D3 /* LanguagePrefView.swift */,
-				43807D5F27E213350056A3D3 /* DevicesPrefView.swift */,
 				43807D6027E213350056A3D3 /* GeneralPrefView.swift */,
 				43807D6127E213350056A3D3 /* NotificationsAndSoundsPrefView.swift */,
+				43807D5927E213350056A3D3 /* PrivacyPrefView.swift */,
+				43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */,
+				43807D5F27E213350056A3D3 /* DevicesPrefView.swift */,
+				43807D5B27E213350056A3D3 /* AppearancePrefView.swift */,
+				43807D5E27E213350056A3D3 /* LanguagePrefView.swift */,
+				43807D5C27E213350056A3D3 /* StickersPrefView.swift */,
+				43807D5D27E213350056A3D3 /* FoldersPrefView.swift */,
+				43807D5827E213350056A3D3 /* AccountsPrefView.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				43807D7A27E213350056A3D3 /* AccountsPrefViewModel.swift */,
+				433464E9284179090010406F /* FoldersPrefViewModel.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 				43807D8527E213350056A3D3 /* Preview Assets.xcassets in Resources */,
 				43807D8427E213350056A3D3 /* Assets.xcassets in Resources */,
 				43807D8627E213350056A3D3 /* Info.plist in Resources */,
+				433464EC2842490A0010406F /* .sourcery.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +515,7 @@
 				43807D9827E213350056A3D3 /* LottieView.swift in Sources */,
 				43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */,
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
-				43807D8827E213350056A3D3 /* PrivacyView.swift in Sources */,
+				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
 				43807DA127E213350056A3D3 /* ChatViewModel.swift in Sources */,
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,
 				43807D9D27E213350056A3D3 /* SearchField.swift in Sources */,
@@ -539,6 +546,7 @@
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
 				43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */,
 				43807D9F27E213350056A3D3 /* TDLibKit+Protocols.swift in Sources */,
+				433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */,
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
 				43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */,
 			);

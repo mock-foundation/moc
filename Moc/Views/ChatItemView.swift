@@ -40,7 +40,7 @@ struct ChatItemView: View {
                 HStack {
                     // swiftlint:disable empty_enum_arguments switch_case_alignment
                     switch chat.type {
-                        case .chatTypePrivate( _):
+                        case .chatTypePrivate(_):
                             EmptyView()
                         case .chatTypeBasicGroup(_):
                             Image(systemName: "person.2")
@@ -57,7 +57,7 @@ struct ChatItemView: View {
                         .font(.title3)
                         .fontWeight(.bold)
                     Spacer()
-                    //                    Image(chat.seen ? "MessageSeenIcon" : "MessageSentIcon")
+                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
                         .foregroundColor(.secondary)
                 }

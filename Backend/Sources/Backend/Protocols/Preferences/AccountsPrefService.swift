@@ -17,5 +17,5 @@ public protocol AccountsPrefService {
     func getMe() async throws -> User
     func getFullInfo() async throws -> UserFullInfo
     func getProfilePhotos() async throws -> [ChatPhoto]
-    func downloadFile(fileId: Int, priority: Int, synchronous: Bool) async throws -> File
+    func downloadFile(by id: Int, priority: Int, synchronous: Bool) async throws -> File
 }

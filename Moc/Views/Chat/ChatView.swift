@@ -312,21 +312,22 @@ struct ChatView: View {
 
             .toolbar {
                 ToolbarItem(placement: .navigation) {
-                    if viewModel.chatPhoto != nil {
-                        TDImage(file: viewModel.chatPhoto!)
+                    if !viewModel.isInspectorShown {
+                        if viewModel.chatPhoto != nil {
+                            TDImage(file: viewModel.chatPhoto!)
+                                .frame(width: 32, height: 32)
+                                .clipShape(Circle())
+                        } else {
+                            ProfilePlaceholderView(
+                                userId: viewModel.chatID,
+                                firstName: viewModel.chatTitle,
+                                lastName: "",
+                                style: .small
+                            )
                             .frame(width: 32, height: 32)
                             .clipShape(Circle())
-                    } else {
-                        ProfilePlaceholderView(
-                            userId: viewModel.chatID,
-                            firstName: viewModel.chatTitle,
-                            lastName: "",
-                            style: .small
-                        )
-                        .frame(width: 32, height: 32)
-                        .clipShape(Circle())
+                        }
                     }
-                        
                 }
                 ToolbarItem(placement: .navigation) {
                     VStack(alignment: .leading) {

@@ -24,7 +24,6 @@ struct ContentView: View {
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
-    @State private var isArchiveChatListOpen = false
     @State private var selectedTab: Tab = .chat
 
     @InjectedObject private var chatViewModel: ChatViewModel
@@ -32,10 +31,10 @@ struct ContentView: View {
     @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
     
-    private func makeChatList(_ list: OrderedSet<Chat>) -> some View {
+    private var chatList: some View {
         ScrollView {
             LazyVStack {
-                ForEach(list) { chat in
+                ForEach(mainViewModel.chatList) { chat in
                     ChatItemView(chat: chat)
                         .frame(height: 52)
                         .onTapGesture {
@@ -75,8 +74,8 @@ struct ContentView: View {
                 Spacer()
             }
             ToolbarItem(placement: .status) {
-                Toggle(isOn: $isArchiveChatListOpen) {
-                    Image(systemName: isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
+                Toggle(isOn: $mainViewModel.isArchiveChatListOpen) {
+                    Image(systemName: mainViewModel.isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
                 }
             }
             ToolbarItem(placement: .status) {
@@ -130,7 +129,7 @@ struct ContentView: View {
         .frame(width: 90)
     }
     
-    private var chatList: some View {
+    private var chats: some View {
         VStack {
             SearchField()
                 .controlSize(.large)
@@ -138,9 +137,7 @@ struct ContentView: View {
             Group {
                 switch selectedTab {
                     case .chat:
-                        isArchiveChatListOpen
-                        ? makeChatList(mainViewModel.archiveChatList)
-                        : makeChatList(mainViewModel.mainChatList)
+                        chatList
                     case .contacts:
                         Text("Contacts")
                     case .calls:
@@ -158,7 +155,7 @@ struct ContentView: View {
         NavigationView {
             HStack {
                 filterBar
-                chatList
+                chats
             }
             .listStyle(.sidebar)
 

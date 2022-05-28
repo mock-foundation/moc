@@ -7,10 +7,8 @@
 
 import SwiftUI
 
-public struct PreferencesContent: View {
-    public init() {}
-
-    public var body: some View {
+struct PreferencesContent: View {
+    var body: some View {
         TabView {
             GeneralPrefView()
                 .tabItem {
@@ -20,7 +18,7 @@ public struct PreferencesContent: View {
                 .tabItem {
                     Label("Notifications and Sounds", systemImage: "bell")
                 }
-            PrivacyView()
+            PrivacyPrefView()
                 .tabItem {
                     Label("Privacy", systemImage: "lock")
                 }
