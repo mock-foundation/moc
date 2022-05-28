@@ -3,6 +3,8 @@
 # This script will set up development environment.
 #
 
+set -eo pipefail
+
 # Generates a colored info log message in stdout
 info() {
     echo "\033[1;37m>>>\033[0m \033[1;34m$1\033[0m"
