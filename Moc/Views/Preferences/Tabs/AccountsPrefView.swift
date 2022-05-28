@@ -282,7 +282,7 @@ struct AccountsPrefView: View {
 
         for photo in photos {
             guard let file = try? await viewModel.dataSource.downloadFile(
-                fileId: photo.sizes[2].photo.id,
+                by: photo.sizes[2].photo.id,
                 priority: 32,
                 synchronous: true
             ) else {

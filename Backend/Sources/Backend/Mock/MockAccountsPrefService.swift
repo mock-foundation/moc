@@ -59,7 +59,7 @@ public class MockAccountsPrefService: AccountsPrefService {
         []
     }
 
-    public func downloadFile(fileId _: Int, priority _: Int, synchronous _: Bool) async throws -> File {
+    public func downloadFile(by id: Int, priority _: Int, synchronous _: Bool) async throws -> File {
         throw Error(code: 1, message: "Download file is not working in mock instances")
     }
 }

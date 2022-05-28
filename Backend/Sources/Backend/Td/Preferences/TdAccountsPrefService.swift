@@ -43,12 +43,12 @@ public class TdAccountsPrefService: AccountsPrefService {
     }
 
     public func downloadFile(
-        fileId: Int,
+        by id: Int,
         priority: Int = 32,
         synchronous: Bool = true
     ) async throws -> File {
         try await tdApi.downloadFile(
-            fileId: fileId,
+            fileId: id,
             limit: 0,
             offset: 0,
             priority: priority,
