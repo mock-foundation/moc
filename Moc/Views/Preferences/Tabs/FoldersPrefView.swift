@@ -14,6 +14,8 @@ private enum FolderManipulationMode {
 }
 
 struct FoldersPrefView: View {
+    @StateObject private var viewModel = FoldersPrefViewModel()
+
     @State private var selectedFolders: Set<ChatFilterInfo> = []
     @State private var showDeleteConfirmationAlert = false
     @State private var showCreateFolderSheet = false
@@ -76,41 +78,38 @@ struct FoldersPrefView: View {
                     .padding([.bottom, .horizontal])
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray)
-                List(selection: $selectedFolders) {
-                    ForEach(0..<10) { index in
-                        Label { Text("Folder \(index)") } icon: {
-                            Image(tdIcon: "Love")
+                List(viewModel.folders) { folder in
+                    Label { Text(folder.title) } icon: {
+                        Image(tdIcon: folder.iconName)
+                    }
+                    .font(.title2)
+                    .padding(4)
+                    .contextMenu {
+                        Button {
+                            showEditFolderSheet = true
+                        } label: {
+                            Image(systemName: "pencil")
+                            Text("Edit")
                         }
-                        .font(.title2)
-                        .padding(4)
-                        .contextMenu {
-                            Button {
-                                showEditFolderSheet = true
-                            } label: {
-                                Image(systemName: "pencil")
-                                Text("Edit")
-                            }
-                            Button(role: .destructive) {
-                                showDeleteConfirmationAlert = true
-                            } label: {
-                                Image(systemName: "trash")
-                                Text("Delete")
-                            }
+                        Button(role: .destructive) {
+                            showDeleteConfirmationAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                            Text("Delete")
                         }
-                        .swipeActions(edge: .leading) {
-                            Button {
-                                showEditFolderSheet = true
-                            } label: {
-                                Text("Edit")
-                            }
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            showEditFolderSheet = true
+                        } label: {
+                            Text("Edit")
                         }
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                showDeleteConfirmationAlert = true
-                            } label: {
-                                Text("Delete")
-                            }
-                            
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            showDeleteConfirmationAlert = true
+                        } label: {
+                            Text("Delete")
                         }
                         
                     }
