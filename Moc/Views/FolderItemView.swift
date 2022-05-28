@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Utilities
 
 struct FolderItemView<Icon: View>: View {
     let name: String
@@ -23,35 +24,30 @@ struct FolderItemView<Icon: View>: View {
         VStack {
             icon
                 .font(.system(size: 22))
-                .reverseMask(alignment: .topTrailing) {
-                    Text("1")
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Circle()
-                            .fill(.black))
-                        .alignmentGuide(VerticalAlignment.top) { $0[VerticalAlignment.center] }
-                        .alignmentGuide(HorizontalAlignment.trailing) { $0[HorizontalAlignment.center] }
-                }
-                .overlay(
-                    Text("1")
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Circle()
-                            .fill(.blue)
-                            .padding(4)
-                        )
-                        .alignmentGuide(VerticalAlignment.top) {
-                            $0[VerticalAlignment.center]
-                        }
-                        .alignmentGuide(HorizontalAlignment.trailing) {
-                            $0[HorizontalAlignment.center]
-                            
-                        }, alignment: .topTrailing)
-//                .padding(4)
+//                .frame(minWidth: 0, maxWidth: .infinity)
+                
             Text(name)
         }
         .padding(.vertical)
         .frame(width: 80, height: 64)
+        .reverseMask(alignment: .topTrailing) {
+            Text("1")
+                .foregroundColor(.white)
+                .padding(8)
+                .background(Capsule(style: .continuous)
+                    .fill(.black))
+                .vTop()
+                .hTrailing()
+        }
+        .overlay(
+            Text("1")
+                .foregroundColor(.white)
+                .padding(8)
+                .background(Capsule(style: .continuous)
+                    .fill(.blue)
+                    .padding(4)
+                    
+                ), alignment: .topTrailing)
         .background(backgroundColor)
         .onHover { isHovered in
             if isHovered {
