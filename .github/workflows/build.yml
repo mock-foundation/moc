@@ -27,7 +27,7 @@ jobs:
               API_ID=${{ secrets.API_ID }}
               API_HASH=${{ secrets.API_HASH }}
           fi
-          HOMEBREW_NO_INSTALL_CLEANUP=1 ./setup_environment.sh $API_ID $API_HASH
+          HOMEBREW_NO_INSTALL_CLEANUP=1 OPEN_XCODE=0 FETCH_SPM=0 ./_environment.sh $API_ID $API_HASH
 
       - name: Build
         run: |

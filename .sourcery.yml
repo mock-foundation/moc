@@ -1,7 +1,0 @@
-configurations:
-  - sources:
-      - Moc
-      - ~/Library/Developer/Xcode/DerivedData/Moc-bcadecnzfmvprabsjmdkbcctfyqm/SourcePackages/checkouts/TDLibKit/Sources
-    templates:
-      - Templates
-    output: Moc/Generated
