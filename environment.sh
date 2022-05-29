@@ -4,6 +4,7 @@
 #
 
 #set -euo pipefail
+setopt extended_glob
 
 # Generates a colored info log message in stdout
 info() {
@@ -77,7 +78,7 @@ if [ "$1" = "teardown" ]; then
     fi
 fi
 
-if [ $# -eq 0 || $# -eq 1 ]; then
+if [ $# -eq 0 ] || [ $# -eq 1 ]; then
     error "No API ID or API hash were provided."
     error "Please specify them as arguments."
     error "Example of calling this script the right way:
@@ -128,13 +129,13 @@ section_start "Sourcery output"
 ./sourcery.sh
 section_end
 
-if [ ${FETCH_SPM} -eq 1 ]; then
+if [ "${FETCH_SPM}" = "1" ]; then
     info "Fetch SPM dependencies up front: using env imported choice..."
     info "Running xcodebuild..."
     section_start "xcodebuild output"
     xcodebuild -resolvePackageDependencies
     section_end
-elif [ ${FETCH_SPM} -eq 0 ]; then
+elif [ "${FETCH_SPM}" = "0" ]; then
     info "Fetch SPM dependencies up front: using env imported choice..."
     info "Skipping..."
 else
@@ -150,11 +151,11 @@ else
 fi
 
 
-if [ ${OPEN_XCODE} -eq 1 ]; then
+if [ "${OPEN_XCODE}" = "1" ]; then
     info "Open Xcode: using env imported choice..."
     info "Opening Xcode..."
     open Moc.xcodeproj
-elif [ ${OPEN_XCODE} -eq 0 ]; then
+elif [ "${OPEN_XCODE}" = "0" ]; then
     info "Open Xcode: using env imported choice..."
     info "Skipping..."
 else

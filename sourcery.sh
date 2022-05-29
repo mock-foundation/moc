@@ -1,4 +1,6 @@
-#setopt extended_glob
+#!/bin/zsh
+
+setopt extended_glob
 
 sourcery \
 --sources Moc \
