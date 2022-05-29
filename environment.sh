@@ -121,14 +121,6 @@ while read file; do
     API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utilities/Generated/${filename%.gyb}" "$filename";
 done
 
-info "Running Sourcery..."
-cd ../..
-info "If you get a password input prompt, don't fear, it's for making sourcery.sh executable"
-chmod +x sourcery.sh
-section_start "Sourcery output"
-./sourcery.sh
-section_end
-
 if [ "${FETCH_SPM}" = "1" ]; then
     info "Fetch SPM dependencies up front: using env imported choice..."
     info "Running xcodebuild..."
@@ -149,6 +141,14 @@ else
         echo
     fi
 fi
+
+info "Running Sourcery..."
+cd ../..
+info "If you get a password input prompt, don't fear, it's for making sourcery.sh executable"
+chmod +x sourcery.sh
+section_start "Sourcery output"
+./sourcery.sh
+section_end
 
 
 if [ "${OPEN_XCODE}" = "1" ]; then
