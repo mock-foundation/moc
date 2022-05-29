@@ -112,8 +112,6 @@ check_dependency sourcery sourcery Sourcery
 #    echo "Python plistlib library is available, skipping installation"
 #fi
 
-cd ../..
-
 cd Utilities/Templates
 info "Running GYB..."
 mkdir ../Sources/Utilities/Generated
@@ -122,6 +120,8 @@ while read file; do
     filename=$(echo "$file" | sed 's/.\///')
     API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utilities/Generated/${filename%.gyb}" "$filename";
 done
+
+cd ../..
 
 if [ "${FETCH_SPM}" = "1" ]; then
     info "Fetch SPM dependencies up front: using env imported choice..."
@@ -141,6 +141,7 @@ else
         section_end
     else
         echo
+        ok "Skipped."
     fi
 fi
 
