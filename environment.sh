@@ -112,6 +112,8 @@ check_dependency sourcery sourcery Sourcery
 #    echo "Python plistlib library is available, skipping installation"
 #fi
 
+cd ../..
+
 cd Utilities/Templates
 info "Running GYB..."
 mkdir ../Sources/Utilities/Generated
@@ -143,7 +145,6 @@ else
 fi
 
 info "Running Sourcery..."
-cd ../..
 info "If you get a password input prompt, don't fear, it's for making sourcery.sh executable"
 chmod +x sourcery.sh
 section_start "Sourcery output"
