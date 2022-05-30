@@ -13,15 +13,14 @@ let package = Package(
             targets: ["Caching"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/realm/realm-swift.git", from: "10.27.0"),
+        .package(url: "https://github.com/groue/GRDB.swift.git", from: "5.24.1"),
         .package(path: "../Utilities")
     ],
     targets: [
         .target(
             name: "Caching",
             dependencies: [
-                .product(name: "Realm", package: "realm-swift"),
-                .product(name: "RealmSwift", package: "realm-swift"),
+                .product(name: "GRDB", package: "GRDB.swift"),
                 "Utilities"
             ])
     ]
