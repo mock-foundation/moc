@@ -37,9 +37,6 @@ struct TDImage: View {
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             guard notification.object != nil else { return }
             
-            // swiftlint:disable force_cast
-            // I would easily disable it because it will definetely
-            // have an UpdateFile as the notification object
             let update = notification.object as! UpdateFile
             
             if update.file.id == file.id {

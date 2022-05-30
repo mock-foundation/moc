@@ -2,8 +2,9 @@ disabled_rules:
     - switch_case_alignment
     - trailing_comma
     - trailing_whitespace
-force_cast: warning
-force_try: warning
+    - identifier_name
+    - force_cast
+    - force_try
 reporter: "xcode"
 excluded:
     - SystemUtils/Sources/SystemUtils/Secret.swift
