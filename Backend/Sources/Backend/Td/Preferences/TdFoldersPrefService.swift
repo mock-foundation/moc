@@ -6,6 +6,7 @@
 //
 
 import TDLibKit
+import Caching
 
 public class TdFoldersPrefService: FoldersPrefService {
     private var tdApi: TdApi = .shared[0]
@@ -13,11 +14,16 @@ public class TdFoldersPrefService: FoldersPrefService {
     public init() { }
 
     public func getFilters() async throws -> [ChatFilterInfo] {
-        // TODO: Implement getFilters()
-        return []
+        return try! CacheService.shared.getObjects(as: Caching.ChatFilter.self).map { filter in
+            ChatFilterInfo(
+                iconName: filter.iconName,
+                id: filter.id,
+                title: filter.title
+            )
+        }
     }
     
-    public func getFilter(by id: Int) async throws -> ChatFilter {
+    public func getFilter(by id: Int) async throws -> TDLibKit.ChatFilter {
         return try await tdApi.getChatFilter(chatFilterId: id)
     }
     
@@ -25,7 +31,7 @@ public class TdFoldersPrefService: FoldersPrefService {
         _ = try await tdApi.reorderChatFilters(chatFilterIds: folders)
     }
     
-    public func createFilter(_ filter: ChatFilter) async throws {
+    public func createFilter(_ filter: TDLibKit.ChatFilter) async throws {
         _ = try await tdApi.createChatFilter(filter: filter)
     }
     
