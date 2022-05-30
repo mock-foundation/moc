@@ -79,7 +79,6 @@ class MainViewModel: ObservableObject {
     }
     
     func updateChatFilters(_ notification: NCPO) {
-        // swiftlint:disable force_cast
         let update = notification.object as! UpdateChatFilters
         
         DispatchQueue.main.async {

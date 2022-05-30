@@ -51,7 +51,6 @@ struct LoginView: View {
                     .foregroundColor(.white)
             }
             .frame(width: 20, height: 20)
-            // swiftlint:disable force_try
             Text(try! AttributedString(markdown: text))
             Spacer()
         }

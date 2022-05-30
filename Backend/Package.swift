@@ -21,6 +21,7 @@ let package = Package(
         ),
         .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
         .package(path: "../Utilities"),
+        .package(path: "../Caching"),
         .package(path: "../Logs")
     ],
     targets: [.target(
@@ -28,6 +29,7 @@ let package = Package(
         dependencies: [
             "TDLibKit",
             "Utilities",
+            "Caching",
             "Logs",
             "Resolver"
         ]
