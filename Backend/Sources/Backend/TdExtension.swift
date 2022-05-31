@@ -5,13 +5,13 @@
 //  Created by Егор Яковенко on 18.01.2022.
 //
 
+import Caching
 import CryptoKit
 import Foundation
 import KeychainSwift
 import Logs
-import Utilities
 import TDLibKit
-import Caching
+import Utilities
 
 public extension TdApi {
     /// A list of shared instances. Why list? There could be multiple `TDLib` instances
@@ -21,7 +21,7 @@ public extension TdApi {
     static var shared: [TdApi] = []
 
     private static let logger = Logs.Logger(label: "TDLib", category: "Updates")
-    
+
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
         Task {
@@ -32,6 +32,7 @@ public extension TdApi {
             #endif
         }
         client.run {
+            let cache = CacheService.shared
             do {
                 let update = try self.decoder.decode(Update.self, from: $0)
             
@@ -113,19 +114,20 @@ public extension TdApi {
                     case let .updateFile(info):
                         SystemUtils.post(notification: .updateFile, with: info)
                     case let .updateChatFilters(info):
+                        try! cache.deleteAll(objects: Caching.ChatFilter.self)
                         for chatFilter in info.chatFilters {
-                            CacheService.shared.save(object: Caching.ChatFilter(
+                            cache.save(object: Caching.ChatFilter(
                                 title: chatFilter.title,
                                 id: chatFilter.id,
-                                iconName: chatFilter.iconName)
-                            )
+                                iconName: chatFilter.iconName
+                            ))
                         }
                         SystemUtils.post(notification: .updateChatFilters, with: info)
                     default:
                         break
                 }
             } catch {
-                
+                print(error)
             }
         }
     }
