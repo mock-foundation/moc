@@ -13,5 +13,5 @@ public protocol FoldersPrefService {
     func reorderFilters(_ folders: [Int]) async throws
     func createFilter(_ filter: ChatFilter) async throws
     func deleteFilter(by id: Int) async throws
-    func getRecommended() async throws -> RecommendedChatFilters
+    func getRecommended() async throws -> [RecommendedChatFilter]
 }

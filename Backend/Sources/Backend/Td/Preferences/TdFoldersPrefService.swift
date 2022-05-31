@@ -14,9 +14,10 @@ public class TdFoldersPrefService: FoldersPrefService {
     public init() {}
 
     public func getFilters() async throws -> [ChatFilterInfo] {
-        try! CacheService.shared.getObjects(as: Caching.ChatFilter.self).map { cached in
-            ChatFilterInfo(from: cached)
-        }
+        try! CacheService.shared.getObjects(as: Caching.ChatFilter.self)
+            .map { cached in
+                ChatFilterInfo(from: cached)
+            }
     }
 
     public func getFilter(by id: Int) async throws -> TDLibKit.ChatFilter {
@@ -35,7 +36,7 @@ public class TdFoldersPrefService: FoldersPrefService {
         _ = try await tdApi.deleteChatFilter(chatFilterId: id)
     }
 
-    public func getRecommended() async throws -> RecommendedChatFilters {
-        try await tdApi.getRecommendedChatFilters()
+    public func getRecommended() async throws -> [RecommendedChatFilter] {
+        try await tdApi.getRecommendedChatFilters().chatFilters
     }
 }

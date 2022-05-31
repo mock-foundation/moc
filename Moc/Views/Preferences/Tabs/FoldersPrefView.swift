@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import Utilities
 
 private enum FolderManipulationMode {
     case edit
@@ -93,6 +94,7 @@ struct FoldersPrefView: View {
                             Text("Edit")
                         }
                         Button(role: .destructive) {
+                            viewModel.folderIdToDelete = folder.id
                             viewModel.showDeleteConfirmationAlert = true
                         } label: {
                             Image(systemName: "trash")
@@ -108,6 +110,7 @@ struct FoldersPrefView: View {
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
+                            viewModel.folderIdToDelete = folder.id
                             viewModel.showDeleteConfirmationAlert = true
                         } label: {
                             Text("Delete")
@@ -120,7 +123,11 @@ struct FoldersPrefView: View {
                     Button(role: .cancel) {} label: {
                         Text("Nope")
                     }
-                    Button(role: .destructive) {} label: {
+                    Button(role: .destructive) {
+                        Task {
+                            try await viewModel.deleteFolder(by: viewModel.folderIdToDelete)
+                        }
+                    } label: {
                         Text("I am!")
                     }
                 }
@@ -139,15 +146,24 @@ struct FoldersPrefView: View {
             }
             List {
                 Section("Recommended") {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Title")
-                                .fontWeight(.medium)
-                            Text("Description")
-                                .foregroundColor(.gray)
+                    ScrollView {
+                        ForEach(viewModel.recommended, id: \.self) { recommendation in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(recommendation.filter.title)
+                                        .fontWeight(.bold)
+                                    Text(recommendation.description)
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                Button("Add") {
+                                    Task {
+                                        try await viewModel.createFolder(from: recommendation.filter)
+                                    }
+                                }
+                            }
                         }
-                        Spacer()
-                        Button("Add") {}
+                        
                     }
                 }
                 Section("Layout") {
