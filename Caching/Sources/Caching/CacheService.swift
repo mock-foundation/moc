@@ -19,15 +19,10 @@ public class CacheService {
 
     init() {
         #if DEBUG
-            // Speed up development by nuking the database when migrations change
-            migrator.eraseDatabaseOnSchemaChange = true
+        // Speed up development by nuking the database when migrations change
+        migrator.eraseDatabaseOnSchemaChange = true
         #endif
-
-        let dbPath = try! FileManager.default
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("cache.sqlite")
-            .path
-        dbQueue = try! DatabaseQueue(path: dbPath)
+        dbQueue = try! DatabaseQueue(path: "cache.sqlite")
 
         registerMigrations()
         // Migrate if not already
