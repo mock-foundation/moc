@@ -13,6 +13,10 @@ import TDLibKit
 import Logs
 
 public class TdChatService: ChatService {
+    public func setAction(_ action: ChatAction) async throws {
+        _ = try await tdApi.sendChatAction(action: action, chatId: chatId, messageThreadId: nil)
+    }
+    
     public func sendMessage(_ message: String) async throws {
         try await tdApi.sendMessage(
             chatId: chatId!,

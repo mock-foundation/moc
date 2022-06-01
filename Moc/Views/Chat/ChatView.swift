@@ -91,7 +91,8 @@ struct ChatView: View {
                         )
                 )
                 .onReceive(inputMessage.publisher) { _ in
-                    // TODO: handle drafts
+                    viewModel.updateAction(with: .chatActionTyping)
+                    // TODO: handle message input updates
                 }
                 .onSubmit {
                     viewModel.sendMessage(inputMessage)

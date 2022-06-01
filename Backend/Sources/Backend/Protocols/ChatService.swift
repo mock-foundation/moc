@@ -37,4 +37,6 @@ public protocol ChatService {
     func set(blocked: Bool) async throws
     func set(chatTitle: String) async throws
     func set(chatId: Int64)
+    
+    func setAction(_ action: ChatAction) async throws
 }

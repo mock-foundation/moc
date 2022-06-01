@@ -136,13 +136,15 @@ class ChatViewModel: ObservableObject {
         }
     }
     
+    func updateAction(with action: ChatAction) {
+        Task {
+            try await service.setAction(action)
+        }
+    }
+    
     func sendMessage(_ message: String) {
         Task {
             try await service.sendMessage(message)
         }
     }
-
-//        .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
-
-//        }
 }
