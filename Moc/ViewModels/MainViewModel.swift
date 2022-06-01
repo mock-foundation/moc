@@ -14,16 +14,31 @@ import Logs
 import OrderedCollections
 
 class MainViewModel: ObservableObject {
+    
     // MARK: - Chat lists
     
+    // just a helper function to filter out a set of chat positions
+    private func getPosition(from positions: Set<ChatPosition>, chatList: ChatList) -> ChatPosition? {
+        print("chatlist: \(chatList)")
+        print("positions: \(positions)")
+        return positions.first { position in
+            position.list == chatList
+        }
+    }
+    
     private func chats(from chatList: ChatList) -> [Chat] {
-        let chats = allChats.filter { chat in
-            chatPositions[chat.id]?.list == chatList
+        let chats = self.allChats.filter { chat in
+            guard let positions = self.chatPositions[chat.id] else { return false }
+            return self.getPosition(from: positions, chatList: chatList) != nil
         }
         
         return chats.sorted { previous, next in
-            guard let previousPosition = chatPositions[previous.id]?.order else { return false }
-            guard let nextPosition = chatPositions[next.id]?.order else { return false }
+            guard let previousPosition = self.getPosition(
+                from: self.chatPositions[previous.id] ?? [],
+                chatList: chatList)?.order else { return false }
+            guard let nextPosition = self.getPosition(
+                from: self.chatPositions[next.id] ?? [],
+                chatList: chatList)?.order else { return false }
             
             return previousPosition > nextPosition
         }
@@ -41,8 +56,16 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    @Published var allChats: OrderedSet<Chat> = []
-    @Published var chatPositions: [Int64: ChatPosition] = [:]
+    @Published var allChats: OrderedSet<Chat> = [] {
+        didSet {
+            print("chats updated")
+        }
+    }
+    @Published var chatPositions: [Int64: Set<ChatPosition>] = [:] {
+        didSet {
+            print("update positions")
+        }
+    }
     
     /// ID of the filter open. 999999 is the main chat list.
     @Published var selectedChatFilter: Int = 999999 {
@@ -83,7 +106,9 @@ class MainViewModel: ObservableObject {
         
         DispatchQueue.main.async {
             self.objectWillChange.send()
-            self.chatFilters = OrderedSet(update.chatFilters)
+            withAnimation {
+                self.chatFilters = OrderedSet(update.chatFilters)
+            }
         }
     }
 
@@ -91,11 +116,20 @@ class MainViewModel: ObservableObject {
         let update = (notification.object as? UpdateChatPosition)!
         let position = update.position
         let chatId = update.chatId
-
-        if !chatPositions.contains(where: { (key, value) in
-            key == chatId && value == position
+        
+        if !chatPositions.contains(where: { key, value in
+            key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
-            chatPositions[chatId] = position
+            withAnimation {
+                if (chatPositions[chatId] ?? []).contains(position) {
+                    chatPositions[chatId]?.update(with: position)
+                    print(chatPositions[chatId])
+                } else {
+                    chatPositions[chatId] = []
+                    chatPositions[chatId]?.insert(position)
+                    print(chatPositions[chatId])
+                }
+            }
         }
     }
 
@@ -105,7 +139,9 @@ class MainViewModel: ObservableObject {
         }
         let chat: Chat = (notification.object as? UpdateNewChat)!.chat
 
-        allChats.updateOrAppend(chat)
+        _ = withAnimation {
+            allChats.updateOrAppend(chat)
+        }
     }
     
     func authorization(notification: NCPO) {
