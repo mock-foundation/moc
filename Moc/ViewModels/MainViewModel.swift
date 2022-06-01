@@ -19,8 +19,6 @@ class MainViewModel: ObservableObject {
     
     // just a helper function to filter out a set of chat positions
     private func getPosition(from positions: Set<ChatPosition>, chatList: ChatList) -> ChatPosition? {
-        print("chatlist: \(chatList)")
-        print("positions: \(positions)")
         return positions.first { position in
             position.list == chatList
         }
@@ -56,16 +54,8 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    @Published var allChats: OrderedSet<Chat> = [] {
-        didSet {
-            print("chats updated")
-        }
-    }
-    @Published var chatPositions: [Int64: Set<ChatPosition>] = [:] {
-        didSet {
-            print("update positions")
-        }
-    }
+    @Published var allChats: OrderedSet<Chat> = []
+    @Published var chatPositions: [Int64: Set<ChatPosition>] = [:]
     
     /// ID of the filter open. 999999 is the main chat list.
     @Published var selectedChatFilter: Int = 999999 {
@@ -74,6 +64,7 @@ class MainViewModel: ObservableObject {
                 try await TdApi.shared[0].loadChats(
                     chatList: .chatListFilter(.init(chatFilterId: selectedChatFilter)),
                     limit: 30)
+                
             }
         }
     }
@@ -121,13 +112,14 @@ class MainViewModel: ObservableObject {
             key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
             withAnimation {
-                if (chatPositions[chatId] ?? []).contains(position) {
-                    chatPositions[chatId]?.update(with: position)
-                    print(chatPositions[chatId])
+                if chatPositions[chatId] == nil { chatPositions[chatId] = [] }
+                
+                if chatPositions[chatId]!.contains(position) {
+                    objectWillChange.send()
+                    chatPositions[chatId]!.update(with: position)
                 } else {
-                    chatPositions[chatId] = []
-                    chatPositions[chatId]?.insert(position)
-                    print(chatPositions[chatId])
+                    objectWillChange.send()
+                    chatPositions[chatId]!.insert(position)
                 }
             }
         }
