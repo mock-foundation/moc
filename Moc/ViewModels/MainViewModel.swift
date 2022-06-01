@@ -64,7 +64,6 @@ class MainViewModel: ObservableObject {
                 try await TdApi.shared[0].loadChats(
                     chatList: .chatListFilter(.init(chatFilterId: selectedChatFilter)),
                     limit: 30)
-                
             }
         }
     }
@@ -80,15 +79,18 @@ class MainViewModel: ObservableObject {
     private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
 
     init() {
-        subscribers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition).sink(
-            receiveValue: updateChatPosition(notification:)
-        )
+        subscribers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateChatPosition(notification:))
         subscribers[.authorizationStateWaitPhoneNumber] = SystemUtils.ncPublisher(
             for: .authorizationStateWaitPhoneNumber)
-        .sink(receiveValue: authorization(notification:))
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: authorization(notification:))
         subscribers[.updateNewChat] = SystemUtils.ncPublisher(for: .updateNewChat)
+            .receive(on: RunLoop.main)
             .sink(receiveValue: updateNewChat(notification:))
         subscribers[.updateChatFilters] = SystemUtils.ncPublisher(for: .updateChatFilters)
+            .receive(on: RunLoop.main)
             .sink(receiveValue: updateChatFilters(_:))
     }
     
@@ -111,15 +113,17 @@ class MainViewModel: ObservableObject {
         if !chatPositions.contains(where: { key, value in
             key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
+            if chatPositions[chatId] == nil {
+                chatPositions[chatId] = []
+            }
+            
             withAnimation {
-                if chatPositions[chatId] == nil { chatPositions[chatId] = [] }
-                
-                if chatPositions[chatId]!.contains(position) {
-                    objectWillChange.send()
+                if chatPositions[chatId]!.first(where: { $0.list == position.list }) != nil {
                     chatPositions[chatId]!.update(with: position)
+                    logger.info("Updated \(chatId): \(position)")
                 } else {
-                    objectWillChange.send()
                     chatPositions[chatId]!.insert(position)
+                    logger.info("Inserted \(chatId): \(position)")
                 }
             }
         }
