@@ -146,24 +146,21 @@ struct FoldersPrefView: View {
             }
             List {
                 Section("Recommended") {
-                    ScrollView {
-                        ForEach(viewModel.recommended, id: \.self) { recommendation in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(recommendation.filter.title)
-                                        .fontWeight(.bold)
-                                    Text(recommendation.description)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                                Button("Add") {
-                                    Task {
-                                        try await viewModel.createFolder(from: recommendation.filter)
-                                    }
+                    ForEach(viewModel.recommended, id: \.self) { recommendation in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(recommendation.filter.title)
+                                    .fontWeight(.bold)
+                                Text(recommendation.description)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Button("Add") {
+                                Task {
+                                    try await viewModel.createFolder(from: recommendation.filter)
                                 }
                             }
                         }
-                        
                     }
                 }
                 Section("Layout") {
