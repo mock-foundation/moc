@@ -81,15 +81,6 @@ struct ChatView: View {
                 .lineLimit(nil)
                 .textFieldStyle(.plain)
                 .padding(6)
-                .padding(.horizontal, 8)
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 16)
-                        .strokeBorder(
-                            Color("InputFieldBorderColor"),
-                            lineWidth: 1
-                        )
-                )
                 .onReceive(inputMessage.publisher) { _ in
                     viewModel.updateAction(with: .chatActionTyping)
                     // TODO: handle message input updates
@@ -109,7 +100,7 @@ struct ChatView: View {
     // MARK: - Chat view
 
     private var chatView: some View {
-        VStack {
+        ZStack {
             ZStack {
                 ScrollViewReader { proxy in
                     ScrollView {
@@ -125,6 +116,8 @@ struct ChatView: View {
                                 view.padding(.leading, 6)
                             }
                         }
+                        Color.clear
+                            .frame(height: 78)
                     }
                     .introspectScrollView { scrollView in
                         scrollView.documentView?.bottomAnchor.constraint(
@@ -160,8 +153,12 @@ struct ChatView: View {
                 .vBottom()
                 .hTrailing()
                 .padding()
+                .padding(.bottom, 64)
             }
             inputField
+                .padding(8)
+                .background(.ultraThinMaterial, in: Capsule())
+                .vBottom()
                 .padding()
         }
     }

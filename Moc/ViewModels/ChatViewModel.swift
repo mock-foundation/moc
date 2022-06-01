@@ -83,7 +83,11 @@ class ChatViewModel: ObservableObject {
     }
     
     func scrollToEnd() {
-        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
+//        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
+        scrollView?.documentView?.scroll(CGPoint(
+            x: 0,
+            y: scrollView?.documentView?.frame.height ?? 0
+        ))
     }
     
     func update(chat: Chat) async throws {
