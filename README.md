@@ -27,6 +27,10 @@ If you have any questions, ask them in [Discussions](https://github.com/ggoraa/m
 # Screenshots
 ![](images/screenshots/light/main.png)
 ![](images/screenshots/dark/main.png)
+![](images/screenshots/light/folders.png)
+![](images/screenshots/dark/folders.png)
+![](images/screenshots/light/account.png)
+![](images/screenshots/dark/account.png)
 
 # Contributing
 
