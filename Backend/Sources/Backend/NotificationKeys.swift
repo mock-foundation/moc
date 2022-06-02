@@ -69,6 +69,10 @@ public extension NSNotification.Name {
     static var updateChatLastMessage: NSNotification.Name {
         .init("UpdateChatLastMessage")
     }
+    
+    static var updateChatDraftMessage: Notification.Name {
+        .init(rawValue: "UpdateChatDraftMessage")
+    }
 
     static var updateNewChat: NSNotification.Name {
         .init("UpdateNewChat")

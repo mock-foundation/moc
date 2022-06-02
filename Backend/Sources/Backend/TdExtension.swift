@@ -105,10 +105,12 @@ public extension TdApi {
 
                     case let .updateChatPosition(info):
                         SystemUtils.post(notification: .updateChatPosition, with: info)
-                    case let .updateNewMessage(info):
-                        SystemUtils.post(notification: .updateNewMessage, with: info)
                     case let .updateChatLastMessage(info):
                         SystemUtils.post(notification: .updateChatLastMessage, with: info)
+                    case let .updateChatDraftMessage(info):
+                        SystemUtils.post(notification: .updateChatDraftMessage, with: info)
+                    case let .updateNewMessage(info):
+                        SystemUtils.post(notification: .updateNewMessage, with: info)
                     case let .updateNewChat(info):
                         SystemUtils.post(notification: .updateNewChat, with: info)
                     case let .updateFile(info):

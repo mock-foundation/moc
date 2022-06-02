@@ -18,7 +18,7 @@ class MainViewModel: ObservableObject {
     // MARK: - Chat lists
     
     // just a helper function to filter out a set of chat positions
-    private func getPosition(from positions: Set<ChatPosition>, chatList: ChatList) -> ChatPosition? {
+    private func getPosition(from positions: [ChatPosition], chatList: ChatList) -> ChatPosition? {
         return positions.first { position in
             position.list == chatList
         }
@@ -55,7 +55,7 @@ class MainViewModel: ObservableObject {
     }
     
     @Published var allChats: OrderedSet<Chat> = []
-    @Published var chatPositions: [Int64: Set<ChatPosition>] = [:]
+    @Published var chatPositions: [Int64: [ChatPosition]] = [:]
     
     /// ID of the filter open. 999999 is the main chat list.
     @Published var selectedChatFilter: Int = 999999 {
@@ -81,17 +81,23 @@ class MainViewModel: ObservableObject {
     init() {
         subscribers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateChatPosition(notification:))
+            .sink(receiveValue: updateChatPosition(_:))
         subscribers[.authorizationStateWaitPhoneNumber] = SystemUtils.ncPublisher(
             for: .authorizationStateWaitPhoneNumber)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: authorization(notification:))
+            .sink(receiveValue: authorization(_:))
         subscribers[.updateNewChat] = SystemUtils.ncPublisher(for: .updateNewChat)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateNewChat(notification:))
+            .sink(receiveValue: updateNewChat(_:))
         subscribers[.updateChatFilters] = SystemUtils.ncPublisher(for: .updateChatFilters)
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateChatFilters(_:))
+        subscribers[.updateChatLastMessage] = SystemUtils.ncPublisher(for: .updateChatLastMessage)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateChatLastMessage(_:))
+        subscribers[.updateChatDraftMessage] = SystemUtils.ncPublisher(for: .updateChatDraftMessage)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateChatDraftMessage(_:))
     }
     
     func updateChatFilters(_ notification: NCPO) {
@@ -105,31 +111,51 @@ class MainViewModel: ObservableObject {
         }
     }
 
-    func updateChatPosition(notification: NCPO) {
+    func updateChatPosition(_ notification: NCPO) {
         let update = (notification.object as? UpdateChatPosition)!
-        let position = update.position
-        let chatId = update.chatId
         
+        updatePosition(for: update.chatId, position: update.position)
+    }
+    
+    func updateChatDraftMessage(_ notification: NCPO) {
+        let update = (notification.object as? UpdateChatDraftMessage)!
+        
+        for position in update.positions {
+            updatePosition(for: update.chatId, position: position)
+        }
+    }
+    
+    func updateChatLastMessage(_ notification: NCPO) {
+        let update = (notification.object as? UpdateChatLastMessage)!
+        
+        for position in update.positions {
+            updatePosition(for: update.chatId, position: position)
+        }
+    }
+    
+    func updatePosition(for chatId: Int64, position: ChatPosition) {
         if !chatPositions.contains(where: { key, value in
             key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
-            if chatPositions[chatId] == nil {
-                chatPositions[chatId] = []
-            }
-            
             withAnimation {
-                if chatPositions[chatId]!.first(where: { $0.list == position.list }) != nil {
-                    chatPositions[chatId]!.update(with: position)
-                    logger.info("Updated \(chatId): \(position)")
+                if chatPositions[chatId] == nil {
+                    chatPositions[chatId] = []
+                }
+                
+                if let index = chatPositions[chatId]!.firstIndex(where: { $0.list == position.list }) {
+                    objectWillChange.send()
+                    chatPositions[chatId]!.remove(at: index)
+                    chatPositions[chatId]!.append(position)
                 } else {
-                    chatPositions[chatId]!.insert(position)
-                    logger.info("Inserted \(chatId): \(position)")
+                    objectWillChange.send()
+                    chatPositions[chatId]!.append(position)
                 }
             }
         }
+        
     }
 
-    func updateNewChat(notification: NCPO) {
+    func updateNewChat(_ notification: NCPO) {
         guard notification.object != nil else {
             return
         }
@@ -140,7 +166,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func authorization(notification: NCPO) {
+    func authorization(_ notification: NCPO) {
         showingLoginScreen = true
     }
 
