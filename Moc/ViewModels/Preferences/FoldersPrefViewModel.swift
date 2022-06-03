@@ -59,12 +59,12 @@ class FoldersPrefViewModel: ObservableObject {
         )
     }
 
-    func getFolder(by id: Int) async throws -> ChatFilter {
+    func getFolder(by id: Int) async throws -> TDLibKit.ChatFilter {
         try await service.getFilter(by: id)
     }
 
     func createFolder() async throws {
-        try await createFolder(from: ChatFilter(
+        try await createFolder(from: TDLibKit.ChatFilter(
             excludeArchived: false,
             excludeMuted: false,
             excludeRead: false,
@@ -81,7 +81,7 @@ class FoldersPrefViewModel: ObservableObject {
         ))
     }
     
-    func createFolder(from filter: ChatFilter) async throws {
+    func createFolder(from filter: TDLibKit.ChatFilter) async throws {
         try await service.createFilter(filter)
     }
     

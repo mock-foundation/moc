@@ -12,11 +12,11 @@ import Combine
 import TDLibKit
 import Logs
 import OrderedCollections
+import Backend
 
 class MainViewModel: ObservableObject {
-    
-    // MARK: - Chat lists
-    
+    @Injected var service: MainService
+        
     // just a helper function to filter out a set of chat positions
     private func getPosition(from positions: [ChatPosition], chatList: ChatList) -> ChatPosition? {
         return positions.first { position in
@@ -68,48 +68,43 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    @Published var chatFilters: OrderedSet<ChatFilterInfo> = []
+    @Published var chatFilters: OrderedSet<Backend.ChatFilter> = []
 
     @Published var showingLoginScreen = false
     @Published var isArchiveChatListOpen = false
 
-    private var publishers: [NSNotification.Name: NotificationCenter.Publisher] = [:]
-    private var subscribers: [NSNotification.Name: AnyCancellable] = [:]
-
+    private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
 
     init() {
-        subscribers[.updateChatPosition] = SystemUtils.ncPublisher(for: .updateChatPosition)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateChatPosition(_:))
-        subscribers[.authorizationStateWaitPhoneNumber] = SystemUtils.ncPublisher(
-            for: .authorizationStateWaitPhoneNumber)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: authorization(_:))
-        subscribers[.updateNewChat] = SystemUtils.ncPublisher(for: .updateNewChat)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateNewChat(_:))
-        subscribers[.updateChatFilters] = SystemUtils.ncPublisher(for: .updateChatFilters)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateChatFilters(_:))
-        subscribers[.updateChatLastMessage] = SystemUtils.ncPublisher(for: .updateChatLastMessage)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateChatLastMessage(_:))
-        subscribers[.updateChatDraftMessage] = SystemUtils.ncPublisher(for: .updateChatDraftMessage)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateChatDraftMessage(_:))
+        if let filters = try? service.getFilters() {
+            chatFilters = OrderedSet(filters)
+        }
+        addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
+        addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorization(_:))
+        addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
+//        addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
+        addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
+        addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
     }
     
-    func updateChatFilters(_ notification: NCPO) {
-        let update = notification.object as! UpdateChatFilters
-        
-        DispatchQueue.main.async {
-            self.objectWillChange.send()
-            withAnimation {
-                self.chatFilters = OrderedSet(update.chatFilters)
-            }
-        }
+    func addSubscriber(for notification: NSNotification.Name, action: @escaping ((NCPO) -> Void)) {
+        subscribers.append(SystemUtils.ncPublisher(for: notification)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: action))
     }
+    
+//    func updateChatFilters(_ notification: NCPO) {
+//        let update = notification.object as! UpdateChatFilters
+//
+//        DispatchQueue.main.async {
+//            withAnimation {
+//                self.chatFilters = OrderedSet(update.chatFilters.map { old in
+//                    Backend.ChatFilter(title: old.title, id: old.id, iconName: old.iconName, unreadCount: 0)
+//                })
+//            }
+//        }
+//    }
 
     func updateChatPosition(_ notification: NCPO) {
         let update = (notification.object as? UpdateChatPosition)!
@@ -143,11 +138,9 @@ class MainViewModel: ObservableObject {
                 }
                 
                 if let index = chatPositions[chatId]!.firstIndex(where: { $0.list == position.list }) {
-                    objectWillChange.send()
                     chatPositions[chatId]!.remove(at: index)
                     chatPositions[chatId]!.append(position)
                 } else {
-                    objectWillChange.send()
                     chatPositions[chatId]!.append(position)
                 }
             }
@@ -172,7 +165,7 @@ class MainViewModel: ObservableObject {
 
     deinit {
         for subscriber in subscribers {
-            subscriber.value.cancel()
+            subscriber.cancel()
         }
     }
 }

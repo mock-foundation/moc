@@ -5,14 +5,16 @@
 //  Created by Егор Яковенко on 26.02.2022.
 //
 import TDLibKit
+import Backend
 
 protocol AutoHashable { }
+protocol AutoEquatable { }
 
-extension ChatFilter: AutoHashable { }
+extension TDLibKit.ChatFilter: AutoHashable { }
 
 extension ChatFilterInfo: AutoHashable, Identifiable { }
 
-extension Chat: AutoHashable, Identifiable { }
+extension TDLibKit.Chat: AutoHashable, Identifiable { }
 
 extension ChatActionBar: AutoHashable { }
 
@@ -147,3 +149,5 @@ extension TextEntityTypeMentionName: AutoHashable { }
 extension TextEntityTypeMediaTimestamp: AutoHashable { }
 
 extension RecommendedChatFilter: AutoHashable { }
+
+extension Backend.ChatFilter: AutoHashable, AutoEquatable { }

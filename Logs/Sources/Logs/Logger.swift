@@ -10,7 +10,6 @@ public struct Logger {
     }
 
     public func log(_ message: String, level: LogLevel) {
-        #if DEBUG
         switch level {
             case .trace:
                 logger.trace("\(message)")
@@ -27,15 +26,18 @@ public struct Logger {
             case .critical:
                 logger.critical("\(message)")
         }
-        #endif
     }
 
     public func trace(_ message: String) {
+        #if DEBUG
         log(message, level: .trace)
+        #endif
     }
 
     public func debug(_ message: String) {
+        #if DEBUG
         log(message, level: .debug)
+        #endif
     }
 
     public func info(_ message: String) {

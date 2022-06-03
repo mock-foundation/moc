@@ -7,6 +7,7 @@
 
 import Caching
 import TDLibKit
+import GRDB
 
 public class TdFoldersPrefService: FoldersPrefService {
     private var tdApi: TdApi = .shared[0]
@@ -14,7 +15,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     public init() {}
 
     public func getFilters() async throws -> [ChatFilterInfo] {
-        try! CacheService.shared.getObjects(as: Caching.ChatFilter.self)
+        try! CacheService.shared.getRecords(as: Caching.ChatFilter.self, ordered: [Column("order").asc])
             .map { cached in
                 ChatFilterInfo(from: cached)
             }

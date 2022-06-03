@@ -1,6 +1,7 @@
 // swiftlint:disable all
 
 import TDLibKit
+import Backend
 
 {% macro combineVariableHashes variables %}
 {% for variable in variables where variable.readAccess != "private" and variable.readAccess != "fileprivate" %}

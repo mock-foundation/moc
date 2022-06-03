@@ -85,4 +85,8 @@ public extension NSNotification.Name {
     static var updateChatFilters: Notification.Name {
         .init(rawValue: "UpdateChatFilters")
     }
+    
+    static var updateUnreadChatCount: Notification.Name {
+        .init(rawValue: "UpdateUnreadChatCount")
+    }
 }

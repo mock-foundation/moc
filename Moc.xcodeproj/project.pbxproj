@@ -66,6 +66,7 @@
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
 		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
 		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
+		43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D389DE284A52A000214874 /* AutoEquatable.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		43807DC527E214D30056A3D3 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43807DC627E214DD0056A3D3 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
+		43D389DE284A52A000214874 /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +183,7 @@
 		4360D7032840296300D3378F /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				43D389DE284A52A000214874 /* AutoEquatable.generated.swift */,
 				433464E5284078E20010406F /* AutoHashable.generated.swift */,
 			);
 			path = Generated;
@@ -525,6 +528,7 @@
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,
 				43807D9D27E213350056A3D3 /* SearchField.swift in Sources */,
 				43807D9627E213350056A3D3 /* LoginView.swift in Sources */,
+				43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */,
 				43807D9527E213350056A3D3 /* ChatView.swift in Sources */,
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
