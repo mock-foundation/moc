@@ -12,19 +12,19 @@ public struct Logger {
     public func log(_ message: String, level: LogLevel) {
         switch level {
             case .trace:
-                logger.trace("\(message)")
+                logger.trace("[trace] \(message)")
             case .debug:
-                logger.debug("\(message)")
+                logger.debug("[debug] \(message)")
             case .info:
-                logger.info("\(message)")
+                logger.info("[info] \(message)")
             case .notice:
-                logger.notice("\(message)")
+                logger.notice("[notice] \(message)")
             case .warning:
-                logger.warning("\(message)")
+                logger.warning("[warning] \(message)")
             case .error:
-                logger.error("\(message)")
+                logger.error("[error] \(message)")
             case .critical:
-                logger.critical("\(message)")
+                logger.critical("[critical] \(message)")
         }
     }
 

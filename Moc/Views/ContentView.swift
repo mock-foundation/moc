@@ -100,18 +100,22 @@ struct ContentView: View {
                                 mainViewModel.selectedChatFilter = 999999
                             }
                         ForEach(mainViewModel.chatFilters) { filter in
-                            FolderItemView(name: filter.title, icon: Image(tdIcon: filter.iconName))
-                                .background(mainViewModel.selectedChatFilter == filter.id
-                                            ? Color("SelectedColor") : Color.clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                .onTapGesture {
-                                    mainViewModel.selectedChatFilter = filter.id
-                                }
+                            FolderItemView(
+                                name: filter.title,
+                                icon: Image(tdIcon: filter.iconName),
+                                unreadCount: filter.unreadCount)
+                            .background(mainViewModel.selectedChatFilter == filter.id
+                                        ? Color("SelectedColor") : Color.clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            .onTapGesture {
+                                mainViewModel.selectedChatFilter = filter.id
+                            }
                         }
                     case .contacts:
-                        Image(systemName: "person.2")
+                        FolderItemView(name: "Nearby chats", icon: Image(systemName: "bubble.left.and.bubble.right"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     case .calls:
-                        FolderItemView(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
+                        FolderItemView(name: "Ingoing", icon: Image(systemName: "map")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green, .primary))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))

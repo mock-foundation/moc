@@ -78,12 +78,17 @@ class MainViewModel: ObservableObject {
 
     init() {
         if let filters = try? service.getFilters() {
+            logger.debug("Filling chat filter with cached ones: \(filters)")
             chatFilters = OrderedSet(filters)
+            logger.trace("\(filters.count), \(chatFilters.count)")
+        } else {
+            logger.debug("There was an issue retrieving cached chat filters, using empty array")
+            chatFilters = []
         }
         addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
         addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorization(_:))
         addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
-//        addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
+        addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
         addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
         addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
     }
@@ -94,17 +99,50 @@ class MainViewModel: ObservableObject {
             .sink(receiveValue: action))
     }
     
-//    func updateChatFilters(_ notification: NCPO) {
-//        let update = notification.object as! UpdateChatFilters
-//
-//        DispatchQueue.main.async {
-//            withAnimation {
-//                self.chatFilters = OrderedSet(update.chatFilters.map { old in
-//                    Backend.ChatFilter(title: old.title, id: old.id, iconName: old.iconName, unreadCount: 0)
-//                })
-//            }
-//        }
-//    }
+    func updateChatFilters(_ notification: NCPO) {
+        let update = notification.object as! UpdateChatFilters
+        logger.debug("Chat filter update")
+
+        DispatchQueue.main.async { [self] in
+            withAnimation {
+                for chatFilter in update.chatFilters {
+                    let newData = Backend.ChatFilter(
+                        title: chatFilter.title,
+                        id: chatFilter.id,
+                        iconName: chatFilter.iconName,
+                        unreadCount: chatFilters.first { filter in
+                            filter.id == chatFilter.id
+                        }?.unreadCount ?? 0
+                    )
+                    
+                    logger.debug("Created new data struct \(newData)")
+                    logger.trace("\(chatFilters.count), \(chatFilters)")
+                    
+                    if chatFilters.contains(where: {
+                        logger.trace("\($0.id) == \(chatFilter.id)")
+                        return $0.id == chatFilter.id
+                    }) {
+                        logger.debug("Chat filters contain a filter with id \(chatFilter.id), updating existing")
+                        if let index = chatFilters.firstIndex(where: {
+                            logger.trace("\($0.id) == \(chatFilter.id)")
+                            return $0.id == chatFilter.id
+                        }) {
+                            chatFilters.update(newData, at: index)
+                        }
+                    } else {
+                        logger.debug("Chat filters does not contain a filter with id \(chatFilter.id), creating a new one")
+                        chatFilters.append(newData)
+                    }
+                }
+                for chatFilter in chatFilters {
+                    if !update.chatFilters.contains(where: { $0.id == chatFilter.id }) {
+                        logger.debug("Received chat filters do not contain a filter that is already saved, removing")
+                        chatFilters.remove(at: chatFilters.firstIndex { $0.id == chatFilter.id }!)
+                    }
+                }
+            }
+        }
+    }
 
     func updateChatPosition(_ notification: NCPO) {
         let update = (notification.object as? UpdateChatPosition)!
@@ -167,5 +205,19 @@ class MainViewModel: ObservableObject {
         for subscriber in subscribers {
             subscriber.cancel()
         }
+    }
+}
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+        
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+    
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
     }
 }

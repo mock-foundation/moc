@@ -149,5 +149,3 @@ extension TextEntityTypeMentionName: AutoHashable { }
 extension TextEntityTypeMediaTimestamp: AutoHashable { }
 
 extension RecommendedChatFilter: AutoHashable { }
-
-extension Backend.ChatFilter: AutoHashable, AutoEquatable { }

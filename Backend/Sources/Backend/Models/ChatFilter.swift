@@ -5,7 +5,7 @@
 //  Created by Егор Яковенко on 03.06.2022.
 //
 
-public struct ChatFilter {
+public struct ChatFilter: Hashable, Identifiable {
     public let title: String
     public let id: Int
     public let iconName: String
