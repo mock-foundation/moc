@@ -63,7 +63,7 @@ jobs:
           path: artifact/
           if-no-files-found: error
           
-      - name: Remove previous release
+      - name: Remove previous release (master only)
         if: github.ref == 'refs/heads/master'
         uses: dev-drprasad/delete-tag-and-release@85fa8bcea0379a6ada9bbfdcb0a9d24d58e1a0d7
         with:
