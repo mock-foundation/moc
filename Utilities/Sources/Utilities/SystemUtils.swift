@@ -90,8 +90,8 @@ public enum SystemUtils {
         return "\(systemVersionCodename) \(info)"
     }
 
-    public static func info<T>(key: String) -> T? {
-        Bundle.main.infoDictionary?[key] as? T
+    public static func info<T>(key: String) -> T {
+        Bundle.main.infoDictionary?[key]! as! T
     }
 
     public static func playAlertSound() {
