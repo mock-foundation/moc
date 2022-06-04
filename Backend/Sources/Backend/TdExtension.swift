@@ -6,9 +6,7 @@
 //
 
 import Caching
-import CryptoKit
 import Foundation
-import KeychainSwift
 import Logs
 import TDLibKit
 import Utilities
@@ -46,9 +44,7 @@ public extension TdApi {
                                     try? await self.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
                                         apiId: Secret.apiId,
-                                        applicationVersion: (
-                                            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-                                        ) ?? "Unknown",
+                                        applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
                                         databaseDirectory: "td",
                                         deviceModel: SystemUtils.macModel,
                                         enableStorageOptimizer: true,
@@ -67,7 +63,7 @@ public extension TdApi {
                                 SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, with: update)
                                 Task {
                                     try? await self.checkDatabaseEncryptionKey(
-                                        encryptionKey: TdApi.tdDatabaseEncryptionKey
+                                        encryptionKey: Data()
                                     )
                                 }
                             case .authorizationStateWaitPhoneNumber:
@@ -164,20 +160,6 @@ public extension TdApi {
             } catch {
                 print(error)
             }
-        }
-    }
-
-    static var tdDatabaseEncryptionKey: Data {
-        let keychain = KeychainSwift()
-        let encryptionKey = keychain.getData(tdDatabaseEncryptionKeyName)
-        if encryptionKey == nil {
-            let key = SymmetricKey(size: .bits256).withUnsafeBytes {
-                Data(Array($0))
-            }
-            keychain.set(key, forKey: tdDatabaseEncryptionKeyName, withAccess: .accessibleAfterFirstUnlock)
-            return key
-        } else {
-            return encryptionKey!
         }
     }
 }

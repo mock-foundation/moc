@@ -60,7 +60,6 @@
 		43807DA527E2137A0056A3D3 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DA427E2137A0056A3D3 /* Resolver */; };
 		43807DA827E2138A0056A3D3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DA727E2138A0056A3D3 /* Lottie */; };
 		43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DAA27E2139B0056A3D3 /* AlertToast */; };
-		43807DAE27E213B00056A3D3 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DAD27E213B00056A3D3 /* KeychainSwift */; };
 		43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB027E213C50056A3D3 /* TDLibKit */; };
 		43807DB827E214440056A3D3 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB727E214440056A3D3 /* Introspect */; };
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
@@ -145,7 +144,6 @@
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
-				43807DAE27E213B00056A3D3 /* KeychainSwift in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -387,7 +385,6 @@
 				43807DA427E2137A0056A3D3 /* Resolver */,
 				43807DA727E2138A0056A3D3 /* Lottie */,
 				43807DAA27E2139B0056A3D3 /* AlertToast */,
-				43807DAD27E213B00056A3D3 /* KeychainSwift */,
 				43807DB027E213C50056A3D3 /* TDLibKit */,
 				43807DB727E214440056A3D3 /* Introspect */,
 				43807DBB27E214970056A3D3 /* Backend */,
@@ -452,7 +449,6 @@
 				43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43807DA627E213890056A3D3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				43807DAC27E213B00056A3D3 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
@@ -865,14 +861,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		43807DAC27E213B00056A3D3 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 20.0.0;
-			};
-		};
 		43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
@@ -930,11 +918,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
-		};
-		43807DAD27E213B00056A3D3 /* KeychainSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43807DAC27E213B00056A3D3 /* XCRemoteSwiftPackageReference "keychain-swift" */;
-			productName = KeychainSwift;
 		};
 		43807DB027E213C50056A3D3 /* TDLibKit */ = {
 			isa = XCSwiftPackageProductDependency;
