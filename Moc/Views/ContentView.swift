@@ -112,10 +112,12 @@ struct ContentView: View {
                             }
                         }
                     case .contacts:
-                        FolderItemView(name: "Nearby chats", icon: Image(systemName: "bubble.left.and.bubble.right"))
+                        FolderItemView(name: "Nearby chats", icon: Image(systemName: "map"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        FolderItemView(name: "Invite", icon: Image(systemName: "person.badge.plus"))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     case .calls:
-                        FolderItemView(name: "Ingoing", icon: Image(systemName: "map")
+                        FolderItemView(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green, .primary))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
