@@ -68,6 +68,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
+    // TODO: Add a new array/set for unread counters
     @Published var chatFilters: OrderedSet<Backend.ChatFilter> = []
 
     @Published var showingLoginScreen = false
@@ -102,12 +103,14 @@ class MainViewModel: ObservableObject {
     
     func updateUnreadChatCount(_ notification: NCPO) {
         let update = notification.object as! UpdateUnreadChatCount
-        
+        // TODO: Rewrite the unread counters logic
     }
     
     func updateChatFilters(_ notification: NCPO) {
         let update = notification.object as! UpdateChatFilters
         logger.debug("Chat filter update")
+        
+        // TODO: Update chat filters logic
 
         DispatchQueue.main.async { [self] in
             withAnimation {
