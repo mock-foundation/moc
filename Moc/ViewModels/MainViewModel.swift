@@ -89,6 +89,7 @@ class MainViewModel: ObservableObject {
         addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorization(_:))
         addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
         addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
+        addSubscriber(for: .updateUnreadChatCount, action: updateUnreadChatCount(_:))
         addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
         addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
     }
@@ -97,6 +98,11 @@ class MainViewModel: ObservableObject {
         subscribers.append(SystemUtils.ncPublisher(for: notification)
             .receive(on: RunLoop.main)
             .sink(receiveValue: action))
+    }
+    
+    func updateUnreadChatCount(_ notification: NCPO) {
+        let update = notification.object as! UpdateUnreadChatCount
+        
     }
     
     func updateChatFilters(_ notification: NCPO) {

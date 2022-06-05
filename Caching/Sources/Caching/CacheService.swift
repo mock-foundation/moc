@@ -47,6 +47,16 @@ private extension CacheService {
                 t.column("order", .integer).notNull().unique(onConflict: .replace)
             }
         }
+        migrator.registerMigration("v1.1") { db in
+            try db.create(table: "unreadCounter") { t in
+                t.column("chats", .integer).notNull()
+                t.column("messages", .integer).notNull()
+                t.column("chatList", .text).notNull().unique(onConflict: .replace)
+            }
+            try db.alter(table: "chatFilter") { t in
+                t.drop(column: "unreadCount")
+            }
+        }
     }
 
     private func save<Record>(db: Database, record: Record) throws

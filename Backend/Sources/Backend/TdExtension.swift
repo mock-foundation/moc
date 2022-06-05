@@ -112,48 +112,33 @@ public extension TdApi {
                     case let .updateFile(update):
                         SystemUtils.post(notification: .updateFile, with: update)
                     case let .updateChatFilters(update):
-                        let objects = try cache.getRecords(as: Caching.ChatFilter.self)
-                        TdApi.logger.debug("Going over received chat filters")
-                        for (index, chatFilter) in update.chatFilters.enumerated() {
-                            if objects.contains(where: { $0.id == chatFilter.id }) {
-                                TdApi.logger.debug("Updating filter with id \(chatFilter.id) in database")
-                                try cache.modify(record: Caching.ChatFilter.self, at: chatFilter.id) {
-                                    $0.title = chatFilter.title
-                                    $0.id = chatFilter.id
-                                    $0.iconName = chatFilter.iconName
-                                    $0.order = index
-                                }
-                            } else {
-                                TdApi.logger.debug("Creating a new one with id \(chatFilter.id)")
-                                try cache.save(record: Caching.ChatFilter(
-                                    title: chatFilter.title,
-                                    id: chatFilter.id,
-                                    iconName: chatFilter.iconName,
-                                    order: index
-                                ))
-                            }
-                        }
-                        TdApi.logger.debug("Going over filters in database")
-                        for object in objects {
-                            if !update.chatFilters.contains(where: { $0.id == object.id }) {
-                                TdApi.logger.debug("Update does not contain filter with id \(object.id), removing from database")
-                                try cache.delete(record: object)
-                            }
-                        }
                         SystemUtils.post(notification: .updateChatFilters, with: update)
-                    case let .updateUnreadChatCount(update):
-                        switch update.chatList {
-                            case let .chatListFilter(filter):
-                                do {
-                                    try cache.modify(record: Caching.ChatFilter.self, at: filter.chatFilterId) {
-                                        $0.unreadCount = update.unreadCount
-                                    }
-                                } catch {
-                                    print(error)
-                                }
-                            default: break
+
+                        try cache.deleteAll(records: Caching.ChatFilter.self)
+                        for (index, filter) in update.chatFilters.enumerated() {
+                            try cache.save(record: Caching.ChatFilter(
+                                title: filter.title,
+                                id: filter.id,
+                                iconName: filter.iconName,
+                                order: index))
                         }
+                    case let .updateUnreadChatCount(update):
                         SystemUtils.post(notification: .updateUnreadChatCount, with: update)
+
+                        var shouldBeAdded = false
+                        for record in try cache.getRecords(as: UnreadCounter.self) {
+                            if Caching.ChatList.from(tdChatList: update.chatList) == record.chatList {
+//                                cache.modify(record: UnreadCounter.self, at: <#T##Int#>, transform: <#T##(inout FetchableRecord & PersistableRecord) -> Void#>)
+                                shouldBeAdded = true
+                            }
+                        }
+                        if shouldBeAdded {
+                            try cache.save(record: UnreadCounter(
+                                chats: update.unreadCount,
+                                messages: 0,
+                                chatList: Caching.ChatList.from(tdChatList: update.chatList)
+                            ))
+                        }
                     default:
                         break
                 }

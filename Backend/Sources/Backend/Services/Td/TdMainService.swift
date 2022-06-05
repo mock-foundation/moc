@@ -16,13 +16,20 @@ public class TdMainService: MainService {
     public init() { }
     
     public func getFilters() throws -> [ChatFilter] {
-        try cache.getRecords(as: Caching.ChatFilter.self, ordered: [Column("order").asc])
+        let unreads = try cache.getRecords(as: UnreadCounter.self)
+        return try cache.getRecords(as: Caching.ChatFilter.self, ordered: [Column("order").asc])
             .map { record in
                 ChatFilter(
                     title: record.title,
                     id: record.id,
                     iconName: record.iconName,
-                    unreadCount: record.unreadCount
+                    unreadCount: unreads.first { unread in
+                        switch unread.chatList {
+                            case let .filter(id):
+                                return id == record.id
+                            default: return false
+                        }
+                    }?.chats ?? 0
                 )
             }
     }
