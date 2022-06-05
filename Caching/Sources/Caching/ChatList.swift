@@ -5,7 +5,9 @@
 //  Created by Егор Яковенко on 05.06.2022.
 //
 
-public enum ChatList: Codable, Equatable {
+import GRDB
+
+public enum ChatList: Codable, Equatable, DatabaseValueConvertible {
     case main
     case archive
     /// A filter chat list with an `id`.

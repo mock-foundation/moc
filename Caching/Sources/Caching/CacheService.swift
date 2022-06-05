@@ -7,6 +7,7 @@
 
 import Foundation
 import GRDB
+import Logs
 
 // MARK: - Definition
 
@@ -14,8 +15,8 @@ public class CacheService {
     public static var shared = CacheService()
 
     let dbQueue: DatabaseQueue
-
     var migrator = DatabaseMigrator()
+    let logger = Logger(label: "CacheService", category: "Caching")
 
     init() {
         #if DEBUG
@@ -49,7 +50,7 @@ private extension CacheService {
             try db.create(table: "unreadCounter") { t in
                 t.column("chats", .integer).notNull()
                 t.column("messages", .integer).notNull()
-                t.column("chatList", .text).notNull().unique(onConflict: .replace)
+                t.column("chatList", .text).notNull().primaryKey(onConflict: .replace, autoincrement: false)
             }
         }
     }
@@ -89,9 +90,12 @@ private extension CacheService {
         transform: (inout Record) -> Void) throws
     where Record: FetchableRecord & PersistableRecord, Key: DatabaseValueConvertible {
         if var value = try record.fetchOne(db, key: key) {
+            logger.debug("Value with key \(key) exists, modifying")
             try value.updateChanges(db) {
                 transform(&$0)
             }
+        } else {
+            logger.debug("A value with key \(key) can not be found, not modifying")
         }
     }
 }

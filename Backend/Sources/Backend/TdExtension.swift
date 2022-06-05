@@ -125,18 +125,22 @@ public extension TdApi {
                     case let .updateUnreadChatCount(update):
                         SystemUtils.post(notification: .updateUnreadChatCount, with: update)
 
-                        var shouldBeAdded = false
-                        for record in try cache.getRecords(as: UnreadCounter.self) {
-                            if Caching.ChatList.from(tdChatList: update.chatList) == record.chatList {
-//                                cache.modify(record: UnreadCounter.self, at: <#T##Int#>, transform: <#T##(inout FetchableRecord & PersistableRecord) -> Void#>)
-                                shouldBeAdded = true
+                        var shouldBeAdded = true
+                        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+                        let records = try cache.getRecords(as: UnreadCounter.self)
+                        
+                        for record in records where chatList == record.chatList {
+                            try cache.modify(record: UnreadCounter.self, at: chatList) { record in
+                                record.chats = update.unreadCount
                             }
+                            shouldBeAdded = false
                         }
+                        
                         if shouldBeAdded {
                             try cache.save(record: UnreadCounter(
                                 chats: update.unreadCount,
                                 messages: 0,
-                                chatList: Caching.ChatList.from(tdChatList: update.chatList)
+                                chatList: chatList
                             ))
                         }
                     default:
