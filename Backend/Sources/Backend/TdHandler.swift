@@ -22,9 +22,10 @@ public extension TdApi {
 
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
+        TdApi.logger.debug("Starting handler")
         Task {
             #if DEBUG
-            try? await self.setLogVerbosityLevel(newVerbosityLevel: 2)
+            try? await self.setLogVerbosityLevel(newVerbosityLevel: 5)
             #else
             try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif
@@ -41,14 +42,30 @@ public extension TdApi {
                             case .authorizationStateWaitTdlibParameters:
                                 SystemUtils.post(notification: .authorizationStateWaitTdlibParameters)
                                 Task {
-                                    try? await self.setTdlibParameters(parameters: TdlibParameters(
+                                    var url = try FileManager.default.url(
+                                        for: .applicationSupportDirectory,
+                                        in: .userDomainMask,
+                                        appropriateFor: nil,
+                                        create: true)
+                                    if #available(macOS 13, iOS 16, *) {
+                                        url.append(path: "td")
+                                    } else {
+                                        url.appendPathComponent("td")
+                                    }
+                                    var dir = ""
+                                    if #available(macOS 13, iOS 16, *) {
+                                        dir = url.path()
+                                    } else {
+                                        dir = url.path
+                                    }
+                                    try await self.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
                                         apiId: Secret.apiId,
                                         applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
-                                        databaseDirectory: "td",
-                                        deviceModel: SystemUtils.macModel,
+                                        databaseDirectory: dir,
+                                        deviceModel: SystemUtils.deviceModel,
                                         enableStorageOptimizer: true,
-                                        filesDirectory: "td",
+                                        filesDirectory: dir,
                                         ignoreFileNames: false,
                                         systemLanguageCode: "en-US",
                                         systemVersion: SystemUtils.osVersionString,
@@ -168,7 +185,7 @@ public extension TdApi {
                         break
                 }
             } catch {
-                print(error)
+                TdApi.logger.error(error.localizedDescription)
             }
         }
     }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,7 +20,7 @@
 		4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E4283FE2BE00D3378F /* DequeModule */; };
 		4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E6283FE2BE00D3378F /* OrderedCollections */; };
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
-		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; };
+		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; platformFilters = (macos, ); };
 		43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4B27E213350056A3D3 /* MessageSender.swift */; };
 		43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4C27E213350056A3D3 /* MessageContent.swift */; };
 		43807D8027E213350056A3D3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4D27E213350056A3D3 /* Message.swift */; };
@@ -28,7 +28,6 @@
 		43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5027E213350056A3D3 /* MocApp+Injection.swift */; };
 		43807D8427E213350056A3D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5127E213350056A3D3 /* Assets.xcassets */; };
 		43807D8527E213350056A3D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5227E213350056A3D3 /* Preview Assets.xcassets */; };
-		43807D8627E213350056A3D3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43807D5427E213350056A3D3 /* Info.plist */; };
 		43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5827E213350056A3D3 /* AccountsPrefView.swift */; };
 		43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5927E213350056A3D3 /* PrivacyPrefView.swift */; };
 		43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5A27E213350056A3D3 /* DataAndStoragePrefView.swift */; };
@@ -46,12 +45,12 @@
 		43807D9527E213350056A3D3 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6827E213350056A3D3 /* ChatView.swift */; };
 		43807D9627E213350056A3D3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6927E213350056A3D3 /* LoginView.swift */; };
 		43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6A27E213350056A3D3 /* ChatItemView.swift */; };
-		43807D9827E213350056A3D3 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6B27E213350056A3D3 /* LottieView.swift */; };
+		43807D9827E213350056A3D3 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6B27E213350056A3D3 /* LottieView.swift */; platformFilters = (macos, ); };
 		43807D9927E213350056A3D3 /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6D27E213350056A3D3 /* AppCommands.swift */; };
 		43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6E27E213350056A3D3 /* FolderItemView.swift */; };
 		43807D9B27E213350056A3D3 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6F27E213350056A3D3 /* ViewRouter.swift */; };
 		43807D9C27E213350056A3D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7027E213350056A3D3 /* ContentView.swift */; };
-		43807D9D27E213350056A3D3 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7227E213350056A3D3 /* SearchField.swift */; };
+		43807D9D27E213350056A3D3 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7227E213350056A3D3 /* SearchField.swift */; platformFilters = (macos, ); };
 		43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7527E213350056A3D3 /* XCAssets+Generated.swift */; };
 		43807D9F27E213350056A3D3 /* TDLibKit+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7727E213350056A3D3 /* TDLibKit+Protocols.swift */; };
 		43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7A27E213350056A3D3 /* AccountsPrefViewModel.swift */; };
@@ -67,6 +66,10 @@
 		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D389DE284A52A000214874 /* AutoEquatable.generated.swift */; };
+		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
+		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
+		43EC18E028566FC400FCAD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18DF28566FC400FCAD43 /* AppDelegate.swift */; platformFilter = ios; };
+		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +138,10 @@
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
 		43D389DE284A52A000214874 /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
+		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
+		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
+		43EC18DF28566FC400FCAD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +161,8 @@
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
 				43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */,
+				43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */,
+				43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
 				43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */,
 			);
@@ -193,6 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				43807CF727E1FCEC0056A3D3 /* Moc */,
+				43EC18DE28566F1E00FCAD43 /* iOS */,
+				43EC18DD28566F1800FCAD43 /* macOS */,
 				43807D2327E2129C0056A3D3 /* Backend */,
 				43016AA72842CDF800C219B4 /* Caching */,
 				43F871B7283E21C700B6C717 /* Logs */,
@@ -221,7 +232,6 @@
 				43807D5527E213350056A3D3 /* Views */,
 				43807D7427E213350056A3D3 /* SwiftGen */,
 				4360D7032840296300D3378F /* Generated */,
-				43807D4927E213350056A3D3 /* AppDelegate.swift */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
@@ -256,7 +266,6 @@
 			children = (
 				43807D5627E213350056A3D3 /* Preferences */,
 				43807D6C27E213350056A3D3 /* Commands */,
-				43807D7127E213350056A3D3 /* AppKit */,
 				43807D6327E213350056A3D3 /* Chat */,
 				4300853F283ABCA300ED5961 /* TDImage.swift */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
@@ -322,15 +331,6 @@
 			path = Commands;
 			sourceTree = "<group>";
 		};
-		43807D7127E213350056A3D3 /* AppKit */ = {
-			isa = PBXGroup;
-			children = (
-				43807D6B27E213350056A3D3 /* LottieView.swift */,
-				43807D7227E213350056A3D3 /* SearchField.swift */,
-			);
-			path = AppKit;
-			sourceTree = "<group>";
-		};
 		43807D7427E213350056A3D3 /* SwiftGen */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,10 +361,31 @@
 		43807DBA27E214970056A3D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				43EC18DB285620A800FCAD43 /* libc++abi.tbd */,
+				43EC18D92856207C00FCAD43 /* libSystem.B.tbd */,
 				43807DC627E214DD0056A3D3 /* libz.1.tbd */,
 				43807DC527E214D30056A3D3 /* libc++.1.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		43EC18DD28566F1800FCAD43 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				43807D6B27E213350056A3D3 /* LottieView.swift */,
+				43807D7227E213350056A3D3 /* SearchField.swift */,
+				43807D4927E213350056A3D3 /* AppDelegate.swift */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		43EC18DE28566F1E00FCAD43 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				43EC18DF28566FC400FCAD43 /* AppDelegate.swift */,
+				43EC18E12856782F00FCAD43 /* SearchField.swift */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,7 +461,7 @@
 				};
 			};
 			buildConfigurationList = 43807CF027E1FCEC0056A3D3 /* Build configuration list for PBXProject "Moc" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -474,7 +495,6 @@
 			files = (
 				43807D8527E213350056A3D3 /* Preview Assets.xcassets in Resources */,
 				43807D8427E213350056A3D3 /* Assets.xcassets in Resources */,
-				43807D8627E213350056A3D3 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43EC18E028566FC400FCAD43 /* AppDelegate.swift in Sources */,
 				43807DA227E213350056A3D3 /* MainViewModel.swift in Sources */,
 				43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */,
 				43807D8B27E213350056A3D3 /* StickersPrefView.swift in Sources */,
@@ -550,6 +571,7 @@
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
+				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
 				43ABC05D28500648009F529E /* ChatFolder.swift in Sources */,
@@ -631,6 +653,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -686,6 +709,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -700,9 +724,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Moc/Moc.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
@@ -714,6 +740,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -721,9 +748,13 @@
 				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -732,9 +763,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Moc/Moc.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
@@ -746,6 +779,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -753,8 +787,12 @@
 				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

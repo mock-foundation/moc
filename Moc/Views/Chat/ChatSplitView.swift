@@ -11,17 +11,28 @@ struct ChatSplitView<Left: View, Right: View>: View {
     var isRightViewVisible: Bool = true
     @ViewBuilder var leftView: () -> Left
     @ViewBuilder var rightView: () -> Right
+    
+    @ViewBuilder
+    private var content: some View {
+        leftView()
+        rightView()
+            .frame(
+                minWidth: isRightViewVisible ? 316 : 0,
+                idealWidth: isRightViewVisible ? 316 : 0,
+                maxWidth: isRightViewVisible ? nil : 0
+            )
+    }
 
     var body: some View {
+        #if os(macOS)
         HSplitView {
-            leftView()
-            rightView()
-                .frame(
-                    minWidth: isRightViewVisible ? 316 : 0,
-                    idealWidth: isRightViewVisible ? 316 : 0,
-                    maxWidth: isRightViewVisible ? nil : 0
-                )
+            content
         }
+        #elseif os(iOS)
+        HStack {
+            content
+        }
+        #endif
     }
 }
 

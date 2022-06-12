@@ -249,6 +249,7 @@ class MainViewModel: ObservableObject {
     }
     
     func authorization(_ notification: NCPO) {
+        logger.debug("Got authorization state update")
         showingLoginScreen = true
     }
 

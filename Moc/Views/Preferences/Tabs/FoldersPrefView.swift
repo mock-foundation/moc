@@ -69,6 +69,63 @@ struct FoldersPrefView: View {
             }
         }
     }
+    
+    private var folderList: some View {
+        List(viewModel.folders) { folder in
+            Label { Text(folder.title) } icon: {
+                Image(tdIcon: folder.iconName)
+            }
+            .font(.title2)
+            .padding(4)
+            .contextMenu {
+                Button {
+                    viewModel.showEditFolderSheet = true
+                } label: {
+                    Image(systemName: "pencil")
+                    Text("Edit")
+                }
+                Button(role: .destructive) {
+                    viewModel.folderIdToDelete = folder.id
+                    viewModel.showDeleteConfirmationAlert = true
+                } label: {
+                    Image(systemName: "trash")
+                    Text("Delete")
+                }
+            }
+            .swipeActions(edge: .leading) {
+                Button {
+                    viewModel.showEditFolderSheet = true
+                } label: {
+                    Text("Edit")
+                }
+            }
+            .swipeActions(edge: .trailing) {
+                Button(role: .destructive) {
+                    viewModel.folderIdToDelete = folder.id
+                    viewModel.showDeleteConfirmationAlert = true
+                } label: {
+                    Text("Delete")
+                }
+            }
+        }
+        .frame(minHeight: 150)
+        .alert("You sure?", isPresented: $viewModel.showDeleteConfirmationAlert) {
+            Button(role: .cancel) {} label: {
+                Text("Nope")
+            }
+            Button(role: .destructive) {
+                Task {
+                    try await viewModel.deleteFolder(by: viewModel.folderIdToDelete)
+                }
+            } label: {
+                Text("I am!")
+            }
+        }
+        .sheet(isPresented: $viewModel.showCreateFolderSheet) {
+            makeFolderManipulationView(.create)
+                .frame(width: 500)
+        }
+    }
 
     var body: some View {
         HStack {
@@ -80,61 +137,12 @@ struct FoldersPrefView: View {
                     .padding([.bottom, .horizontal])
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray)
-                List(viewModel.folders) { folder in
-                    Label { Text(folder.title) } icon: {
-                        Image(tdIcon: folder.iconName)
-                    }
-                    .font(.title2)
-                    .padding(4)
-                    .contextMenu {
-                        Button {
-                            viewModel.showEditFolderSheet = true
-                        } label: {
-                            Image(systemName: "pencil")
-                            Text("Edit")
-                        }
-                        Button(role: .destructive) {
-                            viewModel.folderIdToDelete = folder.id
-                            viewModel.showDeleteConfirmationAlert = true
-                        } label: {
-                            Image(systemName: "trash")
-                            Text("Delete")
-                        }
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            viewModel.showEditFolderSheet = true
-                        } label: {
-                            Text("Edit")
-                        }
-                    }
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            viewModel.folderIdToDelete = folder.id
-                            viewModel.showDeleteConfirmationAlert = true
-                        } label: {
-                            Text("Delete")
-                        }
-                    }
-                }
-                .listStyle(.bordered(alternatesRowBackgrounds: true))
-                .frame(minHeight: 150)
-                .alert("You sure?", isPresented: $viewModel.showDeleteConfirmationAlert) {
-                    Button(role: .cancel) {} label: {
-                        Text("Nope")
-                    }
-                    Button(role: .destructive) {
-                        Task {
-                            try await viewModel.deleteFolder(by: viewModel.folderIdToDelete)
-                        }
-                    } label: {
-                        Text("I am!")
-                    }
-                }
-                .sheet(isPresented: $viewModel.showCreateFolderSheet) {
-                    makeFolderManipulationView(.create)
-                        .frame(width: 500)
-                }
+                #if os(macOS)
+                folderList
+                    .listStyle(.bordered(alternatesRowBackgrounds: true))
+                #elseif os(iOS)
+                folderList
+                #endif
                 HStack {
                     Spacer()
                     Button {

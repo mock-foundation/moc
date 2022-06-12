@@ -5,13 +5,13 @@
 //  Created by Егор Яковенко on 12.01.2022.
 //
 
+import SwiftUI
 import AlertToast
 import Backend
 import Combine
 import Utilities
 import Logs
 import Resolver
-import SwiftUI
 import TDLibKit
 
 // swiftlint:disable type_body_length
@@ -35,12 +35,20 @@ struct AccountsPrefView: View {
     @State private var showInitErrorAlert = false
     @State private var showLogOutSuccessfulToast = false
     @State private var showLogOutFailedToast = false
+    
+    private func makePhoto(from file: File) -> Image {
+        #if os(macOS)
+        Image(nsImage: NSImage(contentsOf: URL(string: "file://\(file.local.path)")!)!)
+        #elseif os(iOS)
+        Image(uiImage: UIImage(contentsOfFile: "file://\(file.local.path)")!)
+        #endif
+    }
 
     private var photoSwitcher: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(photos, id: \.id) { photo in
-                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
+                    makePhoto(from: photo)
                         .resizable()
                         .scaledToFit()
                         .aspectRatio(contentMode: .fill)
@@ -138,10 +146,14 @@ struct AccountsPrefView: View {
                     Task {
                         do {
                             _ = try await viewModel.dataSource.logOut()
+                            #if os(macOS)
                             NSSound(named: "Glass")?.play()
+                            #endif
                             showLogOutSuccessfulToast = true
                         } catch {
+                            #if os(macOS)
                             NSSound(named: "Purr")?.play()
+                            #endif
                             showLogOutFailedToast = true
                         }
                     }
@@ -163,10 +175,17 @@ struct AccountsPrefView: View {
         Form {
             Section {
                 HStack {
+                    #if os(macOS)
                     Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
+                    #elseif os(iOS)
+                    Image(uiImage: UIImage(contentsOfFile: "file://\(photos[0].local.path)")!)
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
+                    #endif
                     Button(action: {}) {
                         Label("Update profile photo",
                               systemImage: "square.and.pencil")
@@ -273,7 +292,11 @@ struct AccountsPrefView: View {
             return
         }
         photoFileId = Int64(profilePhoto.big.id)
+        #if os(macOS)
         miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
+        #elseif os(iOS)
+        miniThumbnail = Image(uiImage: UIImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
+        #endif
 
         guard let photos = (try? await viewModel.dataSource.getProfilePhotos()) else {
             loading = false

@@ -23,7 +23,18 @@ public class CacheService {
         // Speed up development by nuking the database when migrations change
         migrator.eraseDatabaseOnSchemaChange = true
         #endif
-        dbQueue = try! DatabaseQueue(path: "cache.sqlite")
+        
+        var url = try! FileManager.default.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true)
+        if #available(macOS 13, iOS 16, *) {
+            url.append(path: "cache.sqlite")
+        } else {
+            url.appendPathComponent("cache.sqlite")
+        }
+        dbQueue = try! DatabaseQueue(path: url.absoluteString)
 
         registerMigrations()
         // Migrate if not already

@@ -71,6 +71,8 @@ struct LoginView: View {
     @State private var showLoadingSpinner = false
 
     @Environment(\.presentationMode) private var presentationMode
+    
+    #if os(macOS)
 
     func generateQRCode(from string: String) -> NSImage {
         let context = CIContext()
@@ -86,6 +88,25 @@ struct LoginView: View {
         
         return NSImage(systemSymbolName: "xmark.circle", accessibilityDescription: nil)!
     }
+    
+    #elseif os(iOS)
+    
+    func generateQRCode(from string: String) -> UIImage {
+        let context = CIContext()
+        let filter = CIFilter.qrCodeGenerator()
+        
+        filter.message = Data(string.utf8)
+        
+        if let outputImage = filter.outputImage {
+            if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+                return UIImage(cgImage: cgimg)
+            }
+        }
+        
+        return UIImage(systemName: "xmark.circle")!
+    }
+    
+    #endif
 
     var body: some View {
         // swiftlint:disable multiple_closures_with_trailing_closure
@@ -208,12 +229,21 @@ struct LoginView: View {
                         .font(.title)
                         .padding(.top)
                     // QR Code
+                    #if os(macOS)
                     Image(nsImage: generateQRCode(from: qrCodeLink))
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
                         .frame(width: 150, height: 150)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
+                    #elseif os(iOS)
+                    Image(uiImage: generateQRCode(from: qrCodeLink))
+                        .resizable()
+                        .interpolation(.none)
+                        .scaledToFit()
+                        .frame(width: 150, height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    #endif
                     VStack {
                         stepView(number: 1, text: "Open Telegram from your phone")
                         stepView(number: 2, text: "Go to **Settings** -> **Devices** -> **Connect device**.")
@@ -283,7 +313,11 @@ struct LoginView: View {
                 presentationMode.wrappedValue.dismiss()
                 Task {
                     try? await Task.sleep(nanoseconds: UInt64(0.5 * Double(NSEC_PER_SEC)))
+                    #if os(macOS)
                     NSApp.terminate(self)
+                    #elseif os(iOS)
+                    exit(0)
+                    #endif
                 }
             }
             Button("Not really") {}

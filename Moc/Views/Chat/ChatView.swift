@@ -121,9 +121,6 @@ struct ChatView: View {
                             .frame(height: 78)
                     }
                     .introspectScrollView { scrollView in
-                        scrollView.documentView?.bottomAnchor.constraint(
-                            equalTo: scrollView.bottomAnchor).isActive = true
-                        
                         viewModel.scrollView = scrollView
                     }
                     .onAppear {
@@ -132,10 +129,7 @@ struct ChatView: View {
                     }
                 }
                 Button {
-                    viewModel.scrollView?.documentView?.scroll(CGPoint(
-                        x: 0,
-                        y: viewModel.scrollView?.documentView?.frame.height ?? 0
-                    ))
+                    viewModel.scrollToEnd()
                 } label: {
                     Image(systemName: "arrow.down")
                 }
