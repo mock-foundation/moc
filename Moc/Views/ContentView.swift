@@ -62,23 +62,28 @@ struct ContentView: View {
     }
     
     private var chatListToolbar: some ToolbarContent {
-        Group {
-            ToolbarItem(placement: .status) {
+        #if os(macOS)
+        let placement: ToolbarItemPlacement = .status
+        #elseif os(iOS)
+        let placement: ToolbarItemPlacement = .navigationBarLeading
+        #endif
+        return Group {
+            ToolbarItem(placement: placement) {
                 Picker("", selection: $selectedTab) {
                     Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
                     Image(systemName: "phone.and.waveform").tag(Tab.calls)
                     Image(systemName: "person.2").tag(Tab.contacts)
                 }.pickerStyle(.segmented)
             }
-            ToolbarItem(placement: .status) {
+            ToolbarItem(placement: placement) {
                 Spacer()
             }
-            ToolbarItem(placement: .status) {
+            ToolbarItem(placement: placement) {
                 Toggle(isOn: $mainViewModel.isArchiveOpen) {
                     Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                 }
             }
-            ToolbarItem(placement: .status) {
+            ToolbarItem(placement: placement) {
                 // swiftlint:disable multiple_closures_with_trailing_closure
                 Button(action: { logger.info("Pressed add chat") }) {
                     Image(systemName: "square.and.pencil")
