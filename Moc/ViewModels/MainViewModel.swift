@@ -13,18 +13,19 @@ import TDLibKit
 import Logs
 import OrderedCollections
 import Backend
+import Caching
 
 class MainViewModel: ObservableObject {
     @Injected var service: MainService
         
     // just a helper function to filter out a set of chat positions
-    private func getPosition(from positions: [ChatPosition], chatList: ChatList) -> ChatPosition? {
+    private func getPosition(from positions: [ChatPosition], chatList: TDLibKit.ChatList) -> ChatPosition? {
         return positions.first { position in
             position.list == chatList
         }
     }
     
-    private func chats(from chatList: ChatList) -> [Chat] {
+    private func chats(from chatList: TDLibKit.ChatList) -> [Chat] {
         let chats = self.allChats.filter { chat in
             guard let positions = self.chatPositions[chat.id] else { return false }
             return self.getPosition(from: positions, chatList: chatList) != nil
@@ -43,36 +44,83 @@ class MainViewModel: ObservableObject {
     }
     
     var chatList: [Chat] {
-        if isArchiveChatListOpen {
-            return chats(from: .chatListArchive)
-        } else {
-            if selectedChatFilter == 999999 {
+        switch openChatList {
+            case .main:
                 return chats(from: .chatListMain)
-            } else {
-                return chats(from: .chatListFilter(.init(chatFilterId: selectedChatFilter)))
-            }
+            case .archive:
+                return chats(from: .chatListArchive)
+            case .filter(let id):
+                return chats(from: .chatListFilter(.init(chatFilterId: id)))
+        }
+    }
+    
+    @Published var unreadCounters: OrderedSet<Caching.UnreadCounter> = []
+    @Published var chatFilters: [TDLibKit.ChatFilterInfo] = []
+    
+    var mainUnreadCounter: Int {
+        unreadCounters
+            .first { $0.chatList == .main }?.chats ?? 0
+    }
+    
+    var folders: [ChatFolder] {
+        // TODO: Implement chat folders
+        return chatFilters.map { filter in
+            
+            return ChatFolder(
+                title: filter.title,
+                id: filter.id,
+                iconName: filter.iconName,
+                unreadCounter: unreadCounters
+                    .first { $0.chatList == .filter(filter.id) }?
+                    .chats ?? 0)
         }
     }
     
     @Published var allChats: OrderedSet<Chat> = []
     @Published var chatPositions: [Int64: [ChatPosition]] = [:]
     
-    /// ID of the filter open. 999999 is the main chat list.
-    @Published var selectedChatFilter: Int = 999999 {
+    @Published var openChatList: Caching.ChatList = .main {
         didSet {
+            logger.trace("openChatList: \(openChatList)")
+            if openChatList != .archive {
+                openChatListBuffer = openChatList
+            }
             Task {
-                try await TdApi.shared[0].loadChats(
-                    chatList: .chatListFilter(.init(chatFilterId: selectedChatFilter)),
-                    limit: 30)
+                switch openChatList {
+                    case .main:
+                        try await TdApi.shared[0].loadChats(
+                            chatList: .chatListMain,
+                            limit: 30)
+                    case .archive:
+                        try await TdApi.shared[0].loadChats(
+                            chatList: .chatListArchive,
+                            limit: 30)
+                    case .filter(let id):
+                        try await TdApi.shared[0].loadChats(
+                            chatList: .chatListFilter(.init(chatFilterId: id)),
+                            limit: 30)
+                }
             }
         }
     }
     
-    // TODO: Add a new array/set for unread counters
-    @Published var chatFilters: OrderedSet<Backend.ChatFilter> = []
+    private var openChatListBuffer: Caching.ChatList = .main {
+        didSet {
+            logger.trace("openChatListBuffer: \(openChatListBuffer)")
+        }
+    }
+    
+    @Published var isArchiveOpen = false {
+        didSet {
+            if isArchiveOpen {
+                openChatList = .archive
+            } else {
+                openChatList = openChatListBuffer
+            }
+        }
+    }
 
     @Published var showingLoginScreen = false
-    @Published var isArchiveChatListOpen = false
 
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
@@ -80,10 +128,12 @@ class MainViewModel: ObservableObject {
     init() {
         if let filters = try? service.getFilters() {
             logger.debug("Filling chat filter with cached ones: \(filters)")
-            chatFilters = OrderedSet(filters)
+            chatFilters = filters.map { filter in
+                ChatFilterInfo(iconName: filter.iconName, id: filter.id, title: filter.title)
+            }
             logger.trace("\(filters.count), \(chatFilters.count)")
         } else {
-            logger.debug("There was an issue retrieving cached chat filters, using empty array")
+            logger.debug("There was an issue retrieving cached chat filters (maybe empty?), using empty OrderedSet")
             chatFilters = []
         }
         addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
@@ -102,54 +152,41 @@ class MainViewModel: ObservableObject {
     }
     
     func updateUnreadChatCount(_ notification: NCPO) {
+        logger.debug("UpdateUnreadChatCount")
         let update = notification.object as! UpdateUnreadChatCount
-        // TODO: Rewrite the unread counters logic
+        
+        var shouldBeAdded = true
+        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+        let unreads = try! service.getUnreadCounters()
+        
+        logger.debug("Going through unreads")
+        for unread in unreads where chatList == unread.chatList {
+            logger.debug("Found a one to be updated")
+            let newValue = UnreadCounter(
+                chats: update.unreadCount,
+                messages: unread.messages,
+                chatList: unread.chatList
+            )
+            unreadCounters.updateOrAppend(newValue)
+            shouldBeAdded = false
+        }
+        
+        if shouldBeAdded {
+            logger.debug("Adding a new one")
+            unreadCounters.append(UnreadCounter(
+                chats: update.unreadCount,
+                messages: 0,
+                chatList: chatList
+            ))
+        }
     }
     
     func updateChatFilters(_ notification: NCPO) {
         let update = notification.object as! UpdateChatFilters
         logger.debug("Chat filter update")
         
-        // TODO: Update chat filters logic
-
-        DispatchQueue.main.async { [self] in
-            withAnimation {
-                for chatFilter in update.chatFilters {
-                    let newData = Backend.ChatFilter(
-                        title: chatFilter.title,
-                        id: chatFilter.id,
-                        iconName: chatFilter.iconName,
-                        unreadCount: chatFilters.first { filter in
-                            filter.id == chatFilter.id
-                        }?.unreadCount ?? 0
-                    )
-                    
-                    logger.debug("Created new data struct \(newData)")
-                    logger.trace("\(chatFilters.count), \(chatFilters)")
-                    
-                    if chatFilters.contains(where: {
-                        logger.trace("\($0.id) == \(chatFilter.id)")
-                        return $0.id == chatFilter.id
-                    }) {
-                        logger.debug("Chat filters contain a filter with id \(chatFilter.id), updating existing")
-                        if let index = chatFilters.firstIndex(where: {
-                            logger.trace("\($0.id) == \(chatFilter.id)")
-                            return $0.id == chatFilter.id
-                        }) {
-                            chatFilters.update(newData, at: index)
-                        }
-                    } else {
-                        logger.debug("Chat filters does not contain a filter with id \(chatFilter.id), creating a new one")
-                        chatFilters.append(newData)
-                    }
-                }
-                for chatFilter in chatFilters {
-                    if !update.chatFilters.contains(where: { $0.id == chatFilter.id }) {
-                        logger.debug("Received chat filters do not contain a filter that is already saved, removing")
-                        chatFilters.remove(at: chatFilters.firstIndex { $0.id == chatFilter.id }!)
-                    }
-                }
-            }
+        withAnimation {
+            chatFilters = update.chatFilters
         }
     }
 

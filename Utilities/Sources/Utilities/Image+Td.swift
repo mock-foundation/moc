@@ -14,7 +14,7 @@ public extension Image {
             case "All": self.init(systemName: "bubble.left.and.bubble.right")
             case "Unread": self.init(systemName: "exclamationmark.bubble")
             case "Unmuted": self.init(systemName: "text.bubble")
-            case "Bots": self.init("bot")
+            case "Bots": self.init(systemName: "pc")
             case "Channels": self.init(systemName: "megaphone")
             case "Groups": self.init(systemName: "person.2")
             case "Private": self.init(systemName: "person")

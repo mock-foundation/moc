@@ -9,17 +9,17 @@ public struct ChatFilter: Hashable, Identifiable {
     public let title: String
     public let id: Int
     public let iconName: String
-    public let unreadCount: Int
+    public let order: Int
     
     public init(
         title: String,
         id: Int,
         iconName: String,
-        unreadCount: Int
+        order: Int
     ) {
         self.title = title
         self.id = id
         self.iconName = iconName
-        self.unreadCount = unreadCount
+        self.order = order
     }
 }

@@ -7,7 +7,7 @@
 
 import GRDB
 
-public struct UnreadCounter: Codable, FetchableRecord, PersistableRecord {
+public struct UnreadCounter: Codable, Hashable, FetchableRecord, PersistableRecord {
     public var chats: Int
     public var messages: Int
     public var chatList: ChatList

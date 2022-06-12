@@ -7,7 +7,7 @@
 
 import GRDB
 
-public enum ChatList: Codable, Equatable, DatabaseValueConvertible {
+public enum ChatList: Codable, Equatable, Hashable, DatabaseValueConvertible {
     case main
     case archive
     /// A filter chat list with an `id`.

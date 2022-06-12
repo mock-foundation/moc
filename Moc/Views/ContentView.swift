@@ -74,8 +74,8 @@ struct ContentView: View {
                 Spacer()
             }
             ToolbarItem(placement: .status) {
-                Toggle(isOn: $mainViewModel.isArchiveChatListOpen) {
-                    Image(systemName: mainViewModel.isArchiveChatListOpen ? "archivebox.fill" : "archivebox")
+                Toggle(isOn: $mainViewModel.isArchiveOpen) {
+                    Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                 }
             }
             ToolbarItem(placement: .status) {
@@ -92,23 +92,26 @@ struct ContentView: View {
             Group {
                 switch selectedTab {
                     case .chat:
-                        FolderItemView(name: "All chats", icon: Image(systemName: "bubble.left.and.bubble.right"))
-                            .background(mainViewModel.selectedChatFilter == 999999
+                        FolderItemView(
+                            name: "All chats",
+                            icon: Image(systemName: "bubble.left.and.bubble.right"),
+                            unreadCount: mainViewModel.mainUnreadCounter)
+                            .background(mainViewModel.openChatList == .main
                                         ? Color("SelectedColor") : Color.clear)
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                             .onTapGesture {
-                                mainViewModel.selectedChatFilter = 999999
+                                mainViewModel.openChatList = .main
                             }
-                        ForEach(mainViewModel.chatFilters) { filter in
+                        ForEach(mainViewModel.folders) { folder in
                             FolderItemView(
-                                name: filter.title,
-                                icon: Image(tdIcon: filter.iconName),
-                                unreadCount: filter.unreadCount)
-                            .background(mainViewModel.selectedChatFilter == filter.id
+                                name: folder.title,
+                                icon: Image(tdIcon: folder.iconName),
+                                unreadCount: folder.unreadCounter)
+                            .background(mainViewModel.openChatList == .filter(folder.id)
                                         ? Color("SelectedColor") : Color.clear)
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                             .onTapGesture {
-                                mainViewModel.selectedChatFilter = filter.id
+                                mainViewModel.openChatList = .filter(folder.id)
                             }
                         }
                     case .contacts:
@@ -194,6 +197,11 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    init() {
+        Resolver.register { MockChatService() as ChatService }
+        Resolver.register { MockMainService() as MainService }
+    }
+    
     static var previews: some View {
         ContentView()
     }

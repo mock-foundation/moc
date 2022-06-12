@@ -92,9 +92,11 @@ class ChatViewModel: ObservableObject {
     
     func update(chat: Chat) async throws {
         service.set(chatId: chat.id)
-        chatID = chat.id
-        objectWillChange.send()
-        chatTitle = chat.title
+        DispatchQueue.main.async { [self] in
+            chatID = chat.id
+            objectWillChange.send()
+            chatTitle = chat.title
+        }
         let messageHistory: [Message] = try await service.messageHistory
             .asyncMap { tdMessage in
                 switch tdMessage.senderId {

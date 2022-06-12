@@ -7,7 +7,9 @@
 
 import Combine
 import TDLibKit
+import Caching
 
 public protocol MainService {
     func getFilters() throws -> [ChatFilter]
+    func getUnreadCounters() throws -> [UnreadCounter]
 }

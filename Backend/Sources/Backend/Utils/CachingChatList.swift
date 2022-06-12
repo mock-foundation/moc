@@ -8,7 +8,7 @@
 import Caching
 import TDLibKit
 
-extension Caching.ChatList {
+public extension Caching.ChatList {
     static func from(tdChatList: TDLibKit.ChatList) -> Self {
         switch tdChatList {
             case .chatListMain:
