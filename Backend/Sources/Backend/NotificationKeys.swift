@@ -69,6 +69,10 @@ public extension NSNotification.Name {
     static var updateChatLastMessage: NSNotification.Name {
         .init("UpdateChatLastMessage")
     }
+    
+    static var updateChatDraftMessage: Notification.Name {
+        .init(rawValue: "UpdateChatDraftMessage")
+    }
 
     static var updateNewChat: NSNotification.Name {
         .init("UpdateNewChat")
@@ -80,5 +84,13 @@ public extension NSNotification.Name {
     
     static var updateChatFilters: Notification.Name {
         .init(rawValue: "UpdateChatFilters")
+    }
+    
+    static var updateUnreadChatCount: Notification.Name {
+        .init(rawValue: "UpdateUnreadChatCount")
+    }
+    
+    static var updateUnreadMessageCount: Notification.Name {
+        .init(rawValue: "UpdateUnreadMessageCount")
     }
 }

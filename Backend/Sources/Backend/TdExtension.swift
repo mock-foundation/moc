@@ -5,13 +5,11 @@
 //  Created by Егор Яковенко on 18.01.2022.
 //
 
-import CryptoKit
-import Foundation
-import KeychainSwift
-import Logs
-import Utilities
-import TDLibKit
 import Caching
+import Foundation
+import Logs
+import TDLibKit
+import Utilities
 
 public extension TdApi {
     /// A list of shared instances. Why list? There could be multiple `TDLib` instances
@@ -21,7 +19,7 @@ public extension TdApi {
     static var shared: [TdApi] = []
 
     private static let logger = Logs.Logger(label: "TDLib", category: "Updates")
-    
+
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
         Task {
@@ -32,6 +30,7 @@ public extension TdApi {
             #endif
         }
         client.run {
+            let cache = CacheService.shared
             do {
                 let update = try self.decoder.decode(Update.self, from: $0)
             
@@ -45,9 +44,7 @@ public extension TdApi {
                                     try? await self.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
                                         apiId: Secret.apiId,
-                                        applicationVersion: (
-                                            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-                                        ) ?? "Unknown",
+                                        applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
                                         databaseDirectory: "td",
                                         deviceModel: SystemUtils.macModel,
                                         enableStorageOptimizer: true,
@@ -62,21 +59,21 @@ public extension TdApi {
                                         useTestDc: false
                                     ))
                                 }
-                            case let .authorizationStateWaitEncryptionKey(info):
-                                SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, with: info)
+                            case let .authorizationStateWaitEncryptionKey(update):
+                                SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, with: update)
                                 Task {
                                     try? await self.checkDatabaseEncryptionKey(
-                                        encryptionKey: TdApi.tdDatabaseEncryptionKey
+                                        encryptionKey: Data()
                                     )
                                 }
                             case .authorizationStateWaitPhoneNumber:
                                 SystemUtils.post(notification: .authorizationStateWaitPhoneNumber)
-                            case let .authorizationStateWaitCode(info):
-                                SystemUtils.post(notification: .authorizationStateWaitCode, with: info)
-                            case let .authorizationStateWaitRegistration(info):
-                                SystemUtils.post(notification: .authorizationStateWaitRegistration, with: info)
-                            case let .authorizationStateWaitPassword(info):
-                                SystemUtils.post(notification: .authorizationStateWaitPassword, with: info)
+                            case let .authorizationStateWaitCode(update):
+                                SystemUtils.post(notification: .authorizationStateWaitCode, with: update)
+                            case let .authorizationStateWaitRegistration(update):
+                                SystemUtils.post(notification: .authorizationStateWaitRegistration, with: update)
+                            case let .authorizationStateWaitPassword(update):
+                                SystemUtils.post(notification: .authorizationStateWaitPassword, with: update)
                             case .authorizationStateReady:
                                 Task {
                                     do {
@@ -87,10 +84,10 @@ public extension TdApi {
                                     }
                                 }
                                 SystemUtils.post(notification: .authorizationStateReady)
-                            case let .authorizationStateWaitOtherDeviceConfirmation(info):
+                            case let .authorizationStateWaitOtherDeviceConfirmation(update):
                                 SystemUtils.post(
                                     notification: .authorizationStateWaitOtherDeviceConfirmation,
-                                    with: info
+                                    with: update
                                 )
                             case .authorizationStateLoggingOut:
                                 SystemUtils.post(notification: .authorizationStateLoggingOut)
@@ -102,45 +99,77 @@ public extension TdApi {
 
                     // MARK: - Chat updates
 
-                    case let .updateChatPosition(info):
-                        SystemUtils.post(notification: .updateChatPosition, with: info)
-                    case let .updateNewMessage(info):
-                        SystemUtils.post(notification: .updateNewMessage, with: info)
-                    case let .updateChatLastMessage(info):
-                        SystemUtils.post(notification: .updateChatLastMessage, with: info)
-                    case let .updateNewChat(info):
-                        SystemUtils.post(notification: .updateNewChat, with: info)
-                    case let .updateFile(info):
-                        SystemUtils.post(notification: .updateFile, with: info)
-                    case let .updateChatFilters(info):
-                        for chatFilter in info.chatFilters {
-                            CacheService.shared.save(object: Caching.ChatFilter(
-                                title: chatFilter.title,
-                                id: chatFilter.id,
-                                iconName: chatFilter.iconName)
-                            )
+                    case let .updateChatPosition(update):
+                        SystemUtils.post(notification: .updateChatPosition, with: update)
+                    case let .updateChatLastMessage(update):
+                        SystemUtils.post(notification: .updateChatLastMessage, with: update)
+                    case let .updateChatDraftMessage(update):
+                        SystemUtils.post(notification: .updateChatDraftMessage, with: update)
+                    case let .updateNewMessage(update):
+                        SystemUtils.post(notification: .updateNewMessage, with: update)
+                    case let .updateNewChat(update):
+                        SystemUtils.post(notification: .updateNewChat, with: update)
+                    case let .updateFile(update):
+                        SystemUtils.post(notification: .updateFile, with: update)
+                    case let .updateChatFilters(update):
+                        SystemUtils.post(notification: .updateChatFilters, with: update)
+
+                        try cache.deleteAll(records: Caching.ChatFilter.self)
+                        for (index, filter) in update.chatFilters.enumerated() {
+                            try cache.save(record: Caching.ChatFilter(
+                                title: filter.title,
+                                id: filter.id,
+                                iconName: filter.iconName,
+                                order: index))
                         }
-                        SystemUtils.post(notification: .updateChatFilters, with: info)
+                    case let .updateUnreadChatCount(update):
+                        SystemUtils.post(notification: .updateUnreadChatCount, with: update)
+
+                        var shouldBeAdded = true
+                        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+                        let records = try cache.getRecords(as: UnreadCounter.self)
+                        
+                        for record in records where chatList == record.chatList {
+                            try cache.modify(record: UnreadCounter.self, at: chatList) { record in
+                                record.chats = update.unreadCount
+                            }
+                            shouldBeAdded = false
+                        }
+                        
+                        if shouldBeAdded {
+                            try cache.save(record: UnreadCounter(
+                                chats: update.unreadCount,
+                                messages: 0,
+                                chatList: chatList
+                            ))
+                        }
+                    case let .updateUnreadMessageCount(update):
+                        SystemUtils.post(notification: .updateUnreadMessageCount, with: update)
+                        
+                        var shouldBeAdded = true
+                        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+                        let records = try cache.getRecords(as: UnreadCounter.self)
+                        
+                        for record in records where chatList == record.chatList {
+                            try cache.modify(record: UnreadCounter.self, at: chatList) { record in
+                                record.messages = update.unreadCount
+                            }
+                            shouldBeAdded = false
+                        }
+                        
+                        if shouldBeAdded {
+                            try cache.save(record: UnreadCounter(
+                                chats: 0,
+                                messages: update.unreadCount,
+                                chatList: chatList
+                            ))
+                        }
                     default:
                         break
                 }
             } catch {
-                
+                print(error)
             }
-        }
-    }
-
-    static var tdDatabaseEncryptionKey: Data {
-        let keychain = KeychainSwift()
-        let encryptionKey = keychain.getData(tdDatabaseEncryptionKeyName)
-        if encryptionKey == nil {
-            let key = SymmetricKey(size: .bits256).withUnsafeBytes {
-                Data(Array($0))
-            }
-            keychain.set(key, forKey: tdDatabaseEncryptionKeyName, withAccess: .accessibleAfterFirstUnlock)
-            return key
-        } else {
-            return encryptionKey!
         }
     }
 }

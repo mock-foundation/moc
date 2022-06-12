@@ -2,16 +2,14 @@
 //  ChatFilter.swift
 //  
 //
-//  Created by Егор Яковенко on 31.05.2022.
+//  Created by Егор Яковенко on 03.06.2022.
 //
 
-import GRDB
-
-public struct ChatFilter: Codable, FetchableRecord, PersistableRecord {
-    public var title: String
-    public var id: Int
-    public var iconName: String
-    public var order: Int
+public struct ChatFilter: Hashable, Identifiable {
+    public let title: String
+    public let id: Int
+    public let iconName: String
+    public let order: Int
     
     public init(
         title: String,

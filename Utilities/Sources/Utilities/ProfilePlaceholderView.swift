@@ -44,6 +44,8 @@ public struct ProfilePlaceholderView: View {
 
 struct ProfilePlaceholderView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfilePlaceholderView(userId: 736211268, firstName: "Андрей", lastName: "Shooting at Knee", style: .large)
+        ProfilePlaceholderView(userId: 736211268, firstName: "Андрей", lastName: "Shooting at Knee", style: .normal)
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
     }
 }

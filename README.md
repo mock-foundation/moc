@@ -27,6 +27,10 @@ If you have any questions, ask them in [Discussions](https://github.com/ggoraa/m
 # Screenshots
 ![](images/screenshots/light/main.png)
 ![](images/screenshots/dark/main.png)
+![](images/screenshots/light/folders.png)
+![](images/screenshots/dark/folders.png)
+![](images/screenshots/light/account.png)
+![](images/screenshots/dark/account.png)
 
 # Contributing
 
@@ -36,7 +40,7 @@ If you want to contribute a new feature, please make sure you have read the [pro
 
 ## Step 1 - Download right version of Xcode
 
-The development is going with Xcode 13.2. You can download it from
+The development is going with Xcode 13.3ю. You can download it from
 [Apple Developer](https://developer.apple.com/download/release/).
 
 ## Step 2 - Obtain `api_id` and `api_hash`

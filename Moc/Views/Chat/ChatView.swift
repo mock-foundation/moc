@@ -81,17 +81,9 @@ struct ChatView: View {
                 .lineLimit(nil)
                 .textFieldStyle(.plain)
                 .padding(6)
-                .padding(.horizontal, 8)
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 16)
-                        .strokeBorder(
-                            Color("InputFieldBorderColor"),
-                            lineWidth: 1
-                        )
-                )
                 .onReceive(inputMessage.publisher) { _ in
-                    // TODO: handle drafts
+                    viewModel.updateAction(with: .chatActionTyping)
+                    // TODO: handle message input updates
                 }
                 .onSubmit {
                     viewModel.sendMessage(inputMessage)
@@ -108,10 +100,11 @@ struct ChatView: View {
     // MARK: - Chat view
 
     private var chatView: some View {
-        VStack {
+        ZStack {
             ZStack {
                 ScrollViewReader { proxy in
                     ScrollView {
+                        Spacer()
                         ForEach(viewModel.messages) { message in
                             HStack {
                                 if message.isOutgoing { Spacer().border(.white) }
@@ -124,6 +117,8 @@ struct ChatView: View {
                                 view.padding(.leading, 6)
                             }
                         }
+                        Color.clear
+                            .frame(height: 78)
                     }
                     .introspectScrollView { scrollView in
                         scrollView.documentView?.bottomAnchor.constraint(
@@ -159,8 +154,12 @@ struct ChatView: View {
                 .vBottom()
                 .hTrailing()
                 .padding()
+                .padding(.bottom, 64)
             }
             inputField
+                .padding(8)
+                .background(.ultraThinMaterial, in: Capsule())
+                .vBottom()
                 .padding()
         }
     }
@@ -311,25 +310,23 @@ struct ChatView: View {
             // MARK: - Toolbar
 
             .toolbar {
-                ToolbarItem(placement: .navigation) {
-                    if !viewModel.isInspectorShown {
-                        if viewModel.chatPhoto != nil {
-                            TDImage(file: viewModel.chatPhoto!)
-                                .frame(width: 32, height: 32)
-                                .clipShape(Circle())
-                        } else {
-                            ProfilePlaceholderView(
-                                userId: viewModel.chatID,
-                                firstName: viewModel.chatTitle,
-                                lastName: "",
-                                style: .small
-                            )
+                ToolbarItemGroup(placement: .navigation) {
+                    // Chat photo
+                    if viewModel.chatPhoto != nil {
+                        TDImage(file: viewModel.chatPhoto!)
                             .frame(width: 32, height: 32)
                             .clipShape(Circle())
-                        }
+                    } else {
+                        ProfilePlaceholderView(
+                            userId: viewModel.chatID,
+                            firstName: viewModel.chatTitle,
+                            lastName: "",
+                            style: .small
+                        )
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
                     }
-                }
-                ToolbarItem(placement: .navigation) {
+                    // Chat title and quick info
                     VStack(alignment: .leading) {
                         Text(viewModel.chatTitle)
                             .font(.headline)
@@ -337,20 +334,21 @@ struct ChatView: View {
                             .font(.subheadline)
                     }
                 }
-                ToolbarItemGroup {
-                    Button(action: {
+                
+                ToolbarItemGroup(placement: .primaryAction) {
+                    Button {
                         print("search")
-                    }, label: {
+                    } label: {
                         Image(systemName: "magnifyingglass")
-                    })
-                    Button(action: { isInspectorShown.toggle() }, label: {
+                    }
+                    Button { isInspectorShown.toggle() } label: {
                         Image(systemName: "sidebar.right")
-                    })
-                    Button(action: {
+                    }
+                    Button {
                         print("more")
-                    }, label: {
+                    } label: {
                         Image(systemName: "ellipsis")
-                    })
+                    }
                 }
             }
     }

@@ -83,14 +83,20 @@ class ChatViewModel: ObservableObject {
     }
     
     func scrollToEnd() {
-        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
+//        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
+        scrollView?.documentView?.scroll(CGPoint(
+            x: 0,
+            y: scrollView?.documentView?.frame.height ?? 0
+        ))
     }
     
     func update(chat: Chat) async throws {
         service.set(chatId: chat.id)
-        chatID = chat.id
-        objectWillChange.send()
-        chatTitle = chat.title
+        DispatchQueue.main.async { [self] in
+            chatID = chat.id
+            objectWillChange.send()
+            chatTitle = chat.title
+        }
         let messageHistory: [Message] = try await service.messageHistory
             .asyncMap { tdMessage in
                 switch tdMessage.senderId {
@@ -136,13 +142,15 @@ class ChatViewModel: ObservableObject {
         }
     }
     
+    func updateAction(with action: ChatAction) {
+        Task {
+            try await service.setAction(action)
+        }
+    }
+    
     func sendMessage(_ message: String) {
         Task {
             try await service.sendMessage(message)
         }
     }
-
-//        .onReceive(SystemUtils.ncPublisher(for: .updateNewMessage)) { notification in
-
-//        }
 }

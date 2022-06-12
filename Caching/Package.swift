@@ -14,14 +14,16 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/groue/GRDB.swift.git", from: "5.24.1"),
-        .package(path: "../Utilities")
+        .package(path: "../Utilities"),
+        .package(path: "../Logs")
     ],
     targets: [
         .target(
             name: "Caching",
             dependencies: [
                 .product(name: "GRDB", package: "GRDB.swift"),
-                "Utilities"
+                "Utilities",
+                "Logs"
             ])
     ]
 )

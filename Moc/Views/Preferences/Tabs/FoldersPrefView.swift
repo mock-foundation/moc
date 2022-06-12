@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import Utilities
 
 private enum FolderManipulationMode {
     case edit
@@ -16,15 +17,6 @@ private enum FolderManipulationMode {
 struct FoldersPrefView: View {
     @StateObject private var viewModel = FoldersPrefViewModel()
 
-    @State private var selectedFolders: Set<ChatFilterInfo> = []
-    @State private var showDeleteConfirmationAlert = false
-    @State private var showCreateFolderSheet = false
-    @State private var showEditFolderSheet = false
-    
-    @State private var folderIdToEdit = 0
-    
-    @State private var createFolderName = ""
-    
     fileprivate func makeFolderManipulationView(_ mode: FolderManipulationMode) -> some View {
         VStack {
             Image("MockChatPhoto")
@@ -34,9 +26,9 @@ struct FoldersPrefView: View {
             Text(mode == .edit ? "Edit folder" : "Create a new folder")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            
+
             Form {
-                TextField("Folder name", text: $createFolderName)
+                TextField("Folder name", text: $viewModel.createFolderName)
                     .padding()
                 Section("Included chats") {
                     // TODO: implement included chats editor
@@ -51,23 +43,33 @@ struct FoldersPrefView: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button(role: .cancel) {
-                    showCreateFolderSheet = false
+                    viewModel.showCreateFolderSheet = false
                 } label: {
                     Text("Cancel")
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button {
-                    //                showCreateFolderSheet = false
+                    Task {
+                        do {
+                            try await viewModel.createFolder()
+                            viewModel.showCreateFolderSheet = false
+                        } catch {
+                            viewModel.createFolderSheetErrorAlertText = (error as! TDLibKit.Error).message
+                            viewModel.createFolderSheetErrorAlertShown = true
+                        }
+                    }
                 } label: {
                     Text(mode == .edit ? "Finish" : "Create folder")
                 }
                 .buttonStyle(.borderedProminent)
+                .alert("Error!", isPresented: $viewModel.createFolderSheetErrorAlertShown) {} message: {
+                    Text(viewModel.createFolderSheetErrorAlertText)
+                }
             }
-            
         }
     }
-    
+
     var body: some View {
         HStack {
             VStack {
@@ -86,13 +88,14 @@ struct FoldersPrefView: View {
                     .padding(4)
                     .contextMenu {
                         Button {
-                            showEditFolderSheet = true
+                            viewModel.showEditFolderSheet = true
                         } label: {
                             Image(systemName: "pencil")
                             Text("Edit")
                         }
                         Button(role: .destructive) {
-                            showDeleteConfirmationAlert = true
+                            viewModel.folderIdToDelete = folder.id
+                            viewModel.showDeleteConfirmationAlert = true
                         } label: {
                             Image(systemName: "trash")
                             Text("Delete")
@@ -100,42 +103,42 @@ struct FoldersPrefView: View {
                     }
                     .swipeActions(edge: .leading) {
                         Button {
-                            showEditFolderSheet = true
+                            viewModel.showEditFolderSheet = true
                         } label: {
                             Text("Edit")
                         }
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            showDeleteConfirmationAlert = true
+                            viewModel.folderIdToDelete = folder.id
+                            viewModel.showDeleteConfirmationAlert = true
                         } label: {
                             Text("Delete")
                         }
-                        
                     }
                 }
                 .listStyle(.bordered(alternatesRowBackgrounds: true))
                 .frame(minHeight: 150)
-                .alert("You sure?", isPresented: $showDeleteConfirmationAlert) {
-                    Button(role: .cancel) {
-                        
-                    } label: {
+                .alert("You sure?", isPresented: $viewModel.showDeleteConfirmationAlert) {
+                    Button(role: .cancel) {} label: {
                         Text("Nope")
                     }
                     Button(role: .destructive) {
-                        
+                        Task {
+                            try await viewModel.deleteFolder(by: viewModel.folderIdToDelete)
+                        }
                     } label: {
                         Text("I am!")
                     }
                 }
-                .sheet(isPresented: $showCreateFolderSheet) {
+                .sheet(isPresented: $viewModel.showCreateFolderSheet) {
                     makeFolderManipulationView(.create)
                         .frame(width: 500)
                 }
                 HStack {
                     Spacer()
                     Button {
-                        showCreateFolderSheet = true
+                        viewModel.showCreateFolderSheet = true
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -143,15 +146,21 @@ struct FoldersPrefView: View {
             }
             List {
                 Section("Recommended") {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Title")
-                                .fontWeight(.medium)
-                            Text("Description")
-                                .foregroundColor(.gray)
+                    ForEach(viewModel.recommended, id: \.self) { recommendation in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(recommendation.filter.title)
+                                    .fontWeight(.bold)
+                                Text(recommendation.description)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Button("Add") {
+                                Task {
+                                    try await viewModel.createFolder(from: recommendation.filter)
+                                }
+                            }
                         }
-                        Spacer()
-                        Button("Add") { }
                     }
                 }
                 Section("Layout") {
