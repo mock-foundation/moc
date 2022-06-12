@@ -22,7 +22,7 @@ struct FolderItemView<Icon: View>: View {
         self.unreadCount = unreadCount
     }
     
-    var body: some View {
+    private var content: some View {
         VStack {
             icon
                 .font(.system(size: 22))
@@ -30,35 +30,40 @@ struct FolderItemView<Icon: View>: View {
         }
         .padding(.vertical)
         .frame(width: 80, height: 64)
-        .if(unreadCount != 0) { view in
-            view
-            .reverseMask(alignment: .topTrailing) {
-                Text("\(unreadCount)")
-                    .foregroundColor(.white)
-                    .padding(8)
-                    .background(Capsule(style: .continuous)
-                        .fill(.black))
-                    .vTop()
-                    .hTrailing()
-            }
-            .overlay(
-                Text("\(unreadCount)")
-                    .foregroundColor(.white)
-                    .padding(8)
-                    .background(Capsule(style: .continuous)
-                        .fill(.blue)
-                        .padding(4)
-                                
-                    ), alignment: .topTrailing)
-        }
-        
-        .background(backgroundColor)
         .onHover { isHovered in
             if isHovered {
                 backgroundColor = Color("OnHoverColor")
             } else {
                 backgroundColor = Color.clear
             }
+        }
+    }
+    
+    var body: some View {
+        if unreadCount != 0 {
+            content
+                .reverseMask(alignment: .topTrailing) {
+                    Text("\(unreadCount)")
+                        .foregroundColor(.white)
+                        .padding(8)
+                        .background(Capsule(style: .continuous)
+                            .fill(.black))
+                        .vTop()
+                        .hTrailing()
+                }
+                .overlay(
+                    Text("\(unreadCount)")
+                        .foregroundColor(.white)
+                        .padding(8)
+                        .background(Capsule(style: .continuous)
+                            .fill(.blue)
+                            .padding(4)
+                                    
+                        ), alignment: .topTrailing)
+                .background(backgroundColor)
+        } else {
+            content
+                .background(backgroundColor)
         }
     }
 }

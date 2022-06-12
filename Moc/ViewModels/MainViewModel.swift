@@ -54,7 +54,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    @Published var unreadCounters: OrderedSet<Caching.UnreadCounter> = []
+    @Published var unreadCounters: [Caching.UnreadCounter] = []
     @Published var chatFilters: [TDLibKit.ChatFilterInfo] = []
     
     var mainUnreadCounter: Int {
@@ -65,7 +65,6 @@ class MainViewModel: ObservableObject {
     var folders: [ChatFolder] {
         // TODO: Implement chat folders
         return chatFilters.map { filter in
-            
             return ChatFolder(
                 title: filter.title,
                 id: filter.id,
@@ -167,7 +166,10 @@ class MainViewModel: ObservableObject {
                 messages: unread.messages,
                 chatList: unread.chatList
             )
-            unreadCounters.updateOrAppend(newValue)
+            if let index = unreadCounters.firstIndex(where: { $0.chatList == chatList }) {
+                unreadCounters.remove(at: index)
+            }
+            unreadCounters.append(newValue)
             shouldBeAdded = false
         }
         
@@ -179,6 +181,9 @@ class MainViewModel: ObservableObject {
                 chatList: chatList
             ))
         }
+        
+        logger.debug("\(unreadCounters)")
+        logger.debug("\(chatFilters)")
     }
     
     func updateChatFilters(_ notification: NCPO) {
