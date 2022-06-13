@@ -57,7 +57,8 @@ struct ContentView: View {
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
-            }.padding(.trailing, 12)
+            }
+            .padding(.trailing, 12)
         }
     }
     
@@ -91,7 +92,7 @@ struct ContentView: View {
             }
         }
     }
-    
+        
     private var filterBar: some View {
         ScrollView(showsIndicators: false) {
             Group {
@@ -145,9 +146,13 @@ struct ContentView: View {
     
     private var chats: some View {
         VStack {
+            #if os(macOS)
             SearchField()
                 .controlSize(.large)
                 .padding(.trailing, 12)
+            #elseif os(iOS)
+            SearchField()
+            #endif
             Group {
                 switch selectedTab {
                     case .chat:
@@ -158,27 +163,54 @@ struct ContentView: View {
                         Text("Calls")
                 }
             }
-            .frame(minWidth: 300, maxHeight: .infinity)
+            .frame(maxHeight: .infinity)
         }
         .toolbar {
             chatListToolbar
         }
     }
+    
+    private var sidebar: some View {
+        #if os(macOS)
+        HStack {
+            filterBar
+            chats
+        }
+        .frame(minWidth: 400)
+        #elseif os(iOS)
+        VStack {
+            chats
+        }
+        #endif
+    }
 
     var body: some View {
-        NavigationView {
-            HStack {
-                filterBar
-                chats
-            }
-            .listStyle(.sidebar)
-
-            switch viewRouter.currentView {
-            case .selectChat:
-                chatPlaceholder
-            case .chat:
-                ChatView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        Group {
+            if #available(macOS 13, iOS 16, *) {
+                NavigationSplitView {
+                    sidebar
+                } detail: {
+                    switch viewRouter.currentView {
+                        case .selectChat:
+                            chatPlaceholder
+                        case .chat:
+                            ChatView()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                }
+            } else {
+                NavigationView {
+                    sidebar
+                    .listStyle(.sidebar)
+                    
+                    switch viewRouter.currentView {
+                        case .selectChat:
+                            chatPlaceholder
+                        case .chat:
+                            ChatView()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                }
             }
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {

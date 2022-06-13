@@ -66,7 +66,7 @@ struct ChatItemView: View {
                         Text("mock last message")
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
-                            .lineLimit(2)
+                            .lineLimit(1)
                             .foregroundColor(.secondary)
                         Spacer()
                     }
