@@ -63,7 +63,7 @@ struct ChatItemView: View {
                 }
                 HStack {
                     VStack {
-                        Text("mock last message")
+                        Text("last message preview")
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(1)

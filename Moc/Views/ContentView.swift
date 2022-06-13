@@ -92,34 +92,53 @@ struct ContentView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private func makeFilters(horizontal: Bool) -> some View {
+        FolderItemView(
+            name: "All chats",
+            icon: Image(systemName: "bubble.left.and.bubble.right"),
+            unreadCount: mainViewModel.mainUnreadCounter,
+            horizontal: horizontal)
+        .background(mainViewModel.openChatList == .main
+                    ? Color("SelectedColor") : Color.clear)
+        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .onTapGesture {
+            mainViewModel.openChatList = .main
+        }
+        ForEach(mainViewModel.folders) { folder in
+            FolderItemView(
+                name: folder.title,
+                icon: Image(tdIcon: folder.iconName),
+                unreadCount: folder.unreadCounter,
+                horizontal: horizontal)
+            .background(mainViewModel.openChatList == .filter(folder.id)
+                        ? Color("SelectedColor") : Color.clear)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .onTapGesture {
+                mainViewModel.openChatList = .filter(folder.id)
+            }
+        }
+    }
         
+    @ViewBuilder
     private var filterBar: some View {
-        ScrollView(showsIndicators: false) {
-            Group {
+        #if os(macOS)
+        let orientation: Axis.Set = .vertical
+        #elseif os(iOS)
+        let orientation: Axis.Set = .horizontal
+        #endif
+        let view = ScrollView(orientation, showsIndicators: false) {
+            let group = Group {
                 switch selectedTab {
                     case .chat:
-                        FolderItemView(
-                            name: "All chats",
-                            icon: Image(systemName: "bubble.left.and.bubble.right"),
-                            unreadCount: mainViewModel.mainUnreadCounter)
-                            .background(mainViewModel.openChatList == .main
-                                        ? Color("SelectedColor") : Color.clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            .onTapGesture {
-                                mainViewModel.openChatList = .main
-                            }
-                        ForEach(mainViewModel.folders) { folder in
-                            FolderItemView(
-                                name: folder.title,
-                                icon: Image(tdIcon: folder.iconName),
-                                unreadCount: folder.unreadCounter)
-                            .background(mainViewModel.openChatList == .filter(folder.id)
-                                        ? Color("SelectedColor") : Color.clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            .onTapGesture {
-                                mainViewModel.openChatList = .filter(folder.id)
-                            }
+                        #if os(macOS)
+                        makeFilters(horizontal: false)
+                        #elseif os(iOS)
+                        HStack {
+                            makeFilters(horizontal: true)
                         }
+                        #endif
                     case .contacts:
                         FolderItemView(name: "Nearby chats", icon: Image(systemName: "map"))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -139,9 +158,20 @@ struct ContentView: View {
                 }
             }
             .frame(alignment: .center)
-            .padding(.bottom)
+            #if os(macOS)
+            group
+                .padding(.bottom)
+            #elseif os(iOS)
+            group
+                .padding(.horizontal)
+            #endif
         }
-        .frame(width: 90)
+        #if os(macOS)
+        return view
+            .frame(width: 90)
+        #elseif os(iOS)
+        return view
+        #endif
     }
     
     private var chats: some View {
@@ -179,6 +209,7 @@ struct ContentView: View {
         .frame(minWidth: 400)
         #elseif os(iOS)
         VStack {
+            filterBar
             chats
         }
         #endif
@@ -211,7 +242,7 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
-            }
+//            }
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {
             LoginView()
