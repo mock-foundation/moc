@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SearchField: UIViewRepresentable {
-    func makeUIView(context: Context) -> UISearchTextField {
-        return UISearchTextField()
+    func makeUIView(context: Context) -> UISearchBar {
+        return UISearchBar()
     }
     
-    func updateUIView(_ uiView: UISearchTextField, context: Context) {
+    func updateUIView(_ uiView: UISearchBar, context: Context) {
         
     }
 }
