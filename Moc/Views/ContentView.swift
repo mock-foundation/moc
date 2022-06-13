@@ -186,19 +186,19 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-            if #available(macOS 13, iOS 16, *) {
-                NavigationSplitView {
-                    sidebar
-                } detail: {
-                    switch viewRouter.currentView {
-                        case .selectChat:
-                            chatPlaceholder
-                        case .chat:
-                            ChatView()
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                }
-            } else {
+//            if #available(macOS 13, iOS 16, *) {
+//                NavigationSplitView {
+//                    sidebar
+//                } detail: {
+//                    switch viewRouter.currentView {
+//                        case .selectChat:
+//                            chatPlaceholder
+//                        case .chat:
+//                            ChatView()
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    }
+//                }
+//            } else {
                 NavigationView {
                     sidebar
                     .listStyle(.sidebar)
