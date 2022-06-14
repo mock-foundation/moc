@@ -10,7 +10,7 @@ for moderating large communities and personal use.
 </p>
 
 ![](https://img.shields.io/badge/platform-macOS,%20iPadOS-000000?style=flat&logo=apple&logoColor=white)
-![](https://img.shields.io/badge/minimum%20OS-macOS%2012,%20iPadOS%2015-blueviolet?style=flat&logo=apple&logoColor=white)
+![](https://img.shields.io/badge/minimum%20OS-macOS%2012,%20iPadOS%2015.2-blueviolet?style=flat&logo=apple&logoColor=white)
 ![](https://img.shields.io/badge/Swift%205.6-FA7343?style=flat&logo=swift&logoColor=white)
 ![](https://img.shields.io/badge/SwiftUI-2E00F1?style=flat&logo=swift&logoColor=white)
 ![](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)
