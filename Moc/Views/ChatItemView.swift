@@ -58,13 +58,15 @@ struct ChatItemView: View {
                             Image(systemName: "lock")
                     }
                     Text(chat.title)
+                        #if os(macOS)
                         .font(.title3)
+                        #endif
                         .fontWeight(.bold)
                     Spacer()
-                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
+//                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
                         .foregroundColor(.secondary)
-                }
+                }.padding(.vertical, 6)
                 HStack {
                     VStack {
                         Text("last message preview")
@@ -75,13 +77,13 @@ struct ChatItemView: View {
                         Spacer()
                     }
                     Spacer()
-                    VStack {
-                        Spacer()
+//                    VStack {
+//                        Spacer()
 //                        if chat.isPinned {
 //                            Image(systemName: "pin")
 //                                .rotationEffect(.degrees(15))
 //                        }
-                    }
+//                    }
                 }
             }
             Spacer()
