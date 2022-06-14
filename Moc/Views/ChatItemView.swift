@@ -32,10 +32,14 @@ struct ChatItemView: View {
     var body: some View {
         HStack(alignment: .top) {
             //                chat.chatIcon
-            chatPhoto
-                .frame(width: 48, height: 48)
-                .clipShape(Circle())
-                .fixedSize()
+            VStack {
+                Spacer()
+                chatPhoto
+                    .frame(width: 48, height: 48)
+                    .clipShape(Circle())
+                    .fixedSize()
+                Spacer()
+            }
             VStack(alignment: .leading) {
                 HStack {
                     // swiftlint:disable empty_enum_arguments switch_case_alignment
