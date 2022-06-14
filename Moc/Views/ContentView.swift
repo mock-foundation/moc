@@ -230,12 +230,12 @@ struct ContentView: View {
         }
         .frame(minWidth: 400)
         #elseif os(iOS)
-        VStack(spacing: 0) {
-            if !mainViewModel.isArchiveOpen {
-                filterBar
+        chats
+            .safeAreaInset(edge: .top) {
+                if !mainViewModel.isArchiveOpen {
+                    filterBar
+                }
             }
-            chats
-        }
         #endif
     }
 
