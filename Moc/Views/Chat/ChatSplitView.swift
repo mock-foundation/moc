@@ -21,6 +21,11 @@ struct ChatSplitView<Left: View, Right: View>: View {
                 idealWidth: isRightViewVisible ? 316 : 0,
                 maxWidth: isRightViewVisible ? nil : 0
             )
+            #if os(macOS)
+            .animation(.easeInOut, value: isRightViewVisible)
+            #elseif os(iOS)
+            .animation(.easeOut, value: isRightViewVisible)
+            #endif
     }
 
     var body: some View {
