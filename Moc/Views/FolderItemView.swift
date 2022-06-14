@@ -33,8 +33,11 @@ struct FolderItemView<Icon: View>: View {
     private var content: some View {
         if horizontal {
             HStack {
-                icon
-                Text(name)
+                Label {
+                    Text(name)
+                } icon: {
+                    icon
+                }
                 if unreadCount != 0 {
                     Text("\(unreadCount)")
                         .foregroundColor(.white)
@@ -44,7 +47,8 @@ struct FolderItemView<Icon: View>: View {
                             .padding(4))
                 }
             }
-//            .padding(4)
+            .frame(height: 42)
+            .padding(.horizontal, 8)
             .onHover { isHovered in
                 if isHovered {
                     backgroundColor = Color("OnHoverColor")
@@ -72,26 +76,31 @@ struct FolderItemView<Icon: View>: View {
     
     var body: some View {
         if unreadCount != 0 {
-            content
-                .reverseMask(alignment: .topTrailing) {
-                    Text("\(unreadCount)")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .background(Capsule(style: .continuous)
-                            .fill(.black))
-                        .vTop()
-                        .hTrailing()
-                }
-                .overlay(
-                    Text("\(unreadCount)")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .background(Capsule(style: .continuous)
-                            .fill(.blue)
-                            .padding(4)
-                                    
-                        ), alignment: .topTrailing)
-                .background(backgroundColor)
+            if !horizontal {
+                content
+                    .reverseMask(alignment: .topTrailing) {
+                        Text("\(unreadCount)")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Capsule(style: .continuous)
+                                .fill(.black))
+                            .vTop()
+                            .hTrailing()
+                    }
+                    .overlay(
+                        Text("\(unreadCount)")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Capsule(style: .continuous)
+                                .fill(.blue)
+                                .padding(4)
+                                        
+                            ), alignment: .topTrailing)
+                    .background(backgroundColor)
+            } else {
+                content
+                    .background(backgroundColor)
+            }
         } else {
             content
                 .background(backgroundColor)
