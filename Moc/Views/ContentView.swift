@@ -12,6 +12,7 @@ import SwiftUI
 import Utilities
 import TDLibKit
 import OrderedCollections
+import Caching
 
 private enum Tab {
     case chat
@@ -25,41 +26,50 @@ struct ContentView: View {
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
     @State private var selectedTab: Tab = .chat
+    @State private var searchText = ""
 
     @InjectedObject private var chatViewModel: ChatViewModel
 
     @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
     
+    @ViewBuilder
     private var chatList: some View {
+        let content = ForEach(mainViewModel.chatList) { chat in
+            ChatItemView(chat: chat)
+                .frame(height: 52)
+                .onTapGesture {
+                    Task {
+                        do {
+                            try await chatViewModel.update(chat: chat)
+                        } catch {
+                            logger.error("Error in \(error.localizedDescription)")
+                        }
+                    }
+                    viewRouter.openedChat = chat
+                    viewRouter.currentView = .chat
+                }
+                .padding(6)
+                .background(
+                    (viewRouter.currentView == .chat
+                     && viewRouter.openedChat! == chat)
+                    ? Color.accentColor.opacity(0.6)
+                    : nil
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
+        #if os(macOS)
         ScrollView {
             LazyVStack {
-                ForEach(mainViewModel.chatList) { chat in
-                    ChatItemView(chat: chat)
-                        .frame(height: 52)
-                        .onTapGesture {
-                            Task {
-                                do {
-                                    try await chatViewModel.update(chat: chat)
-                                } catch {
-                                    logger.error("Error in \(error.localizedDescription)")
-                                }
-                            }
-                            viewRouter.openedChat = chat
-                            viewRouter.currentView = .chat
-                        }
-                        .padding(6)
-                        .background(
-                            (viewRouter.currentView == .chat
-                             && viewRouter.openedChat! == chat)
-                            ? Color.accentColor.opacity(0.6)
-                            : nil
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                }
+                content
             }
             .padding(.trailing, 12)
         }
+        #elseif os(iOS)
+        List {
+            content
+        }.listStyle(.plain)
+        #endif
     }
     
     private var chatListToolbar: some ToolbarContent {
@@ -69,6 +79,7 @@ struct ContentView: View {
         let placement: ToolbarItemPlacement = .navigationBarLeading
         #endif
         return Group {
+            #if os(macOS)
             ToolbarItem(placement: placement) {
                 Picker("", selection: $selectedTab) {
                     Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
@@ -76,6 +87,7 @@ struct ContentView: View {
                     Image(systemName: "person.2").tag(Tab.contacts)
                 }.pickerStyle(.segmented)
             }
+            #endif
             ToolbarItem(placement: placement) {
                 Spacer()
             }
@@ -93,31 +105,47 @@ struct ContentView: View {
         }
     }
     
-    @ViewBuilder
-    private func makeFilters(horizontal: Bool) -> some View {
-        FolderItemView(
-            name: "All chats",
-            icon: Image(systemName: "bubble.left.and.bubble.right"),
-            unreadCount: mainViewModel.mainUnreadCounter,
+    private func makeFolderItem(
+        name: String,
+        icon: Image,
+        unreadCount: Int,
+        chatList: Caching.ChatList,
+        horizontal: Bool
+    ) -> some View {
+        let item = FolderItemView(
+            name: name,
+            icon: icon,
+            unreadCount: unreadCount,
             horizontal: horizontal)
-        .background(mainViewModel.openChatList == .main
-                    ? Color("SelectedColor") : Color.clear)
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-        .onTapGesture {
-            mainViewModel.openChatList = .main
-        }
-        ForEach(mainViewModel.folders) { folder in
-            FolderItemView(
-                name: folder.title,
-                icon: Image(tdIcon: folder.iconName),
-                unreadCount: folder.unreadCounter,
-                horizontal: horizontal)
-            .background(mainViewModel.openChatList == .filter(folder.id)
+            .background(mainViewModel.openChatList == chatList
                         ? Color("SelectedColor") : Color.clear)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             .onTapGesture {
-                mainViewModel.openChatList = .filter(folder.id)
+                mainViewModel.openChatList = chatList
             }
+        #if os(macOS)
+        return item
+        #elseif os(iOS)
+        return item
+            .hoverEffect(mainViewModel.openChatList == chatList ? .lift : .highlight)
+        #endif
+    }
+    
+    @ViewBuilder
+    private func makeFolders(horizontal: Bool) -> some View {
+        makeFolderItem(
+            name: "All Chats",
+            icon: Image(systemName: "bubble.left.and.bubble.right"),
+            unreadCount: mainViewModel.mainUnreadCounter,
+            chatList: .main,
+            horizontal: horizontal)
+        ForEach(mainViewModel.folders) { folder in
+            makeFolderItem(
+                name: folder.title,
+                icon: Image(tdIcon: folder.iconName),
+                unreadCount: folder.unreadCounter,
+                chatList: .filter(folder.id),
+                horizontal: horizontal)
         }
     }
         
@@ -133,10 +161,10 @@ struct ContentView: View {
                 switch selectedTab {
                     case .chat:
                         #if os(macOS)
-                        makeFilters(horizontal: false)
+                        makeFolders(horizontal: false)
                         #elseif os(iOS)
                         HStack {
-                            makeFilters(horizontal: true)
+                            makeFolders(horizontal: true)
                         }
                         #endif
                     case .contacts:
@@ -163,14 +191,14 @@ struct ContentView: View {
                 .padding(.bottom)
             #elseif os(iOS)
             group
-                .padding(.horizontal)
+                .padding([.horizontal, .top])
             #endif
         }
         #if os(macOS)
-        return view
+        view
             .frame(width: 90)
         #elseif os(iOS)
-        return view
+        view
         #endif
     }
     
@@ -180,10 +208,8 @@ struct ContentView: View {
             SearchField()
                 .controlSize(.large)
                 .padding(.trailing, 12)
-            #elseif os(iOS)
-            SearchField()
             #endif
-            Group {
+            let group = Group {
                 switch selectedTab {
                     case .chat:
                         chatList
@@ -194,6 +220,12 @@ struct ContentView: View {
                 }
             }
             .frame(maxHeight: .infinity)
+            #if os(macOS)
+            group
+            #elseif os(iOS)
+            group
+                .searchable(text: $searchText, placement: .sidebar)
+            #endif
         }
         .toolbar {
             chatListToolbar
