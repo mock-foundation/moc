@@ -64,7 +64,7 @@ struct ContentView: View {
             #if os(macOS)
             .padding(.trailing, 12)
             #elseif os(iOS)
-            .padding(.horizontal, 8)
+            .padding(8)
             #endif
         }
     }
@@ -185,7 +185,7 @@ struct ContentView: View {
             #if os(macOS)
             .padding(.bottom)
             #elseif os(iOS)
-            .padding()
+            .padding(8)
             #endif
         }
         #if os(macOS)
@@ -214,7 +214,7 @@ struct ContentView: View {
             }
             .frame(maxHeight: .infinity)
             #if os(iOS)
-            .searchable(text: $searchText, placement: .sidebar)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             #endif
         }
         .toolbar {
@@ -230,8 +230,10 @@ struct ContentView: View {
         }
         .frame(minWidth: 400)
         #elseif os(iOS)
-        VStack {
-            filterBar
+        VStack(spacing: 0) {
+            if !mainViewModel.isArchiveOpen {
+                filterBar
+            }
             chats
         }
         #endif
