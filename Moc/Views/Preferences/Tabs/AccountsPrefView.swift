@@ -176,16 +176,14 @@ struct AccountsPrefView: View {
             Section {
                 HStack {
                     #if os(macOS)
-                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
-                        .resizable()
-                        .frame(width: 32, height: 32)
-                        .clipShape(Circle())
+                    let image = Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
                     #elseif os(iOS)
-                    Image(uiImage: UIImage(contentsOfFile: "file://\(photos[0].local.path)")!)
+                    let image = Image(uiImage: UIImage(contentsOfFile: "file://\(photos[0].local.path)")!)
+                    #endif
+                    image
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
-                    #endif
                     Button(action: {}) {
                         Label("Update profile photo",
                               systemImage: "square.and.pencil")

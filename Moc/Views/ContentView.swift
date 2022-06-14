@@ -112,7 +112,7 @@ struct ContentView: View {
         chatList: Caching.ChatList,
         horizontal: Bool
     ) -> some View {
-        let item = FolderItemView(
+        FolderItemView(
             name: name,
             icon: icon,
             unreadCount: unreadCount,
@@ -123,10 +123,7 @@ struct ContentView: View {
             .onTapGesture {
                 mainViewModel.openChatList = chatList
             }
-        #if os(macOS)
-        return item
-        #elseif os(iOS)
-        return item
+        #if os(iOS)
             .hoverEffect(mainViewModel.openChatList == chatList ? .lift : .highlight)
         #endif
     }
@@ -156,8 +153,8 @@ struct ContentView: View {
         #elseif os(iOS)
         let orientation: Axis.Set = .horizontal
         #endif
-        let view = ScrollView(orientation, showsIndicators: false) {
-            let group = Group {
+        ScrollView(orientation, showsIndicators: false) {
+            Group {
                 switch selectedTab {
                     case .chat:
                         #if os(macOS)
@@ -187,18 +184,15 @@ struct ContentView: View {
             }
             .frame(alignment: .center)
             #if os(macOS)
-            group
-                .padding(.bottom)
+            .padding(.bottom)
             #elseif os(iOS)
-            group
-                .padding([.horizontal, .top])
+            .padding()
             #endif
         }
         #if os(macOS)
-        view
-            .frame(width: 90)
+        .frame(width: 90)
         #elseif os(iOS)
-        view
+        .background(.ultraThinMaterial, in: Rectangle())
         #endif
     }
     
@@ -209,7 +203,7 @@ struct ContentView: View {
                 .controlSize(.large)
                 .padding(.trailing, 12)
             #endif
-            let group = Group {
+            Group {
                 switch selectedTab {
                     case .chat:
                         chatList
@@ -220,11 +214,8 @@ struct ContentView: View {
                 }
             }
             .frame(maxHeight: .infinity)
-            #if os(macOS)
-            group
-            #elseif os(iOS)
-            group
-                .searchable(text: $searchText, placement: .sidebar)
+            #if os(iOS)
+            .searchable(text: $searchText, placement: .sidebar)
             #endif
         }
         .toolbar {

@@ -25,13 +25,9 @@ struct ChatSplitView<Left: View, Right: View>: View {
 
     var body: some View {
         #if os(macOS)
-        HSplitView {
-            content
-        }
+        HSplitView { content }
         #elseif os(iOS)
-        HStack {
-            content
-        }
+        HStack { content }
         #endif
     }
 }

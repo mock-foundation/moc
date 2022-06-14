@@ -137,12 +137,10 @@ struct FoldersPrefView: View {
                     .padding([.bottom, .horizontal])
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray)
-                #if os(macOS)
                 folderList
+                    #if os(macOS)
                     .listStyle(.bordered(alternatesRowBackgrounds: true))
-                #elseif os(iOS)
-                folderList
-                #endif
+                    #endif
                 HStack {
                     Spacer()
                     Button {
