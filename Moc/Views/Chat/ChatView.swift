@@ -88,7 +88,7 @@ struct ChatView: View {
                 .onSubmit {
                     viewModel.sendMessage(inputMessage)
                     inputMessage = ""
-                    viewModel.scrollViewProxy?.scrollTo(viewModel.messages.last?.id ?? 0)
+                    viewModel.scrollToEnd()
                 }
             Image(systemName: "face.smiling")
                 .font(.system(size: 16))
