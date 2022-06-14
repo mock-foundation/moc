@@ -95,7 +95,10 @@ class ChatViewModel: ObservableObject {
         #elseif os(iOS)
         scrollView?.setContentOffset(CGPoint(
             x: 0,
-            y: scrollView?.contentSize.height ?? 0), animated: true)
+            y: (scrollView?.contentSize.height ?? 0)
+            - (scrollView?.bounds.height ?? 0)
+            + (scrollView?.contentInset.bottom ?? 0)),
+            animated: true)
         #endif
     }
     
