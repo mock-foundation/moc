@@ -36,27 +36,28 @@ struct ContentView: View {
     @ViewBuilder
     private var chatList: some View {
         let content = ForEach(mainViewModel.chatList) { chat in
-            ChatItemView(chat: chat)
-                .frame(height: 52)
-                .onTapGesture {
-                    Task {
-                        do {
-                            try await chatViewModel.update(chat: chat)
-                        } catch {
-                            logger.error("Error in \(error.localizedDescription)")
-                        }
+            Button {
+                Task {
+                    do {
+                        try await chatViewModel.update(chat: chat)
+                    } catch {
+                        logger.error("Error in \(error.localizedDescription)")
                     }
-                    viewRouter.openedChat = chat
-                    viewRouter.currentView = .chat
                 }
-                .padding(6)
-                .background(
-                    (viewRouter.currentView == .chat
-                     && viewRouter.openedChat! == chat)
-                    ? Color.accentColor.opacity(0.6)
-                    : nil
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                viewRouter.openedChat = chat
+                viewRouter.currentView = .chat
+            } label: {
+                ChatItemView(chat: chat)
+                    .frame(height: 52)
+                    .padding(6)
+                    .background(
+                        (viewRouter.currentView == .chat
+                         && viewRouter.openedChat! == chat)
+                        ? Color.accentColor.opacity(0.6)
+                        : nil
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            }.buttonStyle(.plain)
         }
         #if os(macOS)
         ScrollView {
@@ -112,19 +113,21 @@ struct ContentView: View {
         chatList: Caching.ChatList,
         horizontal: Bool
     ) -> some View {
-        FolderItemView(
-            name: name,
-            icon: icon,
-            unreadCount: unreadCount,
-            horizontal: horizontal)
+        Button {
+            mainViewModel.openChatList = chatList
+        } label: {
+            FolderItemView(
+                name: name,
+                icon: icon,
+                unreadCount: unreadCount,
+                horizontal: horizontal)
             .background(mainViewModel.openChatList == chatList
                         ? Color("SelectedColor") : Color.clear)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .onTapGesture {
-                mainViewModel.openChatList = chatList
-            }
+        }
+        .buttonStyle(.plain)
         #if os(iOS)
-            .hoverEffect(mainViewModel.openChatList == chatList ? .lift : .highlight)
+        .hoverEffect(mainViewModel.openChatList == chatList ? .lift : .highlight)
         #endif
     }
     
