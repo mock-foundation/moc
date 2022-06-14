@@ -29,6 +29,12 @@ struct FolderItemView<Icon: View>: View {
         self.horizontal = horizontal
     }
     
+    private var counter: some View {
+        Text("\(unreadCount)")
+            .foregroundColor(.white)
+            .padding(8)
+    }
+    
     @ViewBuilder
     private var content: some View {
         if horizontal {
@@ -39,9 +45,7 @@ struct FolderItemView<Icon: View>: View {
                     icon
                 }
                 if unreadCount != 0 {
-                    Text("\(unreadCount)")
-                        .foregroundColor(.white)
-                        .padding(8)
+                    counter
                         .background(Capsule(style: .continuous)
                             .fill(.blue)
                             .padding(4))
@@ -79,22 +83,17 @@ struct FolderItemView<Icon: View>: View {
             if !horizontal {
                 content
                     .reverseMask(alignment: .topTrailing) {
-                        Text("\(unreadCount)")
-                            .foregroundColor(.white)
-                            .padding(8)
+                        counter
                             .background(Capsule(style: .continuous)
                                 .fill(.black))
                             .vTop()
                             .hTrailing()
                     }
                     .overlay(
-                        Text("\(unreadCount)")
-                            .foregroundColor(.white)
-                            .padding(8)
+                        counter
                             .background(Capsule(style: .continuous)
                                 .fill(.blue)
                                 .padding(4)
-                                        
                             ), alignment: .topTrailing)
                     .background(backgroundColor)
             } else {

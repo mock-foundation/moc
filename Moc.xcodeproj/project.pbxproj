@@ -14,6 +14,10 @@
 		4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309BCF5283D6E6A00F43170 /* View+If.swift */; };
 		4312154B2858C2CF009EFEB5 /* GenerateQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */; platformFilter = ios; };
 		4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4312154C2858C326009EFEB5 /* GenerateQRCode.swift */; platformFilters = (macos, ); };
+		4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4312154E2858E4B6009EFEB5 /* Int+Digits.swift */; };
+		431215522858E50B009EFEB5 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215512858E50B009EFEB5 /* ComplexModule */; };
+		431215542858E50B009EFEB5 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 431215532858E50B009EFEB5 /* Numerics */; };
+		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
 		433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E5284078E20010406F /* AutoHashable.generated.swift */; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
@@ -92,6 +96,7 @@
 		4309BCF5283D6E6A00F43170 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
+		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
 		433464E5284078E20010406F /* AutoHashable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoHashable.generated.swift; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
@@ -158,13 +163,16 @@
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
+				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
+				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
 				43807DA827E2138A0056A3D3 /* Lottie in Frameworks */,
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
 				43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */,
+				431215522858E50B009EFEB5 /* ComplexModule in Frameworks */,
 				43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */,
 				43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
@@ -189,6 +197,7 @@
 				43008543283B59D500ED5961 /* Image+File.swift */,
 				43008545283C0D9F00ED5961 /* Image+Blank.swift */,
 				4309BCF5283D6E6A00F43170 /* View+If.swift */,
+				4312154E2858E4B6009EFEB5 /* Int+Digits.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -206,8 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				43807CF727E1FCEC0056A3D3 /* Moc */,
-				43EC18DE28566F1E00FCAD43 /* iOS */,
 				43EC18DD28566F1800FCAD43 /* macOS */,
+				43EC18DE28566F1E00FCAD43 /* iOS */,
 				43807D2327E2129C0056A3D3 /* Backend */,
 				43016AA72842CDF800C219B4 /* Caching */,
 				43F871B7283E21C700B6C717 /* Logs */,
@@ -423,6 +432,9 @@
 				4360D6E4283FE2BE00D3378F /* DequeModule */,
 				4360D6E6283FE2BE00D3378F /* OrderedCollections */,
 				43016AA82842DE3000C219B4 /* Caching */,
+				431215512858E50B009EFEB5 /* ComplexModule */,
+				431215532858E50B009EFEB5 /* Numerics */,
+				431215552858E50B009EFEB5 /* RealModule */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -483,6 +495,7 @@
 				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */,
+				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -578,6 +591,7 @@
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
+				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
 				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
@@ -881,6 +895,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-numerics.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-algorithms.git";
@@ -943,6 +965,21 @@
 		43016AA82842DE3000C219B4 /* Caching */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Caching;
+		};
+		431215512858E50B009EFEB5 /* ComplexModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = ComplexModule;
+		};
+		431215532858E50B009EFEB5 /* Numerics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = Numerics;
+		};
+		431215552858E50B009EFEB5 /* RealModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = RealModule;
 		};
 		434203B7283CB01D003E344C /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;
