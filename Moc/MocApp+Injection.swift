@@ -49,6 +49,7 @@ struct MocApp: App {
             client: TdClientImpl(completionQueue: .global())
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
+        #if os(iOS)
         let newNavBarAppearance = UINavigationBarAppearance()
         newNavBarAppearance.configureWithDefaultBackground()
         
@@ -57,6 +58,7 @@ struct MocApp: App {
         appearance.compactAppearance = newNavBarAppearance
         appearance.standardAppearance = newNavBarAppearance
         appearance.compactScrollEdgeAppearance = newNavBarAppearance
+        #endif
     }
 
     var body: some Scene {
