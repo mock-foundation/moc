@@ -33,44 +33,40 @@ struct ContentView: View {
     @InjectedObject private var mainViewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
     
-    @ViewBuilder
     private var chatList: some View {
-        let content = ForEach(mainViewModel.chatList) { chat in
-            Button {
-                Task {
-                    do {
-                        try await chatViewModel.update(chat: chat)
-                    } catch {
-                        logger.error("Error in \(error.localizedDescription)")
-                    }
-                }
-                viewRouter.openedChat = chat
-                viewRouter.currentView = .chat
-            } label: {
-                ChatItemView(chat: chat)
-                    .frame(height: 52)
-                    .padding(6)
-                    .background(
-                        (viewRouter.currentView == .chat
-                         && viewRouter.openedChat! == chat)
-                        ? Color.accentColor.opacity(0.6)
-                        : nil
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            }.buttonStyle(.plain)
-        }
-        #if os(macOS)
         ScrollView {
             LazyVStack {
-                content
+                ForEach(mainViewModel.chatList) { chat in
+                    Button {
+                        Task {
+                            do {
+                                try await chatViewModel.update(chat: chat)
+                            } catch {
+                                logger.error("Error in \(error.localizedDescription)")
+                            }
+                        }
+                        viewRouter.openedChat = chat
+                        viewRouter.currentView = .chat
+                    } label: {
+                        ChatItemView(chat: chat)
+                            .frame(height: 52)
+                            .padding(6)
+                            .background(
+                                (viewRouter.currentView == .chat
+                                 && viewRouter.openedChat! == chat)
+                                ? Color.accentColor.opacity(0.6)
+                                : nil
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    }.buttonStyle(.plain)
+                }
             }
+            #if os(macOS)
             .padding(.trailing, 12)
+            #elseif os(iOS)
+            .padding(.horizontal, 8)
+            #endif
         }
-        #elseif os(iOS)
-        List {
-            content
-        }.listStyle(.plain)
-        #endif
     }
     
     private var chatListToolbar: some ToolbarContent {
