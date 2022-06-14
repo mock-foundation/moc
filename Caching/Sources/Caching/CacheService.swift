@@ -25,7 +25,7 @@ public class CacheService {
         #endif
         
         var url = try! FileManager.default.url(
-            for: .applicationSupportDirectory,
+            for: .cachesDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
             create: true)
@@ -44,12 +44,8 @@ public class CacheService {
         dbQueue = try! DatabaseQueue(path: dir)
 
         registerMigrations()
-        // Migrate if not already
-        if (try! dbQueue.read { db in
-            try! !migrator.hasCompletedMigrations(db)
-        }) {
-            try! migrator.migrate(dbQueue)
-        }
+        try! migrator.migrate(dbQueue)
+        logger.notice("Started CacheService")
     }
 }
 
