@@ -40,7 +40,7 @@ If you want to contribute a new feature, please make sure you have read the [pro
 
 ## Step 1 - Download right version of Xcode
 
-The development is going with Xcode 13.3ю. You can download it from
+The development is going with Xcode 14 beta 1. You can download it from
 [Apple Developer](https://developer.apple.com/download/release/).
 
 ## Step 2 - Obtain `api_id` and `api_hash`
