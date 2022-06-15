@@ -13,6 +13,7 @@ import Utilities
 import TDLibKit
 import OrderedCollections
 import Caching
+import Introspect
 
 private enum Tab {
     case chat
@@ -27,6 +28,10 @@ struct ContentView: View {
     @State private var selectedChat: Int? = 0
     @State private var selectedTab: Tab = .chat
     @State private var searchText = ""
+    
+    #if os(iOS)
+    @State private var areSettingsOpen = false
+    #endif
 
     @InjectedObject private var chatViewModel: ChatViewModel
 
@@ -191,7 +196,7 @@ struct ContentView: View {
         #if os(macOS)
         .frame(width: 90)
         #elseif os(iOS)
-        .background(.ultraThinMaterial, in: Rectangle())
+        .background(.bar, in: Rectangle())
         #endif
     }
     
@@ -222,6 +227,28 @@ struct ContentView: View {
         }
     }
     
+    @ViewBuilder
+    
+    private func makeTabBarButton(
+        _ title: String,
+        systemImage: String,
+        value: Tab
+    ) -> some View {
+        Button {
+            selectedTab = value
+        } label: {
+            makeTabBarItem(title, systemImage: systemImage)
+        }
+        .buttonStyle(.plain)
+        .foregroundColor(selectedTab == value ? .blue : Color(uiColor: .darkGray))
+        Spacer()
+    }
+    
+    private func makeTabBarItem(_ title: String, systemImage: String) -> some View {
+        Label(title, systemImage: systemImage)
+            .labelStyle(TabLabelStyle())
+    }
+    
     private var sidebar: some View {
         #if os(macOS)
         HStack {
@@ -235,6 +262,29 @@ struct ContentView: View {
                 if !mainViewModel.isArchiveOpen {
                     filterBar
                 }
+            }
+            .safeAreaInset(edge: .bottom) {
+                HStack {
+                    Spacer()
+                    makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
+                    makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
+                    makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
+                    Menu {
+                        Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
+                        Divider()
+                        Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
+                        Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
+                        Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
+                        Button { } label: { Label("Saved messages", systemImage: "bookmark") }
+                    } label: {
+                        makeTabBarItem("More", systemImage: "ellipsis")
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundColor(Color(uiColor: .darkGray))
+                    Spacer()
+                }
+                .padding(.vertical)
+                .background(.ultraThinMaterial, in: Rectangle())
             }
         #endif
     }
@@ -266,11 +316,26 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
+            // TODO: Implement vertical folders
+                .introspectNavigationController { navigationController in
+                    navigationController.splitViewController?.preferredPrimaryColumnWidthFraction = 1
+                    navigationController.splitViewController?.maximumPrimaryColumnWidth = 350.0
+                }
 //            }
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {
             LoginView()
                 .frame(width: 400, height: 500)
+        }
+        .fullScreenCover(isPresented: $areSettingsOpen) {
+            PreferencesContent()
+                .toolbar {
+                    Button {
+                        areSettingsOpen = false
+                    } label: {
+                        Text("Close")
+                    }
+                }
         }
     }
 
