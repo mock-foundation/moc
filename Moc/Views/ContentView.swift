@@ -227,8 +227,8 @@ struct ContentView: View {
         }
     }
     
+    #if os(iOS)
     @ViewBuilder
-    
     private func makeTabBarButton(
         _ title: String,
         systemImage: String,
@@ -248,6 +248,7 @@ struct ContentView: View {
         Label(title, systemImage: systemImage)
             .labelStyle(TabLabelStyle())
     }
+    #endif
     
     private var sidebar: some View {
         #if os(macOS)
@@ -317,26 +318,23 @@ struct ContentView: View {
                     }
                 }
             // TODO: Implement vertical folders
+                #if os(iOS)
                 .introspectNavigationController { navigationController in
                     navigationController.splitViewController?.preferredPrimaryColumnWidthFraction = 1
                     navigationController.splitViewController?.maximumPrimaryColumnWidth = 350.0
                 }
+                #endif
 //            }
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {
             LoginView()
                 .frame(width: 400, height: 500)
         }
+        #if os(iOS)
         .fullScreenCover(isPresented: $areSettingsOpen) {
             PreferencesContent()
-                .toolbar {
-                    Button {
-                        areSettingsOpen = false
-                    } label: {
-                        Text("Close")
-                    }
-                }
         }
+        #endif
     }
 
     private var chatPlaceholder: some View {

@@ -178,7 +178,7 @@ struct AccountsPrefView: View {
                     #if os(macOS)
                     let image = Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
                     #elseif os(iOS)
-                    let image = Image(uiImage: UIImage(contentsOfFile: "file://\(photos[0].local.path)")!)
+                    let image = Image(uiImage: UIImage(contentsOfFile: photos[0].local.path)!)
                     #endif
                     image
                         .resizable()
