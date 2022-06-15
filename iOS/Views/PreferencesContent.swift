@@ -87,35 +87,39 @@ struct PreferencesContent: View {
         if #available(iOS 16, *) {
             NavigationSplitView {
                 List(PreferenceTab.allCases, id: \.self, selection: $selection) { preference in
-                    NavigationLink(value: preference) {
+                    NavigationLink {
+                        switch preference {
+                            case .general:
+                                GeneralPrefView()
+                            case .notificationsAndSounds:
+                                NotificationsAndSoundsPrefView()
+                            case .privacy:
+                                PrivacyPrefView()
+                            case .dataAndStorage:
+                                DataAndStoragePrefView()
+                            case .devices:
+                                DevicesPrefView()
+                            case .appearance:
+                                AppearancePrefView()
+                            case .language:
+                                LanguagePrefView()
+                            case .stickers:
+                                StickersPrefView()
+                            case .folders:
+                                FoldersPrefView()
+                        }
+                    } label: {
                         preference.label
+                    }
+                }.toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Close") {
+                            dismiss()
+                        }
                     }
                 }
             } detail: {
-                if let value = selection {
-                    switch value {
-                        case .general:
-                            GeneralPrefView()
-                        case .notificationsAndSounds:
-                            NotificationsAndSoundsPrefView()
-                        case .privacy:
-                            PrivacyPrefView()
-                        case .dataAndStorage:
-                            DataAndStoragePrefView()
-                        case .devices:
-                            DevicesPrefView()
-                        case .appearance:
-                            AppearancePrefView()
-                        case .language:
-                            LanguagePrefView()
-                        case .stickers:
-                            StickersPrefView()
-                        case .folders:
-                            FoldersPrefView()
-                    }
-                } else {
-                    EmptyView()
-                }
+                
             }
         } else {
             NavigationView {
