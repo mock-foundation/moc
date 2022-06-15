@@ -9,9 +9,7 @@ import Numerics
 
 public extension Int {
     var digitCount: Int {
-        get {
-            return numberOfDigits(in: self)
-        }
+        return numberOfDigits(in: self)
     }
     
     private func numberOfDigits(in number: Int) -> Int {
