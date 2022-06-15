@@ -60,8 +60,10 @@ struct ChatItemView: View {
                     Text(chat.title)
                         #if os(macOS)
                         .font(.title3)
-                        #endif
                         .fontWeight(.bold)
+                        #elseif os(iOS)
+                        .fontWeight(.medium)
+                        #endif
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
@@ -86,7 +88,6 @@ struct ChatItemView: View {
 //                    }
                 }
             }
-            Spacer()
         }
     }
 }
