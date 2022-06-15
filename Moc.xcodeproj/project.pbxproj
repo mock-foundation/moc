@@ -44,7 +44,7 @@
 		43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5F27E213350056A3D3 /* DevicesPrefView.swift */; };
 		43807D8F27E213350056A3D3 /* GeneralPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6027E213350056A3D3 /* GeneralPrefView.swift */; };
 		43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6127E213350056A3D3 /* NotificationsAndSoundsPrefView.swift */; };
-		43807D9127E213350056A3D3 /* PreferencesContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6227E213350056A3D3 /* PreferencesContent.swift */; platformFilters = (macos, ); };
+		43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6227E213350056A3D3 /* SettingsContent.swift */; platformFilters = (macos, ); };
 		43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6427E213350056A3D3 /* ChatSplitView.swift */; };
 		43807D9327E213350056A3D3 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6627E213350056A3D3 /* MessageBubbleView.swift */; };
 		43807D9427E213350056A3D3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6727E213350056A3D3 /* MessageView.swift */; };
@@ -70,7 +70,7 @@
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
 		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
 		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
-		4396B1512859E904004109AE /* PreferencesContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* PreferencesContent.swift */; platformFilter = ios; };
+		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D389DE284A52A000214874 /* AutoEquatable.generated.swift */; };
@@ -126,7 +126,7 @@
 		43807D5F27E213350056A3D3 /* DevicesPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesPrefView.swift; sourceTree = "<group>"; };
 		43807D6027E213350056A3D3 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPrefView.swift; sourceTree = "<group>"; };
 		43807D6127E213350056A3D3 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
-		43807D6227E213350056A3D3 /* PreferencesContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesContent.swift; sourceTree = "<group>"; };
+		43807D6227E213350056A3D3 /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		43807D6427E213350056A3D3 /* ChatSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
 		43807D6627E213350056A3D3 /* MessageBubbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
 		43807D6727E213350056A3D3 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		43807D7C27E213350056A3D3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		43807DC527E214D30056A3D3 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43807DC627E214DD0056A3D3 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
-		4396B1502859E904004109AE /* PreferencesContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesContent.swift; sourceTree = "<group>"; };
+		4396B1502859E904004109AE /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabelStyle.swift; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 		43807D5527E213350056A3D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				43807D5627E213350056A3D3 /* Preferences */,
+				43807D5627E213350056A3D3 /* Settings */,
 				43807D6C27E213350056A3D3 /* Commands */,
 				43807D6327E213350056A3D3 /* Chat */,
 				4300853F283ABCA300ED5961 /* TDImage.swift */,
@@ -296,7 +296,7 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		43807D5627E213350056A3D3 /* Preferences */ = {
+		43807D5627E213350056A3D3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				43807D6027E213350056A3D3 /* GeneralPrefView.swift */,
@@ -310,7 +310,7 @@
 				43807D5D27E213350056A3D3 /* FoldersPrefView.swift */,
 				43807D5827E213350056A3D3 /* AccountsPrefView.swift */,
 			);
-			path = Preferences;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		43807D6327E213350056A3D3 /* Chat */ = {
@@ -381,7 +381,7 @@
 		4396B152285A01F4004109AE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				43807D6227E213350056A3D3 /* PreferencesContent.swift */,
+				43807D6227E213350056A3D3 /* SettingsContent.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 			);
@@ -391,7 +391,7 @@
 		4396B153285A0208004109AE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4396B1502859E904004109AE /* PreferencesContent.swift */,
+				4396B1502859E904004109AE /* SettingsContent.swift */,
 				43EC18E12856782F00FCAD43 /* SearchField.swift */,
 			);
 			path = Views;
@@ -578,7 +578,7 @@
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
 				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
 				43807DA127E213350056A3D3 /* ChatViewModel.swift in Sources */,
-				4396B1512859E904004109AE /* PreferencesContent.swift in Sources */,
+				4396B1512859E904004109AE /* SettingsContent.swift in Sources */,
 				434A60802848AA000086B866 /* ChatPickerView.swift in Sources */,
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,
 				43807D9D27E213350056A3D3 /* SearchField.swift in Sources */,
@@ -587,7 +587,7 @@
 				43807D9527E213350056A3D3 /* ChatView.swift in Sources */,
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
-				43807D9127E213350056A3D3 /* PreferencesContent.swift in Sources */,
+				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
 				43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */,
 				43008544283B59D500ED5961 /* Image+File.swift in Sources */,
 				43807D8F27E213350056A3D3 /* GeneralPrefView.swift in Sources */,

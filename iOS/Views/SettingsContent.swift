@@ -44,7 +44,7 @@ private enum PreferenceTab: CaseIterable {
     }
 }
 
-struct PreferencesContent: View {
+struct SettingsContent: View {
     @State private var searchText = ""
     @Environment(\.dismiss) private var dismiss
     
@@ -132,8 +132,8 @@ struct PreferencesContent: View {
     }
 }
 
-struct PreferencesContent_Previews: PreviewProvider {
+struct SettingsContent_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesContent()
+        SettingsContent()
     }
 }

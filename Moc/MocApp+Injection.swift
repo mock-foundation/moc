@@ -70,7 +70,7 @@ struct MocApp: App {
 
         #if os(macOS)
         Settings {
-            PreferencesContent()
+            SettingsContent()
         }
         #endif
     }

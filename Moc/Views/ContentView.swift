@@ -332,7 +332,7 @@ struct ContentView: View {
         }
         #if os(iOS)
         .fullScreenCover(isPresented: $areSettingsOpen) {
-            PreferencesContent()
+            SettingsContent()
         }
         #endif
     }

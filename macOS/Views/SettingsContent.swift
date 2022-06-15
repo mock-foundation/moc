@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PreferencesContent: View {
+struct SettingsContent: View {
     var body: some View {
         TabView {
             GeneralPrefView()
@@ -55,8 +55,8 @@ struct PreferencesContent: View {
     }
 }
 
-struct PreferencesContent_Previews: PreviewProvider {
+struct SettingsContent_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesContent()
+        SettingsContent()
     }
 }
