@@ -73,6 +73,7 @@
 		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
+		43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F499285A58BD009F2419 /* View+SidebarSize.swift */; };
 		43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D389DE284A52A000214874 /* AutoEquatable.generated.swift */; };
 		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
 		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
@@ -149,6 +150,7 @@
 		4396B1502859E904004109AE /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabelStyle.swift; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
+		43C0F499285A58BD009F2419 /* View+SidebarSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SidebarSize.swift"; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
 		43D389DE284A52A000214874 /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
@@ -203,6 +205,7 @@
 				4309BCF5283D6E6A00F43170 /* View+If.swift */,
 				4312154E2858E4B6009EFEB5 /* Int+Digits.swift */,
 				439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */,
+				43C0F499285A58BD009F2419 /* View+SidebarSize.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */,
 				439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */,
 				43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */,
+				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,
 				43807D9427E213350056A3D3 /* MessageView.swift in Sources */,
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,

@@ -5,6 +5,8 @@
 //  Created by Егор Яковенко on 21.01.2022.
 //
 
+// Just to shut Xcode up
+#if os(macOS)
 import SwiftUI
 
 struct SettingsContent: View {
@@ -60,3 +62,5 @@ struct SettingsContent_Previews: PreviewProvider {
         SettingsContent()
     }
 }
+
+#endif

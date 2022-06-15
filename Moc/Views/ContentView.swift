@@ -317,12 +317,9 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
-            // TODO: Implement vertical folders
+                // TODO: Implement vertical folders
                 #if os(iOS)
-                .introspectNavigationController { navigationController in
-                    navigationController.splitViewController?.preferredPrimaryColumnWidthFraction = 1
-                    navigationController.splitViewController?.maximumPrimaryColumnWidth = 350.0
-                }
+                .sidebarSize(350)
                 #endif
 //            }
         }
