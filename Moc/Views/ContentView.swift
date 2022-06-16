@@ -323,36 +323,31 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-//            if #available(macOS 13, iOS 16, *) {
-//                NavigationSplitView {
-//                    sidebar
-//                } detail: {
-//                    switch viewRouter.currentView {
-//                        case .selectChat:
-//                            chatPlaceholder
-//                        case .chat:
-//                            ChatView()
-//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    }
-//                }
-//            } else {
-                NavigationView {
-                    sidebar
-                    .listStyle(.sidebar)
-                    
-                    switch viewRouter.currentView {
-                        case .selectChat:
-                            chatPlaceholder
-                        case .chat:
-                            ChatView()
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
+            NavigationView {
+                sidebar
+                .listStyle(.sidebar)
+                
+                switch viewRouter.currentView {
+                    case .selectChat:
+                        chatPlaceholder
+                    case .chat:
+                        ChatView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .introspectNavigationController { vc in
+                                let navBar = vc.navigationBar
+                                let newNavBarAppearance = UINavigationBarAppearance()
+                                newNavBarAppearance.configureWithDefaultBackground()
+                                
+                                navBar.scrollEdgeAppearance = newNavBarAppearance
+                                navBar.compactAppearance = newNavBarAppearance
+                                navBar.standardAppearance = newNavBarAppearance
+                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                            }
                 }
-                // TODO: Implement vertical folders
-                #if os(iOS)
-                .sidebarSize(folderLayout == .vertical ? 450 : 350)
-                #endif
-//            }
+            }
+            #if os(iOS)
+            .sidebarSize(folderLayout == .vertical ? 400 : 300)
+            #endif
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {
             LoginView()
