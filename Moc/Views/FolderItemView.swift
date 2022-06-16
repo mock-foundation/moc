@@ -51,7 +51,11 @@ struct FolderItemView<Icon: View>: View {
                             .padding(4))
                 }
             }
+            #if os(macOS)
+            .frame(height: 32)
+            #elseif os(iOS)
             .frame(height: 42)
+            #endif
             .padding(.horizontal, 8)
             .onHover { isHovered in
                 if isHovered {
@@ -66,7 +70,7 @@ struct FolderItemView<Icon: View>: View {
                     .font(.system(size: 22))
                 Text(name)
             }
-            .padding(.vertical)
+            .padding(.vertical, 8)
             .frame(width: 80, height: 64)
             .onHover { isHovered in
                 if isHovered {
@@ -125,6 +129,5 @@ extension View {
 struct FolderView_Previews: PreviewProvider {
     static var previews: some View {
         FolderItemView(name: "Name", icon: Image("bot"), unreadCount: 0)
-            .preferredColorScheme(.light)
     }
 }

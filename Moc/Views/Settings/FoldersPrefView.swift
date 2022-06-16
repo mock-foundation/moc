@@ -17,6 +17,8 @@ private enum FolderManipulationMode {
 
 struct FoldersPrefView: View {
     @StateObject private var viewModel = FoldersPrefViewModel()
+    
+    @Default(.folderLayout) var folderLayout
 
     fileprivate func makeFolderManipulationView(_ mode: FolderManipulationMode) -> some View {
         VStack {
@@ -130,9 +132,42 @@ struct FoldersPrefView: View {
     
     @ViewBuilder
     private var folderLayoutSelection: some View {
-        Image("VerticalFolderLayout")
-        Image("HorizontalFolderLayout")
-
+        Button {
+            folderLayout = .vertical
+        } label: {
+            Image("VerticalFolderLayout")
+                .padding(1)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                    #if os(macOS)
+                        .stroke(folderLayout == .vertical
+                                ? .blue
+                                : Color(nsColor: .lightGray), lineWidth: 2)
+                    #elseif os(iOS)
+                        .stroke(folderLayout == .vertical
+                                ? .blue
+                                : Color(uiColor: .lightGray), lineWidth: 2)
+                    #endif
+                )
+        }.buttonStyle(.plain)
+        Button {
+            folderLayout = .horizontal
+        } label: {
+            Image("HorizontalFolderLayout")
+                .padding(1)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                    #if os(macOS)
+                        .stroke(folderLayout == .horizontal
+                                ? .blue
+                                : Color(nsColor: .lightGray), lineWidth: 2)
+                    #elseif os(iOS)
+                        .stroke(folderLayout == .horizontal
+                                ? .blue
+                                : Color(uiColor: .lightGray), lineWidth: 2)
+                    #endif
+                )
+        }.buttonStyle(.plain)
     }
 
     var body: some View {
@@ -179,14 +214,18 @@ struct FoldersPrefView: View {
                 }
                 Section("Layout") {
                     #if os(macOS)
-                    HStack {
+                    HStack(spacing: 16) {
+                        Spacer()
                         folderLayoutSelection
+                        Spacer()
                     }
                     #elseif os(iOS)
-                    VStack {
+                    VStack(spacing: 16) {
                         folderLayoutSelection
                     }
                     #endif
+                    Text("If there are too much folders, use the vertical layout for easier access.")
+                        .font(.footnote)
                 }
             }
         }.padding()

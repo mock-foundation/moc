@@ -14,6 +14,7 @@ import TDLibKit
 import OrderedCollections
 import Caching
 import Introspect
+import Defaults
 
 private enum Tab {
     case chat
@@ -28,6 +29,7 @@ struct ContentView: View {
     @State private var selectedChat: Int? = 0
     @State private var selectedTab: Tab = .chat
     @State private var searchText = ""
+    @Default(.folderLayout) private var folderLayout
     
     #if os(iOS)
     @State private var areSettingsOpen = false
@@ -40,7 +42,7 @@ struct ContentView: View {
     
     private var chatList: some View {
         ScrollView {
-            LazyVStack {
+            let stack = LazyVStack {
                 ForEach(mainViewModel.chatList) { chat in
                     Button {
                         Task {
@@ -66,11 +68,11 @@ struct ContentView: View {
                     }.buttonStyle(.plain)
                 }
             }
-            #if os(macOS)
-            .padding(.trailing, 12)
-            #elseif os(iOS)
-            .padding(8)
-            #endif
+            if folderLayout == .vertical {
+                stack.padding(.trailing, 12)
+            } else {
+                stack.padding(8)
+            }
         }
     }
     
@@ -152,22 +154,19 @@ struct ContentView: View {
         
     @ViewBuilder
     private var filterBar: some View {
-        #if os(macOS)
-        let orientation: Axis.Set = .vertical
-        #elseif os(iOS)
-        let orientation: Axis.Set = .horizontal
-        #endif
-        ScrollView(orientation, showsIndicators: false) {
-            Group {
+        let scroll = ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
+            let group = Group {
                 switch selectedTab {
                     case .chat:
-                        #if os(macOS)
-                        makeFolders(horizontal: false)
-                        #elseif os(iOS)
-                        HStack {
-                            makeFolders(horizontal: true)
+                        if folderLayout == .vertical {
+                            VStack {
+                                makeFolders(horizontal: false)
+                            }
+                        } else {
+                            HStack {
+                                makeFolders(horizontal: true)
+                            }
                         }
-                        #endif
                     case .contacts:
                         FolderItemView(name: "Nearby chats", icon: Image(systemName: "map"))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -187,26 +186,31 @@ struct ContentView: View {
                 }
             }
             .frame(alignment: .center)
-            #if os(macOS)
-            .padding(.bottom)
-            #elseif os(iOS)
-            .padding(8)
-            #endif
+            if folderLayout == .vertical {
+                group.padding(.bottom)
+            } else {
+                #if os(macOS)
+                group
+                #elseif os(iOS)
+                group.padding(8)
+                #endif
+            }
         }
-        #if os(macOS)
-        .frame(width: 90)
-        #elseif os(iOS)
-        .background(.bar, in: Rectangle())
-        #endif
+        if folderLayout == .vertical {
+            scroll
+                .frame(width: 90)
+        } else {
+            scroll
+                #if os(iOS)
+                .background(.bar, in: Rectangle())
+                #endif
+                .frame(minWidth: 0, maxWidth: .infinity)
+            
+        }
     }
     
     private var chats: some View {
         VStack {
-            #if os(macOS)
-            SearchField()
-                .controlSize(.large)
-                .padding(.trailing, 12)
-            #endif
             Group {
                 switch selectedTab {
                     case .chat:
@@ -251,42 +255,69 @@ struct ContentView: View {
     #endif
     
     private var sidebar: some View {
-        #if os(macOS)
         HStack {
-            filterBar
-            chats
-        }
-        .frame(minWidth: 400)
-        #elseif os(iOS)
-        chats
-            .safeAreaInset(edge: .top) {
-                if !mainViewModel.isArchiveOpen {
-                    filterBar
-                }
-            }
-            .safeAreaInset(edge: .bottom) {
-                HStack {
-                    Spacer()
-                    makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
-                    makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
-                    makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
-                    Menu {
-                        Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
-                        Divider()
-                        Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
-                        Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
-                        Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
-                        Button { } label: { Label("Saved messages", systemImage: "bookmark") }
-                    } label: {
-                        makeTabBarItem("More", systemImage: "ellipsis")
+            if folderLayout == .vertical {
+                filterBar
+                chats
+                #if os(macOS)
+                    .safeAreaInset(edge: .top) {
+                        let field = SearchField()
+                            .controlSize(.large)
+                        if folderLayout == .vertical {
+                            field.padding(.trailing, 12)
+                        } else {
+                            field.padding(.horizontal, 12)
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .foregroundColor(Color(uiColor: .darkGray))
-                    Spacer()
-                }
-                .padding(.vertical)
-                .background(.ultraThinMaterial, in: Rectangle())
+                #endif
+            } else {
+                chats
+                    #if os(macOS)
+                    .safeAreaInset(edge: .top) {
+                        let field = SearchField()
+                            .controlSize(.large)
+                        if folderLayout == .vertical {
+                            field.padding(.trailing, 12)
+                        } else {
+                            field.padding(.horizontal, 12)
+                        }
+                    }
+                    #endif
+                    .safeAreaInset(edge: .top) {
+                        if !mainViewModel.isArchiveOpen {
+                            filterBar
+                                .padding(.horizontal)
+                        }
+                    }
+                    #if os(iOS)
+                    .safeAreaInset(edge: .bottom) {
+                        HStack {
+                            Spacer()
+                            makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
+                            makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
+                            makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
+                            Menu {
+                                Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
+                                Divider()
+                                Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
+                                Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
+                                Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
+                                Button { } label: { Label("Saved messages", systemImage: "bookmark") }
+                            } label: {
+                                makeTabBarItem("More", systemImage: "ellipsis")
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                            Spacer()
+                        }
+                        .padding(.vertical)
+                        .background(.ultraThinMaterial, in: Rectangle())
+                    }
+                    #endif
             }
+        }
+        #if os(macOS)
+        .frame(minWidth: folderLayout == .vertical ? 400 : 330)
         #endif
     }
 
@@ -319,7 +350,7 @@ struct ContentView: View {
                 }
                 // TODO: Implement vertical folders
                 #if os(iOS)
-                .sidebarSize(350)
+                .sidebarSize(folderLayout == .vertical ? 450 : 350)
                 #endif
 //            }
         }

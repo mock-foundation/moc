@@ -5,7 +5,9 @@
 //  Created by Егор Яковенко on 15.06.2022.
 //
 
-enum FolderLayout {
+import Defaults
+
+enum FolderLayout: Codable, DefaultsSerializable {
     case vertical
     case horizontal
 }
