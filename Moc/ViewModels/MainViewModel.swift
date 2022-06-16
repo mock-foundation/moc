@@ -63,7 +63,6 @@ class MainViewModel: ObservableObject {
     }
     
     var folders: [ChatFolder] {
-        // TODO: Implement chat folders
         return chatFilters.map { filter in
             return ChatFolder(
                 title: filter.title,

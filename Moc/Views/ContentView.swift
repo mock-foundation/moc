@@ -314,7 +314,6 @@ struct ContentView: View {
                     makeTabBarItem("More", systemImage: "ellipsis")
                 }
                 .buttonStyle(.plain)
-                .hoverEffect()
                 .foregroundColor(Color(uiColor: .darkGray))
                 Spacer()
             }
@@ -352,7 +351,7 @@ struct ContentView: View {
                 }
             }
             #if os(iOS)
-            .sidebarSize(folderLayout == .vertical ? 400 : 300)
+            .sidebarSize(folderLayout == .vertical ? 400 : 330)
             #endif
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {

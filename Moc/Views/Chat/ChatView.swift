@@ -83,7 +83,7 @@ struct ChatView: View {
                 .padding(6)
                 .onReceive(inputMessage.publisher) { _ in
                     viewModel.updateAction(with: .chatActionTyping)
-                    // TODO: handle message input updates
+                    // TODO: Handle drafts
                 }
                 .onSubmit {
                     viewModel.sendMessage(inputMessage)

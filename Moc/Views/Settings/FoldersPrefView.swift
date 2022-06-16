@@ -38,7 +38,7 @@ struct FoldersPrefView: View {
                     Text("To be implemented")
                 }
                 Section("Excluded chats") {
-                    // TODO: implement included chats editor
+                    // TODO: implement excluded chats editor
                     Text("To be implemented")
                 }
             }.padding(.bottom)
