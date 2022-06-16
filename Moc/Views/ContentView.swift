@@ -287,7 +287,9 @@ struct ContentView: View {
                     .safeAreaInset(edge: .top) {
                         if !mainViewModel.isArchiveOpen {
                             filterBar
-//                                .padding(.horizontal)
+                                #if os(macOS)
+                                .padding(.horizontal)
+                                #endif
                         }
                     }
             }
@@ -334,6 +336,7 @@ struct ContentView: View {
                     case .chat:
                         ChatView()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            #if os(iOS)
                             .introspectNavigationController { vc in
                                 let navBar = vc.navigationBar
                                 
@@ -345,6 +348,7 @@ struct ContentView: View {
                                 navBar.standardAppearance = newNavBarAppearance
                                 navBar.compactScrollEdgeAppearance = newNavBarAppearance
                             }
+                            #endif
                 }
             }
             #if os(iOS)
