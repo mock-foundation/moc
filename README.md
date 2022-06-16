@@ -25,12 +25,12 @@ Project roadmap: [Craft](https://www.craft.do/s/rmUOSbIPXTVbCY)
 If you have any questions, ask them in [Discussions](https://github.com/ggoraa/moc/discussions) on GitHub, or in a [Telegram group](https://t.me/moc_discussion) (ukrainian/russian). You are **strongly** encoruaged to use Discussions and the Telegram group instead of Issues for questions. Bug reports and stuff go to Issues. There is a reason why GitHub created Discussions in the first place :D
 
 # Screenshots
-![](images/screenshots/light/main.png)
-![](images/screenshots/dark/main.png)
-![](images/screenshots/light/folders.png)
-![](images/screenshots/dark/folders.png)
-![](images/screenshots/light/account.png)
-![](images/screenshots/dark/account.png)
+![](.github/images/screenshots/light/main.png)
+![](.github/images/screenshots/dark/main.png)
+![](.github/images/screenshots/light/folders.png)
+![](.github/images/screenshots/dark/folders.png)
+![](.github/images/screenshots/light/account.png)
+![](.github/images/screenshots/dark/account.png)
 
 # Contributing
 

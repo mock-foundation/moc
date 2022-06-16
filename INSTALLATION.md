@@ -9,10 +9,10 @@ You can find latest release at [Releases page](https://github.com/ggoraa/moc/rel
 
 3. Move Moc to Applications folder
 
-![](images/installation/move_to_applications.png)
+![](.github/images/installation/move_to_applications.png)
 
 4. Open `Moc.app`, macOS will warn you that "Moc" cannnot be opened. This is fine.
 
 1. Go to System Preferences > Security & Privacy. Click "Open Anyway" > "Open"
 
-![](images/installation/security_and_privacy.png)
+![](.github/images/installation/security_and_privacy.png)
