@@ -244,6 +244,7 @@ struct ContentView: View {
             makeTabBarItem(title, systemImage: systemImage)
         }
         .buttonStyle(.plain)
+        .hoverEffect()
         .foregroundColor(selectedTab == value ? .blue : Color(uiColor: .darkGray))
         Spacer()
     }
@@ -286,7 +287,7 @@ struct ContentView: View {
                     .safeAreaInset(edge: .top) {
                         if !mainViewModel.isArchiveOpen {
                             filterBar
-                                .padding(.horizontal)
+//                                .padding(.horizontal)
                         }
                     }
             }
@@ -311,6 +312,7 @@ struct ContentView: View {
                     makeTabBarItem("More", systemImage: "ellipsis")
                 }
                 .buttonStyle(.plain)
+                .hoverEffect()
                 .foregroundColor(Color(uiColor: .darkGray))
                 Spacer()
             }
@@ -334,6 +336,7 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .introspectNavigationController { vc in
                                 let navBar = vc.navigationBar
+                                
                                 let newNavBarAppearance = UINavigationBarAppearance()
                                 newNavBarAppearance.configureWithDefaultBackground()
                                 
