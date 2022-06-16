@@ -9,11 +9,14 @@ import SwiftUI
 import Introspect
 
 extension View {
-    @available(iOS 15, *)
     func sidebarSize(_ size: Double) -> some View {
+        #if os(iOS)
         self.introspectNavigationController { navigationController in
             navigationController.splitViewController?.preferredPrimaryColumnWidthFraction = 1
             navigationController.splitViewController?.maximumPrimaryColumnWidth = size
         }
+        #elseif os(macOS)
+        self
+        #endif
     }
 }
