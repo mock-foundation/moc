@@ -289,35 +289,34 @@ struct ContentView: View {
                                 .padding(.horizontal)
                         }
                     }
-                    #if os(iOS)
-                    .safeAreaInset(edge: .bottom) {
-                        HStack {
-                            Spacer()
-                            makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
-                            makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
-                            makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
-                            Menu {
-                                Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
-                                Divider()
-                                Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
-                                Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
-                                Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
-                                Button { } label: { Label("Saved messages", systemImage: "bookmark") }
-                            } label: {
-                                makeTabBarItem("More", systemImage: "ellipsis")
-                            }
-                            .buttonStyle(.plain)
-                            .foregroundColor(Color(uiColor: .darkGray))
-                            Spacer()
-                        }
-                        .padding(.vertical)
-                        .background(.ultraThinMaterial, in: Rectangle())
-                    }
-                    #endif
             }
         }
         #if os(macOS)
         .frame(minWidth: folderLayout == .vertical ? 400 : 330)
+        #elseif os(iOS)
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                Spacer()
+                makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
+                makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
+                makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
+                Menu {
+                    Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
+                    Divider()
+                    Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
+                    Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
+                    Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
+                    Button { } label: { Label("Saved messages", systemImage: "bookmark") }
+                } label: {
+                    makeTabBarItem("More", systemImage: "ellipsis")
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(Color(uiColor: .darkGray))
+                Spacer()
+            }
+            .padding(.vertical)
+            .background(.ultraThinMaterial, in: Rectangle())
+        }
         #endif
     }
 
