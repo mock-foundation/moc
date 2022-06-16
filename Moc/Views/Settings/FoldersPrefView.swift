@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import Defaults
 import Utilities
 
 private enum FolderManipulationMode {
@@ -126,6 +127,13 @@ struct FoldersPrefView: View {
                 .frame(width: 500)
         }
     }
+    
+    @ViewBuilder
+    private var folderLayoutSelection: some View {
+        Image("VerticalFolderLayout")
+        Image("HorizontalFolderLayout")
+
+    }
 
     var body: some View {
         HStack {
@@ -170,7 +178,15 @@ struct FoldersPrefView: View {
                     }
                 }
                 Section("Layout") {
-                    Text("To be filled")
+                    #if os(macOS)
+                    HStack {
+                        folderLayoutSelection
+                    }
+                    #elseif os(iOS)
+                    VStack {
+                        folderLayoutSelection
+                    }
+                    #endif
                 }
             }
         }.padding()
