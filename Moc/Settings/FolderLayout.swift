@@ -5,4 +5,7 @@
 //  Created by Егор Яковенко on 15.06.2022.
 //
 
-import Foundation
+enum FolderLayout {
+    case vertical
+    case horizontal
+}
