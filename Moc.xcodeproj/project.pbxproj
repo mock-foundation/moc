@@ -11,6 +11,7 @@
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
 		43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008545283C0D9F00ED5961 /* Image+Blank.swift */; };
 		43016AA92842DE3000C219B4 /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 43016AA82842DE3000C219B4 /* Caching */; };
+		4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4305C475285B1C3200F6E7FF /* DefaultKeys.swift */; };
 		4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309BCF5283D6E6A00F43170 /* View+If.swift */; };
 		4312154B2858C2CF009EFEB5 /* GenerateQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */; platformFilter = ios; };
 		4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4312154C2858C326009EFEB5 /* GenerateQRCode.swift */; platformFilters = (macos, ); };
@@ -98,6 +99,7 @@
 		43008543283B59D500ED5961 /* Image+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+File.swift"; sourceTree = "<group>"; };
 		43008545283C0D9F00ED5961 /* Image+Blank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Blank.swift"; sourceTree = "<group>"; };
 		43016AA72842CDF800C219B4 /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
+		4305C475285B1C3200F6E7FF /* DefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeys.swift; sourceTree = "<group>"; };
 		4309BCF5283D6E6A00F43170 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				43C0F49F285A69AA009F2419 /* FolderLayout.swift */,
+				4305C475285B1C3200F6E7FF /* DefaultKeys.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
 				43008540283ABCA300ED5961 /* TDImage.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
+				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
