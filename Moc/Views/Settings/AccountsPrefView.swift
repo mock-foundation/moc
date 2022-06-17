@@ -188,12 +188,12 @@ struct AccountsPrefView: View {
                 Text("Chat photo that will be shown next to your messages.")
                     .foregroundStyle(.secondary)
             }
-            TextField("First name", text: $lastName)
+            TextField("First name", text: $firstName)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
                 .onSubmit {
                     Task {
-                        try await viewModel.dataSource.set(lastName: lastName)
+                        try await viewModel.dataSource.set(firstName: firstName)
                     }
                 }
             TextField("Last name", text: $lastName)
