@@ -25,7 +25,7 @@ struct TDImage: View {
     var body: some View {
         Group {
             if downloadingComplete {
-                Image(file: file)
+                Image(file: displayedFile)
                     .resizable()
                     .antialiased(true)
             } else {
