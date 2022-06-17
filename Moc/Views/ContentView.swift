@@ -288,8 +288,8 @@ struct ContentView: View {
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
-        .transition(.move(edge: .bottom).combined(with: .opacity))
         #endif
+        .transition(.move(edge: .bottom).combined(with: .opacity))
     }
     
     private var sidebar: some View {
