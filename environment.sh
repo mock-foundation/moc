@@ -101,7 +101,7 @@ info "Checking dependencies...\n"
 
 check_dependency swiftformat swiftformat SwiftFormat
 check_dependency swiftlint swiftlint SwiftLint
-check_dependency gyb ggoraa/brew/gyb GYB
+check_dependency gyb ggoraa/apps/gyb GYB
 check_dependency swiftgen swiftgen SwiftGen
 check_dependency sourcery sourcery Sourcery
 
