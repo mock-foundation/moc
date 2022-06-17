@@ -69,11 +69,26 @@ struct ChatView: View {
     @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
+    @FocusState private var isInputFieldFocused
 
     // MARK: - Input field
 
     private var inputField: some View {
         HStack(spacing: 16) {
+            #if os(iOS)
+            if isInputFieldFocused {
+                Button {
+                    isInputFieldFocused = false
+                } label: {
+                    Image(systemName: "shevron.down")
+                        .padding(8)
+                        .foregroundColor(.blue)
+                }
+                .background(Color.white)
+                .clipShape(Circle())
+                .transition(.move(edge: .leading).combined(with: .opacity))
+            }
+            #endif
             Image(systemName: "paperclip")
                 .font(.system(size: 16))
             TextField("Write a message...", text: $inputMessage)
@@ -90,14 +105,18 @@ struct ChatView: View {
                     inputMessage = ""
                     viewModel.scrollToEnd()
                 }
+                .focused($isInputFieldFocused)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                        self.isInputFieldFocused = true
+                    }
+                }
             Image(systemName: "face.smiling")
                 .font(.system(size: 16))
             if inputMessage.isEmpty {
                 Image(systemName: "mic")
                     .font(.system(size: 16))
-                    .transition(.asymmetric(
-                        insertion: .scale.combined(with: .opacity),
-                        removal: .scale.combined(with: .opacity)))
+                    .transition(.scale.combined(with: .opacity))
             }
             #if os(iOS)
             if !inputMessage.isEmpty {
@@ -112,14 +131,13 @@ struct ChatView: View {
                 }
                 .background(Color.blue)
                 .clipShape(Circle())
-                .transition(.asymmetric(
-                    insertion: .scale.combined(with: .opacity),
-                    removal: .scale.combined(with: .opacity)))
+                .transition(.scale.combined(with: .opacity))
 
             }
             #endif
         }
         .animation(.spring(dampingFraction: 0.7), value: inputMessage.isEmpty)
+        .animation(.easeInOut, value: isInputFieldFocused)
     }
 
     // MARK: - Chat view
