@@ -38,9 +38,9 @@ struct AccountsPrefView: View {
     
     private func makePhoto(from file: File) -> Image {
         #if os(macOS)
-        Image(nsImage: NSImage(contentsOf: URL(string: "file://\(file.local.path)")!)!)
+        Image(nsImage: NSImage(contentsOfFile: file.local.path)!)
         #elseif os(iOS)
-        Image(uiImage: UIImage(contentsOfFile: "file://\(file.local.path)")!)
+        Image(uiImage: UIImage(contentsOfFile: file.local.path)!)
         #endif
     }
 
@@ -175,12 +175,7 @@ struct AccountsPrefView: View {
         Form {
             Section {
                 HStack {
-                    #if os(macOS)
-                    let image = Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
-                    #elseif os(iOS)
-                    let image = Image(uiImage: UIImage(contentsOfFile: photos[0].local.path)!)
-                    #endif
-                    image
+                    makePhoto(from: photos[0])
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
