@@ -40,11 +40,11 @@ public class TdChatService: ChatService {
         logger.error("set(protected:) not implemented")
     }
 
-    public func getUser(byId: Int64) async throws -> User {
-        try await self.tdApi.getUser(userId: byId)
+    public func getUser(by id: Int64) async throws -> User {
+        try await self.tdApi.getUser(userId: id)
     }
 
-    public func getChat(id: Int64) async throws -> Chat {
+    public func getChat(by id: Int64) async throws -> Chat {
         try await self.tdApi.getChat(chatId: id)
     }
 
@@ -162,7 +162,7 @@ public class TdChatService: ChatService {
     
     public var chatPhoto: File? {
         get async throws {
-            if let photo = try await getChat(id: chatId!).photo {
+            if let photo = try await getChat(by: chatId!).photo {
                 return photo.small
             } else {
                 return nil

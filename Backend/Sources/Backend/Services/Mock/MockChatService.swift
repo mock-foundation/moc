@@ -20,11 +20,11 @@ public class MockChatService: ChatService {
     
     public var chatPhoto: File?
     
-    public func getUser(byId: Int64) async throws -> User {
+    public func getUser(by id: Int64) async throws -> User {
         User(
             firstName: "First",
             haveAccess: true,
-            id: byId,
+            id: id,
             isContact: true,
             isFake: false,
             isMutualContact: true,
@@ -42,7 +42,7 @@ public class MockChatService: ChatService {
         )
     }
 
-    public func getChat(id: Int64) async throws -> Chat {
+    public func getChat(by id: Int64) async throws -> Chat {
         Chat(
             actionBar: nil,
             availableReactions: [],

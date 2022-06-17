@@ -13,8 +13,8 @@ public protocol ChatService {
     var messageHistory: [Message] { get async throws }
     var draftMessage: DraftMessage? { get async throws }
     func set(draft: DraftMessage?) async throws
-    func getUser(byId: Int64) async throws -> User
-    func getChat(id: Int64) async throws -> Chat
+    func getUser(by: Int64) async throws -> User
+    func getChat(by: Int64) async throws -> Chat
     func sendMessage(_ message: String) async throws
 
     // MARK: - Chat info

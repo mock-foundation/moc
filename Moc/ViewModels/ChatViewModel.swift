@@ -13,6 +13,7 @@ import Utilities
 import TDLibKit
 import Algorithms
 import SwiftUI
+import Logs
 
 private enum Event {
     case updateNewMessage
@@ -40,6 +41,7 @@ class ChatViewModel: ObservableObject {
     @Published var chatPhoto: File?
     
     private var subscribers: [AnyCancellable] = []
+    private var logger = Logs.Logger(label: "ChatViewModel", category: "UI")
     
     init() {
         subscribers.append(SystemUtils.ncPublisher(for: .updateNewMessage)
@@ -55,16 +57,36 @@ class ChatViewModel: ObservableObject {
     }
     
     func updateNewMessage(notification: NCPO) {
+        logger.debug(notification.name.rawValue)
         let tdMessage = (notification.object as? UpdateNewMessage)!.message
-        guard tdMessage.chatId == chatID else { return }
+        logger.debug("Message chat ID: \(tdMessage.chatId), Chat ID: \(chatID)")
+        guard tdMessage.chatId == chatID else {
+            logger.debug("Message not for this chat")
+            return
+        }
         Task {
-            let sender = try await self.service.getUser(byId: tdMessage.chatId)
+            var firstName = ""
+            var lastName = ""
+            var id: Int64 = 0
+            
+            switch tdMessage.senderId {
+                case let .messageSenderUser(info):
+                    let user = try await self.service.getUser(by: info.userId)
+                    firstName = user.firstName
+                    lastName = user.lastName
+                    id = info.userId
+                case let .messageSenderChat(info):
+                    let chat = try await self.service.getChat(by: info.chatId)
+                    firstName = chat.title
+                    id = info.chatId
+            }
+            
             let message = Message(
                 id: tdMessage.id,
                 sender: MessageSender(
-                    name: "\(sender.firstName) \(sender.lastName)",
+                    name: "\(firstName) \(lastName)",
                     type: .user,
-                    id: sender.id),
+                    id: id),
                 content: MessageContent(tdMessage.content),
                 isOutgoing: tdMessage.isOutgoing,
                 date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
@@ -113,7 +135,7 @@ class ChatViewModel: ObservableObject {
             .asyncMap { tdMessage in
                 switch tdMessage.senderId {
                     case let .messageSenderUser(user):
-                        let user = try await self.service.getUser(byId: user.userId)
+                        let user = try await self.service.getUser(by: user.userId)
                         return Message(
                             id: tdMessage.id,
                             sender: .init(
@@ -126,7 +148,7 @@ class ChatViewModel: ObservableObject {
                             date: Date(timeIntervalSince1970: Double(tdMessage.date))
                         )
                     case let .messageSenderChat(chat):
-                        let chat = try await self.service.getChat(id: chat.chatId)
+                        let chat = try await self.service.getChat(by: chat.chatId)
                         return Message(
                             id: tdMessage.id,
                             sender: .init(
