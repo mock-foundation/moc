@@ -7,4 +7,5 @@ disabled_rules:
     - force_try
 reporter: "xcode"
 excluded:
-    - SystemUtils/Sources/SystemUtils/Secret.swift
+    - Utilities/Sources/Utilities/Generated
+    - Moc/Generated/AutoEquatable.generated.swift

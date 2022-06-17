@@ -12,6 +12,9 @@ import SwiftUI
 import Utilities
 import TDLibKit
 import OrderedCollections
+import Caching
+import Introspect
+import Defaults
 
 private enum Tab {
     case chat
@@ -25,60 +28,81 @@ struct ContentView: View {
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
     @State private var selectedTab: Tab = .chat
+    @State private var searchText = ""
+    @Default(.folderLayout) private var folderLayout
+    
+    #if os(iOS)
+    @State private var areSettingsOpen = false
+    #endif
 
     @InjectedObject private var chatViewModel: ChatViewModel
-
     @InjectedObject private var mainViewModel: MainViewModel
+    
     @StateObject private var viewRouter = ViewRouter()
+    
+    @Environment(\.colorScheme) var colorScheme
     
     private var chatList: some View {
         ScrollView {
-            LazyVStack {
+            let stack = LazyVStack {
                 ForEach(mainViewModel.chatList) { chat in
-                    ChatItemView(chat: chat)
-                        .frame(height: 52)
-                        .onTapGesture {
-                            Task {
-                                do {
-                                    try await chatViewModel.update(chat: chat)
-                                } catch {
-                                    logger.error("Error in \(error.localizedDescription)")
-                                }
+                    Button {
+                        Task {
+                            do {
+                                try await chatViewModel.update(chat: chat)
+                            } catch {
+                                logger.error("Error in \(error.localizedDescription)")
                             }
-                            viewRouter.openedChat = chat
-                            viewRouter.currentView = .chat
                         }
-                        .padding(6)
-                        .background(
-                            (viewRouter.currentView == .chat
-                             && viewRouter.openedChat! == chat)
-                            ? Color.accentColor.opacity(0.6)
-                            : nil
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        viewRouter.openedChat = chat
+                        viewRouter.currentView = .chat
+                    } label: {
+                        ChatItemView(chat: chat)
+                            .frame(height: 52)
+                            .padding(6)
+                            .background(
+                                (viewRouter.currentView == .chat
+                                 && viewRouter.openedChat! == chat)
+                                ? Color.accentColor.opacity(0.6)
+                                : nil
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    }.buttonStyle(.plain)
                 }
-            }.padding(.trailing, 12)
+            }
+            if folderLayout == .vertical {
+                stack.padding(.trailing, 12)
+            } else {
+                stack.padding(8)
+            }
         }
     }
     
     private var chatListToolbar: some ToolbarContent {
-        Group {
-            ToolbarItem(placement: .status) {
+        #if os(macOS)
+        let placement: ToolbarItemPlacement = .status
+        #elseif os(iOS)
+        let placement: ToolbarItemPlacement = .navigationBarLeading
+        #endif
+        return Group {
+            #if os(macOS)
+            ToolbarItem(placement: placement) {
                 Picker("", selection: $selectedTab) {
                     Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
                     Image(systemName: "phone.and.waveform").tag(Tab.calls)
                     Image(systemName: "person.2").tag(Tab.contacts)
                 }.pickerStyle(.segmented)
             }
-            ToolbarItem(placement: .status) {
+            #endif
+            ToolbarItem(placement: placement) {
                 Spacer()
             }
-            ToolbarItem(placement: .status) {
+            ToolbarItem(placement: placement) {
                 Toggle(isOn: $mainViewModel.isArchiveOpen) {
                     Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                 }
             }
-            ToolbarItem(placement: .status) {
+            ToolbarItem(placement: placement) {
                 // swiftlint:disable multiple_closures_with_trailing_closure
                 Button(action: { logger.info("Pressed add chat") }) {
                     Image(systemName: "square.and.pencil")
@@ -87,31 +111,62 @@ struct ContentView: View {
         }
     }
     
+    private func makeFolderItem(
+        name: String,
+        icon: Image,
+        unreadCount: Int,
+        chatList: Caching.ChatList,
+        horizontal: Bool
+    ) -> some View {
+        Button {
+            mainViewModel.openChatList = chatList
+        } label: {
+            FolderItemView(
+                name: name,
+                icon: icon,
+                unreadCount: unreadCount,
+                horizontal: horizontal)
+            .background(mainViewModel.openChatList == chatList
+                        ? Color("SelectedColor") : Color.clear)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        #if os(iOS)
+        .hoverEffect(mainViewModel.openChatList == chatList ? .lift : .highlight)
+        #endif
+    }
+    
+    @ViewBuilder
+    private func makeFolders(horizontal: Bool) -> some View {
+        makeFolderItem(
+            name: "All Chats",
+            icon: Image(systemName: "bubble.left.and.bubble.right"),
+            unreadCount: mainViewModel.mainUnreadCounter,
+            chatList: .main,
+            horizontal: horizontal)
+        ForEach(mainViewModel.folders) { folder in
+            makeFolderItem(
+                name: folder.title,
+                icon: Image(tdIcon: folder.iconName),
+                unreadCount: folder.unreadCounter,
+                chatList: .filter(folder.id),
+                horizontal: horizontal)
+        }
+    }
+        
+    @ViewBuilder
     private var filterBar: some View {
-        ScrollView(showsIndicators: false) {
-            Group {
+        let scroll = ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
+            let group = Group {
                 switch selectedTab {
                     case .chat:
-                        FolderItemView(
-                            name: "All chats",
-                            icon: Image(systemName: "bubble.left.and.bubble.right"),
-                            unreadCount: mainViewModel.mainUnreadCounter)
-                            .background(mainViewModel.openChatList == .main
-                                        ? Color("SelectedColor") : Color.clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            .onTapGesture {
-                                mainViewModel.openChatList = .main
+                        if folderLayout == .vertical {
+                            VStack {
+                                makeFolders(horizontal: false)
                             }
-                        ForEach(mainViewModel.folders) { folder in
-                            FolderItemView(
-                                name: folder.title,
-                                icon: Image(tdIcon: folder.iconName),
-                                unreadCount: folder.unreadCounter)
-                            .background(mainViewModel.openChatList == .filter(folder.id)
-                                        ? Color("SelectedColor") : Color.clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            .onTapGesture {
-                                mainViewModel.openChatList = .filter(folder.id)
+                        } else {
+                            HStack {
+                                makeFolders(horizontal: true)
                             }
                         }
                     case .contacts:
@@ -133,16 +188,31 @@ struct ContentView: View {
                 }
             }
             .frame(alignment: .center)
-            .padding(.bottom)
+            if folderLayout == .vertical {
+                group.padding(.bottom)
+            } else {
+                #if os(macOS)
+                group
+                #elseif os(iOS)
+                group.padding(8)
+                #endif
+            }
         }
-        .frame(width: 90)
+        if folderLayout == .vertical {
+            scroll
+                .frame(width: 90)
+        } else {
+            scroll
+                #if os(iOS)
+                .background(.bar, in: Rectangle())
+                #endif
+                .frame(minWidth: 0, maxWidth: .infinity)
+            
+        }
     }
     
     private var chats: some View {
         VStack {
-            SearchField()
-                .controlSize(.large)
-                .padding(.trailing, 12)
             Group {
                 switch selectedTab {
                     case .chat:
@@ -153,33 +223,148 @@ struct ContentView: View {
                         Text("Calls")
                 }
             }
-            .frame(minWidth: 300, maxHeight: .infinity)
+            .frame(maxHeight: .infinity)
+            #if os(iOS)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            #endif
         }
         .toolbar {
             chatListToolbar
         }
     }
-
-    var body: some View {
-        NavigationView {
-            HStack {
+    
+    #if os(iOS)
+    @ViewBuilder
+    private func makeTabBarButton(
+        _ title: String,
+        systemImage: String,
+        value: Tab
+    ) -> some View {
+        Button {
+            selectedTab = value
+        } label: {
+            makeTabBarItem(title, systemImage: systemImage)
+        }
+        .buttonStyle(.plain)
+        .hoverEffect()
+        .foregroundColor(selectedTab == value ? .blue : (colorScheme == .dark ? .gray : Color(uiColor: .darkGray)))
+        Spacer()
+    }
+    
+    private func makeTabBarItem(_ title: String, systemImage: String) -> some View {
+        Label(title, systemImage: systemImage)
+            .labelStyle(TabLabelStyle())
+    }
+    #endif
+    
+    private var sidebar: some View {
+        HStack {
+            if folderLayout == .vertical {
                 filterBar
                 chats
+                #if os(macOS)
+                    .safeAreaInset(edge: .top) {
+                        let field = SearchField()
+                            .controlSize(.large)
+                        if folderLayout == .vertical {
+                            field.padding(.trailing, 12)
+                        } else {
+                            field.padding(.horizontal, 12)
+                        }
+                    }
+                #endif
+            } else {
+                chats
+                    #if os(macOS)
+                    .safeAreaInset(edge: .top) {
+                        let field = SearchField()
+                            .controlSize(.large)
+                        if folderLayout == .vertical {
+                            field.padding(.trailing, 12)
+                        } else {
+                            field.padding(.horizontal, 12)
+                        }
+                    }
+                    #endif
+                    .safeAreaInset(edge: .top) {
+                        if !mainViewModel.isArchiveOpen {
+                            filterBar
+                                #if os(macOS)
+                                .padding(.horizontal)
+                                #endif
+                        }
+                    }
             }
-            .listStyle(.sidebar)
+        }
+        #if os(macOS)
+        .frame(minWidth: folderLayout == .vertical ? 400 : 330)
+        #elseif os(iOS)
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                Spacer()
+                makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
+                makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
+                makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
+                Menu {
+                    Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
+                    Divider()
+                    Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
+                    Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
+                    Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
+                    Button { } label: { Label("Saved messages", systemImage: "bookmark") }
+                } label: {
+                    makeTabBarItem("More", systemImage: "ellipsis")
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(colorScheme == .dark ? .gray : Color(uiColor: .darkGray))
+                Spacer()
+            }
+            .padding(.vertical)
+            .background(.ultraThinMaterial, in: Rectangle())
+        }
+        #endif
+    }
 
-            switch viewRouter.currentView {
-            case .selectChat:
-                chatPlaceholder
-            case .chat:
-                ChatView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    var body: some View {
+        Group {
+            NavigationView {
+                sidebar
+                .listStyle(.sidebar)
+                
+                switch viewRouter.currentView {
+                    case .selectChat:
+                        chatPlaceholder
+                    case .chat:
+                        ChatView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            #if os(iOS)
+                            .introspectNavigationController { vc in
+                                let navBar = vc.navigationBar
+                                
+                                let newNavBarAppearance = UINavigationBarAppearance()
+                                newNavBarAppearance.configureWithDefaultBackground()
+                                
+                                navBar.scrollEdgeAppearance = newNavBarAppearance
+                                navBar.compactAppearance = newNavBarAppearance
+                                navBar.standardAppearance = newNavBarAppearance
+                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                            }
+                            #endif
+                }
             }
+            #if os(iOS)
+            .sidebarSize(folderLayout == .vertical ? 400 : 330)
+            #endif
         }
         .sheet(isPresented: $mainViewModel.showingLoginScreen) {
             LoginView()
                 .frame(width: 400, height: 500)
         }
+        #if os(iOS)
+        .fullScreenCover(isPresented: $areSettingsOpen) {
+            SettingsContent()
+        }
+        #endif
     }
 
     private var chatPlaceholder: some View {

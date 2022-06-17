@@ -24,8 +24,8 @@ public struct ProfilePlaceholderView: View {
         self.lastName = lastName
         self.style = style
     }
-
-    public var body: some View {
+    
+    private var content: some View {
         ZStack {
             Group {
                 if lastName.isEmpty {
@@ -38,7 +38,14 @@ public struct ProfilePlaceholderView: View {
             .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(fromUserId: userId))
+    }
+
+    public var body: some View {
+        if #available(macOS 13, iOS 16, *) {
+            content.background(Color(fromUserId: userId).gradient)
+        } else {
+            content.background(Color(fromUserId: userId))
+        }
     }
 }
 

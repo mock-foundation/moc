@@ -5,12 +5,12 @@
 <h1 align="center">Moc</h1>
 
 <p align="center">
-A (really) native and powerful macOS Telegram client, optimized
+A (really) native and powerful Telegram client for macOS and iPadOS, optimized
 for moderating large communities and personal use. 
 </p>
 
-![](https://img.shields.io/badge/platform-macOS-000000?style=flat&logo=apple&logoColor=white)
-![](https://img.shields.io/badge/minimum%20OS-macOS%2012-blueviolet?style=flat&logo=apple&logoColor=white)
+![](https://img.shields.io/badge/platform-macOS,%20iPadOS-000000?style=flat&logo=apple&logoColor=white)
+![](https://img.shields.io/badge/minimum%20OS-macOS%2012,%20iPadOS%2015.2-blueviolet?style=flat&logo=apple&logoColor=white)
 ![](https://img.shields.io/badge/Swift%205.6-FA7343?style=flat&logo=swift&logoColor=white)
 ![](https://img.shields.io/badge/SwiftUI-2E00F1?style=flat&logo=swift&logoColor=white)
 ![](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)
@@ -25,12 +25,12 @@ Project roadmap: [Craft](https://www.craft.do/s/rmUOSbIPXTVbCY)
 If you have any questions, ask them in [Discussions](https://github.com/ggoraa/moc/discussions) on GitHub, or in a [Telegram group](https://t.me/moc_discussion) (ukrainian/russian). You are **strongly** encoruaged to use Discussions and the Telegram group instead of Issues for questions. Bug reports and stuff go to Issues. There is a reason why GitHub created Discussions in the first place :D
 
 # Screenshots
-![](images/screenshots/light/main.png)
-![](images/screenshots/dark/main.png)
-![](images/screenshots/light/folders.png)
-![](images/screenshots/dark/folders.png)
-![](images/screenshots/light/account.png)
-![](images/screenshots/dark/account.png)
+![](.github/images/screenshots/light/main.png)
+![](.github/images/screenshots/dark/main.png)
+![](.github/images/screenshots/light/folders.png)
+![](.github/images/screenshots/dark/folders.png)
+![](.github/images/screenshots/light/account.png)
+![](.github/images/screenshots/dark/account.png)
 
 # Contributing
 
@@ -40,7 +40,7 @@ If you want to contribute a new feature, please make sure you have read the [pro
 
 ## Step 1 - Download right version of Xcode
 
-The development is going with Xcode 13.3ю. You can download it from
+The development is going with Xcode 14 beta 1. You can download it from
 [Apple Developer](https://developer.apple.com/download/release/).
 
 ## Step 2 - Obtain `api_id` and `api_hash`

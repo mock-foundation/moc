@@ -72,21 +72,6 @@ struct LoginView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    func generateQRCode(from string: String) -> NSImage {
-        let context = CIContext()
-        let filter = CIFilter.qrCodeGenerator()
-
-        filter.message = Data(string.utf8)
-
-        if let outputImage = filter.outputImage {
-            if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
-                return NSImage(cgImage: cgimg, size: NSSize(width: 32, height: 32))
-            }
-        }
-        
-        return NSImage(systemSymbolName: "xmark.circle", accessibilityDescription: nil)!
-    }
-
     var body: some View {
         // swiftlint:disable multiple_closures_with_trailing_closure
         ZStack {
@@ -208,7 +193,12 @@ struct LoginView: View {
                         .font(.title)
                         .padding(.top)
                     // QR Code
-                    Image(nsImage: generateQRCode(from: qrCodeLink))
+                    #if os(macOS)
+                    let image = Image(nsImage: .generateQRCode(from: qrCodeLink))
+                    #elseif os(iOS)
+                    let image = Image(uiImage: .generateQRCode(from: qrCodeLink))
+                    #endif
+                    image
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
@@ -283,7 +273,11 @@ struct LoginView: View {
                 presentationMode.wrappedValue.dismiss()
                 Task {
                     try? await Task.sleep(nanoseconds: UInt64(0.5 * Double(NSEC_PER_SEC)))
+                    #if os(macOS)
                     NSApp.terminate(self)
+                    #elseif os(iOS)
+                    exit(0)
+                    #endif
                 }
             }
             Button("Not really") {}

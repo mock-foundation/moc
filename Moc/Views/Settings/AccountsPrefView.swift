@@ -5,18 +5,17 @@
 //  Created by Егор Яковенко on 12.01.2022.
 //
 
+import SwiftUI
 import AlertToast
 import Backend
 import Combine
 import Utilities
 import Logs
 import Resolver
-import SwiftUI
 import TDLibKit
 
 // swiftlint:disable type_body_length
 struct AccountsPrefView: View {
-    private var logger = Logs.Logger(label: "Preferences", category: "AccountPaneUI")
     @StateObject private var viewModel = AccountsPrefViewModel()
 
     @State private var photos: [File] = []
@@ -25,8 +24,6 @@ struct AccountsPrefView: View {
     @State private var miniThumbnail: Image?
 
     @State private var userId: Int64 = 0
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
     @State private var username: String = ""
     @State private var bioText: String = ""
     @State private var phoneNumber: String = ""
@@ -35,12 +32,20 @@ struct AccountsPrefView: View {
     @State private var showInitErrorAlert = false
     @State private var showLogOutSuccessfulToast = false
     @State private var showLogOutFailedToast = false
+    
+    private func makePhoto(from file: File) -> Image {
+        #if os(macOS)
+        Image(nsImage: NSImage(contentsOfFile: file.local.path)!)
+        #elseif os(iOS)
+        Image(uiImage: UIImage(contentsOfFile: file.local.path)!)
+        #endif
+    }
 
     private var photoSwitcher: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(photos, id: \.id) { photo in
-                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photo.local.path)")!)!)
+                    makePhoto(from: photo)
                         .resizable()
                         .scaledToFit()
                         .aspectRatio(contentMode: .fill)
@@ -57,8 +62,8 @@ struct AccountsPrefView: View {
             if photos.isEmpty {
                 ProfilePlaceholderView(
                     userId: userId,
-                    firstName: firstName,
-                    lastName: lastName,
+                    firstName: viewModel.firstName,
+                    lastName: viewModel.lastName,
                     style: .large
                 ).frame(width: 256, height: 256)
             } else {
@@ -108,7 +113,7 @@ struct AccountsPrefView: View {
                     Spacer()
                     HStack {
                         VStack {
-                            Text("\(firstName) \(lastName)")
+                            Text("\(viewModel.firstName) \(viewModel.lastName)")
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.title)
                             Text(phoneNumber)
@@ -138,10 +143,14 @@ struct AccountsPrefView: View {
                     Task {
                         do {
                             _ = try await viewModel.dataSource.logOut()
+                            #if os(macOS)
                             NSSound(named: "Glass")?.play()
+                            #endif
                             showLogOutSuccessfulToast = true
                         } catch {
+                            #if os(macOS)
                             NSSound(named: "Purr")?.play()
+                            #endif
                             showLogOutFailedToast = true
                         }
                     }
@@ -163,7 +172,7 @@ struct AccountsPrefView: View {
         Form {
             Section {
                 HStack {
-                    Image(nsImage: NSImage(contentsOf: URL(string: "file://\(photos[0].local.path)")!)!)
+                    makePhoto(from: photos[0])
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
@@ -176,21 +185,17 @@ struct AccountsPrefView: View {
                 Text("Chat photo that will be shown next to your messages.")
                     .foregroundStyle(.secondary)
             }
-            TextField("First name", text: $lastName)
+            TextField("First name", text: $viewModel.firstName)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
                 .onSubmit {
-                    Task {
-                        try await viewModel.dataSource.set(lastName: lastName)
-                    }
+                    viewModel.updateNames()
                 }
-            TextField("Last name", text: $lastName)
+            TextField("Last name", text: $viewModel.lastName)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
                 .onSubmit {
-                    Task {
-                        try await viewModel.dataSource.set(lastName: lastName)
-                    }
+                    viewModel.updateNames()
                 }
             TextField("Username", text: $username)
                 .textFieldStyle(.roundedBorder)
@@ -222,18 +227,6 @@ struct AccountsPrefView: View {
         }
         .frame(width: 450)
         // Text length restrictions
-        .onReceive(firstName.publisher) { _ in
-            if firstName.count > 64 {
-                firstName = String(firstName.prefix(64))
-                SystemUtils.playAlertSound()
-            }
-        }
-        .onReceive(lastName.publisher) { _ in
-            if lastName.count > 64 {
-                lastName = String(lastName.prefix(64))
-                SystemUtils.playAlertSound()
-            }
-        }
         .onReceive(username.publisher) { _ in
             if username.count > 32 {
                 username = String(username.prefix(32))
@@ -261,8 +254,8 @@ struct AccountsPrefView: View {
             return
         }
 
-        firstName = user!.firstName
-        lastName = user!.lastName
+        viewModel.firstName = user!.firstName
+        viewModel.lastName = user!.lastName
         username = user!.username
         bioText = userFullInfo!.bio
         phoneNumber = "+\(user!.phoneNumber)"
@@ -273,7 +266,11 @@ struct AccountsPrefView: View {
             return
         }
         photoFileId = Int64(profilePhoto.big.id)
+        #if os(macOS)
         miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
+        #elseif os(iOS)
+        miniThumbnail = Image(uiImage: UIImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
+        #endif
 
         guard let photos = (try? await viewModel.dataSource.getProfilePhotos()) else {
             loading = false
@@ -286,7 +283,7 @@ struct AccountsPrefView: View {
                 priority: 32,
                 synchronous: true
             ) else {
-                logger.error("Failed to download photo")
+                viewModel.logger.error("Failed to download photo \(photo.sizes[2].photo.id)")
                 loading = false
                 return
             }

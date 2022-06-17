@@ -32,10 +32,14 @@ struct ChatItemView: View {
     var body: some View {
         HStack(alignment: .top) {
             //                chat.chatIcon
-            chatPhoto
-                .frame(width: 48, height: 48)
-                .clipShape(Circle())
-                .fixedSize()
+            VStack {
+                Spacer()
+                chatPhoto
+                    .frame(width: 48, height: 48)
+                    .clipShape(Circle())
+                    .fixedSize()
+                Spacer()
+            }
             VStack(alignment: .leading) {
                 HStack {
                     // swiftlint:disable empty_enum_arguments switch_case_alignment
@@ -54,33 +58,37 @@ struct ChatItemView: View {
                             Image(systemName: "lock")
                     }
                     Text(chat.title)
+                        #if os(macOS)
                         .font(.title3)
                         .fontWeight(.bold)
+                        #elseif os(iOS)
+                        .fontWeight(.medium)
+                        #endif
                     Spacer()
-                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
+//                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
+                        .font(.caption)
                         .foregroundColor(.secondary)
-                }
+                }.padding(.vertical, 6)
                 HStack {
                     VStack {
-                        Text("mock last message")
+                        Text("last message preview")
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
-                            .lineLimit(2)
+                            .lineLimit(1)
                             .foregroundColor(.secondary)
                         Spacer()
                     }
                     Spacer()
-                    VStack {
-                        Spacer()
+//                    VStack {
+//                        Spacer()
 //                        if chat.isPinned {
 //                            Image(systemName: "pin")
 //                                .rotationEffect(.degrees(15))
 //                        }
-                    }
+//                    }
                 }
             }
-            Spacer()
         }
     }
 }

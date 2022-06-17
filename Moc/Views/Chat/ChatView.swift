@@ -69,32 +69,87 @@ struct ChatView: View {
     @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
+    @State private var isHideButtonShown = false
+    @FocusState private var isInputFieldFocused
 
     // MARK: - Input field
 
     private var inputField: some View {
         HStack(spacing: 16) {
+            #if os(iOS)
+            if isHideButtonShown {
+                Button {
+                    isInputFieldFocused = false
+                } label: {
+                    Image(systemName: "chevron.down")
+                        .padding(8)
+                        .foregroundColor(.black)
+                }
+                .background(Color.white)
+                .clipShape(Circle())
+                .transition(.scale.combined(with: .opacity))
+            }
+            #endif
             Image(systemName: "paperclip")
                 .font(.system(size: 16))
-            TextField("Write a message...", text: $inputMessage)
-                .multilineTextAlignment(.leading)
-                .lineLimit(nil)
-                .textFieldStyle(.plain)
-                .padding(6)
-                .onReceive(inputMessage.publisher) { _ in
-                    viewModel.updateAction(with: .chatActionTyping)
-                    // TODO: handle message input updates
+            Group {
+                if #available(macOS 13, iOS 16, *) {
+                    TextField("Write a message...", text: $inputMessage, axis: .vertical)
+                        .lineLimit(20)
+                } else {
+                    TextField("Write a message...", text: $inputMessage)
                 }
-                .onSubmit {
-                    viewModel.sendMessage(inputMessage)
-                    inputMessage = ""
-                    viewModel.scrollViewProxy?.scrollTo(viewModel.messages.last?.id ?? 0)
+            }
+            .textFieldStyle(.plain)
+            .padding(6)
+            .onReceive(inputMessage.publisher) { _ in
+                viewModel.updateAction(with: .chatActionTyping)
+                // TODO: Handle drafts
+            }
+            .onSubmit {
+                viewModel.sendMessage(inputMessage)
+                inputMessage = ""
+                viewModel.scrollToEnd()
+            }
+            .focused($isInputFieldFocused)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                    self.isInputFieldFocused = true
                 }
+            }
             Image(systemName: "face.smiling")
                 .font(.system(size: 16))
-            Image(systemName: "mic")
-                .font(.system(size: 16))
+            if inputMessage.isEmpty {
+                Image(systemName: "mic")
+                    .font(.system(size: 16))
+                    .transition(.scale.combined(with: .opacity))
+            }
+            if !inputMessage.isEmpty {
+                Button {
+                    viewModel.sendMessage(inputMessage)
+                    inputMessage = ""
+                    viewModel.scrollToEnd()
+                } label: {
+                    Image(systemName: "arrow.up")
+                        #if os(macOS)
+                        .font(.system(size: 16))
+                        .padding(6)
+                        #elseif os(iOS)
+                        .padding(8)
+                        #endif
+                        .foregroundColor(.white)
+                }
+                .buttonStyle(.plain)
+                .background(Color.blue)
+                .clipShape(Circle())
+                .transition(.scale.combined(with: .opacity))
+            }
         }
+        .onChange(of: isInputFieldFocused) { value in
+            isHideButtonShown = value
+        }
+        .animation(.spring(dampingFraction: 0.7), value: inputMessage.isEmpty)
+        .animation(.spring(dampingFraction: 0.7), value: isHideButtonShown)
     }
 
     // MARK: - Chat view
@@ -121,9 +176,6 @@ struct ChatView: View {
                             .frame(height: 78)
                     }
                     .introspectScrollView { scrollView in
-                        scrollView.documentView?.bottomAnchor.constraint(
-                            equalTo: scrollView.bottomAnchor).isActive = true
-                        
                         viewModel.scrollView = scrollView
                     }
                     .onAppear {
@@ -132,10 +184,7 @@ struct ChatView: View {
                     }
                 }
                 Button {
-                    viewModel.scrollView?.documentView?.scroll(CGPoint(
-                        x: 0,
-                        y: viewModel.scrollView?.documentView?.frame.height ?? 0
-                    ))
+                    viewModel.scrollToEnd()
                 } label: {
                     Image(systemName: "arrow.down")
                 }
@@ -143,14 +192,15 @@ struct ChatView: View {
                 .padding(12)
                 .background(.ultraThinMaterial, in: Circle())
                 .clipShape(Circle())
+                #if (macOS)
                 .background(
-                    RoundedRectangle(
-                        cornerRadius: 50)
-                    .strokeBorder(
-                        Color.gray,
-                        lineWidth: 1
-                    )
+                    Circle()
+                        .strokeBorder(
+                            Color.gray,
+                            lineWidth: 1
+                        )
                 )
+                #endif
                 .vBottom()
                 .hTrailing()
                 .padding()

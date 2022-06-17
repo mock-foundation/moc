@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct SearchField: NSViewRepresentable {
-    func makeNSView(context _: Context) -> NSViewType {
+    func makeNSView(context _: Context) -> NSSearchField {
         return NSSearchField()
     }
 
-    func updateNSView(_: NSViewType, context _: Context) {}
-
-    typealias NSViewType = NSSearchField
+    func updateNSView(_: NSSearchField, context _: Context) {}
 }

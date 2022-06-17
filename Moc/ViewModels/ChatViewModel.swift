@@ -21,7 +21,11 @@ private enum Event {
 class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
     
+    #if os(macOS)
     var scrollView: NSScrollView?
+    #elseif os(iOS)
+    var scrollView: UIScrollView?
+    #endif
     var scrollViewProxy: ScrollViewProxy?
     
     // MARK: - UI state
@@ -84,10 +88,18 @@ class ChatViewModel: ObservableObject {
     
     func scrollToEnd() {
 //        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
+        #if os(macOS)
         scrollView?.documentView?.scroll(CGPoint(
             x: 0,
-            y: scrollView?.documentView?.frame.height ?? 0
-        ))
+            y: scrollView?.documentView?.frame.height ?? 0))
+        #elseif os(iOS)
+        scrollView?.setContentOffset(CGPoint(
+            x: 0,
+            y: (scrollView?.contentSize.height ?? 0)
+            - (scrollView?.bounds.height ?? 0)
+            + (scrollView?.contentInset.bottom ?? 0)),
+            animated: true)
+        #endif
     }
     
     func update(chat: Chat) async throws {

@@ -10,8 +10,7 @@ import TDLibKit
 public protocol AccountsPrefService {
     func logOut() async throws
 
-    func set(firstName: String) async throws
-    func set(lastName: String) async throws
+    func set(firstName: String, lastName: String) async throws
     func set(username: String) async throws
     func set(bio: String) async throws
     func getMe() async throws -> User

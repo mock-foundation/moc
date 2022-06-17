@@ -63,7 +63,6 @@ class MainViewModel: ObservableObject {
     }
     
     var folders: [ChatFolder] {
-        // TODO: Implement chat folders
         return chatFilters.map { filter in
             return ChatFolder(
                 title: filter.title,
@@ -249,6 +248,7 @@ class MainViewModel: ObservableObject {
     }
     
     func authorization(_ notification: NCPO) {
+        logger.debug("Got authorization state update")
         showingLoginScreen = true
     }
 

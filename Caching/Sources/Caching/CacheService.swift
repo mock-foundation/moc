@@ -23,15 +23,29 @@ public class CacheService {
         // Speed up development by nuking the database when migrations change
         migrator.eraseDatabaseOnSchemaChange = true
         #endif
-        dbQueue = try! DatabaseQueue(path: "cache.sqlite")
+        
+        var url = try! FileManager.default.url(
+            for: .cachesDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true)
+        if #available(macOS 13, iOS 16, *) {
+            url.append(path: "cache.sqlite")
+        } else {
+            url.appendPathComponent("cache.sqlite")
+        }
+        var dir = ""
+        if #available(macOS 13, iOS 16, *) {
+            dir = url.path()
+        } else {
+            dir = url.path
+        }
+        logger.debug("Database path: \(dir)")
+        dbQueue = try! DatabaseQueue(path: dir)
 
         registerMigrations()
-        // Migrate if not already
-        if (try! dbQueue.read { db in
-            try! !migrator.hasCompletedMigrations(db)
-        }) {
-            try! migrator.migrate(dbQueue)
-        }
+        try! migrator.migrate(dbQueue)
+        logger.notice("Started CacheService")
     }
 }
 
@@ -39,7 +53,8 @@ public class CacheService {
 
 private extension CacheService {
     private func registerMigrations() {
-        migrator.registerMigration("v1") { db in
+        migrator.registerMigration("v1") { [self] db in
+            logger.debug("Creating chatFilter table")
             try db.create(table: "chatFilter") { t in
                 t.column("title", .text).notNull()
                 t.column("id", .integer).notNull().primaryKey(onConflict: .replace, autoincrement: false)
@@ -47,6 +62,7 @@ private extension CacheService {
                 t.column("order", .integer).notNull().unique(onConflict: .replace)
             }
             
+            logger.debug("Creating unreadCounter table")
             try db.create(table: "unreadCounter") { t in
                 t.column("chats", .integer).notNull()
                 t.column("messages", .integer).notNull()

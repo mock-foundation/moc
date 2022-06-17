@@ -5,7 +5,8 @@ import PackageDescription
 let package = Package(
     name: "Utilities",
     platforms: [
-        .macOS(.v12)
+        .macOS(.v12),
+        .iOS(.v15)
     ],
     products: [
         .library(

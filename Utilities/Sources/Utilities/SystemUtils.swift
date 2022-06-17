@@ -1,6 +1,11 @@
+#if os(macOS)
 import AppKit
-import Foundation
 import IOKit
+#elseif os(iOS)
+import UIKit
+import AVFoundation
+#endif
+import Foundation
 
 public enum SystemUtils {
     private static let notificationQueue = DispatchQueue.main
@@ -25,8 +30,9 @@ public enum SystemUtils {
         return String((0 ..< length).map { _ in letters.randomElement()! })
     }
 
+    #if os(macOS)
     // Thanks to https://www.reddit.com/r/swift/comments/gwf9fa/how_do_i_find_the_model_of_the_mac_in_swift/
-    public static var macModel: String {
+    public static var deviceModel: String {
         // Get device identifier
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
         var modelIdentifier: String?
@@ -72,6 +78,18 @@ public enum SystemUtils {
 
         return model!
     }
+    #elseif os(iOS)
+    // Thanks https://www.zerotoappstore.com/how-to-get-iphone-device-model-swift.html
+    public static var deviceModel: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        return withUnsafePointer(to: &systemInfo.machine) {
+            $0.withMemoryRebound(to: CChar.self, capacity: 1) {
+                String(validatingUTF8: $0)
+            }
+        } ?? "Unknown"
+    }
+    #endif
 
     public static var osVersionString: String {
         let info = ProcessInfo().operatingSystemVersionString
@@ -95,6 +113,11 @@ public enum SystemUtils {
     }
 
     public static func playAlertSound() {
+        #if os(macOS)
         NSSound.beep()
+        #elseif os(iOS)
+        let systemSoundID: SystemSoundID = 1013
+        AudioServicesPlaySystemSound(systemSoundID)
+        #endif
     }
 }
