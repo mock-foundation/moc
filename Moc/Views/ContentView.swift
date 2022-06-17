@@ -36,9 +36,11 @@ struct ContentView: View {
     #endif
 
     @InjectedObject private var chatViewModel: ChatViewModel
-
     @InjectedObject private var mainViewModel: MainViewModel
+    
     @StateObject private var viewRouter = ViewRouter()
+    
+    @Environment(\.colorScheme) var colorScheme
     
     private var chatList: some View {
         ScrollView {
@@ -245,7 +247,7 @@ struct ContentView: View {
         }
         .buttonStyle(.plain)
         .hoverEffect()
-        .foregroundColor(selectedTab == value ? .blue : Color(uiColor: .darkGray))
+        .foregroundColor(selectedTab == value ? .blue : (colorScheme == .dark ? .gray : Color(uiColor: .darkGray)))
         Spacer()
     }
     
@@ -314,7 +316,7 @@ struct ContentView: View {
                     makeTabBarItem("More", systemImage: "ellipsis")
                 }
                 .buttonStyle(.plain)
-                .foregroundColor(Color(uiColor: .darkGray))
+                .foregroundColor(colorScheme == .dark ? .gray : Color(uiColor: .darkGray))
                 Spacer()
             }
             .padding(.vertical)
