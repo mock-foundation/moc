@@ -257,6 +257,41 @@ struct ContentView: View {
     }
     #endif
     
+    private var connectionState: some View {
+        VStack {
+            Spacer()
+            HStack(spacing: 16) {
+                Spacer()
+                if !mainViewModel.isConnected {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .transition(.opacity)
+                }
+                Text(mainViewModel.connectionStateTitle)
+                    .font(.system(size: 20, weight: .medium, design: .rounded))
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                Spacer()
+            }
+            .padding()
+        }
+        #if os(macOS)
+        .background(.linearGradient(
+            Gradient(colors: [
+                mainViewModel.isConnected ? .accentColor : (colorScheme == .dark ? Color(nsColor: .darkGray) : Color(nsColor: .lightGray)),
+                (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
+            startPoint: .bottom,
+            endPoint: .top))
+        #elseif os(iOS)
+        .background(.linearGradient(
+            Gradient(colors: [
+                mainViewModel.isConnected ? .accentColor : (colorScheme == .dark ? Color(uiColor: .darkGray) : Color(uiColor: .lightGray)),
+                (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
+            startPoint: .bottom,
+            endPoint: .top))
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+        #endif
+    }
+    
     private var sidebar: some View {
         HStack {
             if folderLayout == .vertical {
@@ -323,6 +358,15 @@ struct ContentView: View {
             .background(.ultraThinMaterial, in: Rectangle())
         }
         #endif
+        .overlay(alignment: .bottom) {
+            if mainViewModel.isConnectionStateShown {
+                connectionState
+                    .frame(height: 80)
+            }
+        }
+        .animation(.easeInOut, value: mainViewModel.isConnectionStateShown)
+        .animation(.easeInOut, value: mainViewModel.connectionStateTitle)
+        .animation(.easeInOut, value: mainViewModel.isConnected)
     }
 
     var body: some View {

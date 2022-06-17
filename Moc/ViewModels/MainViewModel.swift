@@ -14,9 +14,14 @@ import Logs
 import OrderedCollections
 import Backend
 import Caching
+import Network
 
 class MainViewModel: ObservableObject {
     @Injected var service: MainService
+    
+    @Published var connectionStateTitle = "Connecting..."
+    @Published var isConnectionStateShown = true
+    @Published var isConnected = true
         
     // just a helper function to filter out a set of chat positions
     private func getPosition(from positions: [ChatPosition], chatList: TDLibKit.ChatList) -> ChatPosition? {
@@ -141,12 +146,64 @@ class MainViewModel: ObservableObject {
         addSubscriber(for: .updateUnreadChatCount, action: updateUnreadChatCount(_:))
         addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
         addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
+        addSubscriber(for: .updateConnectionState, action: updateConnectionState(_:))
+        NWPathMonitor()
+            .publisher(queue: DispatchQueue.main)
+            .sink { value in
+                Task {
+                    switch value {
+                        case .satisfied:
+                            try await TdApi.shared[0].setNetworkType(type: .networkTypeOther)
+                        case .unsatisfied:
+                            try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                        case .requiresConnection:
+                            try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                        @unknown default:
+                            try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                    }
+                }
+            }
+            .store(in: &subscribers)
+            
     }
     
     func addSubscriber(for notification: NSNotification.Name, action: @escaping ((NCPO) -> Void)) {
-        subscribers.append(SystemUtils.ncPublisher(for: notification)
+        SystemUtils.ncPublisher(for: notification)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: action))
+            .sink(receiveValue: action)
+            .store(in: &subscribers)
+    }
+    
+    func updateConnectionState(_ notification: NCPO) {
+        logger.debug(notification.name.rawValue)
+        let update = notification.object as! UpdateConnectionState
+        
+        DispatchQueue.main.async { [self] in
+            switch update.state {
+                case .connectionStateWaitingForNetwork:
+                    connectionStateTitle = "Waiting for network..."
+                    isConnectionStateShown = true
+                    isConnected = false
+                case .connectionStateConnectingToProxy:
+                    connectionStateTitle = "Connecting to proxy..."
+                    isConnectionStateShown = true
+                    isConnected = false
+                case .connectionStateConnecting:
+                    connectionStateTitle = "Connecting..."
+                    isConnectionStateShown = true
+                    isConnected = false
+                case .connectionStateUpdating:
+                    connectionStateTitle = "Updating..."
+                    isConnectionStateShown = true
+                    isConnected = false
+                case .connectionStateReady:
+                    connectionStateTitle = "Connected!"
+                    isConnected = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.isConnectionStateShown = false
+                    }
+            }
+        }
     }
     
     func updateUnreadChatCount(_ notification: NCPO) {
@@ -180,9 +237,6 @@ class MainViewModel: ObservableObject {
                 chatList: chatList
             ))
         }
-        
-        logger.debug("\(unreadCounters)")
-        logger.debug("\(chatFilters)")
     }
     
     func updateChatFilters(_ notification: NCPO) {

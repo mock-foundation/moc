@@ -93,4 +93,8 @@ public extension NSNotification.Name {
     static var updateUnreadMessageCount: Notification.Name {
         .init(rawValue: "UpdateUnreadMessageCount")
     }
+    
+    static var updateConnectionState: Notification.Name {
+        .init(rawValue: "UpdateConnectionState")
+    }
 }

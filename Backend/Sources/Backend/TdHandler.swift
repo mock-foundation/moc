@@ -36,7 +36,6 @@ public extension TdApi {
                 let update = try self.decoder.decode(Update.self, from: $0)
             
                 switch update {
-                    // MARK: - Authorization state
                     case let .updateAuthorizationState(state):
                         switch state.authorizationState {
                             case .authorizationStateWaitTdlibParameters:
@@ -113,9 +112,6 @@ public extension TdApi {
                             case .authorizationStateClosed:
                                 SystemUtils.post(notification: .authorizationStateClosed)
                         }
-
-                    // MARK: - Chat updates
-
                     case let .updateChatPosition(update):
                         SystemUtils.post(notification: .updateChatPosition, with: update)
                     case let .updateChatLastMessage(update):
@@ -181,6 +177,8 @@ public extension TdApi {
                                 chatList: chatList
                             ))
                         }
+                    case let .updateConnectionState(info):
+                        SystemUtils.post(notification: .updateConnectionState, with: info)
                     default:
                         break
                 }
