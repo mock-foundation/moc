@@ -69,6 +69,7 @@ struct ChatView: View {
     @InjectedObject private var viewModel: ChatViewModel
     @State private var inputMessage = ""
     @State private var isInspectorShown = true
+    @State private var isHideButtonShown = false
     @FocusState private var isInputFieldFocused
 
     // MARK: - Input field
@@ -76,41 +77,46 @@ struct ChatView: View {
     private var inputField: some View {
         HStack(spacing: 16) {
             #if os(iOS)
-            if isInputFieldFocused {
+            if isHideButtonShown {
                 Button {
                     isInputFieldFocused = false
                 } label: {
-                    Image(systemName: "shevron.down")
+                    Image(systemName: "chevron.down")
                         .padding(8)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.black)
                 }
                 .background(Color.white)
                 .clipShape(Circle())
-                .transition(.move(edge: .leading).combined(with: .opacity))
+                .transition(.scale.combined(with: .opacity))
             }
             #endif
             Image(systemName: "paperclip")
                 .font(.system(size: 16))
-            TextField("Write a message...", text: $inputMessage)
-                .multilineTextAlignment(.leading)
-                .lineLimit(nil)
-                .textFieldStyle(.plain)
-                .padding(6)
-                .onReceive(inputMessage.publisher) { _ in
-                    viewModel.updateAction(with: .chatActionTyping)
-                    // TODO: Handle drafts
+            Group {
+                if #available(macOS 13, iOS 16, *) {
+                    TextField("Write a message...", text: $inputMessage, axis: .vertical)
+                        .lineLimit(20)
+                } else {
+                    TextField("Write a message...", text: $inputMessage)
                 }
-                .onSubmit {
-                    viewModel.sendMessage(inputMessage)
-                    inputMessage = ""
-                    viewModel.scrollToEnd()
+            }
+            .textFieldStyle(.plain)
+            .padding(6)
+            .onReceive(inputMessage.publisher) { _ in
+                viewModel.updateAction(with: .chatActionTyping)
+                // TODO: Handle drafts
+            }
+            .onSubmit {
+                viewModel.sendMessage(inputMessage)
+                inputMessage = ""
+                viewModel.scrollToEnd()
+            }
+            .focused($isInputFieldFocused)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                    self.isInputFieldFocused = true
                 }
-                .focused($isInputFieldFocused)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                        self.isInputFieldFocused = true
-                    }
-                }
+            }
             Image(systemName: "face.smiling")
                 .font(.system(size: 16))
             if inputMessage.isEmpty {
@@ -118,7 +124,6 @@ struct ChatView: View {
                     .font(.system(size: 16))
                     .transition(.scale.combined(with: .opacity))
             }
-            #if os(iOS)
             if !inputMessage.isEmpty {
                 Button {
                     viewModel.sendMessage(inputMessage)
@@ -126,18 +131,25 @@ struct ChatView: View {
                     viewModel.scrollToEnd()
                 } label: {
                     Image(systemName: "arrow.up")
+                        #if os(macOS)
+                        .font(.system(size: 16))
+                        .padding(6)
+                        #elseif os(iOS)
                         .padding(8)
+                        #endif
                         .foregroundColor(.white)
                 }
+                .buttonStyle(.plain)
                 .background(Color.blue)
                 .clipShape(Circle())
                 .transition(.scale.combined(with: .opacity))
-
             }
-            #endif
+        }
+        .onChange(of: isInputFieldFocused) { value in
+            isHideButtonShown = value
         }
         .animation(.spring(dampingFraction: 0.7), value: inputMessage.isEmpty)
-        .animation(.easeInOut, value: isInputFieldFocused)
+        .animation(.spring(dampingFraction: 0.7), value: isHideButtonShown)
     }
 
     // MARK: - Chat view
