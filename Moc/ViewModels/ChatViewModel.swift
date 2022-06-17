@@ -88,7 +88,7 @@ class ChatViewModel: ObservableObject {
                     type: .user,
                     id: id),
                 content: MessageContent(tdMessage.content),
-                isOutgoing: tdMessage.isOutgoing,
+                isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
                 date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
             )
             
@@ -144,7 +144,7 @@ class ChatViewModel: ObservableObject {
                                 id: user.id
                             ),
                             content: MessageContent(tdMessage.content),
-                            isOutgoing: tdMessage.isOutgoing,
+                            isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
                             date: Date(timeIntervalSince1970: Double(tdMessage.date))
                         )
                     case let .messageSenderChat(chat):
@@ -157,7 +157,7 @@ class ChatViewModel: ObservableObject {
                                 id: chat.id
                             ),
                             content: MessageContent(tdMessage.content),
-                            isOutgoing: tdMessage.isOutgoing,
+                            isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
                             date: Date(timeIntervalSince1970: Double(tdMessage.date))
                         )
                 }
