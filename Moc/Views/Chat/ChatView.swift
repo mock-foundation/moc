@@ -162,14 +162,15 @@ struct ChatView: View {
                 .padding(12)
                 .background(.ultraThinMaterial, in: Circle())
                 .clipShape(Circle())
+                #if (macOS)
                 .background(
-                    RoundedRectangle(
-                        cornerRadius: 50)
-                    .strokeBorder(
-                        Color.gray,
-                        lineWidth: 1
-                    )
+                    Circle()
+                        .strokeBorder(
+                            Color.gray,
+                            lineWidth: 1
+                        )
                 )
+                #endif
                 .vBottom()
                 .hTrailing()
                 .padding()
