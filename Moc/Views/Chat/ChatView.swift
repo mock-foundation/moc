@@ -92,9 +92,34 @@ struct ChatView: View {
                 }
             Image(systemName: "face.smiling")
                 .font(.system(size: 16))
-            Image(systemName: "mic")
-                .font(.system(size: 16))
+            if inputMessage.isEmpty {
+                Image(systemName: "mic")
+                    .font(.system(size: 16))
+                    .transition(.asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity)))
+            }
+            #if os(iOS)
+            if !inputMessage.isEmpty {
+                Button {
+                    viewModel.sendMessage(inputMessage)
+                    inputMessage = ""
+                    viewModel.scrollToEnd()
+                } label: {
+                    Image(systemName: "arrow.up")
+                        .padding(8)
+                        .foregroundColor(.white)
+                }
+                .background(Color.blue)
+                .clipShape(Circle())
+                .transition(.asymmetric(
+                    insertion: .scale.combined(with: .opacity),
+                    removal: .scale.combined(with: .opacity)))
+
+            }
+            #endif
         }
+        .animation(.spring(dampingFraction: 0.7), value: inputMessage.isEmpty)
     }
 
     // MARK: - Chat view
