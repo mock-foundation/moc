@@ -19,9 +19,11 @@ import Network
 class MainViewModel: ObservableObject {
     @Injected var service: MainService
     
-    @Published var connectionStateTitle = "Connecting..."
+    @Published var connectionStateTitle = ""
     @Published var isConnectionStateShown = true
     @Published var isConnected = true
+    private var loadingAnimationTimer: Timer? = nil
+    private var loadingAnimationState = 3
         
     // just a helper function to filter out a set of chat positions
     private func getPosition(from positions: [ChatPosition], chatList: TDLibKit.ChatList) -> ChatPosition? {
@@ -127,6 +129,7 @@ class MainViewModel: ObservableObject {
 
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
+    private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
     init() {
         if let filters = try? service.getFilters() {
@@ -148,7 +151,7 @@ class MainViewModel: ObservableObject {
         addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
         addSubscriber(for: .updateConnectionState, action: updateConnectionState(_:))
         NWPathMonitor()
-            .publisher(queue: DispatchQueue.main)
+            .publisher(queue: nwPathMonitorQueue)
             .sink { value in
                 Task {
                     switch value {
@@ -177,8 +180,13 @@ class MainViewModel: ObservableObject {
     func updateConnectionState(_ notification: NCPO) {
         logger.debug(notification.name.rawValue)
         let update = notification.object as! UpdateConnectionState
+        loadingAnimationTimer?.invalidate()
+        loadingAnimationTimer = nil
+        loadingAnimationState = 3
         
         DispatchQueue.main.async { [self] in
+            var needStartTimer = true
+
             switch update.state {
                 case .connectionStateWaitingForNetwork:
                     connectionStateTitle = "Waiting for network..."
@@ -197,11 +205,43 @@ class MainViewModel: ObservableObject {
                     isConnectionStateShown = true
                     isConnected = false
                 case .connectionStateReady:
+                    loadingAnimationTimer?.invalidate()
+                    loadingAnimationTimer = nil
+                    needStartTimer = false
+
                     connectionStateTitle = "Connected!"
                     isConnected = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         self.isConnectionStateShown = false
                     }
+            }
+            
+            if needStartTimer {
+                loadingAnimationTimer = Timer.scheduledTimer(
+                    withTimeInterval: 0.7,
+                    repeats: true
+                ) { [weak self] timer in
+                    guard let strongSelf = self else { return }
+                    guard self?.isConnected == false else {
+                        timer.invalidate()
+                        return
+                    }
+                    
+                    if strongSelf.loadingAnimationState != 3 {
+                        strongSelf.loadingAnimationState += 1
+                        DispatchQueue.main.async {
+                            var buffer = strongSelf.connectionStateTitle
+                            buffer.append(".")
+                            strongSelf.connectionStateTitle = buffer
+                        }
+                    } else {
+                        strongSelf.loadingAnimationState = 0
+                        DispatchQueue.main.async {
+                            strongSelf.connectionStateTitle = String(
+                                strongSelf.connectionStateTitle.prefix(strongSelf.connectionStateTitle.count - 3))
+                        }
+                    }
+                }
             }
         }
     }

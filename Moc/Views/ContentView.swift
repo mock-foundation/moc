@@ -364,7 +364,7 @@ struct ContentView: View {
                     .frame(height: 80)
             }
         }
-        .animation(.easeInOut(duration: 1), value: mainViewModel.isConnectionStateShown)
+        .animation(.easeInOut(duration: 0.5), value: mainViewModel.isConnectionStateShown)
         .animation(.easeInOut, value: mainViewModel.connectionStateTitle)
         .animation(.easeInOut, value: mainViewModel.isConnected)
     }
