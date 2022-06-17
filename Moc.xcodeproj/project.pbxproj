@@ -76,7 +76,6 @@
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
-		43BFD91A285CEBDB00D8980A /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 43BFD919285CEBDB00D8980A /* SwiftUIX */; };
 		43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F499285A58BD009F2419 /* View+SidebarSize.swift */; };
 		43C0F49D285A68ED009F2419 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 43C0F49C285A68ED009F2419 /* Defaults */; };
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
@@ -178,7 +177,6 @@
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
-				43BFD91A285CEBDB00D8980A /* SwiftUIX in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
@@ -477,7 +475,6 @@
 				431215532858E50B009EFEB5 /* Numerics */,
 				431215552858E50B009EFEB5 /* RealModule */,
 				43C0F49C285A68ED009F2419 /* Defaults */,
-				43BFD919285CEBDB00D8980A /* SwiftUIX */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -540,7 +537,6 @@
 				4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */,
 				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
-				43BFD918285CEBDB00D8980A /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1013,14 +1009,6 @@
 				minimumVersion = 0.1.4;
 			};
 		};
-		43BFD918285CEBDB00D8980A /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.2;
-			};
-		};
 		43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
@@ -1099,11 +1087,6 @@
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
-		};
-		43BFD919285CEBDB00D8980A /* SwiftUIX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43BFD918285CEBDB00D8980A /* XCRemoteSwiftPackageReference "SwiftUIX" */;
-			productName = SwiftUIX;
 		};
 		43C0F49C285A68ED009F2419 /* Defaults */ = {
 			isa = XCSwiftPackageProductDependency;
