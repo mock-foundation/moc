@@ -16,7 +16,6 @@ import TDLibKit
 
 // swiftlint:disable type_body_length
 struct AccountsPrefView: View {
-    private var logger = Logs.Logger(label: "Preferences", category: "AccountPaneUI")
     @StateObject private var viewModel = AccountsPrefViewModel()
 
     @State private var photos: [File] = []
@@ -25,8 +24,6 @@ struct AccountsPrefView: View {
     @State private var miniThumbnail: Image?
 
     @State private var userId: Int64 = 0
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
     @State private var username: String = ""
     @State private var bioText: String = ""
     @State private var phoneNumber: String = ""
@@ -65,8 +62,8 @@ struct AccountsPrefView: View {
             if photos.isEmpty {
                 ProfilePlaceholderView(
                     userId: userId,
-                    firstName: firstName,
-                    lastName: lastName,
+                    firstName: viewModel.firstName,
+                    lastName: viewModel.lastName,
                     style: .large
                 ).frame(width: 256, height: 256)
             } else {
@@ -116,7 +113,7 @@ struct AccountsPrefView: View {
                     Spacer()
                     HStack {
                         VStack {
-                            Text("\(firstName) \(lastName)")
+                            Text("\(viewModel.firstName) \(viewModel.lastName)")
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.title)
                             Text(phoneNumber)
@@ -188,21 +185,17 @@ struct AccountsPrefView: View {
                 Text("Chat photo that will be shown next to your messages.")
                     .foregroundStyle(.secondary)
             }
-            TextField("First name", text: $firstName)
+            TextField("First name", text: $viewModel.firstName)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
                 .onSubmit {
-                    Task {
-                        try await viewModel.dataSource.set(firstName: firstName)
-                    }
+                    viewModel.updateNames()
                 }
-            TextField("Last name", text: $lastName)
+            TextField("Last name", text: $viewModel.lastName)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
                 .onSubmit {
-                    Task {
-                        try await viewModel.dataSource.set(lastName: lastName)
-                    }
+                    viewModel.updateNames()
                 }
             TextField("Username", text: $username)
                 .textFieldStyle(.roundedBorder)
@@ -234,18 +227,6 @@ struct AccountsPrefView: View {
         }
         .frame(width: 450)
         // Text length restrictions
-        .onReceive(firstName.publisher) { _ in
-            if firstName.count > 64 {
-                firstName = String(firstName.prefix(64))
-                SystemUtils.playAlertSound()
-            }
-        }
-        .onReceive(lastName.publisher) { _ in
-            if lastName.count > 64 {
-                lastName = String(lastName.prefix(64))
-                SystemUtils.playAlertSound()
-            }
-        }
         .onReceive(username.publisher) { _ in
             if username.count > 32 {
                 username = String(username.prefix(32))
@@ -273,8 +254,8 @@ struct AccountsPrefView: View {
             return
         }
 
-        firstName = user!.firstName
-        lastName = user!.lastName
+        viewModel.firstName = user!.firstName
+        viewModel.lastName = user!.lastName
         username = user!.username
         bioText = userFullInfo!.bio
         phoneNumber = "+\(user!.phoneNumber)"
@@ -302,7 +283,7 @@ struct AccountsPrefView: View {
                 priority: 32,
                 synchronous: true
             ) else {
-                logger.error("Failed to download photo")
+                viewModel.logger.error("Failed to download photo \(photo.sizes[2].photo.id)")
                 loading = false
                 return
             }

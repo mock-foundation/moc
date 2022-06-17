@@ -14,12 +14,8 @@ public class TdAccountsPrefService: AccountsPrefService {
         _ = try await tdApi.logOut()
     }
 
-    public func set(firstName: String) async throws {
-        _ = try await tdApi.setName(firstName: firstName, lastName: "")
-    }
-
-    public func set(lastName: String) async throws {
-        _ = try await tdApi.setName(firstName: "", lastName: lastName)
+    public func set(firstName: String, lastName: String) async throws {
+        _ = try await tdApi.setName(firstName: firstName, lastName: lastName)
     }
 
     public func set(username: String) async throws {
