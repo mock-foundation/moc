@@ -47,12 +47,17 @@ struct MessageView: View {
             MessageBubbleView(isOutgoing: message.isOutgoing) {
                 switch message.content {
                     case let .messageText(info):
-                        Text(info.text.text)
-                            .textSelection(.enabled)
-                            .if(message.isOutgoing) { view in
-                                view.foregroundColor(.white)
+                        VStack(alignment: .leading) {
+                            if !message.isOutgoing {
+                                Text(message.sender.name)
+                                    .foregroundColor(Color(fromUserId: message.sender.id))
                             }
-                            .padding(8)
+                            Text(info.text.text)
+                                .textSelection(.enabled)
+                                .if(message.isOutgoing) { view in
+                                    view.foregroundColor(.white)
+                                }
+                        }.padding(8)
                     case let .messagePhoto(info):
                         VStack(spacing: 0) {
                             if info.photo.sizes.isEmpty == false {

@@ -16,4 +16,12 @@ public struct MessageSender {
     public let lastName: String?
     public let type: MessageSenderType
     public let id: Int64
+    
+    var name: String {
+        if let lastName = lastName {
+            return "\(firstName) \(lastName)"
+        } else {
+            return firstName
+        }
+    }
 }
