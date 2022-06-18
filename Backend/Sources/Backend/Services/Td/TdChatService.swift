@@ -33,7 +33,7 @@ public class TdChatService: ChatService {
         )
     }
     
-    private var logger = Logs.Logger(label: "Services", category: "TdChatDataSource")
+    private var logger = Logs.Logger(category: "Services", label: "TdChatDataSource")
     public var tdApi: TdApi = .shared[0]
 
     public func set(protected _: Bool) async throws {

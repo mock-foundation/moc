@@ -23,7 +23,7 @@ private enum Tab {
 }
 
 struct ContentView: View {
-    private let logger = Logs.Logger(label: "UI", category: "ContentView")
+    private let logger = Logs.Logger(category: "ContentView", label: "UI")
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0

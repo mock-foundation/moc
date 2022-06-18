@@ -16,7 +16,7 @@ public class CacheService {
 
     let dbQueue: DatabaseQueue
     var migrator = DatabaseMigrator()
-    let logger = Logger(label: "CacheService", category: "Caching")
+    let logger = Logger(category: "CacheService", label: "Caching")
 
     init() {
         #if DEBUG

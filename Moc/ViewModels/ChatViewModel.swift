@@ -41,7 +41,7 @@ class ChatViewModel: ObservableObject {
     @Published var chatPhoto: File?
     
     private var subscribers: [AnyCancellable] = []
-    private var logger = Logs.Logger(label: "ChatViewModel", category: "UI")
+    private var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
     
     init() {
         subscribers.append(SystemUtils.ncPublisher(for: .updateNewMessage)

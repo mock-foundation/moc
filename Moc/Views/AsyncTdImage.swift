@@ -15,7 +15,7 @@ struct AsyncTdImage<Content: View>: View {
     let image: (Image) -> Content
     
     private let tdApi = TdApi.shared[0]
-    private let logger = Logs.Logger(label: "AsyncTdImage", category: "UI")
+    private let logger = Logs.Logger(category: "AsyncTdImage", label: "UI")
     
     @State private var file: File?
     @State private var isDownloaded = true
@@ -61,7 +61,7 @@ struct AsyncTdImage<Content: View>: View {
                     priority: 4,
                     synchronous: false)
             } else {
-                logger.debug("Downloading file \(String(describing: id))")
+                logger.debug("Downloading file \(self.id)")
                 self.file = try await tdApi.downloadFile(
                     fileId: self.id,
                     limit: 0,
