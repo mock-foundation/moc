@@ -245,6 +245,15 @@ struct ChatView: View {
     @State private var selectedInspectorTab: InspectorTab = .users
 
     // MARK: - Chat inspector
+    
+    private func makePlaceholder(_ style: PlaceholderStyle) -> some View {
+        ProfilePlaceholderView(
+            userId: viewModel.chatID,
+            firstName: viewModel.chatTitle,
+            lastName: "",
+            style: style
+        )
+    }
 
     private var chatInspector: some View {
         ScrollView {
@@ -256,18 +265,15 @@ struct ChatView: View {
                             .resizable()
                             .interpolation(.medium)
                             .antialiased(true)
+                    } placeholder: {
+                        makePlaceholder(.medium)
                     }
                     .frame(width: 86, height: 86)
                     .clipShape(Circle())
                 } else {
-                    ProfilePlaceholderView(
-                        userId: viewModel.chatID,
-                        firstName: viewModel.chatTitle,
-                        lastName: "",
-                        style: .medium
-                    )
-                    .frame(width: 86, height: 86)
-                    .clipShape(Circle())
+                    makePlaceholder(.medium)
+                        .frame(width: 86, height: 86)
+                        .clipShape(Circle())
                 }
                 Text(viewModel.chatTitle)
                     .font(.title2)
@@ -361,18 +367,15 @@ struct ChatView: View {
                                 .resizable()
                                 .interpolation(.medium)
                                 .antialiased(true)
+                        } placeholder: {
+                            makePlaceholder(.small)
                         }
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
                     } else {
-                        ProfilePlaceholderView(
-                            userId: viewModel.chatID,
-                            firstName: viewModel.chatTitle,
-                            lastName: "",
-                            style: .small
-                        )
-                        .frame(width: 32, height: 32)
-                        .clipShape(Circle())
+                        makePlaceholder(.small)
+                            .frame(width: 32, height: 32)
+                            .clipShape(Circle())
                     }
                     // Chat title and quick info
                     VStack(alignment: .leading) {

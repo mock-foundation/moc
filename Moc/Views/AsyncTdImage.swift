@@ -10,9 +10,10 @@ import TDLibKit
 import Utilities
 import Logs
 
-struct AsyncTdImage<Content: View>: View {
+struct AsyncTdImage<Content: View, Placeholder: View>: View {
     let id: Int
     let image: (Image) -> Content
+    let placeholder: () -> Placeholder
     
     private let tdApi = TdApi.shared[0]
     private let logger = Logs.Logger(category: "AsyncTdImage", label: "UI")
@@ -27,10 +28,10 @@ struct AsyncTdImage<Content: View>: View {
                 if let file = file {
                     image(Image(file: file))
                 } else {
-                    ProgressView()
+                    placeholder()
                 }
             } else {
-                ProgressView()
+                placeholder()
             }
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in

@@ -14,6 +14,15 @@ struct MessageView: View {
     
     @State private var senderPhotoFileID: Int?
     private let tdApi = TdApi.shared[0]
+    
+    private var avatarPlaceholder: some View {
+        ProfilePlaceholderView(
+            userId: message.sender.id,
+            firstName: message.sender.firstName,
+            lastName: message.sender.lastName ?? "",
+            style: .miniature
+        )
+    }
 
     @ViewBuilder
     var body: some View {
@@ -26,14 +35,11 @@ struct MessageView: View {
                                 .resizable()
                                 .interpolation(.medium)
                                 .antialiased(true)
+                        } placeholder: {
+                            avatarPlaceholder
                         }
                     } else {
-                        ProfilePlaceholderView(
-                            userId: message.sender.id,
-                            firstName: message.sender.firstName,
-                            lastName: message.sender.lastName ?? "",
-                            style: .small
-                        )
+                        avatarPlaceholder
                     }
                 }
                 .frame(width: 36, height: 36)
@@ -64,6 +70,8 @@ struct MessageView: View {
                                         $0
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
+                                    } placeholder: {
+                                        ProgressView()
                                     }
                                 }
                                 Text(info.caption.text)
