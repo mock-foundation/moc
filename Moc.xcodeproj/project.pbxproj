@@ -28,7 +28,6 @@
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
 		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; platformFilters = (macos, ); };
 		43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4B27E213350056A3D3 /* MessageSender.swift */; };
-		43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4C27E213350056A3D3 /* MessageContent.swift */; };
 		43807D8027E213350056A3D3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4D27E213350056A3D3 /* Message.swift */; };
 		43807D8227E213350056A3D3 /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4F27E213350056A3D3 /* ChatType.swift */; };
 		43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D5027E213350056A3D3 /* MocApp+Injection.swift */; };
@@ -115,7 +114,6 @@
 		43807D2327E2129C0056A3D3 /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
 		43807D4927E213350056A3D3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43807D4B27E213350056A3D3 /* MessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
-		43807D4C27E213350056A3D3 /* MessageContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContent.swift; sourceTree = "<group>"; };
 		43807D4D27E213350056A3D3 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		43807D4F27E213350056A3D3 /* ChatType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		43807D5027E213350056A3D3 /* MocApp+Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MocApp+Injection.swift"; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				43807D4B27E213350056A3D3 /* MessageSender.swift */,
-				43807D4C27E213350056A3D3 /* MessageContent.swift */,
 				43807D4D27E213350056A3D3 /* Message.swift */,
 				43807D4F27E213350056A3D3 /* ChatType.swift */,
 				43ABC05C28500648009F529E /* ChatFolder.swift */,
@@ -641,7 +638,6 @@
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
-				43807D7F27E213350056A3D3 /* MessageContent.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
 				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,

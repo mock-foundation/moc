@@ -13,16 +13,16 @@ struct MessageView: View {
     @ViewBuilder
     var body: some View {
         switch message.content {
-            case .text(let text):
+            case let .messageText(info):
                 MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
-                    Text(text.text.text)
+                    Text(info.text.text)
                         .textSelection(.enabled)
                         .if(message.isOutgoing) { view in
                             view.foregroundColor(.white)
                         }
                     
                 }
-            case .photo(let info):
+            case let .messagePhoto(info):
                 MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
                     VStack {
                         if info.photo.sizes.isEmpty == false {
@@ -40,7 +40,14 @@ struct MessageView: View {
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     }
                 }
-            case .unsupported:
+            case .messageUnsupported:
+                MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
+                    Text("Sorry, this message is unsupported.")
+                        .if(message.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
+                }
+            default:
                 MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
                     Text("Sorry, this message is unsupported.")
                         .if(message.isOutgoing) { view in
