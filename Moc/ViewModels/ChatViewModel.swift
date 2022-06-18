@@ -68,6 +68,7 @@ class ChatViewModel: ObservableObject {
             var firstName = ""
             var lastName = ""
             var id: Int64 = 0
+            var type: MessageSenderType = .user
             
             switch tdMessage.senderId {
                 case let .messageSenderUser(info):
@@ -75,10 +76,12 @@ class ChatViewModel: ObservableObject {
                     firstName = user.firstName
                     lastName = user.lastName
                     id = info.userId
+                    type = .user
                 case let .messageSenderChat(info):
                     let chat = try await self.service.getChat(by: info.chatId)
                     firstName = chat.title
                     id = info.chatId
+                    type = .chat
             }
             
             let message = Message(
@@ -86,7 +89,7 @@ class ChatViewModel: ObservableObject {
                 sender: MessageSender(
                     firstName: firstName,
                     lastName: lastName,
-                    type: .user,
+                    type: type,
                     id: id),
                 content: tdMessage.content,
                 isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
