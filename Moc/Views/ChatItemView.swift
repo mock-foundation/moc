@@ -23,7 +23,11 @@ struct ChatItemView: View {
     @ViewBuilder
     private var chatPhoto: some View {
         if chat.photo != nil {
-            TDImage(file: chat.photo!.small)
+            AsyncTdImage(id: chat.photo!.small.id) { image in
+                image
+                    .resizable()
+                    .antialiased(true)
+            }
         } else {
             ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
         }

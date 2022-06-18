@@ -263,9 +263,13 @@ struct ChatView: View {
             LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
                 // Header
                 if viewModel.chatPhoto != nil {
-                    TDImage(file: viewModel.chatPhoto!)
-                        .frame(width: 86, height: 86)
-                        .clipShape(Circle())
+                    AsyncTdImage(id: viewModel.chatPhoto!.id) { image in
+                        image
+                            .resizable()
+                            .antialiased(true)
+                    }
+                    .frame(width: 86, height: 86)
+                    .clipShape(Circle())
                 } else {
                     ProfilePlaceholderView(
                         userId: viewModel.chatID,
@@ -363,9 +367,13 @@ struct ChatView: View {
                 ToolbarItemGroup(placement: .navigation) {
                     // Chat photo
                     if viewModel.chatPhoto != nil {
-                        TDImage(file: viewModel.chatPhoto!)
-                            .frame(width: 32, height: 32)
-                            .clipShape(Circle())
+                        AsyncTdImage(id: viewModel.chatPhoto!.id) { image in
+                            image
+                                .resizable()
+                                .antialiased(true)
+                        }
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
                     } else {
                         ProfilePlaceholderView(
                             userId: viewModel.chatID,

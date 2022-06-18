@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43008540283ABCA300ED5961 /* TDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4300853F283ABCA300ED5961 /* TDImage.swift */; };
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
 		43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008545283C0D9F00ED5961 /* Image+Blank.swift */; };
 		43016AA92842DE3000C219B4 /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 43016AA82842DE3000C219B4 /* Caching */; };
@@ -71,6 +70,7 @@
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
 		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
 		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
+		438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B227C285DCA88000D65C8 /* AsyncTdImage.swift */; };
 		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
@@ -98,7 +98,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4300853F283ABCA300ED5961 /* TDImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDImage.swift; sourceTree = "<group>"; };
 		43008543283B59D500ED5961 /* Image+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+File.swift"; sourceTree = "<group>"; };
 		43008545283C0D9F00ED5961 /* Image+Blank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Blank.swift"; sourceTree = "<group>"; };
 		43016AA72842CDF800C219B4 /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
@@ -154,6 +153,7 @@
 		43807D7C27E213350056A3D3 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		43807DC527E214D30056A3D3 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43807DC627E214DD0056A3D3 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
+		438B227C285DCA88000D65C8 /* AsyncTdImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdImage.swift; sourceTree = "<group>"; };
 		4396B1502859E904004109AE /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabelStyle.swift; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
@@ -302,8 +302,8 @@
 				43807D5627E213350056A3D3 /* Settings */,
 				43807D6C27E213350056A3D3 /* Commands */,
 				43807D6327E213350056A3D3 /* Chat */,
-				4300853F283ABCA300ED5961 /* TDImage.swift */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
+				438B227C285DCA88000D65C8 /* AsyncTdImage.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
@@ -633,11 +633,11 @@
 				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,
 				43807D9427E213350056A3D3 /* MessageView.swift in Sources */,
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
+				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
 				43807D9327E213350056A3D3 /* MessageBubbleView.swift in Sources */,
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
-				43008540283ABCA300ED5961 /* TDImage.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
