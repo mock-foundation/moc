@@ -218,7 +218,7 @@ class MainViewModel: ObservableObject {
             
             if needStartTimer {
                 loadingAnimationTimer = Timer.scheduledTimer(
-                    withTimeInterval: 0.7,
+                    withTimeInterval: 0.5,
                     repeats: true
                 ) { [weak self] timer in
                     guard let strongSelf = self else { return }

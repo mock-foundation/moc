@@ -277,14 +277,14 @@ struct ContentView: View {
         #if os(macOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor : (colorScheme == .dark ? Color(nsColor: .darkGray) : Color(nsColor: .lightGray)),
+                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
         #elseif os(iOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor : (colorScheme == .dark ? Color(uiColor: .darkGray) : Color(uiColor: .lightGray)),
+                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
@@ -361,7 +361,7 @@ struct ContentView: View {
         .overlay(alignment: .bottom) {
             if mainViewModel.isConnectionStateShown {
                 connectionState
-                    .frame(height: 80)
+                    .frame(height: 100)
             }
         }
         .animation(.easeInOut(duration: 0.5), value: mainViewModel.isConnectionStateShown)
