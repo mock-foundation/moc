@@ -125,6 +125,7 @@ class ChatViewModel: ObservableObject {
         #endif
     }
     
+    // swiftlint:disable function_body_length
     func update(chat: Chat) async throws {
         service.set(chatId: chat.id)
         DispatchQueue.main.async { [self] in

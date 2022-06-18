@@ -36,7 +36,14 @@ struct AsyncTdImage<Content: View>: View {
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             let update = notification.object as! UpdateFile
             
-            logger.debug("Received UpdateFile, ID: \(update.file.id), local ID: \(id), isDownloaded: \(update.file.local.isDownloadingCompleted)")
+            logger.debug(
+                """
+                Received UpdateFile, \
+                ID: \(update.file.id), \
+                local ID: \(id), \
+                isDownloaded: \(update.file.local.isDownloadingCompleted)
+                """
+            )
             if update.file.id == id {
                 file = update.file
                 isDownloaded = update.file.local.isDownloadingCompleted
