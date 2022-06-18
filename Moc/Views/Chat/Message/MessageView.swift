@@ -34,9 +34,6 @@ struct MessageView: View {
                                 .resizable()
                         } placeholder: {
                             avatarPlaceholder
-                                .onAppear {
-                                    print("Internal placeholder")
-                                }
                         }
                     } else {
                         avatarPlaceholder
@@ -98,13 +95,8 @@ struct MessageView: View {
                 senderPhotoFileID = update.file.id
             }
         }
-        .onAppear(perform: getFileID)
-    }
-    
-    private func getFileID() {
-        Task {
-            print("Getting file id")
-            do {
+        .onAppear {
+            Task {
                 switch message.sender.type {
                     case .user:
                         let user = try await tdApi.getUser(userId: message.sender.id)
@@ -113,8 +105,6 @@ struct MessageView: View {
                         let chat = try await tdApi.getChat(chatId: message.sender.id)
                         senderPhotoFileID = chat.photo?.small.id
                 }
-            } catch {
-                print(error)
             }
         }
     }
