@@ -196,7 +196,7 @@ struct ChatView: View {
             }
             inputField
                 .padding(8)
-                .background(.ultraThinMaterial, in: Capsule())
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .vBottom()
                 .padding()
         }
