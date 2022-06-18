@@ -70,6 +70,11 @@
 		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
 		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
 		438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B227C285DCA88000D65C8 /* AsyncTdImage.swift */; };
+		438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B227E285E3050000D65C8 /* LighterDarker.swift */; platformFilter = ios; };
+		438B2281285E3077000D65C8 /* LighterDarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2280285E3077000D65C8 /* LighterDarker.swift */; platformFilters = (macos, ); };
+		438B2283285E3098000D65C8 /* BackportedGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2282285E3098000D65C8 /* BackportedGradient.swift */; };
+		438B2285285E558F000D65C8 /* ProfilePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */; };
+		438B2287285E55B3000D65C8 /* PlaceholderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2286285E55B3000D65C8 /* PlaceholderStyle.swift */; };
 		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
@@ -152,6 +157,11 @@
 		43807DC527E214D30056A3D3 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		43807DC627E214DD0056A3D3 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		438B227C285DCA88000D65C8 /* AsyncTdImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdImage.swift; sourceTree = "<group>"; };
+		438B227E285E3050000D65C8 /* LighterDarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LighterDarker.swift; sourceTree = "<group>"; };
+		438B2280285E3077000D65C8 /* LighterDarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LighterDarker.swift; sourceTree = "<group>"; };
+		438B2282285E3098000D65C8 /* BackportedGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackportedGradient.swift; sourceTree = "<group>"; };
+		438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlaceholderView.swift; sourceTree = "<group>"; };
+		438B2286285E55B3000D65C8 /* PlaceholderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderStyle.swift; sourceTree = "<group>"; };
 		4396B1502859E904004109AE /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabelStyle.swift; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
@@ -217,6 +227,7 @@
 				439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */,
 				43C0F499285A58BD009F2419 /* View+SidebarSize.swift */,
 				43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */,
+				438B2282285E3098000D65C8 /* BackportedGradient.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -285,6 +296,7 @@
 		43807D4A27E213350056A3D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				438B2286285E55B3000D65C8 /* PlaceholderStyle.swift */,
 				43807D4B27E213350056A3D3 /* MessageSender.swift */,
 				43807D4D27E213350056A3D3 /* Message.swift */,
 				43807D4F27E213350056A3D3 /* ChatType.swift */,
@@ -300,6 +312,7 @@
 				43807D6C27E213350056A3D3 /* Commands */,
 				43807D6327E213350056A3D3 /* Chat */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
+				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
 				438B227C285DCA88000D65C8 /* AsyncTdImage.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
@@ -427,6 +440,7 @@
 				4312154C2858C326009EFEB5 /* GenerateQRCode.swift */,
 				43807D4927E213350056A3D3 /* AppDelegate.swift */,
 				43BFD916285CC30B00D8980A /* MultilineTextField.swift */,
+				438B2280285E3077000D65C8 /* LighterDarker.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -438,6 +452,7 @@
 				43EC18DF28566FC400FCAD43 /* AppDelegate.swift */,
 				4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */,
 				43BFD914285CC2B000D8980A /* MultilineTextField.swift */,
+				438B227E285E3050000D65C8 /* LighterDarker.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -600,6 +615,7 @@
 				43807DA227E213350056A3D3 /* MainViewModel.swift in Sources */,
 				43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */,
 				43807D8B27E213350056A3D3 /* StickersPrefView.swift in Sources */,
+				438B2285285E558F000D65C8 /* ProfilePlaceholderView.swift in Sources */,
 				43807D9827E213350056A3D3 /* LottieView.swift in Sources */,
 				43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */,
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
@@ -619,11 +635,13 @@
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
 				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
 				43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */,
+				438B2281285E3077000D65C8 /* LighterDarker.swift in Sources */,
 				43008544283B59D500ED5961 /* Image+File.swift in Sources */,
 				43807D8F27E213350056A3D3 /* GeneralPrefView.swift in Sources */,
 				43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */,
 				43807D9B27E213350056A3D3 /* ViewRouter.swift in Sources */,
 				43807D8027E213350056A3D3 /* Message.swift in Sources */,
+				438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */,
 				433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */,
 				439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */,
 				43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */,
@@ -637,6 +655,7 @@
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
+				438B2287285E55B3000D65C8 /* PlaceholderStyle.swift in Sources */,
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
@@ -644,6 +663,7 @@
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
+				438B2283285E3098000D65C8 /* BackportedGradient.swift in Sources */,
 				43ABC05D28500648009F529E /* ChatFolder.swift in Sources */,
 				43008546283C0DA000ED5961 /* Image+Blank.swift in Sources */,
 				43807D9F27E213350056A3D3 /* TDLibKit+Protocols.swift in Sources */,
