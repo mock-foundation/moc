@@ -20,8 +20,7 @@ struct MessageView: View {
             userId: message.sender.id,
             firstName: message.sender.firstName,
             lastName: message.sender.lastName ?? "",
-            style: .miniature
-        )
+            style: .miniature)
     }
 
     @ViewBuilder
@@ -29,14 +28,15 @@ struct MessageView: View {
         HStack(alignment: .bottom, spacing: nil) {
             if !message.isOutgoing {
                 Group {
-                    if let senderPhotoFileID = senderPhotoFileID {
-                        AsyncTdImage(id: senderPhotoFileID) { image in
+                    if senderPhotoFileID != nil {
+                        AsyncTdImage(id: senderPhotoFileID!) { image in
                             image
                                 .resizable()
-                                .interpolation(.medium)
-                                .antialiased(true)
                         } placeholder: {
                             avatarPlaceholder
+                                .onAppear {
+                                    print("Internal placeholder")
+                                }
                         }
                     } else {
                         avatarPlaceholder
@@ -46,62 +46,48 @@ struct MessageView: View {
                 .clipShape(Circle())
                 .padding(.leading, 4)
             }
-            Group {
+            
+            MessageBubbleView(isOutgoing: message.isOutgoing) {
                 switch message.content {
                     case let .messageText(info):
-                        MessageBubbleView(
-                            sender: "\(message.sender.firstName) \(message.sender.lastName ?? "")",
-                            isOutgoing: message.isOutgoing
-                        ) {
-                            Text(info.text.text)
-                                .textSelection(.enabled)
+                        Text(info.text.text)
+                            .textSelection(.enabled)
+                            .if(message.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                            .padding(8)
+                    case let .messagePhoto(info):
+                        VStack(spacing: 0) {
+                            if info.photo.sizes.isEmpty == false {
+                                AsyncTdImage(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id) {
+                                    $0
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            }
+                            Text(info.caption.text)
                                 .if(message.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                        }
-                    case let .messagePhoto(info):
-                        MessageBubbleView(
-                            sender: "\(message.sender.firstName) \(message.sender.lastName ?? "")",
-                            isOutgoing: message.isOutgoing
-                        ) {
-                            VStack {
-                                if info.photo.sizes.isEmpty == false {
-                                    AsyncTdImage(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id) {
-                                        $0
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                }
-                                Text(info.caption.text)
-                                    .if(message.isOutgoing) { view in
-                                        view.foregroundColor(.white)
-                                    }
-                                    .multilineTextAlignment(.leading)
-                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            }
+                                .multilineTextAlignment(.leading)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .padding(8)
                         }
                     case .messageUnsupported:
-                        MessageBubbleView(
-                            sender: "\(message.sender.firstName) \(message.sender.lastName ?? "")",
-                            isOutgoing: message.isOutgoing
-                        ) {
-                            Text("Sorry, this message is unsupported.")
-                                .if(message.isOutgoing) { view in
-                                    view.foregroundColor(.white)
-                                }
-                        }
+                        Text("Sorry, this message is unsupported.")
+                            .if(message.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                            .padding(8)
                     default:
-                        MessageBubbleView(
-                            sender: "\(message.sender.firstName) \(message.sender.lastName ?? "")",
-                            isOutgoing: message.isOutgoing
-                        ) {
-                            Text("Sorry, this message is unsupported.")
-                                .if(message.isOutgoing) { view in
-                                    view.foregroundColor(.white)
-                                }
-                        }
+                        Text("Sorry, this message is unsupported.")
+                            .if(message.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                            .padding(8)
                 }
             }.frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
         }
@@ -112,8 +98,13 @@ struct MessageView: View {
                 senderPhotoFileID = update.file.id
             }
         }
-        .onAppear {
-            Task {
+        .onAppear(perform: getFileID)
+    }
+    
+    private func getFileID() {
+        Task {
+            print("Getting file id")
+            do {
                 switch message.sender.type {
                     case .user:
                         let user = try await tdApi.getUser(userId: message.sender.id)
@@ -122,6 +113,8 @@ struct MessageView: View {
                         let chat = try await tdApi.getChat(chatId: message.sender.id)
                         senderPhotoFileID = chat.photo?.small.id
                 }
+            } catch {
+                print(error)
             }
         }
     }

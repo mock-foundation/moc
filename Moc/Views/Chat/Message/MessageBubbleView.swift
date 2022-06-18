@@ -8,28 +8,14 @@
 import SwiftUI
 
 struct MessageBubbleView<Content: View>: View {
-    @State var sender: String
     @State var isOutgoing: Bool = false
-    @State var content: () -> Content
+    @ViewBuilder var content: () -> Content
 
     var body: some View {
-//            Image("MockChatPhoto")
-//                .resizable()
-//                .frame(width: 36, height: 36)
-//                .clipShape(Circle())
-//                .padding(.leading, 8)
-//                .vBottom()
-        VStack(alignment: .leading) {
-            if !isOutgoing {
-                Text(sender)
-                    .foregroundColor(.blue)
-            }
-            content()
-        }
+        content()
         .if(!isOutgoing) {
-            $0.padding(.leading, 8)
+            $0.padding(.leading, 7)
         }
-        .padding(8)
         .background {
             if isOutgoing {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -51,16 +37,14 @@ struct MessageBubbleView<Content: View>: View {
 
 struct MessageBubble_Previews: PreviewProvider {
     static var previews: some View {
-        MessageBubbleView(sender: "Me") {
+        MessageBubbleView {
             Text("u just wOt?")
+                .padding()
         }
-        .preferredColorScheme(.dark)
-//        .frame(height: 40.0)
         
-        MessageBubbleView(sender: "Me", isOutgoing: true) {
+        MessageBubbleView(isOutgoing: true) {
             Text("u just wOt?")
+                .padding()
         }
-        .preferredColorScheme(.dark)
-//        .frame(height: 40.0)
     }
 }

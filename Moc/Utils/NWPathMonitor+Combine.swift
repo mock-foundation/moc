@@ -55,7 +55,7 @@ struct NetworkStatusPublisher: Publisher {
         self.queue = queue
     }
     
-    func receive<S>(subscriber: S) where S : Subscriber, Never == S.Failure, NWPath.Status == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Never == S.Failure, NWPath.Status == S.Input {
         let subscription = NetworkStatusSubscription(
             subscriber: subscriber,
             monitor: monitor,
