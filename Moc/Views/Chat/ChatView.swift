@@ -151,10 +151,9 @@ struct ChatView: View {
                         Spacer()
                         ForEach(viewModel.messages) { message in
                             HStack {
-                                if message.isOutgoing { Spacer().border(.white) }
+                                if message.isOutgoing { Spacer() }
                                 MessageView(message: message)
-                                    .frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
-                                if !message.isOutgoing { Spacer().border(.orange) }
+                                if !message.isOutgoing { Spacer() }
                             }.if(message.isOutgoing) { view in
                                 view.padding(.trailing)
                             } else: { view in
@@ -255,6 +254,7 @@ struct ChatView: View {
                     AsyncTdImage(id: viewModel.chatPhoto!.id) { image in
                         image
                             .resizable()
+                            .interpolation(.medium)
                             .antialiased(true)
                     }
                     .frame(width: 86, height: 86)
@@ -359,6 +359,7 @@ struct ChatView: View {
                         AsyncTdImage(id: viewModel.chatPhoto!.id) { image in
                             image
                                 .resizable()
+                                .interpolation(.medium)
                                 .antialiased(true)
                         }
                         .frame(width: 32, height: 32)

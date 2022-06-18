@@ -26,6 +26,7 @@ struct ChatItemView: View {
             AsyncTdImage(id: chat.photo!.small.id) { image in
                 image
                     .resizable()
+                    .interpolation(.medium)
                     .antialiased(true)
             }
         } else {

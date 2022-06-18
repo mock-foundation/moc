@@ -84,7 +84,8 @@ class ChatViewModel: ObservableObject {
             let message = Message(
                 id: tdMessage.id,
                 sender: MessageSender(
-                    name: "\(firstName) \(lastName)",
+                    firstName: firstName,
+                    lastName: lastName,
                     type: .user,
                     id: id),
                 content: tdMessage.content,
@@ -139,7 +140,8 @@ class ChatViewModel: ObservableObject {
                         return Message(
                             id: tdMessage.id,
                             sender: .init(
-                                name: "\(user.firstName) \(user.lastName)",
+                                firstName: user.firstName,
+                                lastName: user.lastName,
                                 type: .user,
                                 id: user.id
                             ),
@@ -152,7 +154,8 @@ class ChatViewModel: ObservableObject {
                         return Message(
                             id: tdMessage.id,
                             sender: .init(
-                                name: chat.title,
+                                firstName: chat.title,
+                                lastName: nil,
                                 type: .chat,
                                 id: chat.id
                             ),
