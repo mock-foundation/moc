@@ -9,6 +9,7 @@ import TDLibKit
 
 public enum MessageContent {
     case text(MessageText)
+    case photo(MessagePhoto)
     case unsupported
 }
 
@@ -19,6 +20,8 @@ extension MessageContent {
                 self = .text(text)
             case .messageUnsupported:
                 self = .unsupported
+            case let .messagePhoto(info):
+                self = .photo(info)
             default:
                 self = .unsupported
         }

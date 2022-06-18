@@ -10,6 +10,7 @@ import SwiftUI
 struct MessageView: View {
     @State var message: Moc.Message
 
+    @ViewBuilder
     var body: some View {
         switch message.content {
             case .text(let text):
@@ -19,7 +20,25 @@ struct MessageView: View {
                         .if(message.isOutgoing) { view in
                             view.foregroundColor(.white)
                         }
-                        
+                    
+                }
+            case .photo(let info):
+                MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {
+                    VStack {
+                        if info.photo.sizes.isEmpty == false {
+                            AsyncTdImage(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                        Text(info.caption.text)
+                            .if(message.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                            .multilineTextAlignment(.leading)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    }
                 }
             case .unsupported:
                 MessageBubbleView(sender: message.sender.name, isOutgoing: message.isOutgoing) {

@@ -12,17 +12,6 @@ import SwiftUI
 import Utilities
 import TDLibKit
 
-public extension MessageContent {
-    func toString() -> String {
-        switch self {
-        case let .text(data):
-            return data.text.text
-        case .unsupported:
-            return "This message is unsupported, sorry."
-        }
-    }
-}
-
 // thx https://stackoverflow.com/a/56763282
 // swiftlint:disable identifier_name
 private struct RoundedCorners: Shape {
