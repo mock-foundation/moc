@@ -12,6 +12,34 @@ import Utilities
 struct MessageView: View {
     @State var message: Moc.Message
     
+    // Internal state
+    
+    @State private var isMediaOpened = false
+    
+//    @State private var imageScale: CGFloat = 1
+//    @State private var imagePosition = CGPoint(x: 0, y: 0)
+//    @GestureState private var pointerLocation: CGPoint? = nil
+//    @GestureState private var startLocation: CGPoint? = nil
+//
+//    var simpleDrag: some Gesture {
+//        DragGesture()
+//            .onChanged { value in
+//                var newLocation = startLocation ?? imagePosition
+//                newLocation.x += value.translation.width
+//                newLocation.y += value.translation.height
+//                self.imagePosition = newLocation
+//            }.updating($startLocation) { (value, startLocation, transaction) in
+//                startLocation = startLocation ?? imagePosition
+//            }
+//    }
+//
+//    var pointerDrag: some Gesture {
+//        DragGesture()
+//            .updating($pointerLocation) { (value, fingerLocation, transaction) in
+//                fingerLocation = value.location
+//            }
+//    }
+    
     @State private var senderPhotoFileID: Int?
     private let tdApi = TdApi.shared[0]
     
@@ -23,7 +51,7 @@ struct MessageView: View {
             style: .miniature)
     }
     
-    func makeMessage<Content: View>(_ content: @escaping () -> Content) -> some View {
+    func makeMessage<Content: View>(@ViewBuilder _ content: @escaping () -> Content) -> some View {
         HStack(alignment: .bottom, spacing: nil) {
             if message.isOutgoing { Spacer() }
             if !message.isOutgoing {
@@ -90,7 +118,7 @@ struct MessageView: View {
             case let .messagePhoto(info):
                 makeMessage {
                     VStack(spacing: 0) {
-                        if info.photo.sizes.isEmpty == false {
+                        if !info.photo.sizes.isEmpty {
                             AsyncTdImage(
                                 id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
                             ) { image in
@@ -101,7 +129,48 @@ struct MessageView: View {
                                 ProgressView()
                             }
                             .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
+                            .onTapGesture {
+                                isMediaOpened = true
+                            }
+                            .sheet(isPresented: $isMediaOpened) {
+                                ZStack {
+                                    AsyncTdImage(
+                                        id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+                                    ) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+//                                    .position(imagePosition)
+//                                    .scaleEffect(imageScale)
+//                                    .gesture(simpleDrag.simultaneously(with: pointerDrag))
+//                                    .gesture(MagnificationGesture().onChanged { value in
+//                                        imageScale = value
+//                                    })
+                                    Button {
+                                        isMediaOpened = false
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                            .font(.system(size: 12))
+                                            .padding(8)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .keyboardShortcut(.escape, modifiers: [])
+                                    .background(.ultraThinMaterial, in: Circle())
+                                    .clipShape(Circle())
+                                    .hTrailing()
+                                    .vTop()
+                                    .padding()
+                                }
+                                .frame(width: 700, height: 500)
+                                .onTapGesture {
+                                    isMediaOpened = false
+                                }
+                            }
                         }
+                        
                         Text(info.caption.text)
                             .if(message.isOutgoing) { view in
                                 view.foregroundColor(.white)

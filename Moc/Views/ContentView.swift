@@ -370,45 +370,41 @@ struct ContentView: View {
     }
 
     var body: some View {
-        Group {
-            NavigationView {
-                sidebar
-                .listStyle(.sidebar)
-                
-                switch viewRouter.currentView {
-                    case .selectChat:
-                        chatPlaceholder
-                    case .chat:
-                        ChatView()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            #if os(iOS)
-                            .introspectNavigationController { vc in
-                                let navBar = vc.navigationBar
-                                
-                                let newNavBarAppearance = UINavigationBarAppearance()
-                                newNavBarAppearance.configureWithDefaultBackground()
-                                
-                                navBar.scrollEdgeAppearance = newNavBarAppearance
-                                navBar.compactAppearance = newNavBarAppearance
-                                navBar.standardAppearance = newNavBarAppearance
-                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                            }
-                            #endif
-                }
+        NavigationView {
+            sidebar
+            .listStyle(.sidebar)
+            
+            switch viewRouter.currentView {
+                case .selectChat:
+                    chatPlaceholder
+                case .chat:
+                    ChatView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        #if os(iOS)
+                        .introspectNavigationController { vc in
+                            let navBar = vc.navigationBar
+                            
+                            let newNavBarAppearance = UINavigationBarAppearance()
+                            newNavBarAppearance.configureWithDefaultBackground()
+                            
+                            navBar.scrollEdgeAppearance = newNavBarAppearance
+                            navBar.compactAppearance = newNavBarAppearance
+                            navBar.standardAppearance = newNavBarAppearance
+                            navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                        }
+                        #endif
             }
-            #if os(iOS)
-            .sidebarSize(folderLayout == .vertical ? 400 : 330)
-            #endif
-        }
-        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
-            LoginView()
-                .frame(width: 400, height: 500)
         }
         #if os(iOS)
+        .sidebarSize(folderLayout == .vertical ? 400 : 330)
         .fullScreenCover(isPresented: $areSettingsOpen) {
             SettingsContent()
         }
         #endif
+        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
+            LoginView()
+                .frame(width: 400, height: 500)
+        }
     }
 
     private var chatPlaceholder: some View {
