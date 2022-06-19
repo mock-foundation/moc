@@ -22,10 +22,10 @@ struct MessageView: View {
             lastName: message.sender.lastName ?? "",
             style: .miniature)
     }
-
-    @ViewBuilder
-    var body: some View {
+    
+    func makeMessage<Content: View>(_ content: @escaping () -> Content) -> some View {
         HStack(alignment: .bottom, spacing: nil) {
+            if message.isOutgoing { Spacer() }
             if !message.isOutgoing {
                 Group {
                     if senderPhotoFileID != nil {
@@ -43,55 +43,11 @@ struct MessageView: View {
                 .clipShape(Circle())
                 .padding(.leading, 4)
             }
-            
             MessageBubbleView(isOutgoing: message.isOutgoing) {
-                switch message.content {
-                    case let .messageText(info):
-                        VStack(alignment: .leading) {
-                            if !message.isOutgoing {
-                                Text(message.sender.name)
-                                    .foregroundColor(Color(fromUserId: message.sender.id))
-                            }
-                            Text(info.text.text)
-                                .textSelection(.enabled)
-                                .if(message.isOutgoing) { view in
-                                    view.foregroundColor(.white)
-                                }
-                        }.padding(8)
-                    case let .messagePhoto(info):
-                        VStack(spacing: 0) {
-                            if info.photo.sizes.isEmpty == false {
-                                AsyncTdImage(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id) {
-                                    $0
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
-                            }
-                            Text(info.caption.text)
-                                .if(message.isOutgoing) { view in
-                                    view.foregroundColor(.white)
-                                }
-                                .multilineTextAlignment(.leading)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(8)
-                        }
-                    case .messageUnsupported:
-                        Text("Sorry, this message is unsupported.")
-                            .if(message.isOutgoing) { view in
-                                view.foregroundColor(.white)
-                            }
-                            .padding(8)
-                    default:
-                        Text("Sorry, this message is unsupported.")
-                            .if(message.isOutgoing) { view in
-                                view.foregroundColor(.white)
-                            }
-                            .padding(8)
-                }
-            }.frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
+                content()
+            }
+            .frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
+            if !message.isOutgoing { Spacer() }
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             let update = notification.object as! UpdateFile
@@ -111,6 +67,66 @@ struct MessageView: View {
                         senderPhotoFileID = chat.photo?.small.id
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    var body: some View {
+        switch message.content {
+            case let .messageText(info):
+                makeMessage {
+                    VStack(alignment: .leading) {
+                        if !message.isOutgoing {
+                            Text(message.sender.name)
+                                .foregroundColor(Color(fromUserId: message.sender.id))
+                        }
+                        Text(info.text.text)
+                            .textSelection(.enabled)
+                            .if(message.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                    }.padding(8)
+                }
+            case let .messagePhoto(info):
+                makeMessage {
+                    VStack(spacing: 0) {
+                        if info.photo.sizes.isEmpty == false {
+                            AsyncTdImage(
+                                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+                            ) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
+                        }
+                        Text(info.caption.text)
+                            .if(message.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                            .multilineTextAlignment(.leading)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .padding(8)
+                    }
+                }
+            case .messageUnsupported:
+                makeMessage {
+                    Text("Sorry, this message is unsupported.")
+                        .if(message.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
+                        .padding(8)
+                }
+            default:
+                makeMessage {
+                    Text("Sorry, this message is unsupported.")
+                        .if(message.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
+                        .padding(8)
+                }
         }
     }
 }

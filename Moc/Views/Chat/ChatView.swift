@@ -150,15 +150,12 @@ struct ChatView: View {
                     ScrollView {
                         Spacer()
                         ForEach(viewModel.messages) { message in
-                            HStack {
-                                if message.isOutgoing { Spacer() }
-                                MessageView(message: message)
-                                if !message.isOutgoing { Spacer() }
-                            }.if(message.isOutgoing) { view in
-                                view.padding(.trailing)
-                            } else: { view in
-                                view.padding(.leading, 6)
-                            }
+                            MessageView(message: message)
+                                .if(message.isOutgoing) { view in
+                                    view.padding(.trailing)
+                                } else: { view in
+                                    view.padding(.leading, 6)
+                                }
                         }
                         Color.clear
                             .frame(height: 78)
@@ -381,7 +378,7 @@ struct ChatView: View {
                     VStack(alignment: .leading) {
                         Text(viewModel.chatTitle)
                             .font(.headline)
-                        Text("Some users were here lol")
+                        Text("Chat subtitle")
                             .font(.subheadline)
                     }
                 }
