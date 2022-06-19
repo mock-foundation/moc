@@ -68,7 +68,7 @@ struct MessageView: View {
                                 } placeholder: {
                                     ProgressView()
                                 }
-                                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
                             }
                             Text(info.caption.text)
                                 .if(message.isOutgoing) { view in
