@@ -1018,7 +1018,7 @@
 			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = "1.2.1-tdlib-1.8.3-9c9a74c5";
+				version = "1.2.1-tdlib-1.8.3-047246f3";
 			};
 		};
 		43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {

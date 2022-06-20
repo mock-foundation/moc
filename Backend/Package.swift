@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Swiftgram/TDLibKit.git",
-            exact: "1.2.1-tdlib-1.8.3-9c9a74c5"
+            exact: "1.2.1-tdlib-1.8.3-047246f3"
         ),
         .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
         .package(path: "../Utilities"),
