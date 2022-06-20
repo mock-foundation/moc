@@ -91,7 +91,7 @@ struct ChatView: View {
             }
             .textFieldStyle(.plain)
             .padding(6)
-            .onReceive(inputMessage.publisher) { _ in
+            .onChange(of: inputMessage) { _ in
                 viewModel.updateAction(with: .chatActionTyping)
                 // TODO: Handle drafts
             }
@@ -148,14 +148,8 @@ struct ChatView: View {
             ZStack {
                 ScrollViewReader { proxy in
                     ScrollView {
-                        Spacer()
-                        ForEach(viewModel.messages) { message in
+                        ForEach(viewModel.messages, id: \.self) { message in
                             MessageView(message: message)
-                                .if(message.isOutgoing) { view in
-                                    view.padding(.trailing)
-                                } else: { view in
-                                    view.padding(.leading, 6)
-                                }
                         }
                         Color.clear
                             .frame(height: 78)

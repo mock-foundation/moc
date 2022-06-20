@@ -10,7 +10,7 @@ import TDLibKit
 import Utilities
 
 struct MessageView: View {
-    @State var message: Moc.Message
+    @State var message: [Moc.Message]
     
     // Internal state
     
@@ -45,16 +45,16 @@ struct MessageView: View {
     
     private var avatarPlaceholder: some View {
         ProfilePlaceholderView(
-            userId: message.sender.id,
-            firstName: message.sender.firstName,
-            lastName: message.sender.lastName ?? "",
+            userId: message.first!.sender.id,
+            firstName: message.first!.sender.firstName,
+            lastName: message.first!.sender.lastName ?? "",
             style: .miniature)
     }
     
     func makeMessage<Content: View>(@ViewBuilder _ content: @escaping () -> Content) -> some View {
         HStack(alignment: .bottom, spacing: nil) {
-            if message.isOutgoing { Spacer() }
-            if !message.isOutgoing {
+            if message.first!.isOutgoing { Spacer() }
+            if !message.first!.isOutgoing {
                 Group {
                     if senderPhotoFileID != nil {
                         AsyncTdImage(id: senderPhotoFileID!) { image in
@@ -71,11 +71,11 @@ struct MessageView: View {
                 .clipShape(Circle())
                 .padding(.leading, 4)
             }
-            MessageBubbleView(isOutgoing: message.isOutgoing) {
+            MessageBubbleView(isOutgoing: message.first!.isOutgoing) {
                 content()
             }
-            .frame(maxWidth: 300, alignment: message.isOutgoing ? .trailing : .leading)
-            if !message.isOutgoing { Spacer() }
+            .frame(maxWidth: 300, alignment: message.first!.isOutgoing ? .trailing : .leading)
+            if !message.first!.isOutgoing { Spacer() }
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             let update = notification.object as! UpdateFile
@@ -86,12 +86,12 @@ struct MessageView: View {
         }
         .onAppear {
             Task {
-                switch message.sender.type {
+                switch message.first!.sender.type {
                     case .user:
-                        let user = try await tdApi.getUser(userId: message.sender.id)
+                        let user = try await tdApi.getUser(userId: message.first!.sender.id)
                         senderPhotoFileID = user.profilePhoto?.small.id
                     case .chat:
-                        let chat = try await tdApi.getChat(chatId: message.sender.id)
+                        let chat = try await tdApi.getChat(chatId: message.first!.sender.id)
                         senderPhotoFileID = chat.photo?.small.id
                 }
             }
@@ -100,102 +100,109 @@ struct MessageView: View {
 
     @ViewBuilder
     var body: some View {
-        switch message.content {
-            case let .messageText(info):
-                makeMessage {
-                    VStack(alignment: .leading) {
-                        if !message.isOutgoing {
-                            Text(message.sender.name)
-                                .foregroundColor(Color(fromUserId: message.sender.id))
-                        }
-                        Text(info.text.text)
-                            .textSelection(.enabled)
-                            .if(message.isOutgoing) { view in
-                                view.foregroundColor(.white)
+        Group {
+            switch message.first!.content {
+                case let .messageText(info):
+                    makeMessage {
+                        VStack(alignment: .leading) {
+                            if !message.first!.isOutgoing {
+                                Text(message.first!.sender.name)
+                                    .foregroundColor(Color(fromUserId: message.first!.sender.id))
                             }
-                    }.padding(8)
-                }
-            case let .messagePhoto(info):
-                makeMessage {
-                    VStack(spacing: 0) {
-                        if !info.photo.sizes.isEmpty {
-                            AsyncTdImage(
-                                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
-                            ) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
-                            .onTapGesture {
-                                isMediaOpened = true
-                            }
-                            .sheet(isPresented: $isMediaOpened) {
-                                ZStack {
-                                    AsyncTdImage(
-                                        id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-//                                    .position(imagePosition)
-//                                    .scaleEffect(imageScale)
-//                                    .gesture(simpleDrag.simultaneously(with: pointerDrag))
-//                                    .gesture(MagnificationGesture().onChanged { value in
-//                                        imageScale = value
-//                                    })
-                                    Button {
-                                        isMediaOpened = false
-                                    } label: {
-                                        Image(systemName: "xmark")
-                                            .font(.system(size: 12))
-                                            .padding(8)
-                                    }
-                                    .buttonStyle(.plain)
-                                    .keyboardShortcut(.escape, modifiers: [])
-                                    .background(.ultraThinMaterial, in: Circle())
-                                    .clipShape(Circle())
-                                    .hTrailing()
-                                    .vTop()
-                                    .padding()
+                            Text(info.text.text)
+                                .textSelection(.enabled)
+                                .if(message.first!.isOutgoing) { view in
+                                    view.foregroundColor(.white)
                                 }
-                                .frame(width: 700, height: 500)
+                        }.padding(8)
+                    }
+                case let .messagePhoto(info):
+                    makeMessage {
+                        VStack(spacing: 0) {
+                            if !info.photo.sizes.isEmpty {
+                                AsyncTdImage(
+                                    id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+                                ) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
                                 .onTapGesture {
-                                    isMediaOpened = false
+                                    isMediaOpened = true
+                                }
+                                .sheet(isPresented: $isMediaOpened) {
+                                    ZStack {
+                                        AsyncTdImage(
+                                            id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+                                        ) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        //                                    .position(imagePosition)
+                                        //                                    .scaleEffect(imageScale)
+                                        //                                    .gesture(simpleDrag.simultaneously(with: pointerDrag))
+                                        //                                    .gesture(MagnificationGesture().onChanged { value in
+                                        //                                        imageScale = value
+                                        //                                    })
+                                        Button {
+                                            isMediaOpened = false
+                                        } label: {
+                                            Image(systemName: "xmark")
+                                                .font(.system(size: 12))
+                                                .padding(8)
+                                        }
+                                        .buttonStyle(.plain)
+                                        .keyboardShortcut(.escape, modifiers: [])
+                                        .background(.ultraThinMaterial, in: Circle())
+                                        .clipShape(Circle())
+                                        .hTrailing()
+                                        .vTop()
+                                        .padding()
+                                    }
+                                    .frame(width: 700, height: 500)
+                                    .onTapGesture {
+                                        isMediaOpened = false
+                                    }
                                 }
                             }
+                            
+                            Text(info.caption.text)
+                                .if(message.first!.isOutgoing) { view in
+                                    view.foregroundColor(.white)
+                                }
+                                .multilineTextAlignment(.leading)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .padding(8)
                         }
-                        
-                        Text(info.caption.text)
-                            .if(message.isOutgoing) { view in
+                    }
+                case .messageUnsupported:
+                    makeMessage {
+                        Text("Sorry, this message is unsupported.")
+                            .if(message.first!.isOutgoing) { view in
                                 view.foregroundColor(.white)
                             }
-                            .multilineTextAlignment(.leading)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(8)
                     }
-                }
-            case .messageUnsupported:
-                makeMessage {
-                    Text("Sorry, this message is unsupported.")
-                        .if(message.isOutgoing) { view in
-                            view.foregroundColor(.white)
-                        }
-                        .padding(8)
-                }
-            default:
-                makeMessage {
-                    Text("Sorry, this message is unsupported.")
-                        .if(message.isOutgoing) { view in
-                            view.foregroundColor(.white)
-                        }
-                        .padding(8)
-                }
+                default:
+                    makeMessage {
+                        Text("Sorry, this message is unsupported.")
+                            .if(message.first!.isOutgoing) { view in
+                                view.foregroundColor(.white)
+                            }
+                            .padding(8)
+                    }
+            }
+        }
+        .if(message.first!.isOutgoing) { view in
+            view.padding(.trailing)
+        } else: { view in
+            view.padding(.leading, 6)
         }
     }
 }

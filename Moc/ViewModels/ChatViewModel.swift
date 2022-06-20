@@ -33,7 +33,7 @@ class ChatViewModel: ObservableObject {
 
     @Published var inputMessage = ""
     @Published var isInspectorShown = false
-    @Published var messages: [Message] = []
+    @Published var messages: [[Message]] = []
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
@@ -93,11 +93,12 @@ class ChatViewModel: ObservableObject {
                     id: id),
                 content: tdMessage.content,
                 isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
+                date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date)),
+                mediaAlbumID: tdMessage.mediaAlbumId.rawValue
             )
             
             DispatchQueue.main.async {
-                self.messages.append(message)
+                self.messages.append([message])
                 self.scrollToEnd()
             }
         }
@@ -136,8 +137,10 @@ class ChatViewModel: ObservableObject {
             objectWillChange.send()
             chatTitle = chat.title
         }
-        let messageHistory: [Message] = try await service.messageHistory
+        
+        let buffer = try await service.messageHistory
             .asyncMap { tdMessage in
+                logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 switch tdMessage.senderId {
                     case let .messageSenderUser(user):
                         let user = try await self.service.getUser(by: user.userId)
@@ -151,7 +154,8 @@ class ChatViewModel: ObservableObject {
                             ),
                             content: tdMessage.content,
                             isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                            date: Date(timeIntervalSince1970: Double(tdMessage.date))
+                            date: Date(timeIntervalSince1970: Double(tdMessage.date)),
+                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue
                         )
                     case let .messageSenderChat(chat):
                         let chat = try await self.service.getChat(by: chat.chatId)
@@ -165,11 +169,28 @@ class ChatViewModel: ObservableObject {
                             ),
                             content: tdMessage.content,
                             isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                            date: Date(timeIntervalSince1970: Double(tdMessage.date))
+                            date: Date(timeIntervalSince1970: Double(tdMessage.date)),
+                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue
                         )
                 }
             }
             .sorted { $0.id < $1.id }
+        
+        logger.debug("Transformed message history, length: \(buffer.count)")
+        
+        let messageHistory: [[Message]] = buffer
+            .chunked(by: {
+                if $0.mediaAlbumID == 0 {
+                    return false
+                } else {
+                    return $0.mediaAlbumID == $1.mediaAlbumID
+                }
+            })
+            .map {
+                Array($0)
+            }
+        
+        logger.debug("Chunked message history, length: \(messageHistory.count)")
 
         DispatchQueue.main.async {
             Task {

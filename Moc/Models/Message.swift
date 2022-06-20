@@ -8,10 +8,11 @@
 import Foundation
 import TDLibKit
 
-public struct Message: Identifiable {
-    public let id: Int64
-    public let sender: MessageSender
-    public let content: MessageContent
-    public let isOutgoing: Bool
-    public let date: Foundation.Date
+struct Message: Identifiable, Hashable, Equatable {
+    let id: Int64
+    let sender: MessageSender
+    let content: MessageContent
+    let isOutgoing: Bool
+    let date: Foundation.Date
+    let mediaAlbumID: Int64
 }
