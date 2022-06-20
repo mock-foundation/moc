@@ -74,7 +74,7 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            Button  {
+            Button {
                 showExitAlert = true
             } label: {
                 Image(systemName: "xmark")

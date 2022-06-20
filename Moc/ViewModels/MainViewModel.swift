@@ -22,7 +22,7 @@ class MainViewModel: ObservableObject {
     @Published var connectionStateTitle = ""
     @Published var isConnectionStateShown = true
     @Published var isConnected = true
-    private var loadingAnimationTimer: Timer? = nil
+    private var loadingAnimationTimer: Timer?
     private var loadingAnimationState = 3
         
     // just a helper function to filter out a set of chat positions

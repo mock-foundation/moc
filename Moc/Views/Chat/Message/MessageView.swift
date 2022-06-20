@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import Logs
 import Utilities
 
 struct MessageView: View {
@@ -14,10 +15,15 @@ struct MessageView: View {
     
     // Internal state
     
-    @State private var isMediaOpened = false
+    struct OMFID: Identifiable {
+        let id: Int
+    }
+    
+    @State private var openedMediaFileID: OMFID?
     @State private var senderPhotoFileID: Int?
     
     private let tdApi = TdApi.shared[0]
+    private let logger = Logger(category: "MessageView", label: "UI")
     
     private var avatarPlaceholder: some View {
         ProfilePlaceholderView(
@@ -27,7 +33,7 @@ struct MessageView: View {
             style: .miniature)
     }
     
-    func makeMessage<Content: View>(@ViewBuilder _ content: @escaping () -> Content) -> some View {
+    private func makeMessage<Content: View>(@ViewBuilder _ content: @escaping () -> Content) -> some View {
         HStack(alignment: .bottom, spacing: nil) {
             if message.first!.isOutgoing { Spacer() }
             if !message.first!.isOutgoing {
@@ -73,6 +79,198 @@ struct MessageView: View {
             }
         }
     }
+    
+    private func makeImage(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
+        AsyncTdImage(
+            id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+        ) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: contentMode)
+        } placeholder: {
+            ProgressView()
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
+        .onTapGesture {
+            openedMediaFileID = OMFID(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id)
+        }
+    }
+    
+    private func getPhoto(from content: MessageContent) -> MessagePhoto? {
+        if case .messagePhoto(let info) = content {
+            return info
+        } else {
+            return nil
+        }
+    }
+    
+    private func makeMessagePhoto(from info: MessagePhoto) -> some View {
+        makeMessage {
+            VStack(spacing: 0) {
+                // NOTE: all of this code is only for macOS Monterey
+                // and iPadOS 15. It's a subject for change when I will
+                // get familiar with new Layout API in macOS Ventura
+                // and iPadOS 16, so I can build a better system for
+                // organizing media in an album
+                switch message.count { // go through all possible cases of media count in an album
+                    case 1:
+                        makeImage(from: getPhoto(from: message[0].content)!)
+                    case 2:
+                        HStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!)
+                            makeImage(from: getPhoto(from: message[1].content)!)
+                        }
+                    case 3:
+                        HStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                            VStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 4:
+                        VStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 5:
+                        VStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[4].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 6:
+                        VStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[4].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[5].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 7:
+                        VStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[4].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[5].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[6].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 8:
+                        VStack(spacing: 1) {
+                            makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                            makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[4].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[5].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[6].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[7].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 9:
+                        VStack(spacing: 1) {
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[4].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[5].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[6].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[7].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[8].content)!, contentMode: .fill)
+                            }
+                        }
+                    case 10:
+                        VStack(spacing: 1) {
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[0].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[3].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[4].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[5].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[6].content)!, contentMode: .fill)
+                            }
+                            HStack(spacing: 1) {
+                                makeImage(from: getPhoto(from: message[7].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[8].content)!, contentMode: .fill)
+                                makeImage(from: getPhoto(from: message[9].content)!, contentMode: .fill)
+                            }
+                        }
+                    default:
+                        Image(systemName: "xmark")
+                            .font(.system(size: 22))
+                }
+                
+                if !info.caption.text.isEmpty {
+                    Text(info.caption.text)
+                        .if(message.first!.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
+                        .multilineTextAlignment(.leading)
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        .padding(8)
+                }
+            }
+            .sheet(item: $openedMediaFileID) { omfid in
+                ZStack {
+                    AsyncTdQuickLookView(id: omfid.id) {
+                        ProgressView()
+                    }
+                    Button {
+                        openedMediaFileID = nil
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 12))
+                            .padding(8)
+                    }
+                    .buttonStyle(.plain)
+                    .keyboardShortcut(.escape, modifiers: [])
+                    .background(.ultraThinMaterial, in: Circle())
+                    .clipShape(Circle())
+                    .hTrailing()
+                    .vTop()
+                    .padding()
+                }
+                .frame(width: 800, height: 600)
+            }
+        }
+    }
 
     @ViewBuilder
     var body: some View {
@@ -93,57 +291,7 @@ struct MessageView: View {
                         }.padding(8)
                     }
                 case let .messagePhoto(info):
-                    makeMessage {
-                        VStack(spacing: 0) {
-                            if !info.photo.sizes.isEmpty {
-                                AsyncTdImage(
-                                    id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
-                                ) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
-                                .onTapGesture {
-                                    isMediaOpened = true
-                                }
-                                .sheet(isPresented: $isMediaOpened) {
-                                    ZStack {
-                                        AsyncTdQuickLookView(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id) {
-                                            ProgressView()
-                                        }
-                                        Button {
-                                            isMediaOpened = false
-                                        } label: {
-                                            Image(systemName: "xmark")
-                                                .font(.system(size: 12))
-                                                .padding(8)
-                                        }
-                                        .buttonStyle(.plain)
-                                        .keyboardShortcut(.escape, modifiers: [])
-                                        .background(.ultraThinMaterial, in: Circle())
-                                        .clipShape(Circle())
-                                        .hTrailing()
-                                        .vTop()
-                                        .padding()
-                                    }
-                                    .frame(width: 800, height: 600)
-                                }
-                            }
-                            
-                            if !info.caption.text.isEmpty {
-                                Text(info.caption.text)
-                                    .if(message.first!.isOutgoing) { view in
-                                        view.foregroundColor(.white)
-                                    }
-                                    .multilineTextAlignment(.leading)
-                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .padding(8)
-                            }
-                        }
-                    }
+                    makeMessagePhoto(from: info)
                 case .messageUnsupported:
                     makeMessage {
                         Text("Sorry, this message is unsupported.")

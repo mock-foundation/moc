@@ -22,5 +22,6 @@ struct QuickLookGenericPreviewWrapper: NSViewRepresentable {
     
     func updateNSView(_ nsView: NSViewType, context: Context) {
         nsView.previewItem = url as QLPreviewItem
+        nsView.refreshPreviewItem()
     }
 }

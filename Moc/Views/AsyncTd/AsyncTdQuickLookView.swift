@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import TDLibKit
 import Utilities
 import Logs
@@ -66,4 +64,3 @@ struct AsyncTdQuickLookView<Placeholder: View>: View {
         }
     }
 }
-
