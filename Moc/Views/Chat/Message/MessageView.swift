@@ -133,13 +133,15 @@ struct MessageView: View {
                                 }
                             }
                             
-                            Text(info.caption.text)
-                                .if(message.first!.isOutgoing) { view in
-                                    view.foregroundColor(.white)
-                                }
-                                .multilineTextAlignment(.leading)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(8)
+                            if !info.caption.text.isEmpty {
+                                Text(info.caption.text)
+                                    .if(message.first!.isOutgoing) { view in
+                                        view.foregroundColor(.white)
+                                    }
+                                    .multilineTextAlignment(.leading)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .padding(8)
+                            }
                         }
                     }
                 case .messageUnsupported:
