@@ -36,15 +36,6 @@ struct AsyncTdImage<Content: View, Placeholder: View>: View {
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             let update = notification.object as! UpdateFile
-            
-            logger.debug(
-                """
-                Received UpdateFile, \
-                ID: \(update.file.id), \
-                local ID: \(id), \
-                isDownloaded: \(update.file.local.isDownloadingCompleted)
-                """
-            )
             if update.file.id == id {
                 file = update.file
                 isDownloaded = update.file.local.isDownloadingCompleted
@@ -60,23 +51,13 @@ struct AsyncTdImage<Content: View, Placeholder: View>: View {
     
     private func download(_ id: Int? = nil) {
         Task {
-            if let id = id {
-                logger.debug("Downloading file \(id)")
-                self.file = try await tdApi.downloadFile(
-                    fileId: id,
-                    limit: 0,
-                    offset: 0,
-                    priority: 4,
-                    synchronous: false)
-            } else {
-                logger.debug("Downloading file \(self.id)")
-                self.file = try await tdApi.downloadFile(
-                    fileId: self.id,
-                    limit: 0,
-                    offset: 0,
-                    priority: 4,
-                    synchronous: false)
-            }
+            logger.debug("Downloading file \(id != nil ? id! : self.id)")
+            self.file = try await tdApi.downloadFile(
+                fileId: id != nil ? id! : self.id,
+                limit: 0,
+                offset: 0,
+                priority: 4,
+                synchronous: false)
         }
     }
 }

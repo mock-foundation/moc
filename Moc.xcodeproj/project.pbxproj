@@ -20,6 +20,9 @@
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
 		433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E5284078E20010406F /* AutoHashable.generated.swift */; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
+		433EDD942860E7CB009D03D5 /* QuickLookGenericPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookGenericPreviewWrapper.swift */; };
+		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; };
+		433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */; };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
@@ -112,6 +115,9 @@
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
 		433464E5284078E20010406F /* AutoHashable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoHashable.generated.swift; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
+		433EDD932860E7CB009D03D5 /* QuickLookGenericPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookGenericPreviewWrapper.swift; sourceTree = "<group>"; };
+		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
+		433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdQuickLookView.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
 		43807CF527E1FCEC0056A3D3 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0627E1FCEF0056A3D3 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +238,24 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		433EDD952860E9A5009D03D5 /* QuickLook */ = {
+			isa = PBXGroup;
+			children = (
+				433EDD932860E7CB009D03D5 /* QuickLookGenericPreviewWrapper.swift */,
+				433EDD962860E9C0009D03D5 /* QuickLookView.swift */,
+			);
+			path = QuickLook;
+			sourceTree = "<group>";
+		};
+		433EDD982860EB90009D03D5 /* AsyncTd */ = {
+			isa = PBXGroup;
+			children = (
+				438B227C285DCA88000D65C8 /* AsyncTdImage.swift */,
+				433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */,
+			);
+			path = AsyncTd;
+			sourceTree = "<group>";
+		};
 		4360D7032840296300D3378F /* Generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,10 +334,10 @@
 			children = (
 				43807D5627E213350056A3D3 /* Settings */,
 				43807D6C27E213350056A3D3 /* Commands */,
+				433EDD982860EB90009D03D5 /* AsyncTd */,
 				43807D6327E213350056A3D3 /* Chat */,
 				43807D6927E213350056A3D3 /* LoginView.swift */,
 				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
-				438B227C285DCA88000D65C8 /* AsyncTdImage.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
@@ -408,6 +432,7 @@
 		4396B152285A01F4004109AE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				433EDD952860E9A5009D03D5 /* QuickLook */,
 				43807D6227E213350056A3D3 /* SettingsContent.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
@@ -653,6 +678,7 @@
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
 				43807D9327E213350056A3D3 /* MessageBubbleView.swift in Sources */,
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
+				433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
 				438B2287285E55B3000D65C8 /* PlaceholderStyle.swift in Sources */,
@@ -660,7 +686,9 @@
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
 				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,
+				433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */,
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
+				433EDD942860E7CB009D03D5 /* QuickLookGenericPreviewWrapper.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
 				438B2283285E3098000D65C8 /* BackportedGradient.swift in Sources */,
