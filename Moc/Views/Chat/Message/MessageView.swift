@@ -81,15 +81,19 @@ struct MessageView: View {
     }
     
     private func makeImage(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
-        AsyncTdImage(
-            id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
-        ) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: contentMode)
-        } placeholder: {
-            ProgressView()
+        ZStack {
+            AsyncTdImage(
+                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+            ) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: contentMode)
+            } placeholder: {
+                ProgressView()
+            }
         }
+        .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
+        .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
         .onTapGesture {
             openedMediaFileID = OMFID(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id)
@@ -104,6 +108,7 @@ struct MessageView: View {
         }
     }
     
+    // swiftlint:disable function_body_length cyclomatic_complexity
     private func makeMessagePhoto(from info: MessagePhoto) -> some View {
         makeMessage {
             VStack(spacing: 0) {
