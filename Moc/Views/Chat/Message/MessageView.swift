@@ -130,9 +130,6 @@ struct MessageView: View {
                                         .padding()
                                     }
                                     .frame(width: 700, height: 500)
-                                    .onTapGesture {
-                                        isMediaOpened = false
-                                    }
                                 }
                             }
                             
