@@ -129,7 +129,7 @@ struct MessageView: View {
                                         .vTop()
                                         .padding()
                                     }
-                                    .frame(width: 700, height: 500)
+                                    .frame(width: 800, height: 600)
                                 }
                             }
                             
