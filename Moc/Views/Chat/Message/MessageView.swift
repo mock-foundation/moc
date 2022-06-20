@@ -15,32 +15,8 @@ struct MessageView: View {
     // Internal state
     
     @State private var isMediaOpened = false
-    
-//    @State private var imageScale: CGFloat = 1
-//    @State private var imagePosition = CGPoint(x: 0, y: 0)
-//    @GestureState private var pointerLocation: CGPoint? = nil
-//    @GestureState private var startLocation: CGPoint? = nil
-//
-//    var simpleDrag: some Gesture {
-//        DragGesture()
-//            .onChanged { value in
-//                var newLocation = startLocation ?? imagePosition
-//                newLocation.x += value.translation.width
-//                newLocation.y += value.translation.height
-//                self.imagePosition = newLocation
-//            }.updating($startLocation) { (value, startLocation, transaction) in
-//                startLocation = startLocation ?? imagePosition
-//            }
-//    }
-//
-//    var pointerDrag: some Gesture {
-//        DragGesture()
-//            .updating($pointerLocation) { (value, fingerLocation, transaction) in
-//                fingerLocation = value.location
-//            }
-//    }
-    
     @State private var senderPhotoFileID: Int?
+    
     private let tdApi = TdApi.shared[0]
     
     private var avatarPlaceholder: some View {
@@ -135,21 +111,9 @@ struct MessageView: View {
                                 }
                                 .sheet(isPresented: $isMediaOpened) {
                                     ZStack {
-                                        AsyncTdImage(
-                                            id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                        } placeholder: {
+                                        AsyncTdQuickLookView(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id) {
                                             ProgressView()
                                         }
-                                        //                                    .position(imagePosition)
-                                        //                                    .scaleEffect(imageScale)
-                                        //                                    .gesture(simpleDrag.simultaneously(with: pointerDrag))
-                                        //                                    .gesture(MagnificationGesture().onChanged { value in
-                                        //                                        imageScale = value
-                                        //                                    })
                                         Button {
                                             isMediaOpened = false
                                         } label: {
