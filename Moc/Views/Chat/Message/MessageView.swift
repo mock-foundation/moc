@@ -56,7 +56,7 @@ struct MessageView: View {
             MessageBubbleView(isOutgoing: message.first!.isOutgoing) {
                 content()
             }
-            .frame(maxWidth: 300, alignment: message.first!.isOutgoing ? .trailing : .leading)
+            .frame(maxWidth: 350, alignment: message.first!.isOutgoing ? .trailing : .leading)
             if !message.first!.isOutgoing { Spacer() }
         }
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
@@ -93,6 +93,19 @@ struct MessageView: View {
             }
         }
         .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
+        .background {
+            AsyncTdImage(
+                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+            ) { image in
+                image
+                    .resizable()
+            } placeholder: {
+                ProgressView()
+            }.overlay {
+                Color.clear
+                    .background(.ultraThinMaterial, in: Rectangle())
+            }
+        }
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
         .onTapGesture {
@@ -131,7 +144,7 @@ struct MessageView: View {
                             VStack(spacing: 1) {
                                 makeImage(from: getPhoto(from: message[1].content)!, contentMode: .fill)
                                 makeImage(from: getPhoto(from: message[2].content)!, contentMode: .fill)
-                            }
+                            }.frame(maxWidth: 100)
                         }
                     case 4:
                         VStack(spacing: 1) {
