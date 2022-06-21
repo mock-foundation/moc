@@ -8,7 +8,7 @@
 import SwiftUI
 import Quartz
 
-struct QuickLookGenericPreviewWrapper: NSViewRepresentable {
+struct QuickLookPreviewWrapper: NSViewRepresentable {
     typealias NSViewType = QLPreviewView
     
     /// URL of a resource to preview

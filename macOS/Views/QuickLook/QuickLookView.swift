@@ -11,6 +11,6 @@ struct QuickLookView: View {
     var url: URL
     
     var body: some View {
-        QuickLookGenericPreviewWrapper(url: url)
+        QuickLookPreviewWrapper(url: url)
     }
 }

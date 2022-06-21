@@ -281,11 +281,17 @@ struct MessageView: View {
                     .keyboardShortcut(.escape, modifiers: [])
                     .background(.ultraThinMaterial, in: Circle())
                     .clipShape(Circle())
+                    #if os(macOS)
                     .hTrailing()
+                    #elseif os(iOS)
+                    .hLeading()
+                    #endif
                     .vTop()
                     .padding()
                 }
+                #if os(macOS)
                 .frame(width: 800, height: 600)
+                #endif
             }
         }
     }
