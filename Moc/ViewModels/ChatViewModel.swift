@@ -39,6 +39,7 @@ class ChatViewModel: ObservableObject {
     @Published var chatTitle = ""
     @Published var chatMemberCount: Int?
     @Published var chatPhoto: File?
+    @Published var isChannel = false
     
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
@@ -197,6 +198,7 @@ class ChatViewModel: ObservableObject {
                 self.objectWillChange.send()
                 self.chatPhoto = try await self.service.chatPhoto
                 self.chatMemberCount = try await self.service.chatMemberCount
+                self.isChannel = try await self.service.isChannel
             }
             self.objectWillChange.send()
             self.messages = messageHistory

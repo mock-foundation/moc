@@ -394,8 +394,8 @@
 		43807D6327E213350056A3D3 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				43807D6427E213350056A3D3 /* ChatSplitView.swift */,
 				43807D6527E213350056A3D3 /* Message */,
+				43807D6427E213350056A3D3 /* ChatSplitView.swift */,
 				43807D6827E213350056A3D3 /* ChatView.swift */,
 			);
 			path = Chat;

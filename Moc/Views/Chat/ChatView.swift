@@ -83,10 +83,13 @@ struct ChatView: View {
                 .font(.system(size: 16))
             Group {
                 if #available(macOS 13, iOS 16, *) {
-                    TextField("Write a message...", text: $inputMessage, axis: .vertical)
-                        .lineLimit(20)
+                    TextField(
+                        viewModel.isChannel ? "Broadcast..." : "Write a message...",
+                        text: $inputMessage,
+                        axis: .vertical
+                    ).lineLimit(20)
                 } else {
-                    TextField("Write a message...", text: $inputMessage)
+                    TextField(viewModel.isChannel ? "Broadcast..." : "Write a message...", text: $inputMessage)
                 }
             }
             .textFieldStyle(.plain)

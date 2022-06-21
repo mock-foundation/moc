@@ -129,12 +129,22 @@ public class TdChatService: ChatService {
             try await tdApi.getChat(chatId: chatId).draftMessage
         }
     }
+    
+    
+    public var isChannel: Bool {
+        get async throws {
+            if case .chatTypeSupergroup(let info) = try await chatType {
+                return info.isChannel
+            } else {
+                return false
+            }
+        }
+    }
 
     public var chatId: Int64?
 
     public func set(chatId: Int64) {
         self.chatId = chatId
-        SystemUtils.post(notification: Notification.Name("ChatDataSourceUpdated"))
     }
 
     public var chatType: ChatType {
