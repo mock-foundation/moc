@@ -33,6 +33,8 @@ class ChatViewModel: ObservableObject {
 
     @Published var inputMessage = ""
     @Published var isInspectorShown = false
+    @Published var isDropping = false
+    @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
 
     @Published var chatID: Int64 = 0

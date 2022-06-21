@@ -40,5 +40,12 @@ extension MessageView {
         .onTapGesture {
             openedMediaFileID = OMFID(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id)
         }
+        .onDrag {
+            if #available(macOS 13.0, *) {
+                return NSItemProvider(object: NSImage(contentsOfFile: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.local.path)!)
+            } else {
+                return NSItemProvider(object: NSURL(fileURLWithPath: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.local.path))
+            }
+        }
     }
 }

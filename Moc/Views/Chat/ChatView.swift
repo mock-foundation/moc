@@ -11,6 +11,8 @@ import Resolver
 import SwiftUI
 import Utilities
 import TDLibKit
+import UniformTypeIdentifiers
+import Logs
 
 // thx https://stackoverflow.com/a/56763282
 // swiftlint:disable identifier_name
@@ -60,90 +62,121 @@ struct ChatView: View {
     @State private var isInspectorShown = true
     @State private var isHideButtonShown = false
     @FocusState private var isInputFieldFocused
+    
+    private let logger = Logger(category: "ChatView", label: "UI")
 
     // MARK: - Input field
 
     private var inputField: some View {
-        HStack(spacing: 16) {
-            #if os(iOS)
-            if isHideButtonShown {
-                Button {
-                    isInputFieldFocused = false
-                } label: {
-                    Image(systemName: "chevron.down")
-                        .padding(8)
-                        .foregroundColor(.black)
+        VStack(spacing: 8) {
+            if !viewModel.inputMedia.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(viewModel.inputMedia, id: \.self) { media in
+                            Image(nsImage: NSImage(contentsOf: media)!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 100, height: 90)
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                .contextMenu {
+                                    Button(role: .destructive) {
+                                        viewModel.inputMedia.removeAll(where: { $0 == media })
+                                    } label: {
+                                        Image(systemName: "trash")
+                                        Text("Remove")
+                                    }
+                                }.transition(.move(edge: .trailing).combined(with: .opacity))
+                        }
+                        Spacer()
+                    }
                 }
-                .background(Color.white)
-                .clipShape(Circle())
-                .transition(.scale.combined(with: .opacity))
+                .frame(height: 100)
+                .frame(maxWidth: .infinity)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
-            #endif
-            Image(systemName: "paperclip")
-                .font(.system(size: 16))
-            Group {
-                if #available(macOS 13, iOS 16, *) {
-                    TextField(
-                        viewModel.isChannel ? "Broadcast..." : "Write a message...",
-                        text: $inputMessage,
-                        axis: .vertical
-                    ).lineLimit(20)
-                } else {
-                    TextField(viewModel.isChannel ? "Broadcast..." : "Write a message...", text: $inputMessage)
-                }
-            }
-            .textFieldStyle(.plain)
-            .padding(6)
-            .onChange(of: inputMessage) { _ in
-                viewModel.updateAction(with: .chatActionTyping)
-                // TODO: Handle drafts
-            }
-            .onSubmit {
-                viewModel.sendMessage(inputMessage)
-                inputMessage = ""
-                viewModel.scrollToEnd()
-            }
-            .focused($isInputFieldFocused)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                    self.isInputFieldFocused = true
-                }
-            }
-            Image(systemName: "face.smiling")
-                .font(.system(size: 16))
-            if inputMessage.isEmpty {
-                Image(systemName: "mic")
-                    .font(.system(size: 16))
+            HStack(spacing: 16) {
+                #if os(iOS)
+                if isHideButtonShown {
+                    Button {
+                        isInputFieldFocused = false
+                    } label: {
+                        Image(systemName: "chevron.down")
+                            .padding(8)
+                            .foregroundColor(.black)
+                    }
+                    .background(Color.white)
+                    .clipShape(Circle())
                     .transition(.scale.combined(with: .opacity))
-            }
-            if !inputMessage.isEmpty {
-                Button {
+                }
+                #endif
+                Image(systemName: "paperclip")
+                    .font(.system(size: 16))
+                Group {
+                    if #available(macOS 13, iOS 16, *) {
+                        TextField(
+                            viewModel.isChannel ? "Broadcast..." : "Message...",
+                            text: $inputMessage,
+                            axis: .vertical
+                        ).lineLimit(20)
+                    } else {
+                        TextField(viewModel.isChannel ? "Broadcast..." : "Message...", text: $inputMessage)
+                    }
+                }
+                .textFieldStyle(.plain)
+                .padding(6)
+                .onChange(of: inputMessage) { _ in
+                    viewModel.updateAction(with: .chatActionTyping)
+                    // TODO: Handle drafts
+                }
+                .onSubmit {
                     viewModel.sendMessage(inputMessage)
                     inputMessage = ""
                     viewModel.scrollToEnd()
-                } label: {
-                    Image(systemName: "arrow.up")
-                        #if os(macOS)
-                        .font(.system(size: 16))
-                        .padding(6)
-                        #elseif os(iOS)
-                        .padding(8)
-                        #endif
-                        .foregroundColor(.white)
                 }
-                .buttonStyle(.plain)
-                .background(Color.blue)
-                .clipShape(Circle())
-                .transition(.scale.combined(with: .opacity))
+                .focused($isInputFieldFocused)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                        self.isInputFieldFocused = true
+                    }
+                }
+                Image(systemName: "face.smiling")
+                    .font(.system(size: 16))
+                if inputMessage.isEmpty {
+                    Image(systemName: "mic")
+                        .font(.system(size: 16))
+                        .transition(.scale.combined(with: .opacity))
+                }
+                if !inputMessage.isEmpty {
+                    Button {
+                        viewModel.sendMessage(inputMessage)
+                        inputMessage = ""
+                        viewModel.scrollToEnd()
+                    } label: {
+                        Image(systemName: "arrow.up")
+                            #if os(macOS)
+                            .font(.system(size: 16))
+                            .padding(6)
+                            #elseif os(iOS)
+                            .padding(8)
+                            #endif
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(.plain)
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .transition(.scale.combined(with: .opacity))
+                }
             }
         }
         .onChange(of: isInputFieldFocused) { value in
             isHideButtonShown = value
         }
         .animation(.spring(dampingFraction: 0.7), value: inputMessage.isEmpty)
+        .animation(.spring(dampingFraction: 0.7), value: viewModel.inputMedia.isEmpty)
+        .animation(.spring(dampingFraction: 0.7), value: viewModel.inputMedia)
         .animation(.spring(dampingFraction: 0.7), value: isHideButtonShown)
     }
-
+    
     // MARK: - Chat view
 
     private var chatView: some View {
@@ -188,12 +221,45 @@ struct ChatView: View {
                 .padding()
                 .padding(.bottom, 64)
             }
+            .onDrop(of: [.fileURL], isTargeted: $viewModel.isDropping) { itemProviders in
+                guard !itemProviders.isEmpty else { return false }
+                
+                for itemProvider in itemProviders {
+                    if #available(macOS 13.0, *) {
+                        _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, bool, error) in
+                            guard error == nil else { return }
+                            guard let url = url else { return }
+                            
+                            Task {
+                                await addInputMedia(url)
+                            }
+                        }
+                    } else {
+                        itemProvider.loadFileRepresentation(
+                            forTypeIdentifier: UTType.fileURL.identifier
+                        ) { url, error in
+                            guard error == nil else { return }
+                            guard let url = url else { return }
+                            
+                            usleep(100000)
+                            viewModel.inputMedia.append(URL(string: try! String(contentsOf: url))!)
+                            logger.debug("All resulting input media: \(viewModel.inputMedia)")
+                        }
+                    }
+                }
+                
+                return true
+            }
             inputField
                 .padding(8)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .vBottom()
                 .padding()
         }
+    }
+    
+    func addInputMedia(_ url: URL) {
+        viewModel.inputMedia.append(url)
     }
 
     // MARK: - Additional inspector stuff
@@ -340,7 +406,7 @@ struct ChatView: View {
             .padding(.top)
         }
     }
-
+    
     var body: some View {
         ChatSplitView(isRightViewVisible: isInspectorShown) {
             chatView
@@ -349,9 +415,7 @@ struct ChatView: View {
             chatInspector
                 .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
         }.navigationTitle("")
-
             // MARK: - Toolbar
-
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
                     // Chat photo
