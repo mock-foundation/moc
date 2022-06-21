@@ -4,8 +4,10 @@
 //
 //  Created by Егор Яковенко on 18.01.2022.
 //
+
 import Combine
 import TDLibKit
+import Foundation
 
 public protocol ChatService {
     // MARK: - Messages
@@ -16,6 +18,8 @@ public protocol ChatService {
     func getUser(by: Int64) async throws -> User
     func getChat(by: Int64) async throws -> Chat
     func sendMessage(_ message: String) async throws
+    func sendMedia(_ photo: URL, caption: String) async throws
+    func sendAlbum(_ photo: [URL], caption: String) async throws
 
     // MARK: - Chat info
 

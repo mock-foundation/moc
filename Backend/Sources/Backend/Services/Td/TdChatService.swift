@@ -11,6 +11,7 @@ import SwiftUI
 import Utilities
 import TDLibKit
 import Logs
+import UniformTypeIdentifiers
 
 public class TdChatService: ChatService {
     public func setAction(_ action: ChatAction) async throws {
@@ -31,6 +32,21 @@ public class TdChatService: ChatService {
             replyMarkup: nil,
             replyToMessageId: nil
         )
+    }
+    
+    
+    public func sendMedia(_ photo: URL, caption: String) async throws {
+        let fileExtension = photo.pathExtension
+        
+        let uti = UTType(filenameExtension: fileExtension)
+        
+        if uti!.conforms(to: .image) {
+             // TODO: implement media sending
+        }
+    }
+    
+    public func sendAlbum(_ photo: [URL], caption: String) async throws {
+        // TODO: implement album sending
     }
     
     private var logger = Logs.Logger(category: "Services", label: "TdChatDataSource")
