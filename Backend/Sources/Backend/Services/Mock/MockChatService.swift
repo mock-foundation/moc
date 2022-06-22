@@ -11,11 +11,11 @@ import Foundation
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
-    public func sendMedia(_ photo: URL, caption: String) async throws {
+    public func sendMedia(_ url: URL, caption: String) async throws {
         
     }
     
-    public func sendAlbum(_ photo: [URL], caption: String) async throws {
+    public func sendAlbum(_ urls: [URL], caption: String) async throws {
         
     }
     

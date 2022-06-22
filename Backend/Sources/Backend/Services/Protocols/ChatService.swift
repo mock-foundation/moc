@@ -18,8 +18,8 @@ public protocol ChatService {
     func getUser(by: Int64) async throws -> User
     func getChat(by: Int64) async throws -> Chat
     func sendMessage(_ message: String) async throws
-    func sendMedia(_ photo: URL, caption: String) async throws
-    func sendAlbum(_ photo: [URL], caption: String) async throws
+    func sendMedia(_ url: URL, caption: String) async throws
+    func sendAlbum(_ urls: [URL], caption: String) async throws
 
     // MARK: - Chat info
 

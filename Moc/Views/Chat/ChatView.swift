@@ -153,7 +153,7 @@ struct ChatView: View {
                         .font(.system(size: 16))
                         .transition(.scale.combined(with: .opacity))
                 }
-                if !viewModel.inputMessage.isEmpty {
+                if !viewModel.inputMessage.isEmpty || !viewModel.inputMedia.isEmpty {
                     Button {
                         viewModel.sendMessage()
                     } label: {

@@ -19,7 +19,7 @@ public class TdChatService: ChatService {
     }
     
     public func sendMessage(_ message: String) async throws {
-        try await tdApi.sendMessage(
+        _ = try await tdApi.sendMessage(
             chatId: chatId!,
             inputMessageContent: .inputMessageText(
                 InputMessageText(
@@ -34,33 +34,35 @@ public class TdChatService: ChatService {
         )
     }
     
-    
-    public func sendMedia(_ photo: URL, caption: String) async throws {
-        let fileExtension = photo.pathExtension
+    public func sendMedia(_ url: URL, caption: String) async throws {
+//        let fileExtension = url.pathExtension
+//        let uti = UTType(filenameExtension: fileExtension)
         
-        let uti = UTType(filenameExtension: fileExtension)
-        
-        
-        if uti!.conforms(to: .image) {
-            var path = photo.absoluteString
+//        if uti!.conforms(to: .image) {
+            var path = url.absoluteString
             path = String(path.suffix(from: .init(utf16Offset: 7, in: path)))
-
-//                .inputFileGenerated(InputFileGenerated(
-//                    conversion: "compress_photo",
-//                    expectedSize: 0,
-//                    originalPath: path))
-            logger.debug("Sending media with path \(path)")
-            let image = NSImage(contentsOfFile: path)!
+            
+            logger.info("Sending media with path \(path)")
+            guard let image = NSImage(contentsOf: url) else {
+                logger.error("Failed to create an NSImage instance for supplied path \(path)")
+                return
+            }
+            
+            let inputGenerated = InputFile.inputFileGenerated(InputFileGenerated(
+                conversion: "copy",
+                expectedSize: 0,
+                originalPath: path.removingPercentEncoding ?? ""))
+            
             _ = try await tdApi.sendMessage(
                 chatId: chatId!,
                 inputMessageContent: .inputMessagePhoto(InputMessagePhoto(
                     addedStickerFileIds: [],
                     caption: FormattedText(entities: [], text: caption),
                     height: Int(image.size.height),
-                    photo: .inputFileLocal(InputFileLocal(path: path)),
+                    photo: inputGenerated,
                     thumbnail: InputThumbnail(
                         height: Int(image.size.height),
-                        thumbnail: .inputFileLocal(InputFileLocal(path: path)),
+                        thumbnail: inputGenerated,
                         width: Int(image.size.width)),
                     ttl: 0,
                     width: Int(image.size.width))),
@@ -69,11 +71,48 @@ public class TdChatService: ChatService {
                 replyMarkup: nil,
                 replyToMessageId: nil
             )
-        }
+            logger.debug("Done")
+//        }
     }
     
-    public func sendAlbum(_ photo: [URL], caption: String) async throws {
-        // TODO: implement album sending
+    public func sendAlbum(_ urls: [URL], caption: String) async throws {
+        let messageContents: [InputMessageContent] = urls.map { url in
+//            let fileExtension = url.pathExtension
+//            let uti = UTType(filenameExtension: fileExtension)
+            
+//            if uti!.conforms(to: .image) {
+                var path = url.absoluteString
+                path = String(path.suffix(from: .init(utf16Offset: 7, in: path)))
+                
+                logger.info("Sending media with path \(path)")
+                let image = NSImage(contentsOf: url)!
+                
+                let inputGenerated = InputFile.inputFileGenerated(InputFileGenerated(
+                    conversion: "copy",
+                    expectedSize: 0,
+                    originalPath: path.removingPercentEncoding ?? ""))
+                
+                return .inputMessagePhoto(InputMessagePhoto(
+                        addedStickerFileIds: [],
+                        caption: FormattedText(entities: [], text: caption),
+                        height: Int(image.size.height),
+                        photo: inputGenerated,
+                        thumbnail: InputThumbnail(
+                            height: Int(image.size.height),
+                            thumbnail: inputGenerated,
+                            width: Int(image.size.width)),
+                        ttl: 0,
+                        width: Int(image.size.width)))
+//            }
+        }
+        
+        _ = try await tdApi.sendMessageAlbum(
+            chatId: chatId!,
+            inputMessageContents: messageContents,
+            messageThreadId: nil,
+            onlyPreview: nil,
+            options: nil,
+            replyToMessageId: nil)
     }
     
     private var logger = Logs.Logger(category: "Services", label: "TdChatDataSource")
