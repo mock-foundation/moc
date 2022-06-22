@@ -11,31 +11,51 @@ import TDLibKit
 extension LoginView {
     var welcome: some View {
         VStack {
-            Image("WelcomeScreenImage")
-                .resizable()
-                .frame(width: 206, height: 206)
-                .padding(.top)
-            Text("Welcome to Moc!")
-                .font(.largeTitle)
-            Text("Choose your login method")
-            Spacer()
-            Button {
-                Task {
-                    try? await dataSource.requestQrCodeAuth()
+            if showLogo {
+                Image("WelcomeScreenImage")
+                    .resizable()
+                    .frame(width: showContent ? 206 : 240, height: showContent ? 206 : 240)
+                    .padding(.top)
+                    .transition(.scale)
+                    .zIndex(1)
+            }
+            Group {
+                if showContent {
+                    Text("Welcome to Moc!")
+                        .font(.largeTitle)
+                    Text("Choose your login method")
+                    Spacer()
+                    Button {
+                        Task {
+                            try? await dataSource.requestQrCodeAuth()
+                        }
+                    } label: {
+                        Label("Continue using QR Code", systemImage: "qrcode")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .padding(.bottom, 8)
+                    Button {
+                        openedScreen = .phoneNumber
+                    } label: {
+                        Label("Continue using phone number", systemImage: "phone")
+                    }
+                    .controlSize(.large)
+                    Spacer()
                 }
-            } label: {
-                Label("Continue using QR Code", systemImage: "qrcode")
+            }.transition(.move(edge: .top).combined(with: .opacity))
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation {
+                    showLogo = true
+                }
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .padding(.bottom, 8)
-            Button {
-                openedScreen = .phoneNumber
-            } label: {
-                Label("Continue using phone number", systemImage: "phone")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    showContent = true
+                }
             }
-            .controlSize(.large)
-            Spacer()
         }
     }
 }

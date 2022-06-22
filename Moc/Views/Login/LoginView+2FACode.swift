@@ -14,6 +14,7 @@ extension LoginView {
             Text("Enter your Two Factor Authentication (2FA) password")
                 .font(.title)
                 .multilineTextAlignment(.center)
+                
             SecureField("Password", text: $twoFactorAuthPassword)
                 .onSubmit {
                     Task {
@@ -27,6 +28,7 @@ extension LoginView {
                     }
                 }
                 .textFieldStyle(.roundedBorder)
+                .controlSize(.large)
                 .padding()
             if showLoadingSpinner {
                 ProgressView()

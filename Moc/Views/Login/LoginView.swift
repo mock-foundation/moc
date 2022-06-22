@@ -70,6 +70,9 @@ struct LoginView: View {
     @State var showExitAlert = false
     @State var showErrorAlert = false
     @State var showLoadingSpinner = false
+    
+    @State var showLogo = false
+    @State var showContent = false
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -86,21 +89,27 @@ struct LoginView: View {
             .vTop()
             .padding()
 
-            switch openedScreen {
-                case .welcome:
-                    welcome
-                case .phoneNumber:
-                    phoneNumberView
-                case .code:
-                    codeView
-                case .qrCode:
-                    qrCodeView
-                case .registration:
-                    registration
-                case .twoFACode:
-                    twoFACode
+            Group {
+                switch openedScreen {
+                    case .welcome:
+                        welcome
+                    case .phoneNumber:
+                        phoneNumberView
+                    case .code:
+                        codeView
+                    case .qrCode:
+                        qrCodeView
+                    case .registration:
+                        registration
+                    case .twoFACode:
+                        twoFACode
+                }
             }
+            .transition(.opacity)
         }
+        .animation(.timingCurve(0.2, 0.8, 0.9, 1, duration: 0.7), value: openedScreen)
+        .animation(.spring(dampingFraction: 0.6), value: showLogo)
+        .animation(.easeInOut(duration: 0.5), value: showContent)
         .task {
             let countries = try? await dataSource.countries
             guard countries != nil else { return }
