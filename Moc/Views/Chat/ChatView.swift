@@ -72,6 +72,16 @@ struct ChatView: View {
             if !viewModel.inputMedia.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
+                        Button {
+                            withAnimation(.spring()) {
+                                viewModel.inputMedia.removeAll()
+                            }
+                        } label: {
+                            Image(systemName: "trash")
+                                .font(.system(size: 12))
+                        }
+                        .padding()
+                        
                         ForEach(viewModel.inputMedia, id: \.self) { media in
                             Image(nsImage: NSImage(contentsOf: media)!)
                                 .resizable()
@@ -80,12 +90,15 @@ struct ChatView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                 .contextMenu {
                                     Button(role: .destructive) {
-                                        viewModel.inputMedia.removeAll(where: { $0 == media })
+                                        withAnimation(.spring()) {
+                                            viewModel.inputMedia.removeAll(where: { $0 == media })
+                                        }
                                     } label: {
                                         Image(systemName: "trash")
                                         Text("Remove")
                                     }
-                                }.transition(.move(edge: .trailing).combined(with: .opacity))
+                                }
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
                         }
                         Spacer()
                     }
@@ -242,9 +255,9 @@ struct ChatView: View {
                             guard let url = url else { return }
                             
                             usleep(100000)
-                            viewModel.inputMedia.append(URL(string: try! String(contentsOf: url))!)
-                            logger.debug("All resulting input media: \(viewModel.inputMedia)")
+                            addInputMedia(url)
                         }
+                        logger.debug("All resulting input media: \(viewModel.inputMedia)")
                     }
                 }
                 
@@ -259,7 +272,11 @@ struct ChatView: View {
     }
     
     func addInputMedia(_ url: URL) {
-        viewModel.inputMedia.append(url)
+        let fullURL = URL(string: try! String(contentsOf: url))!
+        withAnimation(.spring()) {
+            viewModel.inputMedia.removeAll(where: { $0 == fullURL })
+            viewModel.inputMedia.append(fullURL)
+        }
     }
 
     // MARK: - Additional inspector stuff
