@@ -11,6 +11,7 @@ import Logs
 import Resolver
 import SwiftUI
 import TDLibKit
+import Utilities
 
 enum OpenedLoginScreen {
     case phoneNumber
@@ -132,23 +133,20 @@ struct LoginView: View {
             }
             Button("Not really") {}
         }
-        .onReceive(NotificationCenter.default.publisher(
-            for: .authorizationStateWaitOtherDeviceConfirmation,
-            object: nil
-        )) { notification in
-            self.qrCodeLink = (notification.object as? AuthorizationStateWaitOtherDeviceConfirmation)!.link
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitOtherDeviceConfirmation)) {
+            self.qrCodeLink = ($0.object as? AuthorizationStateWaitOtherDeviceConfirmation)!.link
             openedScreen = .qrCode
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitRegistration, object: nil)) { _ in
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitRegistration)) { _ in
             openedScreen = .registration
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitPassword, object: nil)) { _ in
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPassword)) { _ in
             openedScreen = .twoFACode
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateWaitCode, object: nil)) { _ in
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitCode)) { _ in
             openedScreen = .code
         }
-        .onReceive(NotificationCenter.default.publisher(for: .authorizationStateReady, object: nil)) { _ in
+        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateReady)) { _ in
             presentationMode.wrappedValue.dismiss()
         }
     }
