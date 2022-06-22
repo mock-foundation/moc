@@ -7,9 +7,20 @@
 
 import Resolver
 import TDLibKit
+import Foundation
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
+    public func sendMedia(_ url: URL, caption: String) async throws {
+        
+    }
+    
+    public func sendAlbum(_ urls: [URL], caption: String) async throws {
+        
+    }
+    
+    public var isChannel: Bool = false
+    
     public func setAction(_ action: ChatAction) async throws {
         
     }

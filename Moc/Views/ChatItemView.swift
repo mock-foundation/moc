@@ -19,13 +19,24 @@ extension Foundation.Date {
 
 struct ChatItemView: View {
     @State var chat: Chat
+    
+    private var placeholder: some View {
+        ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
+    }
         
     @ViewBuilder
     private var chatPhoto: some View {
         if chat.photo != nil {
-            TDImage(file: chat.photo!.small)
+            AsyncTdImage(id: chat.photo!.small.id) { image in
+                image
+                    .resizable()
+                    .interpolation(.medium)
+                    .antialiased(true)
+            } placeholder: {
+                placeholder
+            }
         } else {
-            ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
+            placeholder
         }
     }
 

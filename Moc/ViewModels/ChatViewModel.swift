@@ -31,17 +31,21 @@ class ChatViewModel: ObservableObject {
     
     // MARK: - UI state
 
-    @Published var inputMessage = ""
     @Published var isInspectorShown = false
-    @Published var messages: [Message] = []
+    @Published var isHideKeyboardButtonShown = false
+    @Published var isDropping = false
+    @Published var inputMessage = ""
+    @Published var inputMedia: [URL] = []
+    @Published var messages: [[Message]] = []
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
     @Published var chatMemberCount: Int?
     @Published var chatPhoto: File?
+    @Published var isChannel = false
     
     private var subscribers: [AnyCancellable] = []
-    private var logger = Logs.Logger(label: "ChatViewModel", category: "UI")
+    private var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
     
     init() {
         subscribers.append(SystemUtils.ncPublisher(for: .updateNewMessage)
@@ -68,6 +72,7 @@ class ChatViewModel: ObservableObject {
             var firstName = ""
             var lastName = ""
             var id: Int64 = 0
+            var type: MessageSenderType = .user
             
             switch tdMessage.senderId {
                 case let .messageSenderUser(info):
@@ -75,25 +80,29 @@ class ChatViewModel: ObservableObject {
                     firstName = user.firstName
                     lastName = user.lastName
                     id = info.userId
+                    type = .user
                 case let .messageSenderChat(info):
                     let chat = try await self.service.getChat(by: info.chatId)
                     firstName = chat.title
                     id = info.chatId
+                    type = .chat
             }
             
             let message = Message(
                 id: tdMessage.id,
                 sender: MessageSender(
-                    name: "\(firstName) \(lastName)",
-                    type: .user,
+                    firstName: firstName,
+                    lastName: lastName,
+                    type: type,
                     id: id),
-                content: MessageContent(tdMessage.content),
+                content: tdMessage.content,
                 isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date))
+                date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date)),
+                mediaAlbumID: tdMessage.mediaAlbumId.rawValue
             )
             
             DispatchQueue.main.async {
-                self.messages.append(message)
+                self.messages.append([message])
                 self.scrollToEnd()
             }
         }
@@ -124,6 +133,7 @@ class ChatViewModel: ObservableObject {
         #endif
     }
     
+    // swiftlint:disable function_body_length
     func update(chat: Chat) async throws {
         service.set(chatId: chat.id)
         DispatchQueue.main.async { [self] in
@@ -131,44 +141,67 @@ class ChatViewModel: ObservableObject {
             objectWillChange.send()
             chatTitle = chat.title
         }
-        let messageHistory: [Message] = try await service.messageHistory
+        
+        let buffer = try await service.messageHistory
             .asyncMap { tdMessage in
+                logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 switch tdMessage.senderId {
                     case let .messageSenderUser(user):
                         let user = try await self.service.getUser(by: user.userId)
                         return Message(
                             id: tdMessage.id,
                             sender: .init(
-                                name: "\(user.firstName) \(user.lastName)",
+                                firstName: user.firstName,
+                                lastName: user.lastName,
                                 type: .user,
                                 id: user.id
                             ),
-                            content: MessageContent(tdMessage.content),
+                            content: tdMessage.content,
                             isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                            date: Date(timeIntervalSince1970: Double(tdMessage.date))
+                            date: Date(timeIntervalSince1970: Double(tdMessage.date)),
+                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue
                         )
                     case let .messageSenderChat(chat):
                         let chat = try await self.service.getChat(by: chat.chatId)
                         return Message(
                             id: tdMessage.id,
                             sender: .init(
-                                name: chat.title,
+                                firstName: chat.title,
+                                lastName: nil,
                                 type: .chat,
                                 id: chat.id
                             ),
-                            content: MessageContent(tdMessage.content),
+                            content: tdMessage.content,
                             isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                            date: Date(timeIntervalSince1970: Double(tdMessage.date))
+                            date: Date(timeIntervalSince1970: Double(tdMessage.date)),
+                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue
                         )
                 }
             }
             .sorted { $0.id < $1.id }
+        
+        logger.debug("Transformed message history, length: \(buffer.count)")
+        
+        let messageHistory: [[Message]] = buffer
+            .chunked(by: {
+                if $0.mediaAlbumID == 0 {
+                    return false
+                } else {
+                    return $0.mediaAlbumID == $1.mediaAlbumID
+                }
+            })
+            .map {
+                Array($0)
+            }
+        
+        logger.debug("Chunked message history, length: \(messageHistory.count)")
 
         DispatchQueue.main.async {
             Task {
                 self.objectWillChange.send()
                 self.chatPhoto = try await self.service.chatPhoto
                 self.chatMemberCount = try await self.service.chatMemberCount
+                self.isChannel = try await self.service.isChannel
             }
             self.objectWillChange.send()
             self.messages = messageHistory
@@ -182,9 +215,27 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    func sendMessage(_ message: String) {
+    func sendMessage() {
         Task {
-            try await service.sendMessage(message)
+            do {
+                if inputMedia.isEmpty {
+                    try await service.sendMessage(inputMessage)
+                } else {
+                    if inputMedia.count > 1 {
+                        try await service.sendAlbum(inputMedia, caption: inputMessage)
+                    } else {
+                        try await service.sendMedia(inputMedia.first!, caption: inputMessage)
+                    }
+                }
+                DispatchQueue.main.async { [self] in
+                    inputMessage = ""
+                    inputMedia.removeAll()
+                    scrollToEnd()
+                }
+            } catch {
+                let tdError = error as! TDLibKit.Error
+                logger.error("Code: \(tdError.code), message: \(tdError.message)")
+            }
         }
     }
 }

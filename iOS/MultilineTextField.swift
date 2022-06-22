@@ -92,9 +92,9 @@ struct MultilineTextField: View {
     
     @Binding private var text: String
     private var internalText: Binding<String> {
-        Binding<String>(get: {
+        Binding<String> {
             self.text
-        }) {
+        } set: {
             self.text = $0
             self.showingPlaceholder = $0.isEmpty
         }

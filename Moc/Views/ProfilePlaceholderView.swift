@@ -7,25 +7,13 @@
 
 import SwiftUI
 
-public struct ProfilePlaceholderView: View {
+struct ProfilePlaceholderView: View {
     @State var userId: Int64
     @State var firstName: String
     @State var lastName: String
-    @State var style: PlaceholderStyle
-
-    public init(
-        userId: Int64,
-        firstName: String,
-        lastName: String,
-        style: PlaceholderStyle = .normal
-    ) {
-        self.userId = userId
-        self.firstName = firstName
-        self.lastName = lastName
-        self.style = style
-    }
+    @State var style: PlaceholderStyle = .normal
     
-    private var content: some View {
+    var content: some View {
         ZStack {
             Group {
                 if lastName.isEmpty {
@@ -40,11 +28,11 @@ public struct ProfilePlaceholderView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    public var body: some View {
+    var body: some View {
         if #available(macOS 13, iOS 16, *) {
             content.background(Color(fromUserId: userId).gradient)
         } else {
-            content.background(Color(fromUserId: userId))
+            content.background(Color(fromUserId: userId).backportedGradient)
         }
     }
 }

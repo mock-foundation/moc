@@ -39,7 +39,7 @@ private extension String {
 }
 
 struct LoginView: View {
-    private let logger = Logs.Logger(label: "Login", category: "UI")
+    private let logger = Logs.Logger(category: "Login", label: "UI")
     @Injected private var dataSource: LoginService
 
     func stepView(number: Int, text: String) -> some View {
@@ -73,11 +73,10 @@ struct LoginView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
-        // swiftlint:disable multiple_closures_with_trailing_closure
         ZStack {
-            Button(action: {
+            Button {
                 showExitAlert = true
-            }) {
+            } label: {
                 Image(systemName: "xmark")
             }
             .buttonStyle(.plain)
@@ -97,19 +96,19 @@ struct LoginView: View {
                         .font(.largeTitle)
                     Text("Choose your login method")
                     Spacer()
-                    Button(action: {
+                    Button {
                         openedScreen = .phoneNumber
-                    }) {
+                    } label: {
                         Label("Continue using phone number", systemImage: "phone")
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .padding(.bottom, 8)
-                    Button(action: {
+                    Button {
                         Task {
                             try? await dataSource.requestQrCodeAuth()
                         }
-                    }) {
+                    } label: {
                         Label("Continue using QR Code", systemImage: "qrcode")
                     }
                     .controlSize(.large)

@@ -23,7 +23,7 @@ private enum Tab {
 }
 
 struct ContentView: View {
-    private let logger = Logs.Logger(label: "UI", category: "ContentView")
+    private let logger = Logs.Logger(category: "ContentView", label: "UI")
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
@@ -87,25 +87,40 @@ struct ContentView: View {
         return Group {
             #if os(macOS)
             ToolbarItem(placement: placement) {
-                Picker("", selection: $selectedTab) {
-                    Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
-                    Image(systemName: "phone.and.waveform").tag(Tab.calls)
-                    Image(systemName: "person.2").tag(Tab.contacts)
-                }.pickerStyle(.segmented)
+                Button {
+                    mainViewModel.isChatListVisible.toggle()
+                    NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+                } label: {
+                    Label("Toggle chat list", systemImage: "sidebar.left")
+                }
+            }
+            ToolbarItem(placement: placement) {
+                if mainViewModel.isChatListVisible {
+                    Picker("", selection: $selectedTab) {
+                        Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
+                        Image(systemName: "phone.and.waveform").tag(Tab.calls)
+                        Image(systemName: "person.2").tag(Tab.contacts)
+                    }.pickerStyle(.segmented)
+                }
             }
             #endif
             ToolbarItem(placement: placement) {
                 Spacer()
             }
             ToolbarItem(placement: placement) {
-                Toggle(isOn: $mainViewModel.isArchiveOpen) {
-                    Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
+                if mainViewModel.isChatListVisible {
+                    Toggle(isOn: $mainViewModel.isArchiveOpen) {
+                        Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
+                    }
                 }
             }
             ToolbarItem(placement: placement) {
-                // swiftlint:disable multiple_closures_with_trailing_closure
-                Button(action: { logger.info("Pressed add chat") }) {
-                    Image(systemName: "square.and.pencil")
+                if mainViewModel.isChatListVisible {
+                    Button {
+                        logger.info("Pressed add chat")
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
                 }
             }
         }
@@ -277,14 +292,14 @@ struct ContentView: View {
         #if os(macOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor : (colorScheme == .dark ? Color(nsColor: .darkGray) : Color(nsColor: .lightGray)),
+                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
         #elseif os(iOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor : (colorScheme == .dark ? Color(uiColor: .darkGray) : Color(uiColor: .lightGray)),
+                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
@@ -332,7 +347,7 @@ struct ContentView: View {
             }
         }
         #if os(macOS)
-        .frame(minWidth: folderLayout == .vertical ? 400 : 330)
+        .frame(minWidth: folderLayout == .vertical ? 400 : 380)
         #elseif os(iOS)
         .safeAreaInset(edge: .bottom) {
             HStack {
@@ -361,7 +376,7 @@ struct ContentView: View {
         .overlay(alignment: .bottom) {
             if mainViewModel.isConnectionStateShown {
                 connectionState
-                    .frame(height: 80)
+                    .frame(height: 100)
             }
         }
         .animation(.easeInOut(duration: 0.5), value: mainViewModel.isConnectionStateShown)
@@ -370,45 +385,41 @@ struct ContentView: View {
     }
 
     var body: some View {
-        Group {
-            NavigationView {
-                sidebar
-                .listStyle(.sidebar)
-                
-                switch viewRouter.currentView {
-                    case .selectChat:
-                        chatPlaceholder
-                    case .chat:
-                        ChatView()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            #if os(iOS)
-                            .introspectNavigationController { vc in
-                                let navBar = vc.navigationBar
-                                
-                                let newNavBarAppearance = UINavigationBarAppearance()
-                                newNavBarAppearance.configureWithDefaultBackground()
-                                
-                                navBar.scrollEdgeAppearance = newNavBarAppearance
-                                navBar.compactAppearance = newNavBarAppearance
-                                navBar.standardAppearance = newNavBarAppearance
-                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                            }
-                            #endif
-                }
+        NavigationView {
+            sidebar
+            .listStyle(.sidebar)
+            
+            switch viewRouter.currentView {
+                case .selectChat:
+                    chatPlaceholder
+                case .chat:
+                    ChatView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        #if os(iOS)
+                        .introspectNavigationController { vc in
+                            let navBar = vc.navigationBar
+                            
+                            let newNavBarAppearance = UINavigationBarAppearance()
+                            newNavBarAppearance.configureWithDefaultBackground()
+                            
+                            navBar.scrollEdgeAppearance = newNavBarAppearance
+                            navBar.compactAppearance = newNavBarAppearance
+                            navBar.standardAppearance = newNavBarAppearance
+                            navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                        }
+                        #endif
             }
-            #if os(iOS)
-            .sidebarSize(folderLayout == .vertical ? 400 : 330)
-            #endif
-        }
-        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
-            LoginView()
-                .frame(width: 400, height: 500)
         }
         #if os(iOS)
+        .sidebarSize(folderLayout == .vertical ? 400 : 330)
         .fullScreenCover(isPresented: $areSettingsOpen) {
             SettingsContent()
         }
         #endif
+        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
+            LoginView()
+                .frame(width: 400, height: 500)
+        }
     }
 
     private var chatPlaceholder: some View {

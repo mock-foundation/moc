@@ -22,8 +22,10 @@ class MainViewModel: ObservableObject {
     @Published var connectionStateTitle = ""
     @Published var isConnectionStateShown = true
     @Published var isConnected = true
-    private var loadingAnimationTimer: Timer? = nil
+    private var loadingAnimationTimer: Timer?
     private var loadingAnimationState = 3
+    
+    @Published var isChatListVisible = true
         
     // just a helper function to filter out a set of chat positions
     private func getPosition(from positions: [ChatPosition], chatList: TDLibKit.ChatList) -> ChatPosition? {
@@ -128,7 +130,7 @@ class MainViewModel: ObservableObject {
     @Published var showingLoginScreen = false
 
     private var subscribers: [AnyCancellable] = []
-    private var logger = Logs.Logger(label: "UI", category: "MainViewModel")
+    private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
     init() {
@@ -218,7 +220,7 @@ class MainViewModel: ObservableObject {
             
             if needStartTimer {
                 loadingAnimationTimer = Timer.scheduledTimer(
-                    withTimeInterval: 0.7,
+                    withTimeInterval: 0.5,
                     repeats: true
                 ) { [weak self] timer in
                     guard let strongSelf = self else { return }

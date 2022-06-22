@@ -5,7 +5,7 @@ import os
 public struct Logger {
     private let logger: os.Logger
 
-    public init(label: String, category: String) {
+    public init(category: String, label: String) {
         self.logger = os.Logger(subsystem: label, category: category)
     }
 

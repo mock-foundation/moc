@@ -18,7 +18,7 @@ public extension TdApi {
     /// use `shared[0]`.
     static var shared: [TdApi] = []
 
-    private static let logger = Logs.Logger(label: "TDLib", category: "Updates")
+    private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
@@ -179,6 +179,46 @@ public extension TdApi {
                         }
                     case let .updateConnectionState(info):
                         SystemUtils.post(notification: .updateConnectionState, with: info)
+                    case let .updateFileGenerationStart(info):
+                        switch info.conversion {
+                            case "copy":
+                                Task {
+                                    do {
+                                        TdApi.logger.debug(
+                                            """
+                                            Starting conversion with id \(info.generationId.rawValue) \
+                                            by running command \(info.conversion) \
+                                            from \(info.originalPath) \
+                                            to \(info.destinationPath)
+                                            """
+                                            )
+                                        if FileManager.default.fileExists(atPath: info.destinationPath) {
+                                            try FileManager.default.removeItem(atPath: info.destinationPath)
+                                        }
+                                        if #available(macOS 13, iOS 16, *) {
+                                            try FileManager.default.copyItem(
+                                                at: URL(filePath: info.originalPath),
+                                                to: URL(filePath: info.destinationPath))
+                                        } else {
+                                            try FileManager.default.copyItem(
+                                                at: URL(fileURLWithPath: info.originalPath),
+                                                to: URL(fileURLWithPath: info.destinationPath))
+                                        }
+                                        TdApi.logger.debug("Conversion with id \(info.generationId.rawValue) is done")
+                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                            error: nil,
+                                            generationId: info.generationId)
+                                    } catch {
+                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                            error: Error(code: 500, message: error.localizedDescription),
+                                            generationId: info.generationId)
+                                    }
+                                }
+                            default:
+                                break
+                        }
+                    case let .updateFileGenerationStop(info):
+                        break
                     default:
                         break
                 }

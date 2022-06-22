@@ -4,8 +4,10 @@
 //
 //  Created by Егор Яковенко on 18.01.2022.
 //
+
 import Combine
 import TDLibKit
+import Foundation
 
 public protocol ChatService {
     // MARK: - Messages
@@ -16,6 +18,8 @@ public protocol ChatService {
     func getUser(by: Int64) async throws -> User
     func getChat(by: Int64) async throws -> Chat
     func sendMessage(_ message: String) async throws
+    func sendMedia(_ url: URL, caption: String) async throws
+    func sendAlbum(_ urls: [URL], caption: String) async throws
 
     // MARK: - Chat info
 
@@ -32,6 +36,7 @@ public protocol ChatService {
     /// True, if the chat is blocked by the current user and private messages from
     /// the chat can’t be received.
     var blocked: Bool { get async throws }
+    var isChannel: Bool { get async throws }
     /// Will work when you have such powers and permissions 😉
     func set(protected: Bool) async throws
     func set(blocked: Bool) async throws

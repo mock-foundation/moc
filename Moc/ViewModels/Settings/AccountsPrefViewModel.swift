@@ -12,7 +12,7 @@ import Utilities
 import Logs
 
 class AccountsPrefViewModel: ObservableObject {
-    var logger = Logs.Logger(label: "Preferences", category: "AccountPaneUI")
+    var logger = Logs.Logger(category: "Preferences", label: "AccountPaneUI")
     @Injected var dataSource: AccountsPrefService
     
     @Published var firstName: String = "" {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 public enum PlaceholderStyle {
+    case miniature
     case small
     case normal
     case medium
@@ -15,6 +16,8 @@ public enum PlaceholderStyle {
     
     var font: Font {
         switch self {
+            case .miniature:
+                return .system(size: 14, design: .rounded)
             case .small:
                 return .system(size: 20, design: .rounded)
             case .normal:
