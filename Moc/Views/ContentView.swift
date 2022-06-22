@@ -63,10 +63,12 @@ struct ContentView: View {
                             .background(
                                 (viewRouter.currentView == .chat
                                  && viewRouter.openedChat! == chat)
-                                ? Color.accentColor.opacity(0.6)
+                                ? Color.accentColor.opacity(0.8)
                                 : nil
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
+                                                                    && viewRouter.openedChat! == chat))
                     }.buttonStyle(.plain)
                 }
             }

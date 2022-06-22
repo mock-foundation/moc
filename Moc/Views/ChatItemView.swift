@@ -20,6 +20,8 @@ extension Foundation.Date {
 struct ChatItemView: View {
     @State var chat: Chat
     
+    @Environment(\.isChatListItemSelected) var isSelected
+    
     private var placeholder: some View {
         ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
     }
@@ -54,20 +56,23 @@ struct ChatItemView: View {
             VStack(alignment: .leading) {
                 HStack {
                     // swiftlint:disable empty_enum_arguments switch_case_alignment
-                    switch chat.type {
-                        case .chatTypePrivate(_):
-                            EmptyView()
-                        case .chatTypeBasicGroup(_):
-                            Image(systemName: "person.2")
-                        case .chatTypeSupergroup(let info):
-                            if info.isChannel {
-                                Image(systemName: "megaphone")
-                            } else {
-                                Image(systemName: "person.2.fill")
-                            }
-                        case .chatTypeSecret(_):
-                            Image(systemName: "lock")
+                    Group {
+                        switch chat.type {
+                            case .chatTypePrivate(_):
+                                EmptyView()
+                            case .chatTypeBasicGroup(_):
+                                Image(systemName: "person.2")
+                            case .chatTypeSupergroup(let info):
+                                if info.isChannel {
+                                    Image(systemName: "megaphone")
+                                } else {
+                                    Image(systemName: "person.2.fill")
+                                }
+                            case .chatTypeSecret(_):
+                                Image(systemName: "lock")
+                        }
                     }
+                    .foregroundColor(isSelected ? .white : .primary)
                     Text(chat.title)
                         #if os(macOS)
                         .font(.title3)
@@ -75,19 +80,21 @@ struct ChatItemView: View {
                         #elseif os(iOS)
                         .fontWeight(.medium)
                         #endif
+                        .foregroundColor(isSelected ? .white : .primary)
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
                         .font(.caption)
-                        .foregroundColor(.secondary)
-                }.padding(.vertical, 6)
+                        .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
+                }
+                .padding(.vertical, 6)
                 HStack {
                     VStack {
                         Text("last message preview")
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(1)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                         Spacer()
                     }
                     Spacer()
