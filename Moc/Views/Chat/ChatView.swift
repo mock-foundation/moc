@@ -254,7 +254,6 @@ struct ChatView: View {
                             guard error == nil else { return }
                             guard let url = url else { return }
                             
-                            usleep(100000)
                             addInputMedia(url)
                         }
                         logger.debug("All resulting input media: \(viewModel.inputMedia)")
