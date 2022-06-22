@@ -87,25 +87,40 @@ struct ContentView: View {
         return Group {
             #if os(macOS)
             ToolbarItem(placement: placement) {
-                Picker("", selection: $selectedTab) {
-                    Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
-                    Image(systemName: "phone.and.waveform").tag(Tab.calls)
-                    Image(systemName: "person.2").tag(Tab.contacts)
-                }.pickerStyle(.segmented)
+                Button {
+                    mainViewModel.isChatListVisible.toggle()
+                    NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+                } label: {
+                    Label("Toggle chat list", systemImage: "sidebar.left")
+                }
+            }
+            ToolbarItem(placement: placement) {
+                if mainViewModel.isChatListVisible {
+                    Picker("", selection: $selectedTab) {
+                        Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
+                        Image(systemName: "phone.and.waveform").tag(Tab.calls)
+                        Image(systemName: "person.2").tag(Tab.contacts)
+                    }.pickerStyle(.segmented)
+                }
             }
             #endif
             ToolbarItem(placement: placement) {
                 Spacer()
             }
             ToolbarItem(placement: placement) {
-                Toggle(isOn: $mainViewModel.isArchiveOpen) {
-                    Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
+                if mainViewModel.isChatListVisible {
+                    Toggle(isOn: $mainViewModel.isArchiveOpen) {
+                        Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
+                    }
                 }
             }
             ToolbarItem(placement: placement) {
-                // swiftlint:disable multiple_closures_with_trailing_closure
-                Button(action: { logger.info("Pressed add chat") }) {
-                    Image(systemName: "square.and.pencil")
+                if mainViewModel.isChatListVisible {
+                    Button {
+                        logger.info("Pressed add chat")
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
                 }
             }
         }
@@ -332,7 +347,7 @@ struct ContentView: View {
             }
         }
         #if os(macOS)
-        .frame(minWidth: folderLayout == .vertical ? 400 : 330)
+        .frame(minWidth: folderLayout == .vertical ? 400 : 360)
         #elseif os(iOS)
         .safeAreaInset(edge: .bottom) {
             HStack {

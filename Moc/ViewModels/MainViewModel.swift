@@ -24,6 +24,8 @@ class MainViewModel: ObservableObject {
     @Published var isConnected = true
     private var loadingAnimationTimer: Timer?
     private var loadingAnimationState = 3
+    
+    @Published var isChatListVisible = true
         
     // just a helper function to filter out a set of chat positions
     private func getPosition(from positions: [ChatPosition], chatList: TDLibKit.ChatList) -> ChatPosition? {
