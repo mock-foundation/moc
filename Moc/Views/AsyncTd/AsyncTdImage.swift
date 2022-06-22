@@ -52,12 +52,20 @@ struct AsyncTdImage<Content: View, Placeholder: View>: View {
     private func download(_ id: Int? = nil) {
         Task {
             logger.debug("Downloading file \(id != nil ? id! : self.id)")
-            self.file = try await tdApi.downloadFile(
-                fileId: id != nil ? id! : self.id,
-                limit: 0,
-                offset: 0,
-                priority: 4,
-                synchronous: false)
+            do {
+                self.file = try await tdApi.downloadFile(
+                    fileId: id != nil ? id! : self.id,
+                    limit: 0,
+                    offset: 0,
+                    priority: 4,
+                    synchronous: false)
+            } catch {
+                logger.error(
+                    """
+                    Failed to download file with ID \(id != nil ? id! : self.id), \
+                    reason: \((error as! TDLibKit.Error).message)
+                    """)
+            }
         }
     }
 }

@@ -58,9 +58,6 @@ private struct RoundedCorners: Shape {
 
 struct ChatView: View {
     @InjectedObject private var viewModel: ChatViewModel
-    @State private var inputMessage = ""
-    @State private var isInspectorShown = true
-    @State private var isHideButtonShown = false
     @FocusState private var isInputFieldFocused
     
     private let logger = Logger(category: "ChatView", label: "UI")
@@ -127,23 +124,21 @@ struct ChatView: View {
                     if #available(macOS 13, iOS 16, *) {
                         TextField(
                             viewModel.isChannel ? "Broadcast..." : "Message...",
-                            text: $inputMessage,
+                            text: $viewModel.inputMessage,
                             axis: .vertical
                         ).lineLimit(20)
                     } else {
-                        TextField(viewModel.isChannel ? "Broadcast..." : "Message...", text: $inputMessage)
+                        TextField(viewModel.isChannel ? "Broadcast..." : "Message...", text: $viewModel.inputMessage)
                     }
                 }
                 .textFieldStyle(.plain)
                 .padding(6)
-                .onChange(of: inputMessage) { _ in
+                .onChange(of: viewModel.inputMessage) { _ in
                     viewModel.updateAction(with: .chatActionTyping)
                     // TODO: Handle drafts
                 }
                 .onSubmit {
-                    viewModel.sendMessage(inputMessage)
-                    inputMessage = ""
-                    viewModel.scrollToEnd()
+                    viewModel.sendMessage()
                 }
                 .focused($isInputFieldFocused)
                 .onAppear {
@@ -153,16 +148,14 @@ struct ChatView: View {
                 }
                 Image(systemName: "face.smiling")
                     .font(.system(size: 16))
-                if inputMessage.isEmpty {
+                if viewModel.inputMessage.isEmpty {
                     Image(systemName: "mic")
                         .font(.system(size: 16))
                         .transition(.scale.combined(with: .opacity))
                 }
-                if !inputMessage.isEmpty {
+                if !viewModel.inputMessage.isEmpty {
                     Button {
-                        viewModel.sendMessage(inputMessage)
-                        inputMessage = ""
-                        viewModel.scrollToEnd()
+                        viewModel.sendMessage()
                     } label: {
                         Image(systemName: "arrow.up")
                             #if os(macOS)
@@ -181,12 +174,12 @@ struct ChatView: View {
             }
         }
         .onChange(of: isInputFieldFocused) { value in
-            isHideButtonShown = value
+            viewModel.isHideKeyboardButtonShown = value
         }
-        .animation(.spring(dampingFraction: 0.7), value: inputMessage.isEmpty)
+        .animation(.spring(dampingFraction: 0.7), value: viewModel.inputMessage.isEmpty)
         .animation(.spring(dampingFraction: 0.7), value: viewModel.inputMedia.isEmpty)
         .animation(.spring(dampingFraction: 0.7), value: viewModel.inputMedia)
-        .animation(.spring(dampingFraction: 0.7), value: isHideButtonShown)
+        .animation(.spring(dampingFraction: 0.7), value: viewModel.isHideKeyboardButtonShown)
     }
     
     // MARK: - Chat view
@@ -271,9 +264,11 @@ struct ChatView: View {
     
     func addInputMedia(_ url: URL) {
         let fullURL = URL(string: try! String(contentsOf: url))!
-        withAnimation(.spring()) {
-            viewModel.inputMedia.removeAll(where: { $0 == fullURL })
-            viewModel.inputMedia.append(fullURL)
+        DispatchQueue.main.async {
+            withAnimation(.spring()) {
+                viewModel.inputMedia.removeAll(where: { $0 == fullURL })
+                viewModel.inputMedia.append(fullURL)
+            }
         }
     }
 
@@ -423,7 +418,7 @@ struct ChatView: View {
     }
     
     var body: some View {
-        ChatSplitView(isRightViewVisible: isInspectorShown) {
+        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
             chatView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } rightView: {
@@ -465,7 +460,7 @@ struct ChatView: View {
                     } label: {
                         Image(systemName: "magnifyingglass")
                     }
-                    Button { isInspectorShown.toggle() } label: {
+                    Button { viewModel.isInspectorShown.toggle() } label: {
                         Image(systemName: "sidebar.right")
                     }
                     Button {

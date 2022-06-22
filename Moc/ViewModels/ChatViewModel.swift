@@ -31,9 +31,10 @@ class ChatViewModel: ObservableObject {
     
     // MARK: - UI state
 
-    @Published var inputMessage = ""
     @Published var isInspectorShown = false
+    @Published var isHideKeyboardButtonShown = false
     @Published var isDropping = false
+    @Published var inputMessage = ""
     @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
 
@@ -214,9 +215,27 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    func sendMessage(_ message: String) {
+    func sendMessage() {
         Task {
-            try await service.sendMessage(message)
+            do {
+                if inputMedia.isEmpty {
+                    try await service.sendMessage(inputMessage)
+                } else {
+                    if inputMedia.count > 1 {
+                        try await service.sendAlbum(inputMedia, caption: inputMessage)
+                    } else {
+                        try await service.sendMedia(inputMedia.first!, caption: inputMessage)
+                    }
+                }
+                DispatchQueue.main.async { [self] in
+                    inputMessage = ""
+                    inputMedia.removeAll()
+                    scrollToEnd()
+                }
+            } catch {
+                let tdError = error as! TDLibKit.Error
+                logger.error("Code: \(tdError.code), message: \(tdError.message)")
+            }
         }
     }
 }

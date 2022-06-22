@@ -347,7 +347,7 @@ struct ContentView: View {
             }
         }
         #if os(macOS)
-        .frame(minWidth: folderLayout == .vertical ? 400 : 360)
+        .frame(minWidth: folderLayout == .vertical ? 400 : 380)
         #elseif os(iOS)
         .safeAreaInset(edge: .bottom) {
             HStack {

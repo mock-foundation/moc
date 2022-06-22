@@ -40,8 +40,35 @@ public class TdChatService: ChatService {
         
         let uti = UTType(filenameExtension: fileExtension)
         
+        
         if uti!.conforms(to: .image) {
-             // TODO: implement media sending
+            var path = photo.absoluteString
+            path = String(path.suffix(from: .init(utf16Offset: 7, in: path)))
+
+//                .inputFileGenerated(InputFileGenerated(
+//                    conversion: "compress_photo",
+//                    expectedSize: 0,
+//                    originalPath: path))
+            logger.debug("Sending media with path \(path)")
+            let image = NSImage(contentsOfFile: path)!
+            _ = try await tdApi.sendMessage(
+                chatId: chatId!,
+                inputMessageContent: .inputMessagePhoto(InputMessagePhoto(
+                    addedStickerFileIds: [],
+                    caption: FormattedText(entities: [], text: caption),
+                    height: Int(image.size.height),
+                    photo: .inputFileLocal(InputFileLocal(path: path)),
+                    thumbnail: InputThumbnail(
+                        height: Int(image.size.height),
+                        thumbnail: .inputFileLocal(InputFileLocal(path: path)),
+                        width: Int(image.size.width)),
+                    ttl: 0,
+                    width: Int(image.size.width))),
+                messageThreadId: nil,
+                options: nil,
+                replyMarkup: nil,
+                replyToMessageId: nil
+            )
         }
     }
     
