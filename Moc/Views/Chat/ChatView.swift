@@ -87,7 +87,7 @@ struct ChatView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 100, height: 90)
-                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 .contextMenu {
                                     Button(role: .destructive) {
                                         withAnimation(.spring()) {
@@ -100,7 +100,6 @@ struct ChatView: View {
                                 }
                                 .transition(.move(edge: .trailing).combined(with: .opacity))
                         }
-                        Spacer()
                     }
                 }
                 .frame(height: 100)
