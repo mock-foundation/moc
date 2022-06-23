@@ -105,11 +105,12 @@ struct LoginView: View {
                         twoFACode
                 }
             }
-            .transition(.opacity)
+            .transition(.asymmetric(
+                insertion: .move(edge: .trailing),
+                removal: .move(edge: .leading))
+                .combined(with: .opacity))
         }
-        .animation(.timingCurve(0.2, 0.8, 0.9, 1, duration: 0.7), value: openedScreen)
-        .animation(.spring(dampingFraction: 0.6), value: showLogo)
-        .animation(.easeInOut(duration: 0.5), value: showContent)
+        .animation(.spring(), value: openedScreen)
         .task {
             let countries = try? await dataSource.countries
             guard countries != nil else { return }

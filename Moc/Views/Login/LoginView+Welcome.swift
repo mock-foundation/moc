@@ -45,13 +45,15 @@ extension LoginView {
                 }
             }.transition(.move(edge: .top).combined(with: .opacity))
         }
+        .animation(.spring(dampingFraction: 0.6), value: showLogo)
+        .animation(.spring(), value: showContent)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 withAnimation {
                     showLogo = true
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 withAnimation {
                     showContent = true
                 }
