@@ -105,10 +105,7 @@ struct LoginView: View {
                         twoFACode
                 }
             }
-            .transition(.asymmetric(
-                insertion: .move(edge: .trailing),
-                removal: .move(edge: .leading))
-                .combined(with: .opacity))
+            .transition(.scale.combined(with: .opacity))
         }
         .animation(.spring(), value: openedScreen)
         .task {

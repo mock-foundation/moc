@@ -23,18 +23,21 @@ public extension TdApi {
     // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
         TdApi.logger.debug("Starting handler")
-        Task {
-            #if DEBUG
-            try? await self.setLogVerbosityLevel(newVerbosityLevel: 2)
-            #else
-            try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
-            #endif
-        }
+        
         client.run {
             let cache = CacheService.shared
+            
+            Task {
+                #if DEBUG
+                try? await self.setLogVerbosityLevel(newVerbosityLevel: 2)
+                #else
+                try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
+                #endif
+            }
             do {
                 let update = try self.decoder.decode(Update.self, from: $0)
-            
+                TdApi.logger.debug("\(update)")
+                
                 switch update {
                     case let .updateAuthorizationState(state):
                         switch state.authorizationState {
@@ -92,12 +95,8 @@ public extension TdApi {
                                 SystemUtils.post(notification: .authorizationStateWaitPassword, with: update)
                             case .authorizationStateReady:
                                 Task {
-                                    do {
-                                        _ = try await self.loadChats(chatList: .chatListMain, limit: 15)
-                                        _ = try await self.loadChats(chatList: .chatListArchive, limit: 15)
-                                    } catch {
-                                        TdApi.logger.error("Failed to load chats")
-                                    }
+                                    _ = try await self.loadChats(chatList: .chatListMain, limit: 15)
+                                    _ = try await self.loadChats(chatList: .chatListArchive, limit: 15)
                                 }
                                 SystemUtils.post(notification: .authorizationStateReady)
                             case let .authorizationStateWaitOtherDeviceConfirmation(update):
@@ -111,6 +110,10 @@ public extension TdApi {
                                 SystemUtils.post(notification: .authorizationStateClosing)
                             case .authorizationStateClosed:
                                 SystemUtils.post(notification: .authorizationStateClosed)
+                                TdApi.shared.insert(TdApi(
+                                    client: TdClientImpl(completionQueue: .global())
+                                ), at: 0)
+                                TdApi.shared[0].startTdLibUpdateHandler()
                         }
                     case let .updateChatPosition(update):
                         SystemUtils.post(notification: .updateChatPosition, with: update)
@@ -210,20 +213,21 @@ public extension TdApi {
                                             generationId: info.generationId)
                                     } catch {
                                         _ = try await TdApi.shared[0].finishFileGeneration(
-                                            error: Error(code: 500, message: error.localizedDescription),
+                                            error: Error(code: 400, message: error.localizedDescription),
                                             generationId: info.generationId)
                                     }
                                 }
                             default:
                                 break
                         }
-                    case let .updateFileGenerationStop(info):
+                    case .updateFileGenerationStop(_):
                         break
                     default:
                         break
                 }
             } catch {
-                TdApi.logger.error(error.localizedDescription)
+                let tdError = error as! TDLibKit.Error
+                TdApi.logger.error("Code: \(tdError.code), message: \(tdError.message)")
             }
         }
     }
