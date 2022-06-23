@@ -36,7 +36,7 @@ public extension TdApi {
             }
             do {
                 let update = try self.decoder.decode(Update.self, from: $0)
-                TdApi.logger.debug("\(update)")
+//                TdApi.logger.debug("\(update)")
                 
                 switch update {
                     case let .updateAuthorizationState(state):

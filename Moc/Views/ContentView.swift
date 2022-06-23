@@ -94,7 +94,6 @@ struct ContentView: View {
             #if os(macOS)
             ToolbarItem(placement: placement) {
                 Button {
-                    mainViewModel.isChatListVisible.toggle()
                     NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
                 } label: {
                     Label("Toggle chat list", systemImage: "sidebar.left")
@@ -383,6 +382,7 @@ struct ContentView: View {
             if mainViewModel.isConnectionStateShown {
                 connectionState
                     .frame(height: 100)
+                    .allowsHitTesting(false)
             }
         }
         .animation(.easeInOut(duration: 0.5), value: mainViewModel.isConnectionStateShown)
@@ -394,6 +394,9 @@ struct ContentView: View {
         NavigationView {
             sidebar
             .listStyle(.sidebar)
+            #if os(macOS)
+            .background(SplitViewAccessor(sideCollapsed: $mainViewModel.isChatListVisible))
+            #endif
             
             switch viewRouter.currentView {
                 case .selectChat:
