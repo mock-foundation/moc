@@ -50,6 +50,10 @@ struct ContentView: View {
                         Task {
                             do {
                                 try await chatViewModel.update(chat: chat)
+                                _ = try await TdApi.shared[0].openChat(chatId: chat.id)
+                                if let openedChat = viewRouter.openedChat {
+                                    _ = try await TdApi.shared[0].closeChat(chatId: openedChat.id)
+                                }
                             } catch {
                                 logger.error("Error in \(error.localizedDescription)")
                             }
