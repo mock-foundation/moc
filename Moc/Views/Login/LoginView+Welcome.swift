@@ -27,7 +27,7 @@ extension LoginView {
                     Spacer()
                     Button {
                         Task {
-                            try? await dataSource.requestQrCodeAuth()
+                            try? await service.requestQrCodeAuth()
                         }
                     } label: {
                         Label("Continue using QR Code", systemImage: "qrcode")

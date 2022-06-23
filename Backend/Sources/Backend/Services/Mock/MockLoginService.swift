@@ -9,13 +9,15 @@ import Combine
 import TDLibKit
 
 public class MockLoginService: LoginService {
-    public func requestQrCodeAuth() async throws {}
+    public func resendAuthCode() async throws { }
+    
+    public func requestQrCodeAuth() async throws { }
 
-    public func checkAuth(phoneNumber _: String) async throws {}
+    public func checkAuth(phoneNumber _: String) async throws { }
 
-    public func checkAuth(code _: String) async throws {}
+    public func checkAuth(code _: String) async throws { }
 
-    public func checkAuth(password _: String) async throws {}
+    public func checkAuth(password _: String) async throws { }
 
     public var countries: [CountryInfo] = [
         CountryInfo(

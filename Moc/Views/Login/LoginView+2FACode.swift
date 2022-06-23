@@ -19,7 +19,7 @@ extension LoginView {
                 .onSubmit {
                     Task {
                         withAnimation { showLoadingSpinner = true }
-                        if (try? await dataSource.checkAuth(
+                        if (try? await service.checkAuth(
                             password: twoFactorAuthPassword
                         )) == nil {
                             showErrorAlert = true

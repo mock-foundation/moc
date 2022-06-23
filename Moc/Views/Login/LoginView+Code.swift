@@ -18,7 +18,7 @@ extension LoginView {
                     Task {
                         do {
                             withAnimation { showLoadingSpinner = true }
-                            try await dataSource.checkAuth(code: code)
+                            try await service.checkAuth(code: code)
                             withAnimation { showLoadingSpinner = false }
                         } catch {
                             showErrorAlert = true
@@ -27,6 +27,20 @@ extension LoginView {
                 }
                 .frame(width: 156)
                 .textFieldStyle(.roundedBorder)
+            
+//            Button {
+//                Task {
+//                    do {
+//                        try await service.resendAuthCode()
+//                    } catch {
+//                        showErrorAlert = true
+//                        errorAlertMessage = (error as! TDLibKit.Error).message
+//                    }
+//                }
+//            } label: {
+//                Label("Request SMS code", systemImage: "text.bubble")
+//            }
+//            .buttonStyle(.plain)
             if showLoadingSpinner {
                 ProgressView()
                     .progressViewStyle(.circular)

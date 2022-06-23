@@ -41,7 +41,7 @@ private extension String {
 
 struct LoginView: View {
     let logger = Logs.Logger(category: "Login", label: "UI")
-    @Injected var dataSource: LoginService
+    @Injected var service: LoginService
 
     func stepView(number: Int, text: String) -> some View {
         HStack {
@@ -61,16 +61,17 @@ struct LoginView: View {
     @State var code = ""
     @State var twoFactorAuthPassword = ""
     @State var qrCodeLink = ""
-
+    
     @State var phoneNumberCodes: [CountryInfo] = []
     @State var selectedNumberCode: Int = 0
 
     @State var openedScreen = OpenedLoginScreen.welcome
+    
+    @State var showErrorAlert = false
+    @State var errorAlertMessage = ""
 
     @State var showExitAlert = false
-    @State var showErrorAlert = false
     @State var showLoadingSpinner = false
-    
     @State var showLogo = false
     @State var showContent = false
 
@@ -105,15 +106,16 @@ struct LoginView: View {
                         twoFACode
                 }
             }
-            .transition(.scale.combined(with: .opacity))
+            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                .combined(with: .opacity))
         }
         .animation(.spring(), value: openedScreen)
         .task {
-            let countries = try? await dataSource.countries
+            let countries = try? await service.countries
             guard countries != nil else { return }
 
             self.phoneNumberCodes = countries!
-            let countryCode = (try? await dataSource.countryCode) ?? "EN"
+            let countryCode = (try? await service.countryCode) ?? "EN"
 
             for country in countries! where country.countryCode == countryCode {
                 self.selectedNumberCode = Int(country.callingCodes[0])!
@@ -121,10 +123,10 @@ struct LoginView: View {
             }
         }
         .alert(
-            "Error",
+            "Whoops!",
             isPresented: $showErrorAlert,
             actions: {},
-            message: { Text("You typed in wrong/bad data. Please try again!") }
+            message: { Text(errorAlertMessage) }
         )
         .alert("You sure you want to exit?", isPresented: $showExitAlert) {
             Button("Yea!") {

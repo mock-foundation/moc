@@ -60,7 +60,7 @@ public extension TdApi {
                                     } else {
                                         dir = url.path
                                     }
-                                    try await self.setTdlibParameters(parameters: TdlibParameters(
+                                    _ = try await self.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
                                         apiId: Secret.apiId,
                                         applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),

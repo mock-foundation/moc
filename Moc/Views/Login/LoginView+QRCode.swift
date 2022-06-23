@@ -32,14 +32,14 @@ extension LoginView {
                 stepView(number: 3, text: "To confirm, point your phone camera to the QR code.")
             }
             
-            Button("Use phone number") {
-                Task {
-                    openedScreen = .phoneNumber
-                }
-            }
-            .buttonStyle(.borderless)
-            .frame(width: 200)
-            .padding()
+//            Button("Use phone number") {
+//                Task {
+//                    openedScreen = .phoneNumber
+//                }
+//            }
+//            .buttonStyle(.borderless)
+//            .frame(width: 200)
+//            .padding()
         }
         .padding()
     }
