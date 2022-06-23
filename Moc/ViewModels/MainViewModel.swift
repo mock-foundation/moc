@@ -145,31 +145,31 @@ class MainViewModel: ObservableObject {
             chatFilters = []
         }
         addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
-        addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorization(_:))
+        addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorizationStateWaitPhoneNumber(_:))
         addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
         addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
         addSubscriber(for: .updateUnreadChatCount, action: updateUnreadChatCount(_:))
         addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
         addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
         addSubscriber(for: .updateConnectionState, action: updateConnectionState(_:))
+        addSubscriber(for: .authorizationStateClosed, action: authorizationStateClosed(_:))
         NWPathMonitor()
             .publisher(queue: nwPathMonitorQueue)
             .sink { value in
                 Task {
                     switch value {
                         case .satisfied:
-                            try await TdApi.shared[0].setNetworkType(type: .networkTypeOther)
+                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeOther)
                         case .unsatisfied:
-                            try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
                         case .requiresConnection:
-                            try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
                         @unknown default:
-                            try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
                     }
                 }
             }
             .store(in: &subscribers)
-            
     }
     
     func addSubscriber(for notification: NSNotification.Name, action: @escaping ((NCPO) -> Void)) {
@@ -177,6 +177,9 @@ class MainViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveValue: action)
             .store(in: &subscribers)
+    }
+    
+    func authorizationStateClosed(_ notification: NCPO) {
     }
     
     func updateConnectionState(_ notification: NCPO) {
@@ -343,7 +346,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func authorization(_ notification: NCPO) {
+    func authorizationStateWaitPhoneNumber(_ notification: NCPO) {
         logger.debug("Got authorization state update")
         showingLoginScreen = true
     }

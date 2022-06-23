@@ -21,6 +21,8 @@ public protocol LoginService {
 
     /// Checks auth password
     func checkAuth(password: String) async throws
+    
+    func resendAuthCode() async throws
 
     var countries: [CountryInfo] { get async throws }
 
