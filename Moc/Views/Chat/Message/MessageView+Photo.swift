@@ -155,9 +155,7 @@ extension MessageView {
             }
             .sheet(item: $openedMediaFileID) { omfid in
                 ZStack {
-                    AsyncTdQuickLookView(id: omfid.id) {
-                        ProgressView()
-                    }
+                    AsyncTdQuickLookView(id: omfid.id)
                     Button {
                         openedMediaFileID = nil
                     } label: {
@@ -169,17 +167,17 @@ extension MessageView {
                     .keyboardShortcut(.escape, modifiers: [])
                     .background(.ultraThinMaterial, in: Circle())
                     .clipShape(Circle())
-#if os(macOS)
+                    #if os(macOS)
                     .hTrailing()
-#elseif os(iOS)
+                    #elseif os(iOS)
                     .hLeading()
-#endif
+                    #endif
                     .vTop()
                     .padding()
                 }
-#if os(macOS)
+                #if os(macOS)
                 .frame(width: 800, height: 600)
-#endif
+                #endif
             }
         }
     }

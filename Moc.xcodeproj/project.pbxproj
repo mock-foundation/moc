@@ -97,6 +97,10 @@
 		439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4312863C5BA00339375 /* LoginView+2FACode.swift */; };
 		43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */; };
 		43A0AF7F2864DFA500C0A8EF /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7E2864DFA500C0A8EF /* Shake.swift */; };
+		43A0AF812865173B00C0A8EF /* AsyncTdVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF802865173B00C0A8EF /* AsyncTdVideoPlayer.swift */; };
+		43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF822865183300C0A8EF /* MessageView+Video.swift */; };
+		43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF84286518F900C0A8EF /* MessageView+Album.swift */; };
+		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
@@ -204,6 +208,10 @@
 		439BA4312863C5BA00339375 /* LoginView+2FACode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+2FACode.swift"; sourceTree = "<group>"; };
 		43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewAccessor.swift; sourceTree = "<group>"; };
 		43A0AF7E2864DFA500C0A8EF /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
+		43A0AF802865173B00C0A8EF /* AsyncTdVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdVideoPlayer.swift; sourceTree = "<group>"; };
+		43A0AF822865183300C0A8EF /* MessageView+Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Video.swift"; sourceTree = "<group>"; };
+		43A0AF84286518F900C0A8EF /* MessageView+Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Album.swift"; sourceTree = "<group>"; };
+		43A0AF862865197400C0A8EF /* AsyncTdFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdFile.swift; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43BFD914285CC2B000D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD916285CC30B00D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
@@ -287,6 +295,8 @@
 			isa = PBXGroup;
 			children = (
 				438B227C285DCA88000D65C8 /* AsyncTdImage.swift */,
+				43A0AF802865173B00C0A8EF /* AsyncTdVideoPlayer.swift */,
+				43A0AF862865197400C0A8EF /* AsyncTdFile.swift */,
 			);
 			path = AsyncTd;
 			sourceTree = "<group>";
@@ -430,6 +440,8 @@
 				43670726286224AD00587A63 /* MessageView+Image.swift */,
 				436707282862295200587A63 /* MessageView+Utils.swift */,
 				4367072A286229B000587A63 /* MessageView+Photo.swift */,
+				43A0AF822865183300C0A8EF /* MessageView+Video.swift */,
+				43A0AF84286518F900C0A8EF /* MessageView+Album.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -703,6 +715,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4312154B2858C2CF009EFEB5 /* GenerateQRCode.swift in Sources */,
+				43A0AF812865173B00C0A8EF /* AsyncTdVideoPlayer.swift in Sources */,
 				43EC18E028566FC400FCAD43 /* AppDelegate.swift in Sources */,
 				43807DA227E213350056A3D3 /* MainViewModel.swift in Sources */,
 				43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */,
@@ -715,12 +728,15 @@
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
 				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
 				43807DA127E213350056A3D3 /* ChatViewModel.swift in Sources */,
+				43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */,
 				439BA4252863BBBC00339375 /* ChatListItemSelectedKey.swift in Sources */,
 				43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */,
+				43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */,
 				4396B1512859E904004109AE /* SettingsContent.swift in Sources */,
 				4367071F2861A6CD00587A63 /* QuickLookPreviewWrapper.swift in Sources */,
 				43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */,
 				434A60802848AA000086B866 /* ChatPickerView.swift in Sources */,
+				43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */,
 				436707252861F0D700587A63 /* AsyncTdQuickLookView.swift in Sources */,
 				436707232861A8CA00587A63 /* View+QuickLook.swift in Sources */,
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,

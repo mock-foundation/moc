@@ -49,15 +49,12 @@ public extension TdApi {
                                         in: .userDomainMask,
                                         appropriateFor: nil,
                                         create: true)
-                                    if #available(macOS 13, iOS 16, *) {
-                                        url.append(path: "td")
-                                    } else {
-                                        url.appendPathComponent("td")
-                                    }
                                     var dir = ""
                                     if #available(macOS 13, iOS 16, *) {
+                                        url.append(path: "td")
                                         dir = url.path()
                                     } else {
+                                        url.appendPathComponent("td")
                                         dir = url.path
                                     }
                                     _ = try await self.setTdlibParameters(parameters: TdlibParameters(
