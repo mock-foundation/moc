@@ -148,12 +148,12 @@ struct ChatView: View {
                 }
                 Image(systemName: "face.smiling")
                     .font(.system(size: 16))
-                if !viewModel.inputMessage.isEmpty || !viewModel.inputMedia.isEmpty {
+                if viewModel.inputMessage.isEmpty && viewModel.inputMedia.isEmpty {
                     Image(systemName: "mic")
                         .font(.system(size: 16))
                         .transition(.scale.combined(with: .opacity))
                 }
-                if viewModel.inputMessage.isEmpty && viewModel.inputMedia.isEmpty {
+                if !viewModel.inputMessage.isEmpty || !viewModel.inputMedia.isEmpty {
                     Button {
                         viewModel.sendMessage()
                     } label: {
