@@ -39,39 +39,45 @@ public class TdChatService: ChatService {
 //        let uti = UTType(filenameExtension: fileExtension)
         
 //        if uti!.conforms(to: .image) {
-            var path = url.absoluteString
-            path = String(path.suffix(from: .init(utf16Offset: 7, in: path)))
-            
-            logger.info("Sending media with path \(path)")
-            guard let image = NSImage(contentsOf: url) else {
-                logger.error("Failed to create an NSImage instance for supplied path \(path)")
-                return
-            }
-            
-            let inputGenerated = InputFile.inputFileGenerated(InputFileGenerated(
-                conversion: "copy",
-                expectedSize: 0,
-                originalPath: path.removingPercentEncoding ?? ""))
-            
-            _ = try await tdApi.sendMessage(
-                chatId: chatId!,
-                inputMessageContent: .inputMessagePhoto(InputMessagePhoto(
-                    addedStickerFileIds: [],
-                    caption: FormattedText(entities: [], text: caption),
+        var path = url.filePath ?? ""
+        
+        logger.info("Sending media with path \(path)")
+        #if os(macOS)
+        guard let image = NSImage(contentsOf: url) else {
+            logger.error("Failed to create an NSImage instance for supplied path \(path)")
+            return
+        }
+        #elseif os(iOS)
+        guard let image = UIImage(contentsOfFile: path) else {
+            logger.error("Failed to create an UIImage instance for supplied path \(path)")
+            return
+        }
+        #endif
+        
+        let inputGenerated = InputFile.inputFileGenerated(InputFileGenerated(
+            conversion: "copy",
+            expectedSize: 0,
+            originalPath: path))
+        
+        _ = try await tdApi.sendMessage(
+            chatId: chatId!,
+            inputMessageContent: .inputMessagePhoto(InputMessagePhoto(
+                addedStickerFileIds: [],
+                caption: FormattedText(entities: [], text: caption),
+                height: Int(image.size.height),
+                photo: inputGenerated,
+                thumbnail: InputThumbnail(
                     height: Int(image.size.height),
-                    photo: inputGenerated,
-                    thumbnail: InputThumbnail(
-                        height: Int(image.size.height),
-                        thumbnail: inputGenerated,
-                        width: Int(image.size.width)),
-                    ttl: 0,
-                    width: Int(image.size.width))),
-                messageThreadId: nil,
-                options: nil,
-                replyMarkup: nil,
-                replyToMessageId: nil
-            )
-            logger.debug("Done")
+                    thumbnail: inputGenerated,
+                    width: Int(image.size.width)),
+                ttl: 0,
+                width: Int(image.size.width))),
+            messageThreadId: nil,
+            options: nil,
+            replyMarkup: nil,
+            replyToMessageId: nil
+        )
+        logger.debug("Done")
 //        }
     }
     
@@ -81,28 +87,33 @@ public class TdChatService: ChatService {
 //            let uti = UTType(filenameExtension: fileExtension)
             
 //            if uti!.conforms(to: .image) {
-                var path = url.absoluteString
-                path = String(path.suffix(from: .init(utf16Offset: 7, in: path)))
-                
-                logger.info("Sending media with path \(path)")
-                let image = NSImage(contentsOf: url)!
-                
-                let inputGenerated = InputFile.inputFileGenerated(InputFileGenerated(
-                    conversion: "copy",
-                    expectedSize: 0,
-                    originalPath: path.removingPercentEncoding ?? ""))
-                
-                return .inputMessagePhoto(InputMessagePhoto(
-                        addedStickerFileIds: [],
-                        caption: FormattedText(entities: [], text: caption),
+            var path = url.absoluteString
+            path = String(path.suffix(from: .init(utf16Offset: 7, in: path)))
+            
+            logger.info("Sending media with path \(path)")
+            
+            #if os(macOS)
+            let image = NSImage(contentsOf: url)!
+            #elseif os(iOS)
+            let image = UIImage(contentsOfFile: path)!
+            #endif
+            
+            let inputGenerated = InputFile.inputFileGenerated(InputFileGenerated(
+                conversion: "copy",
+                expectedSize: 0,
+                originalPath: path.removingPercentEncoding ?? ""))
+            
+            return .inputMessagePhoto(InputMessagePhoto(
+                    addedStickerFileIds: [],
+                    caption: FormattedText(entities: [], text: caption),
+                    height: Int(image.size.height),
+                    photo: inputGenerated,
+                    thumbnail: InputThumbnail(
                         height: Int(image.size.height),
-                        photo: inputGenerated,
-                        thumbnail: InputThumbnail(
-                            height: Int(image.size.height),
-                            thumbnail: inputGenerated,
-                            width: Int(image.size.width)),
-                        ttl: 0,
-                        width: Int(image.size.width)))
+                        thumbnail: inputGenerated,
+                        width: Int(image.size.width)),
+                    ttl: 0,
+                    width: Int(image.size.width)))
 //            }
         }
         

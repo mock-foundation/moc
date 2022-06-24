@@ -80,7 +80,7 @@ struct ChatView: View {
                         .padding()
                         
                         ForEach(viewModel.inputMedia, id: \.self) { media in
-                            Image(nsImage: NSImage(contentsOf: media)!)
+                            Image(contentsOfFile: media.filePath ?? "")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 100, height: 90)
@@ -105,7 +105,7 @@ struct ChatView: View {
             }
             HStack(spacing: 16) {
                 #if os(iOS)
-                if isHideButtonShown {
+                if viewModel.isHideKeyboardButtonShown {
                     Button {
                         isInputFieldFocused = false
                     } label: {
@@ -230,7 +230,7 @@ struct ChatView: View {
                 guard !itemProviders.isEmpty else { return false }
                 
                 for itemProvider in itemProviders {
-                    if #available(macOS 13.0, *) {
+                    if #available(macOS 13, iOS 16, *) {
                         _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, bool, error) in
                             guard error == nil else { return }
                             guard let url = url else { return }
