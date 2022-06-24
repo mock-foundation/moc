@@ -92,14 +92,12 @@ struct ContentView: View {
         #endif
         return Group {
             #if os(macOS)
-            ToolbarItem(placement: placement) {
+            ToolbarItemGroup(placement: placement ) {
                 Button {
                     NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
                 } label: {
                     Label("Toggle chat list", systemImage: "sidebar.left")
                 }
-            }
-            ToolbarItem(placement: placement) {
                 if mainViewModel.isChatListVisible {
                     Picker("", selection: $selectedTab) {
                         Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
@@ -112,15 +110,11 @@ struct ContentView: View {
             ToolbarItem(placement: placement) {
                 Spacer()
             }
-            ToolbarItem(placement: placement) {
+            ToolbarItemGroup(placement: placement) {
                 if mainViewModel.isChatListVisible {
                     Toggle(isOn: $mainViewModel.isArchiveOpen) {
                         Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                     }
-                }
-            }
-            ToolbarItem(placement: placement) {
-                if mainViewModel.isChatListVisible {
                     Button {
                         logger.info("Pressed add chat")
                     } label: {
