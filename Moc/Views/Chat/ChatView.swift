@@ -235,8 +235,13 @@ struct ChatView: View {
                             guard error == nil else { return }
                             guard let url = url else { return }
                             
-                            Task {
-                                await addInputMedia(url)
+                            let fullURL = URL(string: try! String(contentsOf: url))!
+
+                            DispatchQueue.main.async {
+                                withAnimation(.spring()) {
+                                    viewModel.inputMedia.removeAll(where: { $0 == fullURL})
+                                    viewModel.inputMedia.append(fullURL)
+                                }
                             }
                         }
                     } else {
@@ -246,7 +251,7 @@ struct ChatView: View {
                             guard error == nil else { return }
                             guard let url = url else { return }
                             
-                            addInputMedia(url)
+                            addInputMedia(url: url)
                         }
                         logger.debug("All resulting input media: \(viewModel.inputMedia)")
                     }
@@ -262,7 +267,7 @@ struct ChatView: View {
         }
     }
     
-    func addInputMedia(_ url: URL) {
+    func addInputMedia(url: URL) {
         let fullURL = URL(string: try! String(contentsOf: url))!
         DispatchQueue.main.async {
             withAnimation(.spring()) {
