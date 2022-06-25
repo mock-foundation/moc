@@ -16,19 +16,6 @@ extension MessageView {
             )
         }
         .frame(minWidth: 0, maxWidth: 350, minHeight: 200)
-//        .background {
-//            AsyncTdImage(
-//                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
-//            ) { image in
-//                image
-//                    .resizable()
-//            } placeholder: {
-//                ProgressView()
-//            }.overlay {
-//                Color.clear
-//                    .background(.ultraThinMaterial, in: Rectangle())
-//            }
-//        }
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
         .onTapGesture {

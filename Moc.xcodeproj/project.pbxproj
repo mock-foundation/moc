@@ -101,6 +101,9 @@
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
 		43A0AF8B2865A5ED00C0A8EF /* Image+ContentsOfFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF8A2865A5ED00C0A8EF /* Image+ContentsOfFile.swift */; };
 		43A963722866E4290076F5FD /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */; };
+		43A96374286778740076F5FD /* PlayerLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A96373286778740076F5FD /* PlayerLayerView.swift */; };
+		43A9637628678E130076F5FD /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9637528678E130076F5FD /* VideoPreviewView.swift */; };
+		43A9637828678E960076F5FD /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9637728678E960076F5FD /* PlayerView.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
@@ -212,6 +215,9 @@
 		43A0AF862865197400C0A8EF /* AsyncTdFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdFile.swift; sourceTree = "<group>"; };
 		43A0AF8A2865A5ED00C0A8EF /* Image+ContentsOfFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+ContentsOfFile.swift"; sourceTree = "<group>"; };
 		43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AVPlayerViewWrapper.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/macOS/Views/AVPlayerViewWrapper.swift"; sourceTree = "<group>"; };
+		43A96373286778740076F5FD /* PlayerLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayerLayerView.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/macOS/Views/PlayerLayerView.swift"; sourceTree = "<group>"; };
+		43A9637528678E130076F5FD /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VideoPreviewView.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/Moc/Views/VideoPreviewView.swift"; sourceTree = "<group>"; };
+		43A9637728678E960076F5FD /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/Moc/Views/PlayerView.swift"; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43BFD914285CC2B000D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD916285CC30B00D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
@@ -396,6 +402,8 @@
 				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
+				43A9637528678E130076F5FD /* VideoPreviewView.swift */,
+				43A9637728678E960076F5FD /* PlayerView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				434A607F2848AA000086B866 /* ChatPickerView.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
@@ -500,6 +508,7 @@
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 				43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */,
 				43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */,
+				43A96373286778740076F5FD /* PlayerLayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -755,6 +764,7 @@
 				43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */,
 				43807D9B27E213350056A3D3 /* ViewRouter.swift in Sources */,
 				436707292862295200587A63 /* MessageView+Utils.swift in Sources */,
+				43A9637628678E130076F5FD /* VideoPreviewView.swift in Sources */,
 				43807D8027E213350056A3D3 /* Message.swift in Sources */,
 				438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */,
 				433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */,
@@ -763,6 +773,7 @@
 				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,
 				43807D9427E213350056A3D3 /* MessageView.swift in Sources */,
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
+				43A96374286778740076F5FD /* PlayerLayerView.swift in Sources */,
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
 				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
 				4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */,
@@ -795,6 +806,7 @@
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
 				43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */,
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
+				43A9637828678E960076F5FD /* PlayerView.swift in Sources */,
 				43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */,
 				4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */,
 				439BA42C2863C4B200339375 /* LoginView+Code.swift in Sources */,

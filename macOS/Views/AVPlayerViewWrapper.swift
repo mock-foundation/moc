@@ -6,48 +6,74 @@
 //
 
 import SwiftUI
+import Utilities
+import Combine
 import AVKit
+
+class AVPlayerViewWithoutMouseDown: AVPlayerView {
+    override func mouseDown(with event: NSEvent) {
+        self.nextResponder?.mouseDown(with: event)
+    }
+    
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        return self
+    }
+}
 
 struct AVPlayerViewWrapper: NSViewRepresentable {
     let path: String
-    let controlsStyle: AVPlayerViewControlsStyle
     
-    private let player: AVQueuePlayer
+    private var player: AVPlayer
     
-    init(path: String, controlsStyle: AVPlayerViewControlsStyle = .default) {
+    init(path: String) {
         self.path = path
-        self.controlsStyle = controlsStyle
-        self.player = AVQueuePlayer(url: URL(fileURLWithPath: path))
+        self.player = AVPlayer(url: URL(fileURLWithPath: path))
     }
-    
+            
     func makeNSView(context: Context) -> AVPlayerView {
-        let view = AVPlayerView()
+        let view = AVPlayerViewWithoutMouseDown()
         view.showsFullScreenToggleButton = true
-        view.controlsStyle = controlsStyle
+        player.actionAtItemEnd = .none
+        view.controlsStyle = .none
         view.player = player
+        view.delegate = context.coordinator
+        
+        player.play()
                 
         return view
     }
     
-    func updateNSView(_ nsView: NSViewType, context: Context) {
-        nsView.controlsStyle = controlsStyle
-    }
+    func updateNSView(_ nsView: NSViewType, context: Context) { }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(player: player)
     }
     
-    class Coordinator: NSObject {
-        private var player: AVQueuePlayer?
-        private var playerLooper: AVPlayerLooper?
+    class Coordinator: NSObject, AVPlayerViewDelegate {
+        private let player: AVPlayer
         
-        init(player: AVQueuePlayer) {
+        private var cancellables: [AnyCancellable] = []
+        
+        init(player: AVPlayer) {
             self.player = player
-            let item = player.currentItem!
             
-            playerLooper = AVPlayerLooper(player: self.player!, templateItem: item)
-            
-            self.player?.play()
+            NotificationCenter.default.addObserver(
+                forName: .AVPlayerItemDidPlayToEndTime,
+                object: player.currentItem,
+                queue: .main
+            ) { notification in
+                if let playerItem = notification.object as? AVPlayerItem {
+                    playerItem.seek(to: .zero, completionHandler: nil)
+                }
+            }
+        }
+        
+        func playerViewWillEnterFullScreen(_ playerView: AVPlayerView) {
+            playerView.controlsStyle = .floating
+        }
+        
+        func playerViewWillExitFullScreen(_ playerView: AVPlayerView) {
+            playerView.controlsStyle = .none
         }
     }
 }
