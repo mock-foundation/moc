@@ -31,7 +31,6 @@
 		4367071F2861A6CD00587A63 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367071E2861A6CD00587A63 /* QuickLookPreviewWrapper.swift */; platformFilter = ios; };
 		436707212861A8A500587A63 /* QuickLookPreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436707202861A8A500587A63 /* QuickLookPreviewItem.swift */; platformFilter = ios; };
 		436707232861A8CA00587A63 /* View+QuickLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436707222861A8CA00587A63 /* View+QuickLook.swift */; platformFilter = ios; };
-		43670727286224AD00587A63 /* MessageView+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43670726286224AD00587A63 /* MessageView+Image.swift */; };
 		436707292862295200587A63 /* MessageView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436707282862295200587A63 /* MessageView+Utils.swift */; };
 		4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072A286229B000587A63 /* MessageView+Photo.swift */; };
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
@@ -101,6 +100,7 @@
 		43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF84286518F900C0A8EF /* MessageView+Album.swift */; };
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
 		43A0AF8B2865A5ED00C0A8EF /* Image+ContentsOfFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF8A2865A5ED00C0A8EF /* Image+ContentsOfFile.swift */; };
+		43A963722866E4290076F5FD /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
@@ -143,7 +143,6 @@
 		4367071E2861A6CD00587A63 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		436707202861A8A500587A63 /* QuickLookPreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewItem.swift; sourceTree = "<group>"; };
 		436707222861A8CA00587A63 /* View+QuickLook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+QuickLook.swift"; sourceTree = "<group>"; };
-		43670726286224AD00587A63 /* MessageView+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Image.swift"; sourceTree = "<group>"; };
 		436707282862295200587A63 /* MessageView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Utils.swift"; sourceTree = "<group>"; };
 		4367072A286229B000587A63 /* MessageView+Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Photo.swift"; sourceTree = "<group>"; };
 		4367072C28622CD700587A63 /* MessageView+Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Bubble.swift"; sourceTree = "<group>"; };
@@ -212,6 +211,7 @@
 		43A0AF84286518F900C0A8EF /* MessageView+Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Album.swift"; sourceTree = "<group>"; };
 		43A0AF862865197400C0A8EF /* AsyncTdFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdFile.swift; sourceTree = "<group>"; };
 		43A0AF8A2865A5ED00C0A8EF /* Image+ContentsOfFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+ContentsOfFile.swift"; sourceTree = "<group>"; };
+		43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AVPlayerViewWrapper.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/macOS/Views/AVPlayerViewWrapper.swift"; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43BFD914285CC2B000D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD916285CC30B00D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
@@ -437,7 +437,6 @@
 				43807D6727E213350056A3D3 /* MessageView.swift */,
 				4367072C28622CD700587A63 /* MessageView+Bubble.swift */,
 				4367072E28622D0400587A63 /* MessageView+Message.swift */,
-				43670726286224AD00587A63 /* MessageView+Image.swift */,
 				436707282862295200587A63 /* MessageView+Utils.swift */,
 				4367072A286229B000587A63 /* MessageView+Photo.swift */,
 				43A0AF822865183300C0A8EF /* MessageView+Video.swift */,
@@ -500,6 +499,7 @@
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 				43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */,
+				43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -766,6 +766,7 @@
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
 				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
 				4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */,
+				43A963722866E4290076F5FD /* AVPlayerViewWrapper.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
@@ -773,7 +774,6 @@
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
 				438B2287285E55B3000D65C8 /* PlaceholderStyle.swift in Sources */,
-				43670727286224AD00587A63 /* MessageView+Image.swift in Sources */,
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,

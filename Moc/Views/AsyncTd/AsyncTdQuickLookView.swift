@@ -33,7 +33,7 @@ struct AsyncTdQuickLookView: View {
             }
             #endif
         } placeholder: {
-            EmptyView()
+            ProgressView()
         }
     }
 }

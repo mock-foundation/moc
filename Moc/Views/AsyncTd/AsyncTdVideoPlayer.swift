@@ -10,15 +10,18 @@ import TDLibKit
 import Utilities
 import Logs
 import AVKit
+import AVFoundation
 
 struct AsyncTdVideoPlayer: View {
     let id: Int
     
     var body: some View {
         AsyncTdFile(id: id) { file in
-            VideoPlayer(player: AVPlayer(url: URL(fileURLWithPath: file.local.path)))
+            AVPlayerViewWrapper(
+                path: file.local.path,
+                controlsStyle: .none)
         } placeholder: {
-            EmptyView()
+            ProgressView()
         }
     }
 }

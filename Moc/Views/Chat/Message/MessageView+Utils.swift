@@ -16,4 +16,12 @@ extension MessageView {
             return nil
         }
     }
+    
+    func getVideo(from content: MessageContent) -> MessageVideo? {
+        if case .messageVideo(let info) = content {
+            return info
+        } else {
+            return nil
+        }
+    }
 }
