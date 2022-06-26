@@ -24,6 +24,10 @@
 		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; platformFilters = (macos, ); };
 		433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */; platformFilters = (macos, ); };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
+		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; };
+		434A07192869004700A2BBA5 /* PlayerLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07182869004700A2BBA5 /* PlayerLayerView.swift */; };
+		434A071B2869006800A2BBA5 /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A071A2869006800A2BBA5 /* VideoPreviewView.swift */; };
+		434A071D2869006F00A2BBA5 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A071C2869006F00A2BBA5 /* PlayerView.swift */; };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
 		4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E4283FE2BE00D3378F /* DequeModule */; };
@@ -100,10 +104,6 @@
 		43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF84286518F900C0A8EF /* MessageView+Album.swift */; };
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
 		43A0AF8B2865A5ED00C0A8EF /* Image+ContentsOfFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF8A2865A5ED00C0A8EF /* Image+ContentsOfFile.swift */; };
-		43A963722866E4290076F5FD /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */; };
-		43A96374286778740076F5FD /* PlayerLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A96373286778740076F5FD /* PlayerLayerView.swift */; };
-		43A9637628678E130076F5FD /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9637528678E130076F5FD /* VideoPreviewView.swift */; };
-		43A9637828678E960076F5FD /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9637728678E960076F5FD /* PlayerView.swift */; };
 		43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A9637A2868C8AD0076F5FD /* SkeletonUI */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
@@ -143,6 +143,10 @@
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
 		433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdQuickLookView.swift; sourceTree = "<group>"; };
+		434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
+		434A07182869004700A2BBA5 /* PlayerLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerLayerView.swift; sourceTree = "<group>"; };
+		434A071A2869006800A2BBA5 /* VideoPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPreviewView.swift; sourceTree = "<group>"; };
+		434A071C2869006F00A2BBA5 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
 		4367071E2861A6CD00587A63 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		436707202861A8A500587A63 /* QuickLookPreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewItem.swift; sourceTree = "<group>"; };
@@ -215,10 +219,6 @@
 		43A0AF84286518F900C0A8EF /* MessageView+Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Album.swift"; sourceTree = "<group>"; };
 		43A0AF862865197400C0A8EF /* AsyncTdFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdFile.swift; sourceTree = "<group>"; };
 		43A0AF8A2865A5ED00C0A8EF /* Image+ContentsOfFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+ContentsOfFile.swift"; sourceTree = "<group>"; };
-		43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AVPlayerViewWrapper.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/macOS/Views/AVPlayerViewWrapper.swift"; sourceTree = "<group>"; };
-		43A96373286778740076F5FD /* PlayerLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayerLayerView.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/macOS/Views/PlayerLayerView.swift"; sourceTree = "<group>"; };
-		43A9637528678E130076F5FD /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VideoPreviewView.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/Moc/Views/VideoPreviewView.swift"; sourceTree = "<group>"; };
-		43A9637728678E960076F5FD /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayerView.swift; path = "../../../../../../../../Macintosh HD/Users/egoryakovenko/Documents/GitHub/Moc/Moc/Views/PlayerView.swift"; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43BFD914285CC2B000D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD916285CC30B00D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
@@ -404,8 +404,8 @@
 				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
-				43A9637528678E130076F5FD /* VideoPreviewView.swift */,
-				43A9637728678E960076F5FD /* PlayerView.swift */,
+				434A071A2869006800A2BBA5 /* VideoPreviewView.swift */,
+				434A071C2869006F00A2BBA5 /* PlayerView.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				434A607F2848AA000086B866 /* ChatPickerView.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
@@ -509,8 +509,8 @@
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 				43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */,
-				43A963712866E4290076F5FD /* AVPlayerViewWrapper.swift */,
-				43A96373286778740076F5FD /* PlayerLayerView.swift */,
+				434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */,
+				434A07182869004700A2BBA5 /* PlayerLayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -738,6 +738,7 @@
 				436707212861A8A500587A63 /* QuickLookPreviewItem.swift in Sources */,
 				43807D9827E213350056A3D3 /* LottieView.swift in Sources */,
 				43A0AF8B2865A5ED00C0A8EF /* Image+ContentsOfFile.swift in Sources */,
+				434A071D2869006F00A2BBA5 /* PlayerView.swift in Sources */,
 				43807D8727E213350056A3D3 /* AccountsPrefView.swift in Sources */,
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
 				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
@@ -768,7 +769,6 @@
 				43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */,
 				43807D9B27E213350056A3D3 /* ViewRouter.swift in Sources */,
 				436707292862295200587A63 /* MessageView+Utils.swift in Sources */,
-				43A9637628678E130076F5FD /* VideoPreviewView.swift in Sources */,
 				43807D8027E213350056A3D3 /* Message.swift in Sources */,
 				438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */,
 				433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */,
@@ -777,11 +777,10 @@
 				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,
 				43807D9427E213350056A3D3 /* MessageView.swift in Sources */,
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
-				43A96374286778740076F5FD /* PlayerLayerView.swift in Sources */,
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
 				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
+				434A07192869004700A2BBA5 /* PlayerLayerView.swift in Sources */,
 				4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */,
-				43A963722866E4290076F5FD /* AVPlayerViewWrapper.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
 				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
@@ -789,12 +788,14 @@
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
 				438B2287285E55B3000D65C8 /* PlaceholderStyle.swift in Sources */,
+				434A071B2869006800A2BBA5 /* VideoPreviewView.swift in Sources */,
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
 				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,
 				433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */,
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
+				434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */,
 				433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
@@ -810,7 +811,6 @@
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
 				43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */,
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
-				43A9637828678E960076F5FD /* PlayerView.swift in Sources */,
 				43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */,
 				4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */,
 				439BA42C2863C4B200339375 /* LoginView+Code.swift in Sources */,

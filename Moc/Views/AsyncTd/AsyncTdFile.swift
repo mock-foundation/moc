@@ -72,4 +72,3 @@ struct AsyncTdFile<Content: View, Placeholder: View>: View {
         }
     }
 }
-

@@ -101,7 +101,8 @@ struct ContentView: View {
             ToolbarItemGroup(placement: placement) {
                 if #unavailable(macOS 13) {
                     Button {
-                        NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+                        NSApp.keyWindow?.firstResponder?.tryToPerform(
+                            #selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
                     } label: {
                         Label("Toggle chat list", systemImage: "sidebar.left")
                     }
@@ -296,14 +297,18 @@ struct ContentView: View {
         #if os(macOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
+                mainViewModel.isConnected
+                ? .accentColor.opacity(0.7)
+                : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
         #elseif os(iOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
+                mainViewModel.isConnected
+                ? .accentColor.opacity(0.7)
+                : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))

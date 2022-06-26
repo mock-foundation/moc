@@ -231,7 +231,7 @@ struct ChatView: View {
                 
                 for itemProvider in itemProviders {
                     if #available(macOS 13, iOS 16, *) {
-                        _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, bool, error) in
+                        _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, _, error) in
                             guard error == nil else { return }
                             guard let url = url else { return }
                             
