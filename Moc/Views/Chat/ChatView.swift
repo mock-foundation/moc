@@ -186,45 +186,19 @@ struct ChatView: View {
 
     private var chatView: some View {
         ZStack {
-            ZStack {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        ForEach(viewModel.messages, id: \.self) { message in
-                            MessageView(message: message)
-                        }
-                        Color.clear
-                            .frame(height: 78)
-                    }
-                    .introspectScrollView { scrollView in
-                        viewModel.scrollView = scrollView
-                    }
-                    .onAppear {
-                        viewModel.scrollViewProxy = proxy
-                        viewModel.scrollToEnd()
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ForEach(viewModel.messages, id: \.self) { message in
+                        MessageView(message: message)
                     }
                 }
-                Button {
+                .introspectScrollView { scrollView in
+                    viewModel.scrollView = scrollView
+                }
+                .onAppear {
+                    viewModel.scrollViewProxy = proxy
                     viewModel.scrollToEnd()
-                } label: {
-                    Image(systemName: "arrow.down")
                 }
-                .buttonStyle(.plain)
-                .padding(12)
-                .background(.ultraThinMaterial, in: Circle())
-                .clipShape(Circle())
-                #if (macOS)
-                .background(
-                    Circle()
-                        .strokeBorder(
-                            Color.gray,
-                            lineWidth: 1
-                        )
-                )
-                #endif
-                .vBottom()
-                .hTrailing()
-                .padding()
-                .padding(.bottom, 64)
             }
             .onDrop(of: [.fileURL], isTargeted: $viewModel.isDropping) { itemProviders in
                 guard !itemProviders.isEmpty else { return false }
@@ -236,7 +210,7 @@ struct ChatView: View {
                             guard let url = url else { return }
                             
                             let fullURL = URL(string: try! String(contentsOf: url))!
-
+                            
                             DispatchQueue.main.async {
                                 withAnimation(.spring()) {
                                     viewModel.inputMedia.removeAll(where: { $0 == fullURL})
@@ -259,11 +233,35 @@ struct ChatView: View {
                 
                 return true
             }
+            
+            Button {
+                viewModel.scrollToEnd()
+            } label: {
+                Image(systemName: "arrow.down")
+            }
+            .buttonStyle(.plain)
+            .padding(12)
+            .background(.ultraThinMaterial, in: Circle())
+            .clipShape(Circle())
+            #if (macOS)
+            .background(
+                Circle()
+                    .strokeBorder(
+                        Color.gray,
+                        lineWidth: 1
+                    )
+            )
+            #endif
+            .hTrailing()
+            .vBottom()
+            .padding(.horizontal)
+        }
+        .safeAreaInset(edge: .bottom) {
             inputField
                 .padding(8)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .vBottom()
-                .padding()
+                .padding([.horizontal, .bottom])
+                .padding(.top, 12)
         }
     }
     
