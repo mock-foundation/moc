@@ -14,13 +14,13 @@ extension Image {
         if let nsImage = NSImage(contentsOfFile: file.local.path) {
             self.init(nsImage: nsImage)
         } else {
-            self.init(systemName: "xmark")
+            self.init()
         }
         #elseif os(iOS)
         if let uiImage = UIImage(contentsOfFile: file.local.path) {
             self.init(uiImage: uiImage)
         } else {
-            self.init(systemName: "xmark")
+            self.init()
         }
         #endif
     }

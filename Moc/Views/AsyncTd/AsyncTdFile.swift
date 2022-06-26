@@ -34,6 +34,9 @@ struct AsyncTdFile<Content: View, Placeholder: View>: View {
                 placeholder()
             }
         }
+        .transition(.opacity)
+        .animation(.easeInOut, value: isDownloaded)
+        .animation(.easeInOut, value: file)
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             let update = notification.object as! UpdateFile
             if update.file.id == id {
