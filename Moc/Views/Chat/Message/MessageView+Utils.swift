@@ -24,4 +24,18 @@ extension MessageView {
             return nil
         }
     }
+    
+    /// A helper function for displaying a video or a photo media file, depending on the message
+    /// content.
+    /// - Parameter content: Message content to display
+    @ViewBuilder func makeMedia(from content: MessageContent) -> some View {
+        switch content {
+            case .messageVideo(let info):
+                makeVideo(from: info)
+            case let .messagePhoto(info):
+                makePhoto(from: info, contentMode: .fill)
+            default:
+                EmptyView()
+        }
+    }
 }

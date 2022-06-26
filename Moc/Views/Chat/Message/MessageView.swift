@@ -35,41 +35,45 @@ struct MessageView: View {
     @ViewBuilder
     var body: some View {
         Group {
-            switch message.first!.content {
-                case let .messageText(info):
-                    makeMessage {
-                        VStack(alignment: .leading) {
-                            if !message.first!.isOutgoing {
-                                Text(message.first!.sender.name)
-                                    .foregroundColor(Color(fromUserId: message.first!.sender.id))
-                            }
-                            Text(info.text.text)
-                                .textSelection(.enabled)
+            if message.count > 1 {
+                makeAlbum()
+            } else {
+                switch message.first!.content {
+                    case let .messageText(info):
+                        makeMessage {
+                            VStack(alignment: .leading) {
+                                if !message.first!.isOutgoing {
+                                    Text(message.first!.sender.name)
+                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
+                                }
+                                Text(info.text.text)
+                                    .textSelection(.enabled)
+                                    .if(message.first!.isOutgoing) { view in
+                                        view.foregroundColor(.white)
+                                    }
+                            }.padding(8)
+                        }
+                    case let .messagePhoto(info):
+                        makeMessagePhoto(from: info)
+                    case let .messageVideo(info):
+                        makeMessageVideo(from: info)
+                    case .messageUnsupported:
+                        makeMessage {
+                            Text("Sorry, this message is unsupported.")
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                        }.padding(8)
-                    }
-                case let .messagePhoto(info):
-                    makeMessagePhoto(from: info)
-                case let .messageVideo(info):
-                    makeMessageVideo(from: info)
-                case .messageUnsupported:
-                    makeMessage {
-                        Text("Sorry, this message is unsupported.")
-                            .if(message.first!.isOutgoing) { view in
-                                view.foregroundColor(.white)
-                            }
-                            .padding(8)
-                    }
-                default:
-                    makeMessage {
-                        Text("Sorry, this message is unsupported.")
-                            .if(message.first!.isOutgoing) { view in
-                                view.foregroundColor(.white)
-                            }
-                            .padding(8)
-                    }
+                                .padding(8)
+                        }
+                    default:
+                        makeMessage {
+                            Text("Sorry, this message is unsupported.")
+                                .if(message.first!.isOutgoing) { view in
+                                    view.foregroundColor(.white)
+                                }
+                                .padding(8)
+                        }
+                }
             }
         }
         .if(message.first!.isOutgoing) { view in
