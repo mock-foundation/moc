@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import SkeletonUI
 
 extension MessageView {
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
@@ -18,7 +19,8 @@ extension MessageView {
                     .resizable()
                     .aspectRatio(contentMode: contentMode)
             } placeholder: {
-                ProgressView()
+                Rectangle()
+                    .skeleton(with: true)
             }
         }
         .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)

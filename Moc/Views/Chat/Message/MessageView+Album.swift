@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TDLibKit
+import SkeletonUI
 
 extension MessageView {
     // swiftlint:disable function_body_length
@@ -141,8 +142,9 @@ extension MessageView {
                             }
                         }
                     default:
-                        Image(systemName: "xmark")
-                            .font(.system(size: 22))
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(Color.gray.opacity(0.4))
+                            .skeleton(with: true)
                 }
                                 
                 if !getCaption(from: message.first!.content).text.isEmpty {

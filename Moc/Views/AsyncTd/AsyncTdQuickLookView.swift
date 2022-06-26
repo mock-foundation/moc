@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Utilities
 import Logs
+import SkeletonUI
 
 struct AsyncTdQuickLookView: View {
     let id: Int
@@ -33,7 +34,8 @@ struct AsyncTdQuickLookView: View {
             }
             #endif
         } placeholder: {
-            ProgressView()
+            Rectangle()
+                .skeleton(with: true)
         }
     }
 }

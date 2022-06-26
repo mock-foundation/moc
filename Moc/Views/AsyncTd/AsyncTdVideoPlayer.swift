@@ -11,6 +11,7 @@ import Utilities
 import Logs
 import AVKit
 import AVFoundation
+import SkeletonUI
 
 struct AsyncTdVideoPlayer: View {
     let id: Int
@@ -19,7 +20,8 @@ struct AsyncTdVideoPlayer: View {
         AsyncTdFile(id: id) { file in
             AVPlayerViewWrapper(path: file.local.path)
         } placeholder: {
-            ProgressView()
+            Rectangle()
+                .skeleton(with: true)
         }
     }
 }

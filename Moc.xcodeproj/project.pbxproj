@@ -104,6 +104,7 @@
 		43A96374286778740076F5FD /* PlayerLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A96373286778740076F5FD /* PlayerLayerView.swift */; };
 		43A9637628678E130076F5FD /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9637528678E130076F5FD /* VideoPreviewView.swift */; };
 		43A9637828678E960076F5FD /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9637728678E960076F5FD /* PlayerView.swift */; };
+		43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A9637A2868C8AD0076F5FD /* SkeletonUI */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
@@ -243,6 +244,7 @@
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
+				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -603,6 +605,7 @@
 				431215532858E50B009EFEB5 /* Numerics */,
 				431215552858E50B009EFEB5 /* RealModule */,
 				43C0F49C285A68ED009F2419 /* Defaults */,
+				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -665,6 +668,7 @@
 				4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */,
 				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
+				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1169,6 +1173,14 @@
 				minimumVersion = 0.1.4;
 			};
 		};
+		43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
@@ -1247,6 +1259,11 @@
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
+		};
+		43A9637A2868C8AD0076F5FD /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
 		};
 		43C0F49C285A68ED009F2419 /* Defaults */ = {
 			isa = XCSwiftPackageProductDependency;
