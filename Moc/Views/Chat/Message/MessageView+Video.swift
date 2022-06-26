@@ -11,16 +11,11 @@ import TDLibKit
 extension MessageView {
     func makeVideo(from info: MessageVideo) -> some View {
         ZStack {
-            AsyncTdVideoPlayer(
-                id: info.video.video.id
-            )
+            AsyncTdVideoPlayer(id: info.video.video.id)
         }
         .frame(minWidth: 0, maxWidth: 350, minHeight: 200)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
-        .onTapGesture {
-            openedMediaFileID = OMFID(id: info.video.video.id)
-        }
 //        .onDrag {
 //            let path = info.video.video.local.path
 //            if #available(macOS 13.0, *) {

@@ -9,7 +9,6 @@ import AppKit
 import AVFoundation
 
 class PlayerLayerView: NSView {
-    private let rootLayer = CALayer()
     private let playerLayer = AVPlayerLayer()
     private var player: AVPlayer? = nil
 
@@ -26,8 +25,12 @@ class PlayerLayerView: NSView {
     
     private func commonInit() {
         wantsLayer = true
-        layer = rootLayer
         
-        rootLayer.addSublayer(playerLayer)
+        playerLayer.frame = bounds
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        playerLayer.player = player
+        layer?.addSublayer(playerLayer)
+        
+        player?.play()
     }
 }

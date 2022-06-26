@@ -11,7 +11,17 @@ import AVKit
 struct VideoPreviewView: View {
     let path: String
     
+    let player: AVPlayer
+    
+    init(path: String) {
+        self.path = path
+        self.player = AVPlayer(url: URL(fileURLWithPath: path))
+    }
+    
     var body: some View {
-        PlayerView(player: AVPlayer(url: URL(fileURLWithPath: path)))
+        PlayerView(player: player)
+            .onAppear {
+                player.play()
+            }
     }
 }

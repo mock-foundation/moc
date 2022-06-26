@@ -17,9 +17,7 @@ struct AsyncTdVideoPlayer: View {
     
     var body: some View {
         AsyncTdFile(id: id) { file in
-//            VideoPreviewView(path: file.local.path)
-            AVPlayerViewWrapper(
-                path: file.local.path)
+            AVPlayerViewWrapper(path: file.local.path)
         } placeholder: {
             ProgressView()
         }
