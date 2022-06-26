@@ -41,6 +41,8 @@ struct FolderItemView<Icon: View>: View {
             HStack {
                 Label {
                     Text(name)
+                        .lineLimit(1)
+                        .fixedSize()
                 } icon: {
                     icon
                 }
