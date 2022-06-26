@@ -38,4 +38,26 @@ extension MessageView {
                 EmptyView()
         }
     }
+    
+    /// Returns a caption from the specified message content.
+    /// - Parameter content: Where to get the caption from.
+    /// - Returns: The resulting caption.
+    func getCaption(from content: MessageContent) -> FormattedText {
+        switch content {
+            case let .messageText(info):
+                return info.text
+            case let .messageAnimation(info):
+                return info.caption
+            case let .messageAudio(info):
+                return info.caption
+            case let .messageDocument(info):
+                return info.caption
+            case let .messagePhoto(info):
+                return info.caption
+            case let .messageVideo(info):
+                return info.caption
+            default:
+                return FormattedText(entities: [], text: "")
+        }
+    }
 }

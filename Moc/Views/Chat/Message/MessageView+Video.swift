@@ -13,26 +13,33 @@ extension MessageView {
         ZStack {
             AsyncTdVideoPlayer(id: info.video.video.id)
         }
-        .frame(minWidth: 0, maxWidth: 350, minHeight: 200)
+        .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
-//        .onDrag {
-//            let path = info.video.video.local.path
-//            if #available(macOS 13.0, *) {
-//                #if os(macOS)
-//                return NSItemProvider(object: NSImage(contentsOfFile: path)!)
-//                #elseif os(iOS)
-//                return NSItemProvider(object: UIImage(contentsOfFile: path)!)
-//                #endif
-//            } else {
-//                return NSItemProvider(object: NSURL(fileURLWithPath: path))
-//            }
-//        }
+        .onTapGesture {
+            openedMediaFileID = OMFID(id: info.video.video.id)
+        }
+        .onDrag {
+            return NSItemProvider(object: NSURL(
+                fileURLWithPath: info.video.video.local.path))
+        }
     }
     
     func makeMessageVideo(from info: MessageVideo) -> some View {
         makeMessage {
-            makeVideo(from: getVideo(from: message[0].content)!)
+            VStack(spacing: 0) {
+                makeVideo(from: getVideo(from: message.first!.content)!)
+                
+                if !info.caption.text.isEmpty {
+                    Text(info.caption.text)
+                        .if(message.first!.isOutgoing) { view in
+                            view.foregroundColor(.white)
+                        }
+                        .multilineTextAlignment(.leading)
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        .padding(8)
+                }
+            }
         }
     }
 }

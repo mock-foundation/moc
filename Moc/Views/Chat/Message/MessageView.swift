@@ -76,6 +76,32 @@ struct MessageView: View {
                 }
             }
         }
+        .sheet(item: $openedMediaFileID) { omfid in
+            ZStack {
+                AsyncTdQuickLookView(id: omfid.id)
+                Button {
+                    openedMediaFileID = nil
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 12))
+                        .padding(8)
+                }
+                .buttonStyle(.plain)
+                .keyboardShortcut(.escape, modifiers: [])
+                .background(.ultraThinMaterial, in: Circle())
+                .clipShape(Circle())
+                #if os(macOS)
+                .hTrailing()
+                #elseif os(iOS)
+                .hLeading()
+                #endif
+                .vTop()
+                .padding()
+            }
+            #if os(macOS)
+            .frame(width: 800, height: 600)
+            #endif
+        }
         .if(message.first!.isOutgoing) { view in
             view.padding(.trailing)
         } else: { view in

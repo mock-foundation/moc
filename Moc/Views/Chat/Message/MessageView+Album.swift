@@ -9,7 +9,7 @@ import SwiftUI
 import TDLibKit
 
 extension MessageView {
-    
+    // swiftlint:disable function_body_length
     /// Just makes the album. Used in ``makeMessageVideo(from:)``
     /// and ``makeMessagePhoto(from:)`` to not repeate the same code twice
     func makeAlbum() -> some View {
@@ -66,13 +66,13 @@ extension MessageView {
                             }
                             HStack(spacing: 1) {
                                 makeMedia(from: message[3].content)
-                                makeMedia(from: message[3].content)
+                                makeMedia(from: message[4].content)
                                 makeMedia(from: message[5].content)
                             }
                         }
                     case 7:
                         VStack(spacing: 1) {
-                            makeMedia(from: message[-].content)
+                            makeMedia(from: message[0].content)
                             HStack(spacing: 1) {
                                 makeMedia(from: message[1].content)
                                 makeMedia(from: message[2].content)
@@ -144,9 +144,9 @@ extension MessageView {
                         Image(systemName: "xmark")
                             .font(.system(size: 22))
                 }
-                
-                if !info.caption.text.isEmpty {
-                    Text(info.caption.text)
+                                
+                if !getCaption(from: message.first!.content).text.isEmpty {
+                    Text(getCaption(from: message.first!.content).text)
                         .if(message.first!.isOutgoing) { view in
                             view.foregroundColor(.white)
                         }
