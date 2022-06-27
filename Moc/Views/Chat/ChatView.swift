@@ -133,7 +133,8 @@ struct ChatView: View {
                 }
                 .textFieldStyle(.plain)
                 .padding(6)
-                .onChange(of: viewModel.inputMessage) { _ in
+                .onChange(of: viewModel.inputMessage) { value in
+                    logger.debug("Input message changed, value: \(value)")
                     viewModel.updateAction(with: .chatActionTyping)
                     // TODO: Handle drafts
                 }
