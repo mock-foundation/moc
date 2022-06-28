@@ -22,6 +22,7 @@ struct AVPlayerViewWrapper: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let vc = AVPlayerViewController()
         vc.player = player
+        vc.player?.isMuted = true
         
         return vc
     }

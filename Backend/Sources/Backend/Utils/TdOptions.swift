@@ -8,7 +8,6 @@
 import TDLibKit
 
 public extension String {
-    
     /// `[Boolean, writable]` If true, text entities will be automatically parsed in all `
     /// inputMessageText` objects
     static let alwaysParseMarkdown = "always_parse_markdown"
