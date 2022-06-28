@@ -36,12 +36,6 @@ public extension Resolver {
 // swiftlint:disable weak_delegate
 @main
 struct MocApp: App {
-    #if os(macOS)
-    @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
-    #elseif os(iOS)
-    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
-    #endif
-
     init() {
         Resolver.registerUI()
         Resolver.registerBackend()

@@ -38,7 +38,6 @@
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
 		437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */; platformFilter = ios; };
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
-		43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4927E213350056A3D3 /* AppDelegate.swift */; platformFilters = (macos, ); };
 		43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4B27E213350056A3D3 /* MessageSender.swift */; };
 		43807D8027E213350056A3D3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4D27E213350056A3D3 /* Message.swift */; };
 		43807D8227E213350056A3D3 /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4F27E213350056A3D3 /* ChatType.swift */; };
@@ -113,7 +112,6 @@
 		43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D389DE284A52A000214874 /* AutoEquatable.generated.swift */; };
 		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
 		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
-		43EC18E028566FC400FCAD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18DF28566FC400FCAD43 /* AppDelegate.swift */; platformFilter = ios; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 /* End PBXBuildFile section */
 
@@ -155,7 +153,6 @@
 		43807D0627E1FCEF0056A3D3 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0A27E1FCEF0056A3D3 /* MocTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocTests.swift; sourceTree = "<group>"; };
 		43807D2327E2129C0056A3D3 /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
-		43807D4927E213350056A3D3 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43807D4B27E213350056A3D3 /* MessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
 		43807D4D27E213350056A3D3 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		43807D4F27E213350056A3D3 /* ChatType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
@@ -225,7 +222,6 @@
 		43D389DE284A52A000214874 /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
-		43EC18DF28566FC400FCAD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -547,7 +543,6 @@
 			children = (
 				4396B152285A01F4004109AE /* Views */,
 				4312154C2858C326009EFEB5 /* GenerateQRCode.swift */,
-				43807D4927E213350056A3D3 /* AppDelegate.swift */,
 				43BFD916285CC30B00D8980A /* MultilineTextField.swift */,
 				438B2280285E3077000D65C8 /* LighterDarker.swift */,
 			);
@@ -558,7 +553,6 @@
 			isa = PBXGroup;
 			children = (
 				4396B153285A0208004109AE /* Views */,
-				43EC18DF28566FC400FCAD43 /* AppDelegate.swift */,
 				4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */,
 				43BFD914285CC2B000D8980A /* MultilineTextField.swift */,
 				438B227E285E3050000D65C8 /* LighterDarker.swift */,
@@ -723,7 +717,6 @@
 			files = (
 				4312154B2858C2CF009EFEB5 /* GenerateQRCode.swift in Sources */,
 				43A0AF812865173B00C0A8EF /* AsyncTdVideoPlayer.swift in Sources */,
-				43EC18E028566FC400FCAD43 /* AppDelegate.swift in Sources */,
 				43807DA227E213350056A3D3 /* MainViewModel.swift in Sources */,
 				43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */,
 				4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */,
@@ -776,7 +769,6 @@
 				4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
-				43807D7D27E213350056A3D3 /* AppDelegate.swift in Sources */,
 				433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
 				4305C476285B1C3200F6E7FF /* DefaultKeys.swift in Sources */,
