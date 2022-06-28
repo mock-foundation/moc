@@ -57,7 +57,7 @@ struct MocApp: App {
         .onChange(of: scenePhase) { phase in
             Task {
                 try await TdApi.shared[0].setOption(
-                    name: "online",
+                    name: .online,
                     value: .optionValueBoolean(.init(value: phase == .active)))
             }
         }
