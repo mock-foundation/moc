@@ -215,6 +215,18 @@ class ChatViewModel: ObservableObject {
         }
     }
     
+    func updateDraft() {
+        Task {
+            try await service.set(draft: .init(
+                date: Int(Date.now.timeIntervalSince1970),
+                inputMessageText: .inputMessageText(.init(
+                    clearDraft: true,
+                    disableWebPagePreview: false,
+                    text: .init(entities: [], text: inputMessage))),
+                replyToMessageId: 0))
+        }
+    }
+    
     func sendMessage() {
         Task {
             do {

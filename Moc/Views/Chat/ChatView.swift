@@ -136,7 +136,7 @@ struct ChatView: View {
                 .onChange(of: viewModel.inputMessage) { value in
                     logger.debug("Input message changed, value: \(value)")
                     viewModel.updateAction(with: .chatActionTyping)
-                    // TODO: Handle drafts
+                    viewModel.updateDraft()
                 }
                 .onSubmit {
                     viewModel.sendMessage()
