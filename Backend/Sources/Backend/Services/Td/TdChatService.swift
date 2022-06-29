@@ -88,7 +88,7 @@ public class TdChatService: ChatService {
             path = String(path.suffix(from: .init(utf16Offset: 7, in: path))).removingPercentEncoding ?? ""
             
             let uti = UTType(url)
-            logger.debug("UTType: \(uti)")
+            logger.debug("UTType: \(String(describing: uti))")
             
             let inputGenerated: InputFile = .inputFileGenerated(InputFileGenerated(
                 conversion: "copy",

@@ -10,7 +10,7 @@ import TDLibKit
 import SkeletonUI
 
 extension MessageView {
-    // swiftlint:disable function_body_length
+    // swiftlint:disable function_body_length cyclomatic_complexity
     /// Just makes the album. Used in ``makeMessageVideo(from:)``
     /// and ``makeMessagePhoto(from:)`` to not repeate the same code twice
     func makeAlbum() -> some View {

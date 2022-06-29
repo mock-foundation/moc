@@ -249,6 +249,7 @@ public extension TdApi {
                             default:
                                 break
                         }
+                    // swiftlint:disable empty_enum_arguments
                     case .updateFileGenerationStop(_):
                         break
                     default:
