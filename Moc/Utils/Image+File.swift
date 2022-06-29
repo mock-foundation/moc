@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Utilities
 import TDLibKit
 
 extension Image {

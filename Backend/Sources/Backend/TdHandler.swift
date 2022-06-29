@@ -10,6 +10,7 @@ import Foundation
 import Logs
 import TDLibKit
 import Utilities
+import AppKit
 
 public extension TdApi {
     /// A list of shared instances. Why list? There could be multiple `TDLib` instances
@@ -209,6 +210,27 @@ public extension TdApi {
                                             error: nil,
                                             generationId: info.generationId)
                                     } catch {
+                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                            error: Error(code: 400, message: error.localizedDescription),
+                                            generationId: info.generationId)
+                                    }
+                                }
+                            case "video_thumbnail":
+                                Task {
+                                    do {
+                                        let thumbnail = URL(fileURLWithPath: info.originalPath).platformThumbnail
+                                        
+                                        if let imgRep = thumbnail.representations[0] as? NSBitmapImageRep {
+                                            if let data = imgRep.representation(using: .png, properties: [:]) {
+                                                try data.write(to: URL(fileURLWithPath: info.destinationPath), options: .atomic)
+                                            }
+                                        }
+                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                            error: nil,
+                                            generationId: info.generationId)
+                                        TdApi.logger.debug("File generation with ID \(info.generationId) is done")
+                                    } catch {
+                                        TdApi.logger.debug("File generation with ID \(info.generationId) failed")
                                         _ = try await TdApi.shared[0].finishFileGeneration(
                                             error: Error(code: 400, message: error.localizedDescription),
                                             generationId: info.generationId)

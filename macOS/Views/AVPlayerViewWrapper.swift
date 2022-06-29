@@ -26,6 +26,7 @@ struct AVPlayerViewWrapper: NSViewRepresentable {
         view.player?.isMuted = true
         view.showsSharingServiceButton = true
         view.showsFrameSteppingButtons = true
+        view.allowsPictureInPicturePlayback = true
         
         player.play()
                 

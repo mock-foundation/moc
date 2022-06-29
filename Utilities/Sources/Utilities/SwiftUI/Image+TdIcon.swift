@@ -1,5 +1,5 @@
 //
-//  Image+Td.swift
+//  Image+TdIcon.swift
 //  
 //
 //  Created by Егор Яковенко on 26.05.2022.

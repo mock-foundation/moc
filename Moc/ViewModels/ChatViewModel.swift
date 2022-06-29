@@ -12,12 +12,10 @@ import Resolver
 import Utilities
 import TDLibKit
 import Algorithms
+import Collections
 import SwiftUI
 import Logs
-
-private enum Event {
-    case updateNewMessage
-}
+import AVKit
 
 class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
@@ -48,10 +46,9 @@ class ChatViewModel: ObservableObject {
     private var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
     
     init() {
-        subscribers.append(SystemUtils.ncPublisher(for: .updateNewMessage)
-            .sink(receiveValue: updateNewMessage(notification:)))
-//        subscribers.append(contentsOf: SystemUtils.ncPublisher(for: .update))
-        
+        SystemUtils.ncPublisher(for: .updateNewMessage)
+            .sink(receiveValue: updateNewMessage(notification:))
+            .store(in: &subscribers)
     }
     
     deinit {

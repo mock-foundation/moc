@@ -79,8 +79,8 @@ struct ChatView: View {
                         }
                         .padding()
                         
-                        ForEach(viewModel.inputMedia, id: \.self) { media in
-                            Image(contentsOfFile: media.filePath ?? "")
+                        ForEach(viewModel.inputMedia, id: \.self) { url in
+                            url.thumbnail
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 100, height: 90)
@@ -88,7 +88,7 @@ struct ChatView: View {
                                 .contextMenu {
                                     Button(role: .destructive) {
                                         withAnimation(.spring()) {
-                                            viewModel.inputMedia.removeAll(where: { $0 == media })
+                                            viewModel.inputMedia.removeAll(where: { $0 == url })
                                         }
                                     } label: {
                                         Image(systemName: "trash")
