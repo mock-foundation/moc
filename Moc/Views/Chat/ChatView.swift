@@ -80,22 +80,46 @@ struct ChatView: View {
                         .padding()
                         
                         ForEach(viewModel.inputMedia, id: \.self) { url in
-                            url.thumbnail
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 100, height: 90)
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .contextMenu {
-                                    Button(role: .destructive) {
-                                        withAnimation(.spring()) {
-                                            viewModel.inputMedia.removeAll(where: { $0 == url })
-                                        }
-                                    } label: {
-                                        Image(systemName: "trash")
-                                        Text("Remove")
+                            Group {
+                                if UTType(url)!.conforms(toAtLeastOneOf: [
+                                    .image,
+                                    .video,
+                                    .mpeg,
+                                    .mpeg2Video,
+                                    .mpeg4Movie,
+                                    .appleProtectedMPEG4Video,
+                                    .quickTimeMovie]
+                                ) {
+                                    url.thumbnail
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } else {
+                                    VStack {
+                                        Image(systemName: "doc.text")
+                                            .font(.system(size: 22))
+                                        Text(url.lastPathComponent)
+                                            .font(.system(.body, design: .rounded))
+                                            .lineLimit(2)
+                                            .truncationMode(.middle)
+                                            .multilineTextAlignment(.center)
                                     }
+                                    .padding(8)
+                                    .background(.ultraThinMaterial, in: Rectangle())
                                 }
-                                .transition(.move(edge: .trailing).combined(with: .opacity))
+                            }
+                            .frame(width: 100, height: 90)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    withAnimation(.spring()) {
+                                        viewModel.inputMedia.removeAll(where: { $0 == url })
+                                    }
+                                } label: {
+                                    Image(systemName: "trash")
+                                    Text("Remove")
+                                }
+                            }
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
                         }
                     }
                 }
