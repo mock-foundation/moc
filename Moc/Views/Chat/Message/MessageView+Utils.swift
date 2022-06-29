@@ -30,10 +30,12 @@ extension MessageView {
     /// - Parameter content: Message content to display
     @ViewBuilder func makeMedia(from content: MessageContent) -> some View {
         switch content {
-            case .messageVideo(let info):
+            case let .messageVideo(info):
                 makeVideo(from: info)
             case let .messagePhoto(info):
                 makePhoto(from: info, contentMode: .fill)
+            case let .messageDocument(info):
+                makeDocument(from: info)
             default:
                 EmptyView()
         }
@@ -58,6 +60,20 @@ extension MessageView {
                 return info.caption
             default:
                 return FormattedText(entities: [], text: "")
+        }
+    }
+}
+
+extension MessageContent {
+    /// Says whether a message is graphic (photo or video)
+    var isGraphic: Bool {
+        switch self {
+            case .messageVideo(_):
+                return true
+            case .messagePhoto(_):
+                return true
+            default:
+                return false
         }
     }
 }

@@ -57,6 +57,8 @@ struct MessageView: View {
                         makeMessagePhoto(from: info)
                     case let .messageVideo(info):
                         makeMessageVideo(from: info)
+                    case let .messageDocument(info):
+                        makeMessageDocument(from: info)
                     case .messageUnsupported:
                         makeMessage {
                             Text("Sorry, this message is unsupported.")
