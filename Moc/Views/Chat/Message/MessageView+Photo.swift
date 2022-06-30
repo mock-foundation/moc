@@ -40,7 +40,7 @@ extension MessageView {
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
         .onTapGesture {
-            openedMediaFileID = OMFID(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id)
+            openedMediaFileID = OpenedMediaFile(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id)
         }
         .onDrag {
             let path = info.photo.sizes[info.photo.sizes.endIndex - 1].photo.local.path

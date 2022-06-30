@@ -23,10 +23,9 @@ struct AVPlayerViewWrapper: NSViewRepresentable {
         let view = AVPlayerView()
         view.showsFullScreenToggleButton = true
         view.player = player
-        view.player?.isMuted = true
         view.showsSharingServiceButton = true
         view.showsFrameSteppingButtons = true
-        view.allowsPictureInPicturePlayback = true
+        view.controlsStyle = .floating
         
         player.play()
                 

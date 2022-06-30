@@ -15,10 +15,17 @@ struct MessageView: View {
     
     // Internal state
     
-    struct OMFID: Identifiable {
+    struct OpenedMediaFile: Identifiable {
         let id: Int
+        let isVideo: Bool
+        
+        init(id: Int, isVideo: Bool = false) {
+            self.id = id
+            self.isVideo = isVideo
+        }
     }
-    @State var openedMediaFileID: OMFID?
+    
+    @State var openedMediaFileID: OpenedMediaFile?
     @State var senderPhotoFileID: Int?
     /// Download progress of a media file, represented by a tuple of current progress and overall size
 //    @State var downloadProgress: (Int64?, Int64)?
@@ -80,9 +87,13 @@ struct MessageView: View {
                 }
             }
         }
-        .sheet(item: $openedMediaFileID) { omfid in
+        .sheet(item: $openedMediaFileID) { file in
             ZStack {
-                AsyncTdQuickLookView(id: omfid.id)
+                if file.isVideo {
+                    AsyncTdVideoPlayer(id: file.id)
+                } else {
+                    AsyncTdQuickLookView(id: file.id)
+                }
                 Button {
                     openedMediaFileID = nil
                 } label: {

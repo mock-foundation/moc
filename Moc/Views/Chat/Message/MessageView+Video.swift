@@ -10,13 +10,21 @@ import TDLibKit
 
 extension MessageView {
     func makeVideo(from info: MessageVideo) -> some View {
-        AsyncTdVideoPlayer(id: info.video.video.id)
-            .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
-            .clipped()
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
-            .onTapGesture {
-                openedMediaFileID = OMFID(id: info.video.video.id)
+        URL(fileURLWithPath: info.video.video.local.path).thumbnail
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .overlay {
+                Button {
+                    openedMediaFileID = OpenedMediaFile(id: info.video.video.id, isVideo: true)
+                } label: {
+                    Image(systemName: "play.fill")
+                        .font(.system(size: 26))
+                        .padding(12)
+                }
+                .buttonStyle(.plain)
+                .background(.ultraThinMaterial, in: Circle())
             }
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
             .onDrag {
                 return NSItemProvider(object: NSURL(fileURLWithPath: info.video.video.local.path))
             }
