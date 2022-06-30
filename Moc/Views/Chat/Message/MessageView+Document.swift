@@ -33,8 +33,17 @@ extension MessageView {
                     .font(.system(size: 14, weight: .bold))
                     .lineLimit(2)
                     .truncationMode(.middle)
-                Text("\(info.document.document.size / 1024) KB")
-                    .frame(maxHeight: 30)
+                    .foregroundColor(.white)
+                HStack {
+                    Text("\(info.document.document.size / 1024) KB")
+                        .foregroundColor(.white)
+                    Divider()
+                    Button {
+                        
+                    } label: {
+                        Text("Save to Downloads")
+                    }
+                }.frame(maxHeight: 30)
                 Spacer()
             }
         }

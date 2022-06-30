@@ -227,12 +227,16 @@ public extension TdApi {
                                         #if os(macOS)
                                         if let imgRep = thumbnail.representations[0] as? NSBitmapImageRep {
                                             if let data = imgRep.representation(using: .png, properties: [:]) {
-                                                try data.write(to: URL(fileURLWithPath: info.destinationPath), options: .atomic)
+                                                try data.write(
+                                                    to: URL(fileURLWithPath: info.destinationPath),
+                                                    options: .atomic)
                                             }
                                         }
                                         #elseif os(iOS)
                                         if let data = thumbnail.pngData() {
-                                            try? data.write(to: URL(fileURLWithPath: info.destinationPath), options: .atomic)
+                                            try? data.write(
+                                                to: URL(fileURLWithPath: info.destinationPath),
+                                                options: .atomic)
                                         }
                                         #endif
                                         _ = try await TdApi.shared[0].finishFileGeneration(

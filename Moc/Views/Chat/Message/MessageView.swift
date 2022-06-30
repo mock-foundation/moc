@@ -20,6 +20,8 @@ struct MessageView: View {
     }
     @State var openedMediaFileID: OMFID?
     @State var senderPhotoFileID: Int?
+    /// Download progress of a media file, represented by a tuple of current progress and overall size
+//    @State var downloadProgress: (Int64?, Int64)?
     
     let tdApi = TdApi.shared[0]
     let logger = Logger(category: "MessageView", label: "UI")
