@@ -133,7 +133,7 @@ struct ChatView: View {
                     Button {
                         isInputFieldFocused = false
                     } label: {
-                        Image(systemName: "chevron.down")
+                        Image(systemName: "keyboard.chevron.compact.down")
                             .padding(8)
                             .foregroundColor(.black)
                     }
