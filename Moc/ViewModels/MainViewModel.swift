@@ -95,15 +95,15 @@ class MainViewModel: ObservableObject {
             Task {
                 switch openChatList {
                     case .main:
-                        try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared[0].loadChats(
                             chatList: .chatListMain,
                             limit: 30)
                     case .archive:
-                        try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared[0].loadChats(
                             chatList: .chatListArchive,
                             limit: 30)
                     case .filter(let id):
-                        try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared[0].loadChats(
                             chatList: .chatListFilter(.init(chatFilterId: id)),
                             limit: 30)
                 }

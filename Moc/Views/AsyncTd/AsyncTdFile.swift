@@ -1,20 +1,22 @@
 //
-//  AsyncTdQuickLookView.swift
+//  AsyncTdFile.swift
 //  Moc
 //
-//  Created by Егор Яковенко on 21.06.2022.
+//  Created by Егор Яковенко on 24.06.2022.
 //
 
 import SwiftUI
 import TDLibKit
 import Utilities
 import Logs
-struct AsyncTdQuickLookView<Placeholder: View>: View {
+
+struct AsyncTdFile<Content: View, Placeholder: View>: View {
     let id: Int
-    let placeholder: () -> Placeholder
+    @ViewBuilder let content: (File) -> Content
+    @ViewBuilder let placeholder: () -> Placeholder
     
     private let tdApi = TdApi.shared[0]
-    private let logger = Logs.Logger(category: "AsyncTdQuickLook", label: "UI")
+    private let logger = Logs.Logger(category: "AsyncTdFile", label: "UI")
     
     @State private var file: File?
     @State private var isDownloaded = true
@@ -24,15 +26,7 @@ struct AsyncTdQuickLookView<Placeholder: View>: View {
         Group {
             if isDownloaded {
                 if let file = file {
-                    if #available(macOS 13, iOS 16, *) {
-                        QuickLookPreviewWrapper(items: .constant([
-                            QuickLookPreviewItem(url: URL(filePath: file.local.path), title: "")
-                        ]), index: .constant(0))
-                    } else {
-                        QuickLookPreviewWrapper(items: .constant([
-                            QuickLookPreviewItem(url: URL(fileURLWithPath: file.local.path), title: "")
-                        ]), index: .constant(0))
-                    }
+                    content(file)
                 } else {
                     placeholder()
                 }
@@ -40,6 +34,9 @@ struct AsyncTdQuickLookView<Placeholder: View>: View {
                 placeholder()
             }
         }
+        .transition(.opacity)
+        .animation(.easeInOut, value: isDownloaded)
+        .animation(.easeInOut, value: file)
         .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
             let update = notification.object as! UpdateFile
             if update.file.id == id {
@@ -58,12 +55,20 @@ struct AsyncTdQuickLookView<Placeholder: View>: View {
     private func download(_ id: Int? = nil) {
         Task {
             logger.debug("Downloading file \(id != nil ? id! : self.id)")
-            self.file = try await tdApi.downloadFile(
-                fileId: id != nil ? id! : self.id,
-                limit: 0,
-                offset: 0,
-                priority: 4,
-                synchronous: false)
+            do {
+                self.file = try await tdApi.downloadFile(
+                    fileId: id != nil ? id! : self.id,
+                    limit: 0,
+                    offset: 0,
+                    priority: 4,
+                    synchronous: false)
+            } catch {
+                logger.error(
+                    """
+                    Failed to download file with ID \(id != nil ? id! : self.id), \
+                    reason: \((error as! TDLibKit.Error).message)
+                    """)
+            }
         }
     }
 }

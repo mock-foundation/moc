@@ -79,23 +79,47 @@ struct ChatView: View {
                         }
                         .padding()
                         
-                        ForEach(viewModel.inputMedia, id: \.self) { media in
-                            Image(nsImage: NSImage(contentsOf: media)!)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 100, height: 90)
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .contextMenu {
-                                    Button(role: .destructive) {
-                                        withAnimation(.spring()) {
-                                            viewModel.inputMedia.removeAll(where: { $0 == media })
-                                        }
-                                    } label: {
-                                        Image(systemName: "trash")
-                                        Text("Remove")
+                        ForEach(viewModel.inputMedia, id: \.self) { url in
+                            Group {
+                                if UTType(url)!.conforms(toAtLeastOneOf: [
+                                    .image,
+                                    .video,
+                                    .mpeg,
+                                    .mpeg2Video,
+                                    .mpeg4Movie,
+                                    .appleProtectedMPEG4Video,
+                                    .quickTimeMovie]
+                                ) {
+                                    url.thumbnail
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } else {
+                                    VStack {
+                                        Image(systemName: "doc.text")
+                                            .font(.system(size: 22))
+                                        Text(url.lastPathComponent)
+                                            .font(.system(.body, design: .rounded))
+                                            .lineLimit(2)
+                                            .truncationMode(.middle)
+                                            .multilineTextAlignment(.center)
                                     }
+                                    .padding(8)
+                                    .background(.ultraThinMaterial, in: Rectangle())
                                 }
-                                .transition(.move(edge: .trailing).combined(with: .opacity))
+                            }
+                            .frame(width: 100, height: 90)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    withAnimation(.spring()) {
+                                        viewModel.inputMedia.removeAll(where: { $0 == url })
+                                    }
+                                } label: {
+                                    Image(systemName: "trash")
+                                    Text("Remove")
+                                }
+                            }
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
                         }
                     }
                 }
@@ -105,11 +129,11 @@ struct ChatView: View {
             }
             HStack(spacing: 16) {
                 #if os(iOS)
-                if isHideButtonShown {
+                if viewModel.isHideKeyboardButtonShown {
                     Button {
                         isInputFieldFocused = false
                     } label: {
-                        Image(systemName: "chevron.down")
+                        Image(systemName: "keyboard.chevron.compact.down")
                             .padding(8)
                             .foregroundColor(.black)
                     }
@@ -133,9 +157,10 @@ struct ChatView: View {
                 }
                 .textFieldStyle(.plain)
                 .padding(6)
-                .onChange(of: viewModel.inputMessage) { _ in
+                .onChange(of: viewModel.inputMessage) { value in
+                    logger.debug("Input message changed, value: \(value)")
                     viewModel.updateAction(with: .chatActionTyping)
-                    // TODO: Handle drafts
+                    viewModel.updateDraft()
                 }
                 .onSubmit {
                     viewModel.sendMessage()
@@ -186,57 +211,36 @@ struct ChatView: View {
 
     private var chatView: some View {
         ZStack {
-            ZStack {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        ForEach(viewModel.messages, id: \.self) { message in
-                            MessageView(message: message)
-                        }
-                        Color.clear
-                            .frame(height: 78)
-                    }
-                    .introspectScrollView { scrollView in
-                        viewModel.scrollView = scrollView
-                    }
-                    .onAppear {
-                        viewModel.scrollViewProxy = proxy
-                        viewModel.scrollToEnd()
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ForEach(viewModel.messages, id: \.self) { message in
+                        MessageView(message: message)
                     }
                 }
-                Button {
+                .introspectScrollView { scrollView in
+                    viewModel.scrollView = scrollView
+                }
+                .onAppear {
+                    viewModel.scrollViewProxy = proxy
                     viewModel.scrollToEnd()
-                } label: {
-                    Image(systemName: "arrow.down")
                 }
-                .buttonStyle(.plain)
-                .padding(12)
-                .background(.ultraThinMaterial, in: Circle())
-                .clipShape(Circle())
-                #if (macOS)
-                .background(
-                    Circle()
-                        .strokeBorder(
-                            Color.gray,
-                            lineWidth: 1
-                        )
-                )
-                #endif
-                .vBottom()
-                .hTrailing()
-                .padding()
-                .padding(.bottom, 64)
             }
             .onDrop(of: [.fileURL], isTargeted: $viewModel.isDropping) { itemProviders in
                 guard !itemProviders.isEmpty else { return false }
                 
                 for itemProvider in itemProviders {
-                    if #available(macOS 13.0, *) {
-                        _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, bool, error) in
+                    if #available(macOS 13, iOS 16, *) {
+                        _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, _, error) in
                             guard error == nil else { return }
                             guard let url = url else { return }
                             
-                            Task {
-                                await addInputMedia(url)
+                            let fullURL = URL(string: try! String(contentsOf: url))!
+                            
+                            DispatchQueue.main.async {
+                                withAnimation(.spring()) {
+                                    viewModel.inputMedia.removeAll(where: { $0 == fullURL})
+                                    viewModel.inputMedia.append(fullURL)
+                                }
                             }
                         }
                     } else {
@@ -246,7 +250,7 @@ struct ChatView: View {
                             guard error == nil else { return }
                             guard let url = url else { return }
                             
-                            addInputMedia(url)
+                            addInputMedia(url: url)
                         }
                         logger.debug("All resulting input media: \(viewModel.inputMedia)")
                     }
@@ -254,15 +258,39 @@ struct ChatView: View {
                 
                 return true
             }
+            
+            Button {
+                viewModel.scrollToEnd()
+            } label: {
+                Image(systemName: "arrow.down")
+            }
+            .buttonStyle(.plain)
+            .padding(12)
+            .background(.ultraThinMaterial, in: Circle())
+            .clipShape(Circle())
+            #if (macOS)
+            .background(
+                Circle()
+                    .strokeBorder(
+                        Color.gray,
+                        lineWidth: 1
+                    )
+            )
+            #endif
+            .hTrailing()
+            .vBottom()
+            .padding(.horizontal)
+        }
+        .safeAreaInset(edge: .bottom) {
             inputField
                 .padding(8)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .vBottom()
-                .padding()
+                .padding([.horizontal, .bottom])
+                .padding(.top, 12)
         }
     }
     
-    func addInputMedia(_ url: URL) {
+    func addInputMedia(url: URL) {
         let fullURL = URL(string: try! String(contentsOf: url))!
         DispatchQueue.main.async {
             withAnimation(.spring()) {

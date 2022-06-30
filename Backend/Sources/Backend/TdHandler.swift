@@ -10,6 +10,11 @@ import Foundation
 import Logs
 import TDLibKit
 import Utilities
+#if os(macOS)
+import AppKit
+#elseif os(iOS)
+import UIKit
+#endif
 
 public extension TdApi {
     /// A list of shared instances. Why list? There could be multiple `TDLib` instances
@@ -49,15 +54,12 @@ public extension TdApi {
                                         in: .userDomainMask,
                                         appropriateFor: nil,
                                         create: true)
-                                    if #available(macOS 13, iOS 16, *) {
-                                        url.append(path: "td")
-                                    } else {
-                                        url.appendPathComponent("td")
-                                    }
                                     var dir = ""
                                     if #available(macOS 13, iOS 16, *) {
+                                        url.append(path: "td")
                                         dir = url.path()
                                     } else {
+                                        url.appendPathComponent("td")
                                         dir = url.path
                                     }
                                     _ = try await self.setTdlibParameters(parameters: TdlibParameters(
@@ -217,9 +219,41 @@ public extension TdApi {
                                             generationId: info.generationId)
                                     }
                                 }
+                            case "video_thumbnail":
+                                Task {
+                                    do {
+                                        let thumbnail = URL(fileURLWithPath: info.originalPath).platformThumbnail
+                                        
+                                        #if os(macOS)
+                                        if let imgRep = thumbnail.representations[0] as? NSBitmapImageRep {
+                                            if let data = imgRep.representation(using: .png, properties: [:]) {
+                                                try data.write(
+                                                    to: URL(fileURLWithPath: info.destinationPath),
+                                                    options: .atomic)
+                                            }
+                                        }
+                                        #elseif os(iOS)
+                                        if let data = thumbnail.pngData() {
+                                            try? data.write(
+                                                to: URL(fileURLWithPath: info.destinationPath),
+                                                options: .atomic)
+                                        }
+                                        #endif
+                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                            error: nil,
+                                            generationId: info.generationId)
+                                        TdApi.logger.debug("File generation with ID \(info.generationId) is done")
+                                    } catch {
+                                        TdApi.logger.debug("File generation with ID \(info.generationId) failed")
+                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                            error: Error(code: 400, message: error.localizedDescription),
+                                            generationId: info.generationId)
+                                    }
+                                }
                             default:
                                 break
                         }
+                    // swiftlint:disable empty_enum_arguments
                     case .updateFileGenerationStop(_):
                         break
                     default:

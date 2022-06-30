@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppCommands: Commands {
     var body: some Commands {
-        CommandGroup(after: CommandGroupPlacement.appSettings) {
+        CommandGroup(after: .appSettings) {
             Button(action: {
 
             }, label: {

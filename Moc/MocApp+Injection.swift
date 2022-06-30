@@ -36,12 +36,8 @@ public extension Resolver {
 // swiftlint:disable weak_delegate
 @main
 struct MocApp: App {
-    #if os(macOS)
-    @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
-    #elseif os(iOS)
-    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
-    #endif
-
+    @Environment(\.scenePhase) var scenePhase
+    
     init() {
         Resolver.registerUI()
         Resolver.registerBackend()
@@ -54,8 +50,16 @@ struct MocApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }.commands {
+        }
+        .commands {
             AppCommands()
+        }
+        .onChange(of: scenePhase) { phase in
+            Task {
+                try await TdApi.shared[0].setOption(
+                    name: .online,
+                    value: .optionValueBoolean(.init(value: phase == .active)))
+            }
         }
 
         #if os(macOS)

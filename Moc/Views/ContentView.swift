@@ -22,6 +22,7 @@ private enum Tab {
     case calls
 }
 
+// swiftlint:disable type_body_length
 struct ContentView: View {
     private let logger = Logs.Logger(category: "ContentView", label: "UI")
 
@@ -86,20 +87,26 @@ struct ContentView: View {
     
     private var chatListToolbar: some ToolbarContent {
         #if os(macOS)
-        let placement: ToolbarItemPlacement = .status
+        let placement: ToolbarItemPlacement
+        if #available(macOS 13, *) {
+            placement = .automatic
+        } else {
+            placement = .status
+        }
         #elseif os(iOS)
         let placement: ToolbarItemPlacement = .navigationBarLeading
         #endif
         return Group {
             #if os(macOS)
-            ToolbarItem(placement: placement) {
-                Button {
-                    NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-                } label: {
-                    Label("Toggle chat list", systemImage: "sidebar.left")
+            ToolbarItemGroup(placement: placement) {
+                if #unavailable(macOS 13) {
+                    Button {
+                        NSApp.keyWindow?.firstResponder?.tryToPerform(
+                            #selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+                    } label: {
+                        Label("Toggle chat list", systemImage: "sidebar.left")
+                    }
                 }
-            }
-            ToolbarItem(placement: placement) {
                 if mainViewModel.isChatListVisible {
                     Picker("", selection: $selectedTab) {
                         Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
@@ -112,15 +119,11 @@ struct ContentView: View {
             ToolbarItem(placement: placement) {
                 Spacer()
             }
-            ToolbarItem(placement: placement) {
+            ToolbarItemGroup(placement: placement) {
                 if mainViewModel.isChatListVisible {
                     Toggle(isOn: $mainViewModel.isArchiveOpen) {
                         Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                     }
-                }
-            }
-            ToolbarItem(placement: placement) {
-                if mainViewModel.isChatListVisible {
                     Button {
                         logger.info("Pressed add chat")
                     } label: {
@@ -248,9 +251,6 @@ struct ContentView: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             #endif
         }
-        .toolbar {
-            chatListToolbar
-        }
     }
     
     #if os(iOS)
@@ -297,14 +297,18 @@ struct ContentView: View {
         #if os(macOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
+                mainViewModel.isConnected
+                ? .accentColor.opacity(0.7)
+                : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
         #elseif os(iOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected ? .accentColor.opacity(0.7) : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
+                mainViewModel.isConnected
+                ? .accentColor.opacity(0.7)
+                : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
@@ -391,43 +395,83 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationView {
-            sidebar
-            .listStyle(.sidebar)
-            #if os(macOS)
-            .background(SplitViewAccessor(sideCollapsed: $mainViewModel.isChatListVisible))
-            #endif
-            
-            switch viewRouter.currentView {
-                case .selectChat:
-                    chatPlaceholder
-                case .chat:
-                    ChatView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        #if os(iOS)
-                        .introspectNavigationController { vc in
-                            let navBar = vc.navigationBar
-                            
-                            let newNavBarAppearance = UINavigationBarAppearance()
-                            newNavBarAppearance.configureWithDefaultBackground()
-                            
-                            navBar.scrollEdgeAppearance = newNavBarAppearance
-                            navBar.compactAppearance = newNavBarAppearance
-                            navBar.standardAppearance = newNavBarAppearance
-                            navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                        }
-                        #endif
+        if #available(macOS 13, iOS 16, *) {
+            NavigationSplitView {
+                sidebar
+                    .toolbar {
+                        chatListToolbar
+                    }
+                    #if os(macOS)
+                    .background(SplitViewAccessor(sideCollapsed: $mainViewModel.isChatListVisible))
+                    #endif
+            } detail: {
+                NavigationStack {
+                    switch viewRouter.currentView {
+                    case .selectChat:
+                        chatPlaceholder
+                    case .chat:
+                        ChatView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            #if os(iOS)
+                            .introspectNavigationController { vc in
+                                let navBar = vc.navigationBar
+                                
+                                let newNavBarAppearance = UINavigationBarAppearance()
+                                newNavBarAppearance.configureWithDefaultBackground()
+                                
+                                navBar.scrollEdgeAppearance = newNavBarAppearance
+                                navBar.compactAppearance = newNavBarAppearance
+                                navBar.standardAppearance = newNavBarAppearance
+                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                            }
+                            #endif
+                    }
+                }
             }
-        }
-        #if os(iOS)
-        .sidebarSize(folderLayout == .vertical ? 400 : 330)
-        .fullScreenCover(isPresented: $areSettingsOpen) {
-            SettingsContent()
-        }
-        #endif
-        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
-            LoginView()
-                .frame(width: 400, height: 500)
+        } else {
+            Group {
+                NavigationView {
+                    sidebar
+                        .listStyle(.sidebar)
+                        .toolbar {
+                            chatListToolbar
+                        }
+                        #if os(macOS)
+                        .background(SplitViewAccessor(sideCollapsed: $mainViewModel.isChatListVisible))
+                        #endif
+                    
+                    switch viewRouter.currentView {
+                        case .selectChat:
+                            chatPlaceholder
+                        case .chat:
+                            ChatView()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                #if os(iOS)
+                                .introspectNavigationController { vc in
+                                    let navBar = vc.navigationBar
+                                    
+                                    let newNavBarAppearance = UINavigationBarAppearance()
+                                    newNavBarAppearance.configureWithDefaultBackground()
+                                    
+                                    navBar.scrollEdgeAppearance = newNavBarAppearance
+                                    navBar.compactAppearance = newNavBarAppearance
+                                    navBar.standardAppearance = newNavBarAppearance
+                                    navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                                }
+                                #endif
+                    }
+                }
+            }
+            #if os(iOS)
+            .sidebarSize(folderLayout == .vertical ? 400 : 330)
+            .fullScreenCover(isPresented: $areSettingsOpen) {
+                SettingsContent()
+            }
+            #endif
+            .sheet(isPresented: $mainViewModel.showingLoginScreen) {
+                LoginView()
+                    .frame(width: 400, height: 500)
+            }
         }
     }
 

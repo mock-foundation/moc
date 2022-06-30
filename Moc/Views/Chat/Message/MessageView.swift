@@ -15,11 +15,21 @@ struct MessageView: View {
     
     // Internal state
     
-    struct OMFID: Identifiable {
+    struct OpenedMediaFile: Identifiable {
         let id: Int
+        let isVideo: Bool
+        
+        init(id: Int, isVideo: Bool = false) {
+            self.id = id
+            self.isVideo = isVideo
+        }
     }
-    @State var openedMediaFileID: OMFID?
+    
+    @State var openedMediaFileID: OpenedMediaFile?
     @State var senderPhotoFileID: Int?
+    // swiftlint:disable orphaned_doc_comment
+    /// Download progress of a media file, represented by a tuple of current progress and overall size
+//    @State var downloadProgress: (Int64?, Int64)?
     
     let tdApi = TdApi.shared[0]
     let logger = Logger(category: "MessageView", label: "UI")
@@ -35,40 +45,78 @@ struct MessageView: View {
     @ViewBuilder
     var body: some View {
         Group {
-            switch message.first!.content {
-                case let .messageText(info):
-                    makeMessage {
-                        VStack(alignment: .leading) {
-                            if !message.first!.isOutgoing {
-                                Text(message.first!.sender.name)
-                                    .foregroundColor(Color(fromUserId: message.first!.sender.id))
-                            }
-                            Text(info.text.text)
-                                .textSelection(.enabled)
+            if message.count > 1 {
+                makeAlbum()
+            } else {
+                switch message.first!.content {
+                    case let .messageText(info):
+                        makeMessage {
+                            VStack(alignment: .leading) {
+                                if !message.first!.isOutgoing {
+                                    Text(message.first!.sender.name)
+                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
+                                }
+                                Text(info.text.text)
+                                    .textSelection(.enabled)
+                                    .if(message.first!.isOutgoing) { view in
+                                        view.foregroundColor(.white)
+                                    }
+                            }.padding(8)
+                        }
+                    case let .messagePhoto(info):
+                        makeMessagePhoto(from: info)
+                    case let .messageVideo(info):
+                        makeMessageVideo(from: info)
+                    case let .messageDocument(info):
+                        makeMessageDocument(from: info)
+                    case .messageUnsupported:
+                        makeMessage {
+                            Text("Sorry, this message is unsupported.")
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                        }.padding(8)
-                    }
-                case let .messagePhoto(info):
-                    makeMessagePhoto(from: info)
-                case .messageUnsupported:
-                    makeMessage {
-                        Text("Sorry, this message is unsupported.")
-                            .if(message.first!.isOutgoing) { view in
-                                view.foregroundColor(.white)
-                            }
-                            .padding(8)
-                    }
-                default:
-                    makeMessage {
-                        Text("Sorry, this message is unsupported.")
-                            .if(message.first!.isOutgoing) { view in
-                                view.foregroundColor(.white)
-                            }
-                            .padding(8)
-                    }
+                                .padding(8)
+                        }
+                    default:
+                        makeMessage {
+                            Text("Sorry, this message is unsupported.")
+                                .if(message.first!.isOutgoing) { view in
+                                    view.foregroundColor(.white)
+                                }
+                                .padding(8)
+                        }
+                }
             }
+        }
+        .sheet(item: $openedMediaFileID) { file in
+            ZStack {
+                if file.isVideo {
+                    AsyncTdVideoPlayer(id: file.id)
+                } else {
+                    AsyncTdQuickLookView(id: file.id)
+                }
+                Button {
+                    openedMediaFileID = nil
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 12))
+                        .padding(8)
+                }
+                .buttonStyle(.plain)
+                .keyboardShortcut(.escape, modifiers: [])
+                .background(.ultraThinMaterial, in: Circle())
+                .clipShape(Circle())
+                #if os(macOS)
+                .hTrailing()
+                #elseif os(iOS)
+                .hLeading()
+                #endif
+                .vTop()
+                .padding()
+            }
+            #if os(macOS)
+            .frame(width: 800, height: 600)
+            #endif
         }
         .if(message.first!.isOutgoing) { view in
             view.padding(.trailing)

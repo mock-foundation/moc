@@ -26,6 +26,8 @@ extension MessageView {
                         avatarPlaceholder
                     }
                 }
+                .transition(.opacity)
+                .animation(.easeInOut, value: senderPhotoFileID)
                 .frame(width: 36, height: 36)
                 .clipShape(Circle())
                 .padding(.leading, 4)

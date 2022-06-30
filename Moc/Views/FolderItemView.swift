@@ -41,13 +41,15 @@ struct FolderItemView<Icon: View>: View {
             HStack {
                 Label {
                     Text(name)
+                        .lineLimit(1)
+                        .fixedSize()
                 } icon: {
                     icon
                 }
                 if unreadCount != 0 {
                     counter
                         .background(Capsule(style: .continuous)
-                            .fill(.blue)
+                            .fill(Color.accentColor)
                             .padding(4))
                 }
             }
@@ -96,7 +98,7 @@ struct FolderItemView<Icon: View>: View {
                     .overlay(
                         counter
                             .background(Capsule(style: .continuous)
-                                .fill(.blue)
+                                .fill(Color.accentColor)
                                 .padding(4)
                             ), alignment: .topTrailing)
                     .background(backgroundColor)

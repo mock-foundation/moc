@@ -1,5 +1,4 @@
 //  swiftlint:disable all
-
 //
 //  NWPathMonitor.swift
 //  Moc
