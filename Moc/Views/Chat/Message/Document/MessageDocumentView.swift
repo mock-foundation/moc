@@ -1,5 +1,5 @@
 //
-//  MessageView+Document.swift
+//  MessageDocumentView.swift
 //  Moc
 //
 //  Created by Егор Яковенко on 30.06.2022.
@@ -7,10 +7,13 @@
 
 import SwiftUI
 import TDLibKit
-import SkeletonUI
 
-extension MessageView {
-    func makeDocument(from info: MessageDocument) -> some View {
+struct MessageDocumentView: View {
+    let info: MessageDocument
+    
+    @State private var showingSavedToDownloadsCheckmark = false
+    
+    var body: some View {
         HStack(spacing: 8) {
             AsyncTdImage(id: info.document.document.id) { image in
                 image
@@ -38,21 +41,27 @@ extension MessageView {
                     Text("\(info.document.document.size / 1024) KB")
                         .foregroundColor(.white)
                     Divider()
+                    if showingSavedToDownloadsCheckmark {
+                        Image(systemName: "checkmark.circle")
+                            .transition(.move(edge: .leading))
+                    }
                     Button {
-                        
+                        try? FileManager.default.copyItem(
+                            at: URL(fileURLWithPath: info.document.document.local.path),
+                            to: FileManager.default.urls(
+                                for: .downloadsDirectory,
+                                in: .userDomainMask)[0].appendingPathComponent(info.document.fileName))
+                        showingSavedToDownloadsCheckmark = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            showingSavedToDownloadsCheckmark = false
+                        }
                     } label: {
                         Text("Save to Downloads")
                     }
+                    .animation(.easeOut, value: showingSavedToDownloadsCheckmark)
                 }.frame(maxHeight: 30)
                 Spacer()
             }
-        }
-    }
-    
-    func makeMessageDocument(from info: MessageDocument) -> some View {
-        makeMessage {
-            makeDocument(from: info)
-                .padding(8)
         }
     }
 }
