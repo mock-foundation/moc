@@ -27,6 +27,7 @@ struct MessageView: View {
     
     @State var openedMediaFileID: OpenedMediaFile?
     @State var senderPhotoFileID: Int?
+    // swiftlint:disable orphaned_doc_comment
     /// Download progress of a media file, represented by a tuple of current progress and overall size
 //    @State var downloadProgress: (Int64?, Int64)?
     
