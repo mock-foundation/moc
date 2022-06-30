@@ -33,7 +33,22 @@ extension MessageView {
                 .padding(.leading, 4)
             }
             makeMessageBubble(isOutgoing: message.first!.isOutgoing) {
-                content()
+                VStack(alignment: .leading) {
+                    // TODO: Implement replies
+                    HStack {
+                        Capsule()
+                            .frame(width: 3)
+                            .frame(minHeight: 0, maxHeight: .infinity)
+                        VStack {
+                            Text("Sender")
+                            Text("Content")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .frame(maxHeight: 80)
+                    .padding(8)
+                    content()
+                }
             }
             .frame(maxWidth: 350, alignment: message.first!.isOutgoing ? .trailing : .leading)
             if !message.first!.isOutgoing { Spacer() }

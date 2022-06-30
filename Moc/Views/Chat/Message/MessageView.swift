@@ -52,10 +52,11 @@ struct MessageView: View {
                     case let .messageText(info):
                         makeMessage {
                             VStack(alignment: .leading) {
-                                if !message.first!.isOutgoing {
-                                    Text(message.first!.sender.name)
-                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
-                                }
+                                // TODO: Implement replies
+//                                if !message.first!.isOutgoing {
+//                                    Text(message.first!.sender.name)
+//                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
+//                                }
                                 Text(info.text.text)
                                     .textSelection(.enabled)
                                     .if(message.first!.isOutgoing) { view in
