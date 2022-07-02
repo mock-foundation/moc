@@ -9,8 +9,6 @@ import Lottie
 import SwiftUI
 
 struct LottieView: NSViewRepresentable {
-    typealias NSViewType = NSView
-
     var name: String
 
     func makeNSView(context _: Context) -> NSView {
@@ -24,13 +22,6 @@ struct LottieView: NSViewRepresentable {
 
         animationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(animationView)
-
-        NSLayoutConstraint.activate([
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
 
         return view
     }

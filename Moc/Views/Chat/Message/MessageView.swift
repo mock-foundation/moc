@@ -52,17 +52,19 @@ struct MessageView: View {
                     case let .messageText(info):
                         makeMessage {
                             VStack(alignment: .leading) {
-                                // TODO: Implement replies
-//                                if !message.first!.isOutgoing {
-//                                    Text(message.first!.sender.name)
-//                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
-//                                }
                                 Text(info.text.text)
                                     .textSelection(.enabled)
                                     .if(message.first!.isOutgoing) { view in
                                         view.foregroundColor(.white)
                                     }
-                            }.padding(8)
+                                    .truncationMode(.middle)
+                            }
+                            .padding([.horizontal, .bottom], 8)
+                        } sender: {
+                            if !message.first!.isOutgoing {
+                                Text(message.first!.sender.name)
+                                    .foregroundColor(Color(fromUserId: message.first!.sender.id))
+                            }
                         }
                     case let .messagePhoto(info):
                         makeMessagePhoto(from: info)
@@ -76,7 +78,7 @@ struct MessageView: View {
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                                .padding(8)
+                                .padding([.horizontal, .bottom], 8)
                         }
                     default:
                         makeMessage {
@@ -84,7 +86,7 @@ struct MessageView: View {
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                                .padding(8)
+                                .padding([.horizontal, .bottom], 8)
                         }
                 }
             }
