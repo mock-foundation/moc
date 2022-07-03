@@ -39,19 +39,18 @@ extension MessageView {
                 VStack(alignment: .leading) {
                     // TODO: Implement replies
                     // sender()
-                    HStack {
-                        Capsule()
-                            .frame(width: 3)
-                            .frame(minHeight: 0, maxHeight: .infinity)
-                        VStack(alignment: .leading) {
-                            Text("Sender")
-                            Text("Message content")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .frame(maxHeight: 40)
-                    .padding([.horizontal, .top], 8)
                     content()
+                }
+            } replyContent: {
+                HStack {
+                    Capsule()
+                        .frame(width: 3)
+                        .frame(minHeight: 0, maxHeight: .infinity)
+                    VStack(alignment: .leading) {
+                        Text("Sender")
+                        Text("Message content")
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             .frame(maxWidth: 350, alignment: message.first!.isOutgoing ? .trailing : .leading)
