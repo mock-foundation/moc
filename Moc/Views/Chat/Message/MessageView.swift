@@ -41,6 +41,10 @@ struct MessageView: View {
             lastName: message.first!.sender.lastName ?? "",
             style: .miniature)
     }
+    
+    var mainMessage: Message {
+        return message.first!
+    }
 
     @ViewBuilder
     var body: some View {
@@ -54,28 +58,39 @@ struct MessageView: View {
                             VStack(alignment: .leading) {
                                 if let reply = message.first!.replyToMessage {
                                     HStack {
-                                        Capsule()
-                                            .frame(width: 3)
+                                        if mainMessage.isOutgoing {
+                                            Capsule()
+                                                .if(mainMessage.isOutgoing) {
+                                                    $0.fill(.white)
+                                                }
+                                                .frame(width: 3)
+                                        } else {
+                                            Capsule()
+                                                .frame(width: 3)
+                                        }
                                         VStack(alignment: .leading) {
                                             Text(reply.sender)
                                             Text("reply.content.text")
-                                                .foregroundStyle(.secondary)
+                                                .if(mainMessage.isOutgoing) {
+                                                    $0.foregroundColor(.white.darker(by: 30))
+                                                } else: { text in
+                                                    text.foregroundStyle(.secondary)
+                                                }
                                         }
                                     }
                                     .frame(height: 30)
-                                    .padding(.top, 8)
                                 }
-                                if !message.first!.isOutgoing && message.first!.replyToMessage == nil {
-                                    Text(message.first!.sender.name)
+                                if !mainMessage.isOutgoing && mainMessage.replyToMessage == nil {
+                                    Text(mainMessage.sender.name)
                                         .foregroundColor(Color(fromUserId: message.first!.sender.id))
                                 }
                                 Text(info.text.text)
                                     .textSelection(.enabled)
-                                    .if(message.first!.isOutgoing) { view in
+                                    .if(mainMessage.isOutgoing) { view in
                                         view.foregroundColor(.white)
                                     }
                             }
-                            .padding([.horizontal, .bottom], 8)
+                            .padding(8)
                         }
                     case let .messagePhoto(info):
                         makeMessagePhoto(from: info)
@@ -134,8 +149,9 @@ struct MessageView: View {
         }
         .if(message.first!.isOutgoing) { view in
             view.padding(.trailing)
-        } else: { view in
-            view.padding(.leading, 6)
+        }
+        .if(!mainMessage.isOutgoing) {
+            $0.padding(.leading, 6)
         }
     }
 }
