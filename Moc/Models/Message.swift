@@ -15,5 +15,5 @@ struct Message: Identifiable, Hashable, Equatable {
     let isOutgoing: Bool
     let date: Foundation.Date
     let mediaAlbumID: Int64
-    let replyToMessageID: Int64? = nil
+    let replyToMessage: ReplyMessage? = nil
 }
