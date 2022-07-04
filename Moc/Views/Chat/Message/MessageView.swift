@@ -52,18 +52,20 @@ struct MessageView: View {
                     case let .messageText(info):
                         makeMessage {
                             VStack(alignment: .leading) {
-                                HStack {
-                                    Capsule()
-                                        .frame(width: 3)
-                                    VStack(alignment: .leading) {
-                                        Text("Sender")
-                                        Text("Message content")
-                                            .foregroundStyle(.secondary)
+                                if let reply = message.first!.replyToMessage {
+                                    HStack {
+                                        Capsule()
+                                            .frame(width: 3)
+                                        VStack(alignment: .leading) {
+                                            Text(reply.sender)
+                                            Text(reply.content.text)
+                                                .foregroundStyle(.secondary)
+                                        }
                                     }
+                                    .frame(height: 30)
+                                    .padding(.top, 8)
                                 }
-                                .frame(height: 30)
-                                .padding(.top, 8)
-                                if !message.first!.isOutgoing {
+                                if !message.first!.isOutgoing && message.first!.replyToMessage == nil {
                                     Text(message.first!.sender.name)
                                         .foregroundColor(Color(fromUserId: message.first!.sender.id))
                                 }
