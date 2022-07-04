@@ -58,7 +58,7 @@ struct MessageView: View {
                                             .frame(width: 3)
                                         VStack(alignment: .leading) {
                                             Text(reply.sender)
-                                            Text(reply.content.text)
+                                            Text("reply.content.text")
                                                 .foregroundStyle(.secondary)
                                         }
                                     }

@@ -15,6 +15,10 @@ import Logs
 import UniformTypeIdentifiers
 
 public class TdChatService: ChatService {
+    public func getMessage(by id: Int64) async throws -> Message {
+        return try await tdApi.getMessage(chatId: chatId!, messageId: id)
+    }
+    
     public func setAction(_ action: ChatAction) async throws {
         _ = try await tdApi.sendChatAction(action: action, chatId: chatId, messageThreadId: nil)
     }

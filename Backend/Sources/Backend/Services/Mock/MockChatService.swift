@@ -11,6 +11,46 @@ import Foundation
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
+    public func getMessage(by id: Int64) async throws -> TDLibKit.Message {
+        return Message(
+            authorSignature: "",
+            canBeDeletedForAllUsers: false,
+            canBeDeletedOnlyForSelf: false,
+            canBeEdited: false,
+            canBeForwarded: false,
+            canBeSaved: false,
+            canGetAddedReactions: false,
+            canGetMediaTimestampLinks: false,
+            canGetMessageThread: false,
+            canGetStatistics: false,
+            canGetViewers: false,
+            chatId: 0,
+            containsUnreadMention: false,
+            content: .messageText(.init(text: .init(entities: [], text: ""), webPage: nil)),
+            date: 0,
+            editDate: 0,
+            forwardInfo: nil,
+            hasTimestampedMedia: false,
+            id: 0,
+            interactionInfo: nil,
+            isChannelPost: false,
+            isOutgoing: false,
+            isPinned: false,
+            mediaAlbumId: 0,
+            messageThreadId: 0,
+            replyInChatId: 0,
+            replyMarkup: nil,
+            replyToMessageId: 0,
+            restrictionReason: "",
+            schedulingState: nil,
+            senderId: .messageSenderChat(.init(chatId: 0)),
+            sendingState: nil,
+            ttl: 0,
+            ttlExpiresIn: 0,
+            unreadReactions: [],
+            viaBotUserId: 0)
+    }
+    
     public func sendMedia(_ url: URL, caption: String) async throws {
         
     }
