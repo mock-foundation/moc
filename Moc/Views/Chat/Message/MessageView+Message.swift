@@ -10,9 +10,8 @@ import TDLibKit
 import Utilities
 
 extension MessageView {
-    func makeMessage<Content: View, Sender: View>(
-        @ViewBuilder _ content: @escaping () -> Content,
-        @ViewBuilder sender: @escaping () -> Sender = { EmptyView() }
+    func makeMessage<Content: View>(
+        @ViewBuilder _ content: @escaping () -> Content
     ) -> some View {
         HStack(alignment: .bottom, spacing: nil) {
             if message.first!.isOutgoing { Spacer() }
@@ -36,23 +35,7 @@ extension MessageView {
                 .padding(.leading, 4)
             }
             makeMessageBubble(isOutgoing: message.first!.isOutgoing) {
-                VStack(alignment: .leading) {
-                    // TODO: Implement replies
-                    // sender()
-                    HStack {
-                        Capsule()
-                            .frame(width: 3)
-                            .frame(minHeight: 0, maxHeight: .infinity)
-                        VStack(alignment: .leading) {
-                            Text("Sender")
-                            Text("Message content")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .frame(maxHeight: 40)
-                    .padding([.horizontal, .top], 8)
-                    content()
-                }
+                content()
             }
             .frame(maxWidth: 350, alignment: message.first!.isOutgoing ? .trailing : .leading)
             if !message.first!.isOutgoing { Spacer() }

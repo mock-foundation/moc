@@ -52,19 +52,28 @@ struct MessageView: View {
                     case let .messageText(info):
                         makeMessage {
                             VStack(alignment: .leading) {
+                                HStack {
+                                    Capsule()
+                                        .frame(width: 3)
+                                    VStack(alignment: .leading) {
+                                        Text("Sender")
+                                        Text("Message content")
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .frame(height: 30)
+                                .padding(.top, 8)
+                                if !message.first!.isOutgoing {
+                                    Text(message.first!.sender.name)
+                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
+                                }
                                 Text(info.text.text)
                                     .textSelection(.enabled)
                                     .if(message.first!.isOutgoing) { view in
                                         view.foregroundColor(.white)
                                     }
-                                    .truncationMode(.middle)
                             }
                             .padding([.horizontal, .bottom], 8)
-                        } sender: {
-                            if !message.first!.isOutgoing {
-                                Text(message.first!.sender.name)
-                                    .foregroundColor(Color(fromUserId: message.first!.sender.id))
-                            }
                         }
                     case let .messagePhoto(info):
                         makeMessagePhoto(from: info)
