@@ -81,7 +81,7 @@ struct MessageView: View {
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                                .padding( 8)
+                                .padding(8)
                         }
                     default:
                         makeMessage {

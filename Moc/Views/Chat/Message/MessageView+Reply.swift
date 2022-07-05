@@ -21,6 +21,9 @@ extension MessageView {
                     .frame(width: 3)
                 VStack(alignment: .leading) {
                     Text(reply.sender)
+                        .if(mainMessage.isOutgoing) {
+                            $0.foregroundColor(.white)
+                        }
                     Group {
                         switch reply.content {
                             case let .messageText(info):
@@ -30,7 +33,7 @@ extension MessageView {
                         }
                     }
                     .if(mainMessage.isOutgoing) {
-                        $0.foregroundColor(.white.darker(by: 30))
+                        $0.foregroundColor(.white.darker(by: 50))
                     }
                     .if(!mainMessage.isOutgoing) {
                         $0.foregroundStyle(.secondary)
