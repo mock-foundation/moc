@@ -31,6 +31,12 @@ extension MessageView {
                             switch reply.content {
                                 case let .messageText(info):
                                     Text(info.text.text)
+                                case let .messagePhoto(info):
+                                    Label(info.caption.text, systemImage: message.count > 1 ? "photo.stack" : "photo")
+                                case let .messageVideo(info):
+                                    Label(info.caption.text, systemImage: "video")
+                                case let .messageDocument(info):
+                                    Label(info.caption.text, systemImage: "doc.text")
                                 default:
                                     Text(unsupportedMessageString)
                             }
