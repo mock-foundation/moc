@@ -215,10 +215,15 @@ struct ChatView: View {
                 ScrollView {
                     ForEach(viewModel.messages, id: \.self) { message in
                         MessageView(message: message)
+                            .id(message.first!.id)
                     }
                 }
                 .introspectScrollView { scrollView in
                     viewModel.scrollView = scrollView
+                }
+                .onReceive(SystemUtils.ncPublisher(for: .init("ScrollToMessage"))) { notification in
+                    let id = notification.object as! Int64
+                    proxy.scrollTo(id)
                 }
                 .onAppear {
                     viewModel.scrollViewProxy = proxy

@@ -7,14 +7,14 @@
 
 import TDLibKit
 
-struct ReplyMessage: Hashable, Equatable {
+struct ReplyMessage: Identifiable, Hashable, Equatable {
+    let id: Int64
     let sender: String
     let content: MessageContent
-    let mediaID: Int64?
     
-    init(sender: String, content: MessageContent, mediaID: Int64? = nil) {
+    init(id: Int64, sender: String, content: MessageContent) {
+        self.id = id
         self.sender = sender
         self.content = content
-        self.mediaID = mediaID
     }
 }

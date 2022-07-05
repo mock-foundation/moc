@@ -13,33 +13,38 @@ extension MessageView {
     @ViewBuilder
     var replyView: some View {
         if let reply = message.first!.replyToMessage {
-            HStack {
-                Capsule()
-                    .if(mainMessage.isOutgoing) {
-                        $0.fill(.white)
-                    }
-                    .frame(width: 3)
-                VStack(alignment: .leading) {
-                    Text(reply.sender)
+            Button {
+                SystemUtils.post(notification: .init("ScrollToMessage"), with: reply.id)
+            } label: {
+                HStack {
+                    Capsule()
                         .if(mainMessage.isOutgoing) {
-                            $0.foregroundColor(.white)
+                            $0.fill(.white)
                         }
-                    Group {
-                        switch reply.content {
-                            case let .messageText(info):
-                                Text(info.text.text)
-                            default:
-                                Text(unsupportedMessageString)
+                        .frame(width: 3)
+                    VStack(alignment: .leading) {
+                        Text(reply.sender)
+                            .if(mainMessage.isOutgoing) {
+                                $0.foregroundColor(.white)
+                            }
+                        Group {
+                            switch reply.content {
+                                case let .messageText(info):
+                                    Text(info.text.text)
+                                default:
+                                    Text(unsupportedMessageString)
+                            }
                         }
-                    }
-                    .if(mainMessage.isOutgoing) {
-                        $0.foregroundColor(.white.darker(by: 50))
-                    }
-                    .if(!mainMessage.isOutgoing) {
-                        $0.foregroundStyle(.secondary)
+                        .if(mainMessage.isOutgoing) {
+                            $0.foregroundColor(.white.darker(by: 50))
+                        }
+                        .if(!mainMessage.isOutgoing) {
+                            $0.foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
+            .buttonStyle(.plain)
             .frame(height: 30)
         }
     }

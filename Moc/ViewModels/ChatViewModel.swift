@@ -144,21 +144,20 @@ class ChatViewModel: ObservableObject {
                 logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 var replyMessage: ReplyMessage?
                 if let id = tdMessage.replyToMessageId, id != 0 {
-                    let message = try await self.service.getMessage(by: id)
-                    switch message.senderId {
+                    let tdReplyMessage = try await self.service.getMessage(by: id)
+                    switch tdReplyMessage.senderId {
                         case let .messageSenderUser(user):
                             let user = try await self.service.getUser(by: user.userId)
                             replyMessage = ReplyMessage(
+                                id: id,
                                 sender: "\(user.firstName) \(user.lastName)",
-                                content: message.content,
-                                mediaID: nil)
+                                content: tdReplyMessage.content)
                         case let .messageSenderChat(chat):
                             let chat = try await self.service.getChat(by: chat.chatId)
                             replyMessage = ReplyMessage(
+                                id: id,
                                 sender: chat.title,
-                                content: message.content,
-                                mediaID: nil)
-
+                                content: tdReplyMessage.content)
                     }
                 }
                 switch tdMessage.senderId {
