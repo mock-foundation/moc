@@ -18,6 +18,7 @@
 		431215522858E50B009EFEB5 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215512858E50B009EFEB5 /* ComplexModule */; };
 		431215542858E50B009EFEB5 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 431215532858E50B009EFEB5 /* Numerics */; };
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
+		432AF5622874AF3800272AEF /* MessageContent+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432AF5612874AF3800272AEF /* MessageContent+Preview.swift */; };
 		433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E5284078E20010406F /* AutoHashable.generated.swift */; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */; platformFilters = (macos, ); };
@@ -135,6 +136,7 @@
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
+		432AF5612874AF3800272AEF /* MessageContent+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageContent+Preview.swift"; sourceTree = "<group>"; };
 		433464E5284078E20010406F /* AutoHashable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoHashable.generated.swift; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */,
 				438B2282285E3098000D65C8 /* BackportedGradient.swift */,
 				439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */,
+				432AF5612874AF3800272AEF /* MessageContent+Preview.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,
 				43807D9D27E213350056A3D3 /* SearchField.swift in Sources */,
 				43BFD91C285D148100D8980A /* NWPathMonitor+Combine.swift in Sources */,
+				432AF5622874AF3800272AEF /* MessageContent+Preview.swift in Sources */,
 				43807D9627E213350056A3D3 /* LoginView.swift in Sources */,
 				43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */,
 				43807D9527E213350056A3D3 /* ChatView.swift in Sources */,

@@ -27,26 +27,13 @@ extension MessageView {
                             .if(mainMessage.isOutgoing) {
                                 $0.foregroundColor(.white)
                             }
-                        Group {
-                            switch reply.content {
-                                case let .messageText(info):
-                                    Text(info.text.text)
-                                case let .messagePhoto(info):
-                                    Label(info.caption.text, systemImage: message.count > 1 ? "photo.stack" : "photo")
-                                case let .messageVideo(info):
-                                    Label(info.caption.text, systemImage: "video")
-                                case let .messageDocument(info):
-                                    Label(info.caption.text, systemImage: "doc.text")
-                                default:
-                                    Text(unsupportedMessageString)
+                        reply.content.preview
+                            .if(mainMessage.isOutgoing) {
+                                $0.foregroundColor(.white.darker(by: 50))
                             }
-                        }
-                        .if(mainMessage.isOutgoing) {
-                            $0.foregroundColor(.white.darker(by: 50))
-                        }
-                        .if(!mainMessage.isOutgoing) {
-                            $0.foregroundStyle(.secondary)
-                        }
+                            .if(!mainMessage.isOutgoing) {
+                                $0.foregroundStyle(.secondary)
+                            }
                     }
                 }
             }
