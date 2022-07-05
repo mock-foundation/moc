@@ -229,9 +229,6 @@ struct ChatView: View {
                             }
                     }
                 }
-                .introspectScrollView { scrollView in
-                    viewModel.scrollView = scrollView
-                }
                 .onReceive(SystemUtils.ncPublisher(for: .init("ScrollToMessage"))) { notification in
                     let id = notification.object as! Int64
                     viewModel.highlightMessage(at: id)

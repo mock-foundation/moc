@@ -20,11 +20,6 @@ import AVKit
 class ChatViewModel: ObservableObject {
     @Injected private var service: ChatService
     
-    #if os(macOS)
-    var scrollView: NSScrollView?
-    #elseif os(iOS)
-    var scrollView: UIScrollView?
-    #endif
     var scrollViewProxy: ScrollViewProxy?
     
     // MARK: - UI state
@@ -116,19 +111,16 @@ class ChatViewModel: ObservableObject {
     }
     
     func scrollToEnd() {
-//        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
-        #if os(macOS)
-        scrollView?.documentView?.scroll(CGPoint(
-            x: 0,
-            y: scrollView?.documentView?.frame.height ?? 0))
-        #elseif os(iOS)
-        scrollView?.setContentOffset(CGPoint(
-            x: 0,
-            y: (scrollView?.contentSize.height ?? 0)
-            - (scrollView?.bounds.height ?? 0)
-            + (scrollView?.contentInset.bottom ?? 0)),
-            animated: true)
-        #endif
+        withAnimation(.timingCurve(0, 0.99, 0.31, 1, duration: 1.5)) {
+            scrollViewProxy?.scrollTo(messages.last?.first?.id ?? 0)
+        }
+    }
+    
+    func scrollToMessage(at id: Int64) {
+        highlightMessage(at: id)
+        withAnimation(.timingCurve(0, 0.99, 0.31, 1, duration: 1.5)) {
+            scrollViewProxy?.scrollTo(id, anchor: .center)
+        }
     }
     
     // swiftlint:disable function_body_length
