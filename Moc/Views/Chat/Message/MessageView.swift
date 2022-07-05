@@ -52,34 +52,11 @@ struct MessageView: View {
             if message.count > 1 {
                 makeAlbum()
             } else {
-                switch message.first!.content {
+                switch mainMessage.content {
                     case let .messageText(info):
                         makeMessage {
                             VStack(alignment: .leading) {
-                                if let reply = message.first!.replyToMessage {
-                                    HStack {
-                                        if mainMessage.isOutgoing {
-                                            Capsule()
-                                                .if(mainMessage.isOutgoing) {
-                                                    $0.fill(.white)
-                                                }
-                                                .frame(width: 3)
-                                        } else {
-                                            Capsule()
-                                                .frame(width: 3)
-                                        }
-                                        VStack(alignment: .leading) {
-                                            Text(reply.sender)
-                                            Text("reply.content.text")
-                                                .if(mainMessage.isOutgoing) {
-                                                    $0.foregroundColor(.white.darker(by: 30))
-                                                } else: { text in
-                                                    text.foregroundStyle(.secondary)
-                                                }
-                                        }
-                                    }
-                                    .frame(height: 30)
-                                }
+                                replyView
                                 if !mainMessage.isOutgoing && mainMessage.replyToMessage == nil {
                                     Text(mainMessage.sender.name)
                                         .foregroundColor(Color(fromUserId: message.first!.sender.id))
@@ -100,19 +77,19 @@ struct MessageView: View {
                         makeMessageDocument(from: info)
                     case .messageUnsupported:
                         makeMessage {
-                            Text("Sorry, this message is unsupported.")
+                            Text(unsupportedMessageString)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                                .padding([.horizontal, .bottom], 8)
+                                .padding( 8)
                         }
                     default:
                         makeMessage {
-                            Text("Sorry, this message is unsupported.")
+                            Text(unsupportedMessageString)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
-                                .padding([.horizontal, .bottom], 8)
+                                .padding(8)
                         }
                 }
             }

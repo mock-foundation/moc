@@ -14,6 +14,7 @@ import TDLibKit
 import Logs
 import UniformTypeIdentifiers
 
+// swiftlint:disable type_body_length function_body_length
 public class TdChatService: ChatService {
     public func getMessage(by id: Int64) async throws -> Message {
         return try await tdApi.getMessage(chatId: chatId!, messageId: id)
