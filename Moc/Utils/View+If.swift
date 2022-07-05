@@ -14,6 +14,8 @@ extension View {
     ) -> some View {
         if condition {
             transform(self)
+        } else {
+            self
         }
     }
 }
