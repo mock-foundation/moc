@@ -10,8 +10,10 @@ import TDLibKit
 import Utilities
 
 extension MessageView {
-    func makeMessage<Content: View>(@ViewBuilder _ content: @escaping () -> Content) -> some View {
-        HStack(alignment: .bottom, spacing: nil) {
+    func makeMessage<Content: View>(
+        @ViewBuilder _ content: @escaping () -> Content
+    ) -> some View {
+        HStack(alignment: .bottom) {
             if message.first!.isOutgoing { Spacer() }
             if !message.first!.isOutgoing {
                 Group {

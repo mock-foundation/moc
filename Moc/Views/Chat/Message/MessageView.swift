@@ -41,6 +41,10 @@ struct MessageView: View {
             lastName: message.first!.sender.lastName ?? "",
             style: .miniature)
     }
+    
+    var mainMessage: Message {
+        return message.first!
+    }
 
     @ViewBuilder
     var body: some View {
@@ -48,20 +52,22 @@ struct MessageView: View {
             if message.count > 1 {
                 makeAlbum()
             } else {
-                switch message.first!.content {
+                switch mainMessage.content {
                     case let .messageText(info):
                         makeMessage {
                             VStack(alignment: .leading) {
-                                if !message.first!.isOutgoing {
-                                    Text(message.first!.sender.name)
+                                replyView
+                                if !mainMessage.isOutgoing && mainMessage.replyToMessage == nil {
+                                    Text(mainMessage.sender.name)
                                         .foregroundColor(Color(fromUserId: message.first!.sender.id))
                                 }
                                 Text(info.text.text)
                                     .textSelection(.enabled)
-                                    .if(message.first!.isOutgoing) { view in
+                                    .if(mainMessage.isOutgoing) { view in
                                         view.foregroundColor(.white)
                                     }
-                            }.padding(8)
+                            }
+                            .padding(8)
                         }
                     case let .messagePhoto(info):
                         makeMessagePhoto(from: info)
@@ -71,7 +77,7 @@ struct MessageView: View {
                         makeMessageDocument(from: info)
                     case .messageUnsupported:
                         makeMessage {
-                            Text("Sorry, this message is unsupported.")
+                            Text(unsupportedMessageString)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
@@ -79,7 +85,7 @@ struct MessageView: View {
                         }
                     default:
                         makeMessage {
-                            Text("Sorry, this message is unsupported.")
+                            Text(unsupportedMessageString)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
@@ -120,8 +126,9 @@ struct MessageView: View {
         }
         .if(message.first!.isOutgoing) { view in
             view.padding(.trailing)
-        } else: { view in
-            view.padding(.leading, 6)
+        }
+        .if(!mainMessage.isOutgoing) {
+            $0.padding(.leading, 6)
         }
     }
 }

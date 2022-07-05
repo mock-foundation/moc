@@ -11,7 +11,7 @@ import Foundation
 
 public protocol ChatService {
     // MARK: - Messages
-
+    
     var messageHistory: [Message] { get async throws }
     var draftMessage: DraftMessage? { get async throws }
     func set(draft: DraftMessage?) async throws
@@ -20,9 +20,9 @@ public protocol ChatService {
     func sendMessage(_ message: String) async throws
     func sendMedia(_ url: URL, caption: String) async throws
     func sendAlbum(_ urls: [URL], caption: String) async throws
-
+    
     // MARK: - Chat info
-
+    
     /// `nil` when nothing to show
     var chatId: Int64? { get async throws }
     var chatTitle: String { get async throws }
@@ -44,4 +44,6 @@ public protocol ChatService {
     func set(chatId: Int64)
     
     func setAction(_ action: ChatAction) async throws
+    
+    func getMessage(by id: Int64) async throws -> Message
 }

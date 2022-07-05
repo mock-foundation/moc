@@ -35,6 +35,7 @@ class ChatViewModel: ObservableObject {
     @Published var inputMessage = ""
     @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
+    @Published var highlightedMessageId: Int64? = nil
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
@@ -142,6 +143,24 @@ class ChatViewModel: ObservableObject {
         let buffer = try await service.messageHistory
             .asyncMap { tdMessage in
                 logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
+                var replyMessage: ReplyMessage?
+                if let id = tdMessage.replyToMessageId, id != 0 {
+                    let tdReplyMessage = try await self.service.getMessage(by: id)
+                    switch tdReplyMessage.senderId {
+                        case let .messageSenderUser(user):
+                            let user = try await self.service.getUser(by: user.userId)
+                            replyMessage = ReplyMessage(
+                                id: id,
+                                sender: "\(user.firstName) \(user.lastName)",
+                                content: tdReplyMessage.content)
+                        case let .messageSenderChat(chat):
+                            let chat = try await self.service.getChat(by: chat.chatId)
+                            replyMessage = ReplyMessage(
+                                id: id,
+                                sender: chat.title,
+                                content: tdReplyMessage.content)
+                    }
+                }
                 switch tdMessage.senderId {
                     case let .messageSenderUser(user):
                         let user = try await self.service.getUser(by: user.userId)
@@ -156,7 +175,8 @@ class ChatViewModel: ObservableObject {
                             content: tdMessage.content,
                             isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
                             date: Date(timeIntervalSince1970: Double(tdMessage.date)),
-                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue
+                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue,
+                            replyToMessage: replyMessage
                         )
                     case let .messageSenderChat(chat):
                         let chat = try await self.service.getChat(by: chat.chatId)
@@ -171,7 +191,8 @@ class ChatViewModel: ObservableObject {
                             content: tdMessage.content,
                             isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
                             date: Date(timeIntervalSince1970: Double(tdMessage.date)),
-                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue
+                            mediaAlbumID: tdMessage.mediaAlbumId.rawValue,
+                            replyToMessage: replyMessage
                         )
                 }
             }
@@ -245,6 +266,13 @@ class ChatViewModel: ObservableObject {
                 let tdError = error as! TDLibKit.Error
                 logger.error("Code: \(tdError.code), message: \(tdError.message)")
             }
+        }
+    }
+    
+    func highlightMessage(at id: Int64) {
+        highlightedMessageId = id
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.highlightedMessageId = nil
         }
     }
 }
