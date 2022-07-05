@@ -35,6 +35,7 @@ class ChatViewModel: ObservableObject {
     @Published var inputMessage = ""
     @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
+    @Published var highlightedMessageId: Int64? = nil
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""

@@ -216,6 +216,17 @@ struct ChatView: View {
                     ForEach(viewModel.messages, id: \.self) { message in
                         MessageView(message: message)
                             .id(message.first!.id)
+                            .background {
+                                Group {
+                                    if viewModel.highlightedMessageId == message.first!.id {
+                                        Color.blue.opacity(0.3)
+                                    } else {
+                                        Color.clear
+                                    }
+                                }
+                                .padding(-6)
+                                .transition(.opacity)
+                            }
                     }
                 }
                 .introspectScrollView { scrollView in
@@ -223,12 +234,17 @@ struct ChatView: View {
                 }
                 .onReceive(SystemUtils.ncPublisher(for: .init("ScrollToMessage"))) { notification in
                     let id = notification.object as! Int64
+                    viewModel.highlightedMessageId = id
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        viewModel.highlightedMessageId = nil
+                    }
                     proxy.scrollTo(id)
                 }
                 .onAppear {
                     viewModel.scrollViewProxy = proxy
                     viewModel.scrollToEnd()
                 }
+                .animation(.easeInOut, value: viewModel.highlightedMessageId)
             }
             .onDrop(of: [.fileURL], isTargeted: $viewModel.isDropping) { itemProviders in
                 guard !itemProviders.isEmpty else { return false }
