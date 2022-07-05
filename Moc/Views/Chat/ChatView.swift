@@ -238,7 +238,7 @@ struct ChatView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         viewModel.highlightedMessageId = nil
                     }
-                    proxy.scrollTo(id)
+                    proxy.scrollTo(id, anchor: .center)
                 }
                 .onAppear {
                     viewModel.scrollViewProxy = proxy
