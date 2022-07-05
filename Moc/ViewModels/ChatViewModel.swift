@@ -268,4 +268,11 @@ class ChatViewModel: ObservableObject {
             }
         }
     }
+    
+    func highlightMessage(at id: Int64) {
+        highlightedMessageId = id
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.highlightedMessageId = nil
+        }
+    }
 }

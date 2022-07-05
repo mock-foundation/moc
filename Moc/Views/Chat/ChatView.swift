@@ -234,11 +234,10 @@ struct ChatView: View {
                 }
                 .onReceive(SystemUtils.ncPublisher(for: .init("ScrollToMessage"))) { notification in
                     let id = notification.object as! Int64
-                    viewModel.highlightedMessageId = id
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        viewModel.highlightedMessageId = nil
+                    viewModel.highlightMessage(at: id)
+                    withAnimation(.timingCurve(0, 0.99, 0.31, 1, duration: 1.5)) {
+                        proxy.scrollTo(id, anchor: .center)
                     }
-                    proxy.scrollTo(id, anchor: .center)
                 }
                 .onAppear {
                     viewModel.scrollViewProxy = proxy
