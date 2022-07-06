@@ -29,7 +29,13 @@ public extension URL {
         let fileExtension = self.pathExtension
         let uti = UTType(filenameExtension: fileExtension)
         
-        print(uti!.identifier, uti!.tags)
+        guard let uti = uti else {
+            #if os(macOS)
+            return NSImage(systemSymbolName: "exclamationmark.circle", accessibilityDescription: nil)!
+            #elseif os(iOS)
+            return UIImage(systemName: "exclamationmark.circle")
+            #endif
+        }
                 
         func thumbnailForVideo() -> PlatformImage {
             let asset = AVURLAsset(url: self)
@@ -47,9 +53,9 @@ public extension URL {
             #endif
         }
                 
-        if uti!.conforms(to: .image) {
+        if uti.conforms(to: .image) {
             return PlatformImage(contentsOfFile: self.filePath!)!
-        } else if uti!.conforms(toAtLeastOneOf: [
+        } else if uti.conforms(toAtLeastOneOf: [
             .video,
             .mpeg4Movie,
             .mpeg2Video,
