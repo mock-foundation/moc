@@ -30,4 +30,8 @@ public class TdMainService: MainService {
     public func getUnreadCounters() throws -> [UnreadCounter] {
         return try cache.getRecords(as: UnreadCounter.self)
     }
+    
+    public func getChat(by id: Int64) async throws -> TDLibKit.Chat {
+        try await tdApi.getChat(chatId: id)
+    }
 }
