@@ -22,15 +22,24 @@ class ChatViewModel: ObservableObject {
     
     var scrollViewProxy: ScrollViewProxy?
     
+    enum InspectorTab {
+        case users
+        case media
+        case links
+        case files
+        case voice
+    }
+    
     // MARK: - UI state
 
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
+    @Published var selectedInspectorTab: InspectorTab = .users
     @Published var isDropping = false
     @Published var inputMessage = ""
     @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
-    @Published var highlightedMessageId: Int64? = nil
+    @Published var highlightedMessageId: Int64?
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
