@@ -75,6 +75,25 @@ class ChatViewModel: ObservableObject {
             var lastName = ""
             var id: Int64 = 0
             var type: MessageSenderType = .user
+            var replyMessage: ReplyMessage?
+            
+            if let id = tdMessage.replyToMessageId, id != 0 {
+                let tdReplyMessage = try await self.service.getMessage(by: id)
+                switch tdReplyMessage.senderId {
+                    case let .messageSenderUser(user):
+                        let user = try await self.service.getUser(by: user.userId)
+                        replyMessage = ReplyMessage(
+                            id: id,
+                            sender: "\(user.firstName) \(user.lastName)",
+                            content: tdReplyMessage.content)
+                    case let .messageSenderChat(chat):
+                        let chat = try await self.service.getChat(by: chat.chatId)
+                        replyMessage = ReplyMessage(
+                            id: id,
+                            sender: chat.title,
+                            content: tdReplyMessage.content)
+                }
+            }
             
             switch tdMessage.senderId {
                 case let .messageSenderUser(info):
@@ -100,7 +119,8 @@ class ChatViewModel: ObservableObject {
                 content: tdMessage.content,
                 isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
                 date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date)),
-                mediaAlbumID: tdMessage.mediaAlbumId.rawValue
+                mediaAlbumID: tdMessage.mediaAlbumId.rawValue,
+                replyToMessage: replyMessage
             )
             
             DispatchQueue.main.async {
