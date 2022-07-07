@@ -8,8 +8,7 @@
 import Foundation
 
 public struct Emoji: Decodable, Hashable {
-    
-    var id = UUID()
+
     var emoji: String
     
     init(emoji: String){
