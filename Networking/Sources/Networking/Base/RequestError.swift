@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  RequestError.swift
 //  
 //
 //  Created by DariaMikots on 06.07.2022.

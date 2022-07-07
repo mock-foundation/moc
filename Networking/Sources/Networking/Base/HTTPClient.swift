@@ -1,12 +1,12 @@
 //
-//  File.swift
+//  HTTPClient.swift
 //  
 //
 //  Created by DariaMikots on 06.07.2022.
 //
 import Foundation
 
-@available(macOS 12.0, *)
+
 public protocol HTTPClient {
     func sendRequest<T: Decodable>(
         endpoint: Endpoint,
@@ -14,7 +14,7 @@ public protocol HTTPClient {
     ) async throws -> T
 }
 
-@available(macOS 12.0, *)
+
 public extension HTTPClient {
     func sendRequest<T: Decodable>(
         endpoint: Endpoint,
@@ -28,9 +28,9 @@ public extension HTTPClient {
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.header
         
-        if let body = endpoint.body {
+         let body = endpoint.body
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-        }
+        
         do {
             let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
             guard let response = response as? HTTPURLResponse else {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Networking
 
 class EmojiViewModel: ObservableObject {
     

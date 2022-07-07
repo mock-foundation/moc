@@ -1,12 +1,11 @@
 //
 //  EmojiNetworking.swift
-//  Moc
+//  
 //
-//  Created by DariaMikots on 06.07.2022.
+//  Created by DariaMikots on 07.07.2022.
 //
 
 import Foundation
-import Networking
 
 enum EmojiEndpoints {
     case name(name: String, limit: String)
@@ -30,17 +29,17 @@ extension EmojiEndpoints: Endpoint {
         }
     }
 
-    var header: [String: String]? {
+    var header: [String: String] {
         switch self {
         case .name:
-            return nil
+            return [:]
         }
     }
 
-    var body: [String: String]? {
+    var body: [String: String] {
         switch self {
         case .name:
-            return nil
+            return [:]
         }
     }
 }
