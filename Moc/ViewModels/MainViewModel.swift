@@ -313,17 +313,6 @@ class MainViewModel: ObservableObject {
         for position in update.positions {
             updatePosition(for: update.chatId, position: position)
         }
-        
-        let chatIndex = allChats.firstIndex(where: { $0.id == update.chatId })
-        guard let chatIndex else { return }
-        
-        guard update.lastMessage != nil && allChats[chatIndex].lastMessage != nil else { return }
-        guard (update.lastMessage?.id ?? 0) != (allChats[chatIndex].lastMessage?.id ?? -1) else { return }
-        
-        var chat = allChats[chatIndex]
-        chat.lastMessage = update.lastMessage
-        allChats.remove(at: chatIndex)
-        allChats.append(chat)
     }
     
     func updatePosition(for chatId: Int64, position: ChatPosition) {
