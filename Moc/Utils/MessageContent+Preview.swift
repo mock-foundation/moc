@@ -29,7 +29,7 @@ extension MessageContent {
             case let .messageDocument(info):
                 makeLabel(info.caption.text, icon: "doc.text")
             default:
-                Text(unsupportedMessageString)
+                Text(Constants.unsupportedMessageString)
         }
     }
 }

@@ -40,7 +40,7 @@ struct ChatView: View {
                             }
                     }
                 }
-                .onReceive(SystemUtils.ncPublisher(for: .init("ScrollToMessage"))) { notification in
+                .onReceive(SystemUtils.ncPublisher(for: .scrollToMessage)) { notification in
                     let id = notification.object as! Int64
                     viewModel.highlightMessage(at: id)
                     withAnimation(.timingCurve(0, 0.99, 0.31, 1, duration: 1.5)) {

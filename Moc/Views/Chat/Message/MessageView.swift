@@ -77,7 +77,7 @@ struct MessageView: View {
                         makeMessageDocument(from: info)
                     case .messageUnsupported:
                         makeMessage {
-                            Text(unsupportedMessageString)
+                            Text(Constants.unsupportedMessageString)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
@@ -85,7 +85,7 @@ struct MessageView: View {
                         }
                     default:
                         makeMessage {
-                            Text(unsupportedMessageString)
+                            Text(Constants.unsupportedMessageString)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }

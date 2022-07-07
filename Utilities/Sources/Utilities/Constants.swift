@@ -5,11 +5,15 @@
 //  Created by Егор Яковенко on 27.01.2022.
 //
 
-//public struct Constants {
-    public let tdDatabaseEncryptionKeyName = "TDLib database encryption key"
-    public let tdCompletionQueueLabel = "TDLib"
-    public let unsupportedMessageString = "This message is not supported; please update Moc to view it."
+import Foundation
+
+public struct Constants {
+    public static let unsupportedMessage = "This message is not supported; please update Moc to view it."
     
     // A blank private init so this struct is not possible to instantiate
-//    private init() { }
-//}
+    private init() { }
+}
+
+public extension Notification.Name {
+    public static let scrollToMessage = Notification.Name(rawValue: "ScrollToMessage")
+}

@@ -14,7 +14,7 @@ extension MessageView {
     var replyView: some View {
         if let reply = message.first!.replyToMessage {
             Button {
-                SystemUtils.post(notification: .init("ScrollToMessage"), with: reply.id)
+                SystemUtils.post(notification: .scrollToMessage, with: reply.id)
             } label: {
                 HStack {
                     Capsule()
