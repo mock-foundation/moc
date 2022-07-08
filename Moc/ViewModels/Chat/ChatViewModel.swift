@@ -18,24 +18,27 @@ import Logs
 import AVKit
 
 class ChatViewModel: ObservableObject {
-    @Injected private var service: ChatService
+    @Injected var service: ChatService
     
-    #if os(macOS)
-    var scrollView: NSScrollView?
-    #elseif os(iOS)
-    var scrollView: UIScrollView?
-    #endif
+    enum InspectorTab {
+        case users
+        case media
+        case links
+        case files
+        case voice
+    }
+    
     var scrollViewProxy: ScrollViewProxy?
     
-    // MARK: - UI state
 
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
+    @Published var selectedInspectorTab: InspectorTab = .users
     @Published var isDropping = false
     @Published var inputMessage = ""
     @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
-    @Published var highlightedMessageId: Int64? = nil
+    @Published var highlightedMessageId: Int64?
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
@@ -43,8 +46,8 @@ class ChatViewModel: ObservableObject {
     @Published var chatPhoto: File?
     @Published var isChannel = false
     
-    private var subscribers: [AnyCancellable] = []
-    private var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
+    var subscribers: [AnyCancellable] = []
+    var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
     
     init() {
         SystemUtils.ncPublisher(for: .updateNewMessage)
@@ -56,79 +59,6 @@ class ChatViewModel: ObservableObject {
         for subscriber in subscribers {
             subscriber.cancel()
         }
-    }
-    
-    func updateNewMessage(notification: NCPO) {
-        logger.debug(notification.name.rawValue)
-        let tdMessage = (notification.object as? UpdateNewMessage)!.message
-        logger.debug("Message chat ID: \(tdMessage.chatId), Chat ID: \(chatID)")
-        guard tdMessage.chatId == chatID else {
-            logger.debug("Message not for this chat")
-            return
-        }
-        Task {
-            var firstName = ""
-            var lastName = ""
-            var id: Int64 = 0
-            var type: MessageSenderType = .user
-            
-            switch tdMessage.senderId {
-                case let .messageSenderUser(info):
-                    let user = try await self.service.getUser(by: info.userId)
-                    firstName = user.firstName
-                    lastName = user.lastName
-                    id = info.userId
-                    type = .user
-                case let .messageSenderChat(info):
-                    let chat = try await self.service.getChat(by: info.chatId)
-                    firstName = chat.title
-                    id = info.chatId
-                    type = .chat
-            }
-            
-            let message = Message(
-                id: tdMessage.id,
-                sender: MessageSender(
-                    firstName: firstName,
-                    lastName: lastName,
-                    type: type,
-                    id: id),
-                content: tdMessage.content,
-                isOutgoing: tdMessage.isChannelPost ? false : tdMessage.isOutgoing,
-                date: Date(timeIntervalSince1970: TimeInterval(tdMessage.date)),
-                mediaAlbumID: tdMessage.mediaAlbumId.rawValue
-            )
-            
-            DispatchQueue.main.async {
-                self.messages.append([message])
-                self.scrollToEnd()
-            }
-        }
-        
-//            .chunked {
-//                let firstDay = Calendar.current.dateComponents([.day], from: $0.date).day
-//                let secondDay = Calendar.current.dateComponents([.day], from: $1.date).day
-//                guard firstDay != nil else { false }
-//                guard secondDay != nil else { false }
-//
-//                return firstDay! < secondDay!
-//            }
-    }
-    
-    func scrollToEnd() {
-//        scrollViewProxy?.scrollTo(messages.last?.id ?? 0)
-        #if os(macOS)
-        scrollView?.documentView?.scroll(CGPoint(
-            x: 0,
-            y: scrollView?.documentView?.frame.height ?? 0))
-        #elseif os(iOS)
-        scrollView?.setContentOffset(CGPoint(
-            x: 0,
-            y: (scrollView?.contentSize.height ?? 0)
-            - (scrollView?.bounds.height ?? 0)
-            + (scrollView?.contentInset.bottom ?? 0)),
-            animated: true)
-        #endif
     }
     
     // swiftlint:disable function_body_length
@@ -224,55 +154,6 @@ class ChatViewModel: ObservableObject {
             self.objectWillChange.send()
             self.messages = messageHistory
             self.scrollToEnd()
-        }
-    }
-    
-    func updateAction(with action: ChatAction) {
-        Task {
-            try await service.setAction(action)
-        }
-    }
-    
-    func updateDraft() {
-        Task {
-            try await service.set(draft: .init(
-                date: Int(Date.now.timeIntervalSince1970),
-                inputMessageText: .inputMessageText(.init(
-                    clearDraft: true,
-                    disableWebPagePreview: false,
-                    text: .init(entities: [], text: inputMessage))),
-                replyToMessageId: 0))
-        }
-    }
-    
-    func sendMessage() {
-        Task {
-            do {
-                if inputMedia.isEmpty {
-                    try await service.sendMessage(inputMessage)
-                } else {
-                    if inputMedia.count > 1 {
-                        try await service.sendAlbum(inputMedia, caption: inputMessage)
-                    } else {
-                        try await service.sendMedia(inputMedia.first!, caption: inputMessage)
-                    }
-                }
-                DispatchQueue.main.async { [self] in
-                    inputMessage = ""
-                    inputMedia.removeAll()
-                    scrollToEnd()
-                }
-            } catch {
-                let tdError = error as! TDLibKit.Error
-                logger.error("Code: \(tdError.code), message: \(tdError.message)")
-            }
-        }
-    }
-    
-    func highlightMessage(at id: Int64) {
-        highlightedMessageId = id
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.highlightedMessageId = nil
         }
     }
 }

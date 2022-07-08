@@ -8,6 +8,7 @@
 import SwiftUI
 import TDLibKit
 import Utilities
+import Backend
 
 extension Foundation.Date {
     var hoursAndMinutes: String {
@@ -18,7 +19,9 @@ extension Foundation.Date {
 }
 
 struct ChatItemView: View {
-    @State var chat: Chat
+    let chat: Chat
+    
+    @State private var lastMessage: TDLibKit.Message?
     
     @Environment(\.isChatListItemSelected) var isSelected
     
@@ -41,10 +44,14 @@ struct ChatItemView: View {
             placeholder
         }
     }
+    
+    init(chat: Chat) {
+        self.chat = chat
+        self.lastMessage = chat.lastMessage
+    }
 
     var body: some View {
         HStack(alignment: .top) {
-            //                chat.chatIcon
             VStack {
                 Spacer()
                 chatPhoto
@@ -83,17 +90,14 @@ struct ChatItemView: View {
                         .foregroundColor(isSelected ? .white : .primary)
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
-                    Text(Date(timeIntervalSince1970: Double(chat.lastMessage?.date ?? 0)).hoursAndMinutes)
+                    Text(Date(timeIntervalSince1970: Double(lastMessage?.date ?? 0)).hoursAndMinutes)
                         .font(.caption)
                         .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                 }
                 .padding(.vertical, 6)
                 HStack {
                     VStack {
-                        Text("last message preview")
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .lineLimit(1)
+                        lastMessage?.content.preview
                             .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                         Spacer()
                     }
@@ -106,6 +110,13 @@ struct ChatItemView: View {
 //                        }
 //                    }
                 }
+            }
+        }
+        .onReceive(SystemUtils.ncPublisher(for: .updateChatLastMessage)) { notification in
+            let update = notification.object as! UpdateChatLastMessage
+            
+            if update.chatId == chat.id {
+                lastMessage = update.lastMessage
             }
         }
     }

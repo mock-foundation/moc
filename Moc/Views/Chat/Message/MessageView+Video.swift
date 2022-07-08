@@ -10,9 +10,7 @@ import TDLibKit
 
 extension MessageView {
     func makeVideo(from info: MessageVideo) -> some View {
-        URL(fileURLWithPath: info.video.video.local.path).thumbnail
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+        AsyncTdFileThumbnail(id: info.video.video.id)
             .overlay {
                 Button {
                     openedMediaFileID = OpenedMediaFile(id: info.video.video.id, isVideo: true)
@@ -27,6 +25,9 @@ extension MessageView {
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
             .onDrag {
                 return NSItemProvider(object: NSURL(fileURLWithPath: info.video.video.local.path))
+            }
+            .onAppear {
+                logger.debug("Video path: \(info.video.video.local.path)")
             }
     }
     
