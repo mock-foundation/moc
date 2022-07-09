@@ -25,9 +25,10 @@ public extension TdApi {
 
     private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
     func startTdLibUpdateHandler() {
         TdApi.logger.debug("Starting handler")
+        
+        client.run { _ in }
         
 //        client.run {
 //            let cache = CacheService.shared

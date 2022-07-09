@@ -10,6 +10,10 @@ import Caching
 import GRDB
 
 public class TdMainService: MainService {
+    public var updateStream: AsyncStream<TDLibKit.Update> {
+        tdApi.client.updateStream
+    }
+    
     private var tdApi = TdApi.shared[0]
     private var cache = CacheService.shared
     

@@ -9,6 +9,10 @@ import TDLibKit
 import Caching
 
 public class MockMainService: MainService {
+    public var updateStream: AsyncStream<TDLibKit.Update> {
+        AsyncStream { _ in }
+    }
+    
     public init() { }
     
     public func getFilters() throws -> [ChatFilter] {
