@@ -40,11 +40,13 @@ extension MessageView {
             .frame(maxWidth: 350, alignment: message.first!.isOutgoing ? .trailing : .leading)
             if !message.first!.isOutgoing { Spacer() }
         }
-        .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
-            let update = notification.object as! UpdateFile
-            
-            if update.file.id == senderPhotoFileID {
-                senderPhotoFileID = update.file.id
+        .task {
+            for await update in tdApi.client.updateStream {
+                if case let .file(info) = update {
+                    if info.file.id == senderPhotoFileID {
+                        senderPhotoFileID = info.file.id
+                    }
+                }
             }
         }
         .onAppear {

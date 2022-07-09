@@ -142,21 +142,25 @@ struct LoginView: View {
             }
             Button("Not really") {}
         }
-        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitOtherDeviceConfirmation)) {
-            self.qrCodeLink = ($0.object as? AuthorizationStateWaitOtherDeviceConfirmation)!.link
-            openedScreen = .qrCode
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitRegistration)) { _ in
-            openedScreen = .registration
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitPassword)) { _ in
-            openedScreen = .twoFACode
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateWaitCode)) { _ in
-            openedScreen = .code
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .authorizationStateReady)) { _ in
-            presentationMode.wrappedValue.dismiss()
+        .task {
+            for await update in service.updateStream {
+                if case let .authorizationState(info) = update {
+                    switch info.authorizationState {
+                        case let .waitOtherDeviceConfirmation(info):
+                            self.qrCodeLink = info.link
+                            openedScreen = .qrCode
+                        case .waitRegistration(_):
+                            openedScreen = .registration
+                        case .waitPassword(_):
+                            openedScreen = .twoFACode
+                        case .waitCode(_):
+                            openedScreen = .code
+                        case .ready:
+                            presentationMode.wrappedValue.dismiss()
+                        default: break
+                    }
+                }
+            }
         }
     }
 }

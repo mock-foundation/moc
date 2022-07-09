@@ -26,20 +26,62 @@ public extension TdApi {
     private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
     func startTdLibUpdateHandler() {
-        TdApi.logger.debug("Starting handler")
-        
-        client.run { _ in }
+        client.run { _ in
+            Task {
+                TdApi.logger.debug("Starting handler")
+                #if DEBUG
+                try await self.setLogVerbosityLevel(newVerbosityLevel: 2)
+                #else
+                try await self.setLogVerbosityLevel(newVerbosityLevel: 0)
+                #endif
+                
+                for await update in self.client.updateStream {
+                    switch update {
+                        case let .authorizationState(info):
+                            switch info.authorizationState {
+                                case .waitTdlibParameters:
+                                    var url = try FileManager.default.url(
+                                        for: .applicationSupportDirectory,
+                                        in: .userDomainMask,
+                                        appropriateFor: nil,
+                                        create: true)
+                                    var dir = ""
+                                    if #available(macOS 13, iOS 16, *) {
+                                        url.append(path: "td")
+                                        dir = url.path()
+                                    } else {
+                                        url.appendPathComponent("td")
+                                        dir = url.path
+                                    }
+                                    try await self.setTdlibParameters(parameters: TdlibParameters(
+                                        apiHash: Secret.apiHash,
+                                        apiId: Secret.apiId,
+                                        applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
+                                        databaseDirectory: dir,
+                                        deviceModel: SystemUtils.deviceModel,
+                                        enableStorageOptimizer: true,
+                                        filesDirectory: dir,
+                                        ignoreFileNames: false,
+                                        systemLanguageCode: "en-US",
+                                        systemVersion: SystemUtils.osVersionString,
+                                        useChatInfoDatabase: true,
+                                        useFileDatabase: true,
+                                        useMessageDatabase: true,
+                                        useSecretChats: false,
+                                        useTestDc: false
+                                    ))
+                                default: break
+                            }
+                        default: break
+                    }
+                }
+            }
+        }
         
 //        client.run {
 //            let cache = CacheService.shared
 //            
-//            Task {
-//                #if DEBUG
-//                try? await self.setLogVerbosityLevel(newVerbosityLevel: 2)
-//                #else
-//                try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
-//                #endif
-//            }
+//
 //            do {
 //                let update = try TdApi.decoder.decode(Update.self, from: $0)
 ////                TdApi.logger.debug("\(update)")

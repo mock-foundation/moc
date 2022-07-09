@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/mock-foundation/tdlibkit.git",
-            exact: "2.0.0-1.8.4-d4890143"
+            exact: "2.0.3-1.8.4-d4890143"
         ),
         .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
         .package(path: "../Utilities"),

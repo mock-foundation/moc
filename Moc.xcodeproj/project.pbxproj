@@ -1199,7 +1199,7 @@
 			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
 			requirement = {
 				kind = exactVersion;
-				version = "2.0.0-1.8.4-d4890143";
+				version = "2.0.3-1.8.4-d4890143";
 			};
 		};
 		43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {

@@ -10,9 +10,9 @@ import TDLibKit
 import Utilities
 
 extension ChatViewModel {
-    func updateNewMessage(notification: NCPO) {
-        logger.debug(notification.name.rawValue)
-        let tdMessage = (notification.object as? UpdateNewMessage)!.message
+    func updateNewMessage(_ update: UpdateNewMessage) {
+        logger.debug("UpdateNewMessage")
+        let tdMessage = update.message
         logger.debug("Message chat ID: \(tdMessage.chatId), Chat ID: \(chatID)")
         guard tdMessage.chatId == chatID else {
             logger.debug("Message not for this chat")

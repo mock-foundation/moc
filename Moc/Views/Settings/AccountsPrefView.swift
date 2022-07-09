@@ -93,14 +93,18 @@ struct AccountsPrefView: View {
                 }
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .updateFile, object: nil)) {
-            let file = ($0.object as? UpdateFile)!.file
-            guard file.id == photoFileId else { return }
-
-            photoLoading = !file.local.isDownloadingCompleted
-
-            if file.local.isDownloadingCompleted {
-                photos[0] = file
+        .task {
+            for await update in viewModel.updateStream {
+                if case let .file(info) = update {
+                    let file = info.file
+                    guard file.id == photoFileId else { return }
+                    
+                    photoLoading = !file.local.isDownloadingCompleted
+                    
+                    if file.local.isDownloadingCompleted {
+                        photos[0] = file
+                    }
+                }
             }
         }
     }
@@ -142,7 +146,7 @@ struct AccountsPrefView: View {
                 Button(role: .destructive, action: {
                     Task {
                         do {
-                            _ = try await viewModel.dataSource.logOut()
+                            _ = try await viewModel.service.logOut()
                             #if os(macOS)
                             NSSound(named: "Glass")?.play()
                             #endif
@@ -202,7 +206,7 @@ struct AccountsPrefView: View {
                 .frame(width: 150)
                 .onSubmit {
                     Task {
-                        try await viewModel.dataSource.set(username: username)
+                        try await viewModel.service.set(username: username)
                     }
                 }
             Section {
@@ -210,7 +214,7 @@ struct AccountsPrefView: View {
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         Task {
-                            try await viewModel.dataSource.set(bio: bioText)
+                            try await viewModel.service.set(bio: bioText)
                         }
                     }
                     .frame(width: 350)
@@ -242,13 +246,13 @@ struct AccountsPrefView: View {
     }
 
     private func getAccountData() async {
-        let user = try? await viewModel.dataSource.getMe()
+        let user = try? await viewModel.service.getMe()
         guard user != nil else {
             showInitErrorAlert = true
             return
         }
 
-        let userFullInfo = try? await viewModel.dataSource.getFullInfo()
+        let userFullInfo = try? await viewModel.service.getFullInfo()
         guard userFullInfo != nil else {
             showInitErrorAlert = true
             return
@@ -272,13 +276,13 @@ struct AccountsPrefView: View {
         miniThumbnail = Image(uiImage: UIImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
         #endif
 
-        guard let photos = (try? await viewModel.dataSource.getProfilePhotos()) else {
+        guard let photos = (try? await viewModel.service.getProfilePhotos()) else {
             loading = false
             return
         }
 
         for photo in photos {
-            guard let file = try? await viewModel.dataSource.downloadFile(
+            guard let file = try? await viewModel.service.downloadFile(
                 by: photo.sizes[2].photo.id,
                 priority: 32,
                 synchronous: true

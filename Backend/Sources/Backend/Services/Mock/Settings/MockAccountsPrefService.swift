@@ -8,6 +8,8 @@
 import TDLibKit
 
 public class MockAccountsPrefService: AccountsPrefService {
+    public var updateStream: AsyncStream<TDLibKit.Update> { AsyncStream { _ in } }
+    
     public func set(firstName _: String, lastName _: String) async throws {}
 
     public func set(username _: String) async throws {}

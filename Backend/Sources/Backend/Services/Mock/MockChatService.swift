@@ -11,6 +11,8 @@ import Foundation
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
+    public var updateStream: AsyncStream<TDLibKit.Update> { AsyncStream { _ in } }
+
     public func getMessage(by id: Int64) async throws -> TDLibKit.Message {
         return Message(
             authorSignature: "",
@@ -101,10 +103,6 @@ public class MockChatService: ChatService {
 
     public init() {}
     public var messageHistory: [Message] = []
-
-    public func getMessageSenderName(_: MessageSender) throws -> String {
-        "Name"
-    }
 
     public var draftMessage: DraftMessage?
 

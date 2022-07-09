@@ -8,6 +8,10 @@
 import TDLibKit
 
 public class TdAccountsPrefService: AccountsPrefService {
+    public var updateStream: AsyncStream<TDLibKit.Update> {
+        tdApi.client.updateStream
+    }
+    
     public var tdApi: TdApi = .shared[0]
 
     public func logOut() async throws {

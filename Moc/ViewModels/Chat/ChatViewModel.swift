@@ -49,10 +49,18 @@ class ChatViewModel: ObservableObject {
     var subscribers: [AnyCancellable] = []
     var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
     
+    private var updateTask: Task<Void, Swift.Error>?
+    
     init() {
-        SystemUtils.ncPublisher(for: .updateNewMessage)
-            .sink(receiveValue: updateNewMessage(notification:))
-            .store(in: &subscribers)
+        updateTask = Task {
+            for await update in service.updateStream {
+                switch update {
+                    case let .newMessage(info):
+                        updateNewMessage(info)
+                    default: break
+                }
+            }
+        }
     }
     
     deinit {

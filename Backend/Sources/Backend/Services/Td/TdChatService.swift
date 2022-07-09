@@ -16,6 +16,10 @@ import UniformTypeIdentifiers
 
 // swiftlint:disable type_body_length function_body_length
 public class TdChatService: ChatService {
+    public var updateStream: AsyncStream<TDLibKit.Update> {
+        tdApi.client.updateStream
+    }
+    
     public func getMessage(by id: Int64) async throws -> Message {
         return try await tdApi.getMessage(chatId: chatId!, messageId: id)
     }
@@ -162,33 +166,6 @@ public class TdChatService: ChatService {
 
     public func getChat(by id: Int64) async throws -> Chat {
         try await self.tdApi.getChat(chatId: id)
-    }
-
-    public func getMessageSenderName(_ sender: MessageSender) throws -> String {
-        switch sender {
-        case let .user(messageSenderUser):
-            var str = ""
-            try tdApi.getUser(userId: messageSenderUser.userId) { result in
-                switch result {
-                case let .success(data):
-                    str = "\(data.firstName) \(data.lastName)"
-                case .failure:
-                    str = "Failure"
-                }
-            }
-            return str
-        case let .chat(messageSenderChat):
-            var str = ""
-            try tdApi.getChat(chatId: messageSenderChat.chatId) {
-                switch $0 {
-                case let .success(data):
-                    str = data.title
-                case .failure:
-                    str = "Failure"
-                }
-            }
-            return str
-        }
     }
 
     public func set(blocked: Bool) async throws {

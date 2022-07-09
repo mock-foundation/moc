@@ -137,7 +137,9 @@ class MainViewModel: ObservableObject {
 
     init() {
         updateTask = Task {
+            logger.notice("Update task started")
             for await update in service.updateStream {
+                logger.debug("Got update")
                 switch update {
                     case let .chatPosition(info):
                         updateChatPosition(info)

@@ -9,6 +9,10 @@ import TDLibKit
 
 public class TdLoginService: LoginService {
     private var tdApi: TdApi = .shared[0]
+    
+    public var updateStream: AsyncStream<TDLibKit.Update> {
+        tdApi.client.updateStream
+    }
 
     public func resendAuthCode() async throws {
         _ = try await tdApi.resendAuthenticationCode()

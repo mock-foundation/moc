@@ -112,11 +112,13 @@ struct ChatItemView: View {
                 }
             }
         }
-        .onReceive(SystemUtils.ncPublisher(for: .updateChatLastMessage)) { notification in
-            let update = notification.object as! UpdateChatLastMessage
-            
-            if update.chatId == chat.id {
-                lastMessage = update.lastMessage
+        .task {
+            for await update in TdApi.shared[0].client.updateStream {
+                if case let .chatLastMessage(info) = update {
+                    if info.chatId == chat.id {
+                        lastMessage = info.lastMessage
+                    }
+                }
             }
         }
     }

@@ -11,6 +11,10 @@ import GRDB
 
 public class TdFoldersPrefService: FoldersPrefService {
     private var tdApi: TdApi = .shared[0]
+    
+    public var updateStream: AsyncStream<TDLibKit.Update> {
+        tdApi.client.updateStream
+    }
 
     public init() {}
 

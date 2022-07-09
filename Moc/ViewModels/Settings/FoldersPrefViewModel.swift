@@ -31,6 +31,8 @@ class FoldersPrefViewModel: ObservableObject {
     @Published var recommended: [RecommendedChatFilter] = []
 
     private var subscribers: [AnyCancellable] = []
+    
+    private var updateTask: Task<Void, Swift.Error>?
 
     init() {
         DispatchQueue.main.async {
@@ -44,19 +46,22 @@ class FoldersPrefViewModel: ObservableObject {
                 }
             }
         }
-        subscribers.append(SystemUtils.ncPublisher(for: .updateChatFilters)
-            .sink { notification in
-                let update = notification.object as! UpdateChatFilters
-                DispatchQueue.main.async {
-                    withAnimation {
-                        self.folders = update.chatFilters
-                        Task {
-                            self.recommended = try await self.service.getRecommended()
+        updateTask = Task {
+            for await update in service.updateStream {
+                switch update {
+                    case let .chatFilters(info):
+                        DispatchQueue.main.async {
+                            withAnimation {
+                                self.folders = info.chatFilters
+                                Task {
+                                    self.recommended = try await self.service.getRecommended()
+                                }
+                            }
                         }
-                    }
+                    default: break
                 }
             }
-        )
+        }
     }
 
     func getFolder(by id: Int) async throws -> TDLibKit.ChatFilter {
