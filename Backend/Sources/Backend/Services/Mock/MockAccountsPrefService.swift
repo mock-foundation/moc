@@ -18,12 +18,14 @@ public class MockAccountsPrefService: AccountsPrefService {
 
     public func getMe() async throws -> User {
         User(
+            addedToAttachmentMenu: false,
             firstName: "First name",
             haveAccess: true,
             id: 0,
             isContact: false,
             isFake: false,
             isMutualContact: false,
+            isPremium: true,
             isScam: false,
             isSupport: false,
             isVerified: true,
@@ -32,15 +34,15 @@ public class MockAccountsPrefService: AccountsPrefService {
             phoneNumber: "+0987654",
             profilePhoto: nil,
             restrictionReason: "",
-            status: .userStatusEmpty,
-            type: .userTypeRegular,
+            status: .empty,
+            type: .regular,
             username: "username"
         )
     }
 
     public func getFullInfo() async throws -> UserFullInfo {
         UserFullInfo(
-            bio: "Bio",
+            bio: FormattedText(entities: [], text: "Bio"),
             botInfo: nil,
             canBeCalled: false,
             groupInCommonCount: 2,

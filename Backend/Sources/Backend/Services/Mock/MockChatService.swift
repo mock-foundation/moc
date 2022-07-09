@@ -26,7 +26,7 @@ public class MockChatService: ChatService {
             canGetViewers: false,
             chatId: 0,
             containsUnreadMention: false,
-            content: .messageText(.init(text: .init(entities: [], text: ""), webPage: nil)),
+            content: .text(.init(text: .init(entities: [], text: ""), webPage: nil)),
             date: 0,
             editDate: 0,
             forwardInfo: nil,
@@ -43,7 +43,7 @@ public class MockChatService: ChatService {
             replyToMessageId: 0,
             restrictionReason: "",
             schedulingState: nil,
-            senderId: .messageSenderChat(.init(chatId: 0)),
+            senderId: .chat(.init(chatId: 0)),
             sendingState: nil,
             ttl: 0,
             ttlExpiresIn: 0,
@@ -73,12 +73,14 @@ public class MockChatService: ChatService {
     
     public func getUser(by id: Int64) async throws -> User {
         User(
+            addedToAttachmentMenu: false,
             firstName: "First",
             haveAccess: true,
             id: id,
             isContact: true,
             isFake: false,
             isMutualContact: true,
+            isPremium: true,
             isScam: false,
             isSupport: true,
             isVerified: true,
@@ -87,8 +89,8 @@ public class MockChatService: ChatService {
             phoneNumber: "phone",
             profilePhoto: nil,
             restrictionReason: "",
-            status: .userStatusEmpty,
-            type: .userTypeRegular,
+            status: .empty,
+            type: .regular,
             username: "username"
         )
     }
@@ -112,7 +114,7 @@ public class MockChatService: ChatService {
 
     public var chatTitle: String = "Ninjas from the Reeds"
 
-    public var chatType: ChatType = .chatTypeSupergroup(.init(isChannel: false, supergroupId: 0))
+    public var chatType: ChatType = .supergroup(.init(isChannel: false, supergroupId: 0))
 
     public var chatMemberCount: Int? = 20
 
