@@ -7,15 +7,36 @@
 
 import Foundation
 
-public struct Emoji: Decodable, Hashable {
+import Foundation
 
-    var emoji: String
-    
-    init(emoji: String){
-        self.emoji = emoji
+// MARK: - Emoji
+public struct Emoji: Codable {
+    let totals: Int
+    let results: [Result]
+}
+
+// MARK: - Result
+struct Result: Codable {
+    let id: Int
+    let name, emoji, unicode: String
+    let category, subCategory: Category
+    let children: [Child]
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, emoji, unicode, category
+        case subCategory = "sub_category"
+        case children
     }
-    
-    private enum CodingKeys: String, CodingKey {
-        case emoji
-    }
+}
+
+// MARK: - Category
+struct Category: Codable {
+    let id: Int
+    let name: String
+}
+
+// MARK: - Child
+struct Child: Codable {
+    let id: Int
+    let name, emoji, unicode: String
 }
