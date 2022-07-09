@@ -53,7 +53,7 @@ struct MessageView: View {
                 makeAlbum()
             } else {
                 switch mainMessage.content {
-                    case let .messageText(info):
+                    case let .text(info):
                         makeMessage {
                             VStack(alignment: .leading) {
                                 replyView
@@ -69,15 +69,15 @@ struct MessageView: View {
                             }
                             .padding(8)
                         }
-                    case let .messagePhoto(info):
+                    case let .photo(info):
                         makeMessagePhoto(from: info)
-                    case let .messageVideo(info):
+                    case let .video(info):
                         makeMessageVideo(from: info)
-                    case let .messageDocument(info):
+                    case let .document(info):
                         makeMessageDocument(from: info)
-                    case .messageUnsupported:
+                    case .unsupported:
                         makeMessage {
-                            Text(Constants.unsupportedMessageString)
+                            Text(Constants.unsupportedMessage)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }
@@ -85,7 +85,7 @@ struct MessageView: View {
                         }
                     default:
                         makeMessage {
-                            Text(Constants.unsupportedMessageString)
+                            Text(Constants.unsupportedMessage)
                                 .if(message.first!.isOutgoing) { view in
                                     view.foregroundColor(.white)
                                 }

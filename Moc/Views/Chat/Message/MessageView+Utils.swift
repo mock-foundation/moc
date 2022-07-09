@@ -10,7 +10,7 @@ import TDLibKit
 
 extension MessageView {
     func getPhoto(from content: MessageContent) -> MessagePhoto? {
-        if case .messagePhoto(let info) = content {
+        if case .photo(let info) = content {
             return info
         } else {
             return nil
@@ -18,7 +18,7 @@ extension MessageView {
     }
     
     func getVideo(from content: MessageContent) -> MessageVideo? {
-        if case .messageVideo(let info) = content {
+        if case .video(let info) = content {
             return info
         } else {
             return nil
@@ -30,11 +30,11 @@ extension MessageView {
     /// - Parameter content: Message content to display
     @ViewBuilder func makeMedia(from content: MessageContent) -> some View {
         switch content {
-            case let .messageVideo(info):
+            case let .video(info):
                 makeVideo(from: info)
-            case let .messagePhoto(info):
+            case let .photo(info):
                 makePhoto(from: info, contentMode: .fill)
-            case let .messageDocument(info):
+            case let .document(info):
                 makeDocument(from: info)
             default:
                 EmptyView()
@@ -46,17 +46,17 @@ extension MessageView {
     /// - Returns: The resulting caption.
     func getCaption(from content: MessageContent) -> FormattedText {
         switch content {
-            case let .messageText(info):
+            case let .text(info):
                 return info.text
-            case let .messageAnimation(info):
+            case let .animation(info):
                 return info.caption
-            case let .messageAudio(info):
+            case let .audio(info):
                 return info.caption
-            case let .messageDocument(info):
+            case let .document(info):
                 return info.caption
-            case let .messagePhoto(info):
+            case let .photo(info):
                 return info.caption
-            case let .messageVideo(info):
+            case let .video(info):
                 return info.caption
             default:
                 return FormattedText(entities: [], text: "")
@@ -68,9 +68,9 @@ extension MessageContent {
     /// Says whether a message is graphic (photo or video)
     var isGraphic: Bool {
         switch self {
-            case .messageVideo(_):
+            case .video(_):
                 return true
-            case .messagePhoto(_):
+            case .photo(_):
                 return true
             default:
                 return false

@@ -65,17 +65,17 @@ struct ChatItemView: View {
                     // swiftlint:disable empty_enum_arguments switch_case_alignment
                     Group {
                         switch chat.type {
-                            case .chatTypePrivate(_):
+                            case .private(_):
                                 EmptyView()
-                            case .chatTypeBasicGroup(_):
+                            case .basicGroup(_):
                                 Image(systemName: "person.2")
-                            case .chatTypeSupergroup(let info):
+                            case .supergroup(let info):
                                 if info.isChannel {
                                     Image(systemName: "megaphone")
                                 } else {
                                     Image(systemName: "person.2.fill")
                                 }
-                            case .chatTypeSecret(_):
+                            case .secret(_):
                                 Image(systemName: "lock")
                         }
                     }

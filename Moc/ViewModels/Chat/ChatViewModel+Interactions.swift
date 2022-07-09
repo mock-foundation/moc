@@ -19,7 +19,7 @@ extension ChatViewModel {
         Task {
             try await service.set(draft: .init(
                 date: Int(Date.now.timeIntervalSince1970),
-                inputMessageText: .inputMessageText(.init(
+                inputMessageText: .text(.init(
                     clearDraft: true,
                     disableWebPagePreview: false,
                     text: .init(entities: [], text: inputMessage))),

@@ -77,13 +77,13 @@ class ChatViewModel: ObservableObject {
                 if let id = tdMessage.replyToMessageId, id != 0 {
                     let tdReplyMessage = try await self.service.getMessage(by: id)
                     switch tdReplyMessage.senderId {
-                        case let .messageSenderUser(user):
+                        case let .user(user):
                             let user = try await self.service.getUser(by: user.userId)
                             replyMessage = ReplyMessage(
                                 id: id,
                                 sender: "\(user.firstName) \(user.lastName)",
                                 content: tdReplyMessage.content)
-                        case let .messageSenderChat(chat):
+                        case let .chat(chat):
                             let chat = try await self.service.getChat(by: chat.chatId)
                             replyMessage = ReplyMessage(
                                 id: id,
@@ -92,7 +92,7 @@ class ChatViewModel: ObservableObject {
                     }
                 }
                 switch tdMessage.senderId {
-                    case let .messageSenderUser(user):
+                    case let .user(user):
                         let user = try await self.service.getUser(by: user.userId)
                         return Message(
                             id: tdMessage.id,
@@ -108,7 +108,7 @@ class ChatViewModel: ObservableObject {
                             mediaAlbumID: tdMessage.mediaAlbumId.rawValue,
                             replyToMessage: replyMessage
                         )
-                    case let .messageSenderChat(chat):
+                    case let .chat(chat):
                         let chat = try await self.service.getChat(by: chat.chatId)
                         return Message(
                             id: tdMessage.id,

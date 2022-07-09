@@ -55,11 +55,11 @@ class MainViewModel: ObservableObject {
     var chatList: [Chat] {
         switch openChatList {
             case .main:
-                return chats(from: .chatListMain)
+                return chats(from: .main)
             case .archive:
-                return chats(from: .chatListArchive)
+                return chats(from: .archive)
             case .filter(let id):
-                return chats(from: .chatListFilter(.init(chatFilterId: id)))
+                return chats(from: .filter(.init(chatFilterId: id)))
         }
     }
     
@@ -96,15 +96,15 @@ class MainViewModel: ObservableObject {
                 switch openChatList {
                     case .main:
                         _ = try await TdApi.shared[0].loadChats(
-                            chatList: .chatListMain,
+                            chatList: .main,
                             limit: 30)
                     case .archive:
                         _ = try await TdApi.shared[0].loadChats(
-                            chatList: .chatListArchive,
+                            chatList: .archive,
                             limit: 30)
                     case .filter(let id):
                         _ = try await TdApi.shared[0].loadChats(
-                            chatList: .chatListFilter(.init(chatFilterId: id)),
+                            chatList: .filter(.init(chatFilterId: id)),
                             limit: 30)
                 }
             }
@@ -159,13 +159,13 @@ class MainViewModel: ObservableObject {
                 Task {
                     switch value {
                         case .satisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeOther)
+                            _ = try await TdApi.shared[0].setNetworkType(type: .other)
                         case .unsatisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
                         case .requiresConnection:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
                         @unknown default:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
                     }
                 }
             }
@@ -193,23 +193,23 @@ class MainViewModel: ObservableObject {
             var needStartTimer = true
 
             switch update.state {
-                case .connectionStateWaitingForNetwork:
+                case .waitingForNetwork:
                     connectionStateTitle = "Waiting for network..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateConnectingToProxy:
+                case .connectingToProxy:
                     connectionStateTitle = "Connecting to proxy..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateConnecting:
+                case .connecting:
                     connectionStateTitle = "Connecting..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateUpdating:
+                case .updating:
                     connectionStateTitle = "Updating..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateReady:
+                case .ready:
                     loadingAnimationTimer?.invalidate()
                     loadingAnimationTimer = nil
                     needStartTimer = false

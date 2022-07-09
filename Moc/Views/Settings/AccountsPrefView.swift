@@ -257,7 +257,7 @@ struct AccountsPrefView: View {
         viewModel.firstName = user!.firstName
         viewModel.lastName = user!.lastName
         username = user!.username
-        bioText = userFullInfo!.bio
+        bioText = userFullInfo!.bio?.text ?? ""
         phoneNumber = "+\(user!.phoneNumber)"
         userId = user!.id
 

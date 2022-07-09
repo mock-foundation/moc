@@ -29,7 +29,6 @@
 		431215542858E50B009EFEB5 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 431215532858E50B009EFEB5 /* Numerics */; };
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
 		432AF5622874AF3800272AEF /* MessageContent+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432AF5612874AF3800272AEF /* MessageContent+Preview.swift */; };
-		433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E5284078E20010406F /* AutoHashable.generated.swift */; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */; platformFilters = (macos, ); };
 		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; platformFilters = (macos, ); };
@@ -122,7 +121,6 @@
 		43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F499285A58BD009F2419 /* View+SidebarSize.swift */; };
 		43C0F49D285A68ED009F2419 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 43C0F49C285A68ED009F2419 /* Defaults */; };
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
-		43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D389DE284A52A000214874 /* AutoEquatable.generated.swift */; };
 		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
 		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
@@ -158,7 +156,6 @@
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
 		432AF5612874AF3800272AEF /* MessageContent+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageContent+Preview.swift"; sourceTree = "<group>"; };
-		433464E5284078E20010406F /* AutoHashable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoHashable.generated.swift; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
@@ -245,7 +242,6 @@
 		43C0F499285A58BD009F2419 /* View+SidebarSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SidebarSize.swift"; sourceTree = "<group>"; };
 		43C0F49F285A69AA009F2419 /* FolderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLayout.swift; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
-		43D389DE284A52A000214874 /* AutoEquatable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoEquatable.generated.swift; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
@@ -340,15 +336,6 @@
 			path = AsyncTd;
 			sourceTree = "<group>";
 		};
-		4360D7032840296300D3378F /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-				43D389DE284A52A000214874 /* AutoEquatable.generated.swift */,
-				433464E5284078E20010406F /* AutoHashable.generated.swift */,
-			);
-			path = Generated;
-			sourceTree = "<group>";
-		};
 		4367071D2861A69200587A63 /* QuickLook */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,7 +381,6 @@
 				43807D7827E213350056A3D3 /* ViewModels */,
 				43807D5527E213350056A3D3 /* Views */,
 				43807D7427E213350056A3D3 /* SwiftGen */,
-				4360D7032840296300D3378F /* Generated */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
@@ -798,7 +784,6 @@
 				43BFD91C285D148100D8980A /* NWPathMonitor+Combine.swift in Sources */,
 				432AF5622874AF3800272AEF /* MessageContent+Preview.swift in Sources */,
 				43807D9627E213350056A3D3 /* LoginView.swift in Sources */,
-				43D389DF284A52A100214874 /* AutoEquatable.generated.swift in Sources */,
 				43807D9527E213350056A3D3 /* ChatView.swift in Sources */,
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
@@ -817,7 +802,6 @@
 				43807D8027E213350056A3D3 /* Message.swift in Sources */,
 				43051C8E28779218003C5CE2 /* ChatView+InputField.swift in Sources */,
 				438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */,
-				433464E6284078E20010406F /* AutoHashable.generated.swift in Sources */,
 				439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */,
 				43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */,
 				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,

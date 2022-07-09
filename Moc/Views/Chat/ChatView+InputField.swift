@@ -109,7 +109,7 @@ extension ChatView {
                 .padding(6)
                 .onChange(of: viewModel.inputMessage) { value in
                     logger.debug("Input message changed, value: \(value)")
-                    viewModel.updateAction(with: .chatActionTyping)
+                    viewModel.updateAction(with: .actionTyping)
                     viewModel.updateDraft()
                 }
                 .onSubmit {

@@ -58,7 +58,7 @@ struct MocApp: App {
             Task {
                 try await TdApi.shared[0].setOption(
                     name: .online,
-                    value: .optionValueBoolean(.init(value: phase == .active)))
+                    value: .boolean(.init(value: phase == .active)))
             }
         }
 
