@@ -86,7 +86,6 @@
 		43807DA527E2137A0056A3D3 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DA427E2137A0056A3D3 /* Resolver */; };
 		43807DA827E2138A0056A3D3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DA727E2138A0056A3D3 /* Lottie */; };
 		43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DAA27E2139B0056A3D3 /* AlertToast */; };
-		43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB027E213C50056A3D3 /* TDLibKit */; };
 		43807DB827E214440056A3D3 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB727E214440056A3D3 /* Introspect */; };
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
 		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
@@ -114,6 +113,7 @@
 		43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF822865183300C0A8EF /* MessageView+Video.swift */; };
 		43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF84286518F900C0A8EF /* MessageView+Album.swift */; };
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
+		43A802C728794FC600309A6A /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43A802C628794FC600309A6A /* TDLibKit */; };
 		43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A9637A2868C8AD0076F5FD /* SkeletonUI */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
@@ -259,6 +259,7 @@
 			files = (
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
+				43A802C728794FC600309A6A /* TDLibKit in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
@@ -272,7 +273,6 @@
 				2D229DD7287606710056A294 /* Networking in Frameworks */,
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
-				43807DB127E213C50056A3D3 /* TDLibKit in Frameworks */,
 				431215522858E50B009EFEB5 /* ComplexModule in Frameworks */,
 				43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */,
 				43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */,
@@ -629,7 +629,6 @@
 				43807DA427E2137A0056A3D3 /* Resolver */,
 				43807DA727E2138A0056A3D3 /* Lottie */,
 				43807DAA27E2139B0056A3D3 /* AlertToast */,
-				43807DB027E213C50056A3D3 /* TDLibKit */,
 				43807DB727E214440056A3D3 /* Introspect */,
 				43807DBB27E214970056A3D3 /* Backend */,
 				434203B7283CB01D003E344C /* Algorithms */,
@@ -643,6 +642,7 @@
 				43C0F49C285A68ED009F2419 /* Defaults */,
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
+				43A802C628794FC600309A6A /* TDLibKit */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -699,13 +699,13 @@
 				43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43807DA627E213890056A3D3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */,
 				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */,
 				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				43A802C528794FC600309A6A /* XCRemoteSwiftPackageReference "tdlibkit" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1013,7 +1013,7 @@
 				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "Moc/Preview\\ Assets.xcassets";
-				DEVELOPMENT_TEAM = FQ887UV32J;
+				DEVELOPMENT_TEAM = 9H3XZRTVLY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1055,7 +1055,7 @@
 				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "Moc/Preview\\ Assets.xcassets";
-				DEVELOPMENT_TEAM = FQ887UV32J;
+				DEVELOPMENT_TEAM = 9H3XZRTVLY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1202,20 +1202,20 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swiftgram/TDLibKit.git";
-			requirement = {
-				kind = exactVersion;
-				version = "1.2.1-tdlib-1.8.3-047246f3";
-			};
-		};
 		43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.4;
+			};
+		};
+		43A802C528794FC600309A6A /* XCRemoteSwiftPackageReference "tdlibkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
+			requirement = {
+				kind = exactVersion;
+				version = "2.0.0-1.8.4-d4890143";
 			};
 		};
 		43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
@@ -1295,11 +1295,6 @@
 			package = 43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
 		};
-		43807DB027E213C50056A3D3 /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43807DAF27E213C50056A3D3 /* XCRemoteSwiftPackageReference "TDLibKit" */;
-			productName = TDLibKit;
-		};
 		43807DB727E214440056A3D3 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
@@ -1308,6 +1303,11 @@
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
+		};
+		43A802C628794FC600309A6A /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43A802C528794FC600309A6A /* XCRemoteSwiftPackageReference "tdlibkit" */;
+			productName = TDLibKit;
 		};
 		43A9637A2868C8AD0076F5FD /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
