@@ -19,7 +19,6 @@ class EmojiViewModel: ObservableObject {
     @Published private(set) var didFetchingEmoji = false
     @Published private(set) var emojis: [Emoji] = []
     
-    
     private let emojiService: EmojiServiceable
     
     public init(emojiService: EmojiServiceable) {
@@ -33,7 +32,7 @@ class EmojiViewModel: ObservableObject {
                 let result = try await emojiService.getEmoji(searchText, "100")
                 self.emojis = result
                 didFetchingEmoji = true
-            }catch{
+            } catch {
                 print("some error in getEmoji")
             }
         }
