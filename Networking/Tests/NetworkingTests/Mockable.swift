@@ -7,25 +7,19 @@
 
 import Foundation
 
-protocol Mockable: AnyObject {
-    var bundle: Bundle { get }
+protocol Mockable {
     func loadJSON<T: Decodable>(filename: String, type: T.Type) -> T
 }
 
 extension Mockable {
-    var bundle: Bundle {
-        return Bundle(for: type(of: self))
-    }
-
     func loadJSON<T: Decodable>(filename: String, type: T.Type) -> T {
-        guard let path = bundle.url(forResource: filename, withExtension: "json") else {
+        guard let path = Bundle.module.path(forResource: filename, ofType: "json")
+         else {
             fatalError("Failed to load JSON")
         }
-
         do {
-            let data = try Data(contentsOf: path)
+            let data = try Data(contentsOf: URL(string:path)!)
             let decodedObject = try JSONDecoder().decode(type, from: data)
-
             return decodedObject
         } catch {
             fatalError("Failed to decode loaded JSON")

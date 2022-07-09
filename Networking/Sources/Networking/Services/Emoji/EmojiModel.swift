@@ -7,16 +7,14 @@
 
 import Foundation
 
-import Foundation
-
 // MARK: - Emoji
 public struct Emoji: Codable {
     let totals: Int
-    let results: [Result]
+    let subCategories: [SubCategory]
 }
 
-// MARK: - Result
-struct Result: Codable {
+// MARK: - SubCategory
+struct SubCategory: Codable {
     let id: Int
     let name, emoji, unicode: String
     let category, subCategory: Category

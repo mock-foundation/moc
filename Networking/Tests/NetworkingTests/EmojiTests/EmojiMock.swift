@@ -8,8 +8,13 @@
 import Foundation
 import Networking
 
+
 final class EmojiServiceMock: Mockable, EmojiServiceable {
-    func getEmoji(_ name: String, _ length: String) async throws -> Emoji {
-        return loadJSON(filename: "emoji", type: Emoji.self)
-    }
+    func getEmoji(
+        _ name: String,
+        _ length: String) async throws -> Emoji {
+            return loadJSON(filename: "emoji",
+                            type: Emoji.self
+            )
+        }
 }
