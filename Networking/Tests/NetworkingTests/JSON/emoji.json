@@ -1,0 +1,66 @@
+{
+   "totals": 2,
+   "results": [
+      {
+         "id": 1467,
+         "name": "baby bottle",
+         "emoji": "🍼",
+         "unicode": "1F37C",
+         "category": {
+            "id": 3,
+            "name": "Food & Drink"
+         },
+         "sub_category" : {
+            "id": 33,
+            "name": "drink"
+         },
+         "children": []
+      },
+      {
+         "id": 113,
+         "name": "baby",
+         "emoji": "👶",
+         "unicode": "1F476",
+         "category": {
+            "id" : 1,
+            "name": "Smileys & People"
+         },
+         "sub_category":{
+            "id": 10,
+            "name": "person"
+         },
+         "children":[
+           {
+            "id": 114,
+            "name": "baby: light skin tone",
+            "emoji": "👶🏻",
+            "unicode": "1F476 1F3FB"
+           },
+           {
+             "id": 115,
+             "name": "baby: medium-light skin tone",
+             "emoji": "👶🏼",
+             "unicode": "1F476 1F3FC"
+           },
+           {
+             "id": 116,
+             "name": "baby: medium skin tone",
+             "emoji": "👶🏽",
+             "unicode": "1F476 1F3FD"
+           },
+           {
+             "id": 117,
+             "name": "baby: medium-dark skin tone",
+             "emoji": "👶🏾",
+             "unicode": "1F476 1F3FE"
+           },
+           {
+             "id": 118,
+             "name": "baby: dark skin tone",
+             "emoji": "👶🏿",
+             "unicode": "1F476 1F3FF"
+           }
+         ]
+      }
+   ]
+}

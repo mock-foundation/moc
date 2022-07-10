@@ -21,6 +21,8 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "NetworkingTests",
-            dependencies: ["Networking"]),
+            dependencies: ["Networking"],
+            resources: [
+                .copy("JSON/emoji.json")])
     ]
 )
