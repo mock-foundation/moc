@@ -11,6 +11,11 @@ import Foundation
 public struct Emoji: Codable {
     let totals: Int
     let subCategories: [SubCategory]
+    
+    enum CodingKeys: String, CodingKey {
+        case subCategories = "results"
+        case totals
+    }
 }
 
 // MARK: - SubCategory

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  EmojiMock.swift
 //  
 //
 //  Created by DariaMikots on 08.07.2022.
