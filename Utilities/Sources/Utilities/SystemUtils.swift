@@ -55,7 +55,8 @@ public enum SystemUtils {
         }
 
         // And then find a corresponding marketing name using the identifier
-        let model = await MacModels.getDevice(by: modelIdentifier!) // Force unwrap because it is guaranteed that it will not be nil
+        // Force unwrap because it is guaranteed that it will not be nil
+        let model = await MacModels.getDevice(by: modelIdentifier!)
         
         if let model = model {
             return model.name
