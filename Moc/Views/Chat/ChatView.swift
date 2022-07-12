@@ -24,22 +24,32 @@ struct ChatView: View {
         ZStack {
             ScrollViewReader { proxy in
                 ScrollView {
-                    ForEach(viewModel.messages, id: \.self) { message in
-                        MessageView(message: message)
-                            .id(message.first!.id)
-                            .background {
-                                Group {
-                                    if viewModel.highlightedMessageId == message.first!.id {
-                                        Color.blue.opacity(0.3)
-                                    } else {
-                                        Color.clear
+                    ZStack {
+                        VStack {
+                            ForEach(viewModel.messages, id: \.self) { message in
+                                MessageView(message: message)
+                                    .id(message.first!.id)
+                                    .background {
+                                        Group {
+                                            if viewModel.highlightedMessageId == message.first!.id {
+                                                Color.blue.opacity(0.3)
+                                            } else {
+                                                Color.clear
+                                            }
+                                        }
+                                        .padding(-6)
+                                        .transition(.opacity)
                                     }
-                                }
-                                .padding(-6)
-                                .transition(.opacity)
                             }
+                        }
+                        GeometryReader { proxy in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: Int(proxy.frame(in: .named("scroll")).maxY))
+                        }
                     }
                 }
+                .coordinateSpace(name: "scroll")
                 .onReceive(SystemUtils.ncPublisher(for: .scrollToMessage)) { notification in
                     let id = notification.object as! Int64
                     viewModel.highlightMessage(at: id)
@@ -86,22 +96,42 @@ struct ChatView: View {
                 
                 return true
             }
-            
-            Button {
-                viewModel.scrollToEnd()
-            } label: {
-                Image(systemName: "arrow.down")
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                // Additional checks are there to not trigger UI update
+                // a heck amount of times when scrolling, which causes
+                // huge lags
+                if value > 700 {
+                    if viewModel.isScrollToBottomButtonShown == false {
+                        viewModel.isScrollToBottomButtonShown = true
+                    }
+                } else {
+                    if viewModel.isScrollToBottomButtonShown == true {
+                        viewModel.isScrollToBottomButtonShown = false
+                    }
+                }
             }
-            .buttonStyle(.plain)
-            .padding(12)
-            .background(.ultraThinMaterial, in: Circle())
-            .clipShape(Circle())
-            #if (macOS)
-            .background(Circle().strokeBorder(Color.gray, lineWidth: 1))
-            #endif
-            .hTrailing()
-            .vBottom()
-            .padding(.horizontal)
+            
+            ZStack {
+                if viewModel.isScrollToBottomButtonShown {
+                    Button {
+                        viewModel.scrollToEnd()
+                    } label: {
+                        Image(systemName: "arrow.down")
+                    }
+                    .buttonStyle(.plain)
+                    .padding(12)
+                    .background(.ultraThinMaterial, in: Circle())
+                    .clipShape(Circle())
+                    #if (macOS)
+                    .background(Circle().strokeBorder(Color.gray, lineWidth: 1))
+                    #endif
+                    .hTrailing()
+                    .vBottom()
+                    .padding(.horizontal)
+                    .transition(.move(edge: .trailing))
+                }
+            }
+            .animation(.fastStartSlowStop, value: viewModel.isScrollToBottomButtonShown)
         }
         .safeAreaInset(edge: .bottom) {
             inputField
@@ -119,11 +149,12 @@ struct ChatView: View {
         } rightView: {
             chatInspector
                 .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
-        }.navigationTitle("")
-            // MARK: - Toolbar
-            .toolbar {
-                toolbar
-            }
+        }
+        .navigationTitle("")
+        // MARK: - Toolbar
+        .toolbar {
+            toolbar
+        }
     }
 }
 

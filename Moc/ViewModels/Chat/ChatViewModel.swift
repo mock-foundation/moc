@@ -30,7 +30,7 @@ class ChatViewModel: ObservableObject {
     
     var scrollViewProxy: ScrollViewProxy?
     
-
+    @Published var isScrollToBottomButtonShown = true
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
     @Published var selectedInspectorTab: InspectorTab = .users
