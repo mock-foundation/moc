@@ -66,7 +66,7 @@ public extension TdApi {
                                         apiId: Secret.apiId,
                                         applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
                                         databaseDirectory: dir,
-                                        deviceModel: SystemUtils.deviceModel,
+                                        deviceModel: await SystemUtils.getDeviceModel(),
                                         enableStorageOptimizer: true,
                                         filesDirectory: dir,
                                         ignoreFileNames: false,
