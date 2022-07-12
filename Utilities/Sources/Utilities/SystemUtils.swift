@@ -66,7 +66,7 @@ public enum SystemUtils {
     }
     #elseif os(iOS)
     // Thanks https://www.zerotoappstore.com/how-to-get-iphone-device-model-swift.html
-    public static var deviceModel: String {
+    public static func getDeviceModel() async -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         return withUnsafePointer(to: &systemInfo.machine) {
