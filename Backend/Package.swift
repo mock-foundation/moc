@@ -16,8 +16,8 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/Swiftgram/TDLibKit.git",
-            exact: "1.2.1-tdlib-1.8.3-047246f3"
+            url: "https://github.com/mock-foundation/tdlibkit.git",
+            exact: "2.1.1-1.8.4-1dec0e20"
         ),
         .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
         .package(path: "../Utilities"),
@@ -27,7 +27,7 @@ let package = Package(
     targets: [.target(
         name: "Backend",
         dependencies: [
-            "TDLibKit",
+            .product(name: "TDLibKit", package: "tdlibkit"),
             "Utilities",
             "Caching",
             "Logs",

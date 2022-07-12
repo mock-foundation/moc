@@ -9,7 +9,7 @@ import Combine
 import TDLibKit
 import Caching
 
-public protocol MainService {
+public protocol MainService: Service {
     func getFilters() throws -> [ChatFilter]
     func getUnreadCounters() throws -> [UnreadCounter]
     func getChat(by id: Int64) async throws -> Chat

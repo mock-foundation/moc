@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public protocol AccountsPrefService {
+public protocol AccountsPrefService: Service {
     func logOut() async throws
 
     func set(firstName: String, lastName: String) async throws

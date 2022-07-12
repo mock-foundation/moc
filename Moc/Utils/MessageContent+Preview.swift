@@ -20,16 +20,16 @@ extension MessageContent {
     @ViewBuilder
     var preview: some View {
         switch self {
-            case let .messageText(info):
+            case let .text(info):
                 Text(info.text.text)
-            case let .messagePhoto(info):
+            case let .photo(info):
                 makeLabel(info.caption.text, icon: "photo")
-            case let .messageVideo(info):
+            case let .video(info):
                 makeLabel(info.caption.text, icon: "video")
-            case let .messageDocument(info):
+            case let .document(info):
                 makeLabel(info.caption.text, icon: "doc.text")
             default:
-                Text(Constants.unsupportedMessageString)
+                Text(Constants.unsupportedMessage)
         }
     }
 }

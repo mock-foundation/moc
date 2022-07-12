@@ -25,29 +25,20 @@ public extension TdApi {
 
     private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
+    // swiftlint:disable function_body_length cyclomatic_complexity
     func startTdLibUpdateHandler() {
         TdApi.logger.debug("Starting handler")
         
         client.run {
             let cache = CacheService.shared
             
-            Task {
-                #if DEBUG
-                try? await self.setLogVerbosityLevel(newVerbosityLevel: 2)
-                #else
-                try? await self.setLogVerbosityLevel(newVerbosityLevel: 0)
-                #endif
-            }
             do {
-                let update = try self.decoder.decode(Update.self, from: $0)
-//                TdApi.logger.debug("\(update)")
+                let update = try TdApi.decoder.decode(Update.self, from: $0)
                 
                 switch update {
-                    case let .updateAuthorizationState(state):
+                    case let .authorizationState(state):
                         switch state.authorizationState {
-                            case .authorizationStateWaitTdlibParameters:
-                                SystemUtils.post(notification: .authorizationStateWaitTdlibParameters)
+                            case .waitTdlibParameters:
                                 Task {
                                     var url = try FileManager.default.url(
                                         for: .applicationSupportDirectory,
@@ -80,58 +71,25 @@ public extension TdApi {
                                         useTestDc: false
                                     ))
                                 }
-                            case let .authorizationStateWaitEncryptionKey(update):
-                                SystemUtils.post(notification: .authorizationStateWaitEncryptionKey, with: update)
+                            case .waitEncryptionKey(_):
                                 Task {
                                     try? await self.checkDatabaseEncryptionKey(
                                         encryptionKey: Data()
                                     )
                                 }
-                            case .authorizationStateWaitPhoneNumber:
-                                SystemUtils.post(notification: .authorizationStateWaitPhoneNumber)
-                            case let .authorizationStateWaitCode(update):
-                                SystemUtils.post(notification: .authorizationStateWaitCode, with: update)
-                            case let .authorizationStateWaitRegistration(update):
-                                SystemUtils.post(notification: .authorizationStateWaitRegistration, with: update)
-                            case let .authorizationStateWaitPassword(update):
-                                SystemUtils.post(notification: .authorizationStateWaitPassword, with: update)
-                            case .authorizationStateReady:
+                            case .ready:
                                 Task {
-                                    _ = try await self.loadChats(chatList: .chatListMain, limit: 15)
-                                    _ = try await self.loadChats(chatList: .chatListArchive, limit: 15)
+                                    _ = try await self.loadChats(chatList: .main, limit: 15)
+                                    _ = try await self.loadChats(chatList: .archive, limit: 15)
                                 }
-                                SystemUtils.post(notification: .authorizationStateReady)
-                            case let .authorizationStateWaitOtherDeviceConfirmation(update):
-                                SystemUtils.post(
-                                    notification: .authorizationStateWaitOtherDeviceConfirmation,
-                                    with: update
-                                )
-                            case .authorizationStateLoggingOut:
-                                SystemUtils.post(notification: .authorizationStateLoggingOut)
-                            case .authorizationStateClosing:
-                                SystemUtils.post(notification: .authorizationStateClosing)
-                            case .authorizationStateClosed:
-                                SystemUtils.post(notification: .authorizationStateClosed)
+                            case .closed:
                                 TdApi.shared.insert(TdApi(
                                     client: TdClientImpl(completionQueue: .global())
                                 ), at: 0)
                                 TdApi.shared[0].startTdLibUpdateHandler()
+                            default: break
                         }
-                    case let .updateChatPosition(update):
-                        SystemUtils.post(notification: .updateChatPosition, with: update)
-                    case let .updateChatLastMessage(update):
-                        SystemUtils.post(notification: .updateChatLastMessage, with: update)
-                    case let .updateChatDraftMessage(update):
-                        SystemUtils.post(notification: .updateChatDraftMessage, with: update)
-                    case let .updateNewMessage(update):
-                        SystemUtils.post(notification: .updateNewMessage, with: update)
-                    case let .updateNewChat(update):
-                        SystemUtils.post(notification: .updateNewChat, with: update)
-                    case let .updateFile(update):
-                        SystemUtils.post(notification: .updateFile, with: update)
-                    case let .updateChatFilters(update):
-                        SystemUtils.post(notification: .updateChatFilters, with: update)
-
+                    case let .chatFilters(update):
                         try cache.deleteAll(records: Caching.ChatFilter.self)
                         for (index, filter) in update.chatFilters.enumerated() {
                             try cache.save(record: Caching.ChatFilter(
@@ -140,9 +98,7 @@ public extension TdApi {
                                 iconName: filter.iconName,
                                 order: index))
                         }
-                    case let .updateUnreadChatCount(update):
-                        SystemUtils.post(notification: .updateUnreadChatCount, with: update)
-
+                    case let .unreadChatCount(update):
                         var shouldBeAdded = true
                         let chatList = Caching.ChatList.from(tdChatList: update.chatList)
                         let records = try cache.getRecords(as: UnreadCounter.self)
@@ -161,9 +117,7 @@ public extension TdApi {
                                 chatList: chatList
                             ))
                         }
-                    case let .updateUnreadMessageCount(update):
-                        SystemUtils.post(notification: .updateUnreadMessageCount, with: update)
-                        
+                    case let .unreadMessageCount(update):
                         var shouldBeAdded = true
                         let chatList = Caching.ChatList.from(tdChatList: update.chatList)
                         let records = try cache.getRecords(as: UnreadCounter.self)
@@ -182,9 +136,7 @@ public extension TdApi {
                                 chatList: chatList
                             ))
                         }
-                    case let .updateConnectionState(info):
-                        SystemUtils.post(notification: .updateConnectionState, with: info)
-                    case let .updateFileGenerationStart(info):
+                    case let .fileGenerationStart(info):
                         switch info.conversion {
                             case "copy":
                                 Task {
@@ -250,17 +202,13 @@ public extension TdApi {
                                             generationId: info.generationId)
                                     }
                                 }
-                            default:
-                                break
+                            default: break
                         }
-                    // swiftlint:disable empty_enum_arguments
-                    case .updateFileGenerationStop(_):
-                        break
-                    default:
-                        break
+                    default: break
                 }
             } catch {
-                let tdError = error as! TDLibKit.Error
+                let tdError = error as? TDLibKit.Error
+                guard let tdError else { return }
                 TdApi.logger.error("Code: \(tdError.code), message: \(tdError.message)")
             }
         }

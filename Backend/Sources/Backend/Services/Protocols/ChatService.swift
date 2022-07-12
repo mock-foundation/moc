@@ -9,7 +9,7 @@ import Combine
 import TDLibKit
 import Foundation
 
-public protocol ChatService {
+public protocol ChatService: Service {
     // MARK: - Messages
     
     var messageHistory: [Message] { get async throws }

@@ -7,13 +7,15 @@
 
 import Foundation
 import Backend
+import TDLibKit
 import Resolver
 import Utilities
 import Logs
+import Combine
 
 class AccountsPrefViewModel: ObservableObject {
     var logger = Logs.Logger(category: "Preferences", label: "AccountPaneUI")
-    @Injected var dataSource: AccountsPrefService
+    @Injected var service: AccountsPrefService
     
     @Published var firstName: String = "" {
         didSet {
@@ -32,10 +34,12 @@ class AccountsPrefViewModel: ObservableObject {
         }
     }
     
+    var updateSubject: PassthroughSubject<Update, Never> { service.updateSubject }
+    
     func updateNames() {
         Task {
             do {
-                try await dataSource.set(
+                try await service.set(
                     firstName: firstName,
                     lastName: lastName)
             } catch let error {

@@ -15,5 +15,5 @@ public struct Constants {
 }
 
 public extension Notification.Name {
-    public static let scrollToMessage = Notification.Name(rawValue: "ScrollToMessage")
+    static let scrollToMessage = Notification.Name(rawValue: "ScrollToMessage")
 }

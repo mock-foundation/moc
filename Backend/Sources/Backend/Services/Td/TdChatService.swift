@@ -16,6 +16,10 @@ import UniformTypeIdentifiers
 
 // swiftlint:disable type_body_length function_body_length
 public class TdChatService: ChatService {
+    public var updateSubject: PassthroughSubject<Update, Never> {
+        tdApi.client.updateSubject
+    }
+    
     public func getMessage(by id: Int64) async throws -> Message {
         return try await tdApi.getMessage(chatId: chatId!, messageId: id)
     }
@@ -27,7 +31,7 @@ public class TdChatService: ChatService {
     public func sendMessage(_ message: String) async throws {
         _ = try await tdApi.sendMessage(
             chatId: chatId!,
-            inputMessageContent: .inputMessageText(
+            inputMessageContent: .text(
                 InputMessageText(
                     clearDraft: true,
                     disableWebPagePreview: false,
@@ -58,12 +62,12 @@ public class TdChatService: ChatService {
         let uti = UTType(url)
         logger.debug("UTType: \(String(describing: uti))")
         
-        let inputGenerated: InputFile = .inputFileGenerated(InputFileGenerated(
+        let inputGenerated: InputFile = .generated(InputFileGenerated(
             conversion: "copy",
             expectedSize: 0,
             originalPath: path))
         
-        let messageDocument: InputMessageContent = .inputMessageDocument(InputMessageDocument(
+        let messageDocument: InputMessageContent = .document(InputMessageDocument(
             caption: caption,
             disableContentTypeDetection: false,
             document: inputGenerated,
@@ -81,7 +85,7 @@ public class TdChatService: ChatService {
             let image = UIImage(contentsOfFile: path)!
             #endif
             
-            return .inputMessagePhoto(InputMessagePhoto(
+            return .photo(InputMessagePhoto(
                 addedStickerFileIds: [],
                 caption: caption,
                 height: Int(image.size.height),
@@ -115,7 +119,7 @@ public class TdChatService: ChatService {
                 size = CGSize(width: abs(tempSize.width), height: abs(tempSize.height))
             }
             
-            return .inputMessageVideo(InputMessageVideo(
+            return .video(InputMessageVideo(
                 addedStickerFileIds: [],
                 caption: caption,
                 duration: Int(CMTimeGetSeconds(asset.duration)),
@@ -123,7 +127,7 @@ public class TdChatService: ChatService {
                 supportsStreaming: true,
                 thumbnail: InputThumbnail(
                     height: Int(size!.height),
-                    thumbnail: .inputFileGenerated(InputFileGenerated(
+                    thumbnail: .generated(InputFileGenerated(
                         conversion: "video_thumbnail",
                         expectedSize: 0,
                         originalPath: path)),
@@ -164,44 +168,17 @@ public class TdChatService: ChatService {
         try await self.tdApi.getChat(chatId: id)
     }
 
-    public func getMessageSenderName(_ sender: MessageSender) throws -> String {
-        switch sender {
-        case let .messageSenderUser(messageSenderUser):
-            var str = ""
-            try tdApi.getUser(userId: messageSenderUser.userId) { result in
-                switch result {
-                case let .success(data):
-                    str = "\(data.firstName) \(data.lastName)"
-                case .failure:
-                    str = "Failure"
-                }
-            }
-            return str
-        case let .messageSenderChat(messageSenderChat):
-            var str = ""
-            try tdApi.getChat(chatId: messageSenderChat.chatId) {
-                switch $0 {
-                case let .success(data):
-                    str = data.title
-                case .failure:
-                    str = "Failure"
-                }
-            }
-            return str
-        }
-    }
-
     public func set(blocked: Bool) async throws {
         switch try await chatType {
-        case let .chatTypePrivate(info):
+        case let .private(info):
             _ = try await tdApi.toggleMessageSenderIsBlocked(
                 isBlocked: blocked,
-                senderId: .messageSenderUser(.init(userId: info.userId))
+                senderId: .user(.init(userId: info.userId))
             )
-        case let .chatTypeSupergroup(info):
+        case let .supergroup(info):
             _ = try await tdApi.toggleMessageSenderIsBlocked(
                 isBlocked: blocked,
-                senderId: .messageSenderChat(.init(chatId: info.supergroupId))
+                senderId: .chat(.init(chatId: info.supergroupId))
             )
         default:
             throw ChatServiceError.cantBeBlocked
@@ -248,7 +225,7 @@ public class TdChatService: ChatService {
     
     public var isChannel: Bool {
         get async throws {
-            if case .chatTypeSupergroup(let info) = try await chatType {
+            if case .supergroup(let info) = try await chatType {
                 return info.isChannel
             } else {
                 return false
@@ -271,11 +248,11 @@ public class TdChatService: ChatService {
     public var chatMemberCount: Int? {
         get async throws {
             switch try await chatType {
-                case let .chatTypeBasicGroup(info):
+                case let .basicGroup(info):
                     return try await tdApi.getBasicGroupFullInfo(
                         basicGroupId: info.basicGroupId
                     ).members.count
-                case let .chatTypeSupergroup(info):
+                case let .supergroup(info):
                     return try await tdApi.getSupergroupFullInfo(
                         supergroupId: info.supergroupId
                     ).memberCount

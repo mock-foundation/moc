@@ -11,11 +11,11 @@ import TDLibKit
 public extension Caching.ChatList {
     static func from(tdChatList: TDLibKit.ChatList) -> Self {
         switch tdChatList {
-            case .chatListMain:
+            case .main:
                 return .main
-            case .chatListArchive:
+            case .archive:
                 return .archive
-            case let .chatListFilter(info):
+            case let .filter(info):
                 return .filter(info.chatFilterId)
         }
     }

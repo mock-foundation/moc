@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public protocol FoldersPrefService {
+public protocol FoldersPrefService: Service {
     func getFilters() async throws -> [ChatFilterInfo]
     func getFilter(by id: Int) async throws -> TDLibKit.ChatFilter
     func reorderFilters(_ folders: [Int]) async throws

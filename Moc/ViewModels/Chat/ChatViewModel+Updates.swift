@@ -7,11 +7,12 @@
 
 import SwiftUI
 import TDLibKit
+import Utilities
 
 extension ChatViewModel {
-    func updateNewMessage(notification: NCPO) {
-        logger.debug(notification.name.rawValue)
-        let tdMessage = (notification.object as? UpdateNewMessage)!.message
+    func updateNewMessage(_ update: UpdateNewMessage) {
+        logger.debug("UpdateNewMessage")
+        let tdMessage = update.message
         logger.debug("Message chat ID: \(tdMessage.chatId), Chat ID: \(chatID)")
         guard tdMessage.chatId == chatID else {
             logger.debug("Message not for this chat")
@@ -27,13 +28,13 @@ extension ChatViewModel {
             if let id = tdMessage.replyToMessageId, id != 0 {
                 let tdReplyMessage = try await self.service.getMessage(by: id)
                 switch tdReplyMessage.senderId {
-                    case let .messageSenderUser(user):
+                    case let .user(user):
                         let user = try await self.service.getUser(by: user.userId)
                         replyMessage = ReplyMessage(
                             id: id,
                             sender: "\(user.firstName) \(user.lastName)",
                             content: tdReplyMessage.content)
-                    case let .messageSenderChat(chat):
+                    case let .chat(chat):
                         let chat = try await self.service.getChat(by: chat.chatId)
                         replyMessage = ReplyMessage(
                             id: id,
@@ -43,13 +44,13 @@ extension ChatViewModel {
             }
             
             switch tdMessage.senderId {
-                case let .messageSenderUser(info):
+                case let .user(info):
                     let user = try await self.service.getUser(by: info.userId)
                     firstName = user.firstName
                     lastName = user.lastName
                     id = info.userId
                     type = .user
-                case let .messageSenderChat(info):
+                case let .chat(info):
                     let chat = try await self.service.getChat(by: info.chatId)
                     firstName = chat.title
                     id = info.chatId

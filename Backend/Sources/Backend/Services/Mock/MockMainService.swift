@@ -7,8 +7,11 @@
 
 import TDLibKit
 import Caching
+import Combine
 
 public class MockMainService: MainService {
+    public var updateSubject = PassthroughSubject<Update, Never>()
+    
     public init() { }
     
     public func getFilters() throws -> [ChatFilter] {

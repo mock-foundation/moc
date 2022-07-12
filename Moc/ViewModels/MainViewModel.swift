@@ -55,11 +55,11 @@ class MainViewModel: ObservableObject {
     var chatList: [Chat] {
         switch openChatList {
             case .main:
-                return chats(from: .chatListMain)
+                return chats(from: .main)
             case .archive:
-                return chats(from: .chatListArchive)
+                return chats(from: .archive)
             case .filter(let id):
-                return chats(from: .chatListFilter(.init(chatFilterId: id)))
+                return chats(from: .filter(.init(chatFilterId: id)))
         }
     }
     
@@ -96,15 +96,15 @@ class MainViewModel: ObservableObject {
                 switch openChatList {
                     case .main:
                         _ = try await TdApi.shared[0].loadChats(
-                            chatList: .chatListMain,
+                            chatList: .main,
                             limit: 30)
                     case .archive:
                         _ = try await TdApi.shared[0].loadChats(
-                            chatList: .chatListArchive,
+                            chatList: .archive,
                             limit: 30)
                     case .filter(let id):
                         _ = try await TdApi.shared[0].loadChats(
-                            chatList: .chatListFilter(.init(chatFilterId: id)),
+                            chatList: .filter(.init(chatFilterId: id)),
                             limit: 30)
                 }
             }
@@ -134,6 +134,38 @@ class MainViewModel: ObservableObject {
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
     init() {
+        service.updateSubject
+            .receive(on: RunLoop.main)
+            .sink { _ in } receiveValue: { [self] update in
+                switch update {
+                    case let .chatPosition(info):
+                        updateChatPosition(info)
+                    case let .authorizationState(info):
+                        switch info.authorizationState {
+                            case .waitPhoneNumber:
+                                authorizationStateWaitPhoneNumber()
+                            case .closed:
+                                authorizationStateClosed()
+                            default:
+                                break
+                        }
+                    case let .newChat(info):
+                        updateNewChat(info)
+                    case let .chatFilters(info):
+                        updateChatFilters(info)
+                    case let .unreadChatCount(info):
+                        updateUnreadChatCount(info)
+                    case let .chatLastMessage(info):
+                        updateChatLastMessage(info)
+                    case let .chatDraftMessage(info):
+                        updateChatDraftMessage(info)
+                    case let .connectionState(info):
+                        updateConnectionState(info)
+                    default:
+                        break
+                }
+            }
+            .store(in: &subscribers)
         if let filters = try? service.getFilters() {
             logger.debug("Filling chat filter with cached ones: \(filters)")
             chatFilters = filters.map { filter in
@@ -144,28 +176,29 @@ class MainViewModel: ObservableObject {
             logger.debug("There was an issue retrieving cached chat filters (maybe empty?), using empty OrderedSet")
             chatFilters = []
         }
-        addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
-        addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorizationStateWaitPhoneNumber(_:))
-        addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
-        addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
-        addSubscriber(for: .updateUnreadChatCount, action: updateUnreadChatCount(_:))
-        addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
-        addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
-        addSubscriber(for: .updateConnectionState, action: updateConnectionState(_:))
-        addSubscriber(for: .authorizationStateClosed, action: authorizationStateClosed(_:))
+//        addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
+//        addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorizationStateWaitPhoneNumber(_:))
+//        addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
+//        addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
+//        addSubscriber(for: .updateUnreadChatCount, action: updateUnreadChatCount(_:))
+//        addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
+//        addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
+//        addSubscriber(for: .updateConnectionState, action: updateConnectionState(_:))
+//        addSubscriber(for: .authorizationStateClosed, action: authorizationStateClosed(_:))
         NWPathMonitor()
             .publisher(queue: nwPathMonitorQueue)
+            .receive(on: RunLoop.main)
             .sink { value in
                 Task {
                     switch value {
                         case .satisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeOther)
+                            _ = try await TdApi.shared[0].setNetworkType(type: .other)
                         case .unsatisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
                         case .requiresConnection:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
                         @unknown default:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .networkTypeNone)
+                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
                     }
                 }
             }
@@ -179,12 +212,10 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    func authorizationStateClosed(_ notification: NCPO) {
-    }
+    func authorizationStateClosed() { }
     
-    func updateConnectionState(_ notification: NCPO) {
-        logger.debug(notification.name.rawValue)
-        let update = notification.object as! UpdateConnectionState
+    func updateConnectionState(_ update: UpdateConnectionState) {
+        logger.debug("UpdateConnectionState")
         loadingAnimationTimer?.invalidate()
         loadingAnimationTimer = nil
         loadingAnimationState = 3
@@ -193,23 +224,23 @@ class MainViewModel: ObservableObject {
             var needStartTimer = true
 
             switch update.state {
-                case .connectionStateWaitingForNetwork:
+                case .waitingForNetwork:
                     connectionStateTitle = "Waiting for network..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateConnectingToProxy:
+                case .connectingToProxy:
                     connectionStateTitle = "Connecting to proxy..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateConnecting:
+                case .connecting:
                     connectionStateTitle = "Connecting..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateUpdating:
+                case .updating:
                     connectionStateTitle = "Updating..."
                     isConnectionStateShown = true
                     isConnected = false
-                case .connectionStateReady:
+                case .ready:
                     loadingAnimationTimer?.invalidate()
                     loadingAnimationTimer = nil
                     needStartTimer = false
@@ -251,9 +282,8 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func updateUnreadChatCount(_ notification: NCPO) {
+    func updateUnreadChatCount(_ update: UpdateUnreadChatCount) {
         logger.debug("UpdateUnreadChatCount")
-        let update = notification.object as! UpdateUnreadChatCount
         
         var shouldBeAdded = true
         let chatList = Caching.ChatList.from(tdChatList: update.chatList)
@@ -284,8 +314,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func updateChatFilters(_ notification: NCPO) {
-        let update = notification.object as! UpdateChatFilters
+    func updateChatFilters(_ update: UpdateChatFilters) {
         logger.debug("Chat filter update")
         
         withAnimation {
@@ -293,25 +322,25 @@ class MainViewModel: ObservableObject {
         }
     }
 
-    func updateChatPosition(_ notification: NCPO) {
-        let update = (notification.object as? UpdateChatPosition)!
-        
+    func updateChatPosition(_ update: UpdateChatPosition) {
         updatePosition(for: update.chatId, position: update.position)
     }
     
-    func updateChatDraftMessage(_ notification: NCPO) {
-        let update = (notification.object as? UpdateChatDraftMessage)!
-        
+    func updateChatDraftMessage(_ update: UpdateChatDraftMessage) {
         for position in update.positions {
             updatePosition(for: update.chatId, position: position)
         }
     }
     
-    func updateChatLastMessage(_ notification: NCPO) {
-        let update = (notification.object as? UpdateChatLastMessage)!
-        
+    func updateChatLastMessage(_ update: UpdateChatLastMessage) {
         for position in update.positions {
             updatePosition(for: update.chatId, position: position)
+        }
+    }
+    
+    func updateNewChat(_ update: UpdateNewChat) {
+        _ = withAnimation {
+            allChats.updateOrAppend(update.chat)
         }
     }
     
@@ -334,19 +363,8 @@ class MainViewModel: ObservableObject {
         }
         
     }
-
-    func updateNewChat(_ notification: NCPO) {
-        guard notification.object != nil else {
-            return
-        }
-        let chat: Chat = (notification.object as? UpdateNewChat)!.chat
-
-        _ = withAnimation {
-            allChats.updateOrAppend(chat)
-        }
-    }
     
-    func authorizationStateWaitPhoneNumber(_ notification: NCPO) {
+    func authorizationStateWaitPhoneNumber() {
         logger.debug("Got authorization state update")
         showingLoginScreen = true
     }

@@ -8,7 +8,7 @@
 import Combine
 import TDLibKit
 
-public protocol LoginService {
+public protocol LoginService: Service {
     /// Requests login using a QR code.
     func requestQrCodeAuth() async throws
 

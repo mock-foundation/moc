@@ -6,8 +6,13 @@
 //
 
 import TDLibKit
+import Combine
 
 public class TdAccountsPrefService: AccountsPrefService {
+    public var updateSubject: PassthroughSubject<TDLibKit.Update, Never> {
+        tdApi.client.updateSubject
+    }
+    
     public var tdApi: TdApi = .shared[0]
 
     public func logOut() async throws {

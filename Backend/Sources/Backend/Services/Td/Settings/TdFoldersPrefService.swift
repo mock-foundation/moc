@@ -8,9 +8,14 @@
 import Caching
 import TDLibKit
 import GRDB
+import Combine
 
 public class TdFoldersPrefService: FoldersPrefService {
     private var tdApi: TdApi = .shared[0]
+    
+    public var updateSubject: PassthroughSubject<Update, Never> {
+        tdApi.client.updateSubject
+    }
 
     public init() {}
 
@@ -26,7 +31,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     }
 
     public func reorderFilters(_ folders: [Int]) async throws {
-        _ = try await tdApi.reorderChatFilters(chatFilterIds: folders)
+        _ = try await tdApi.reorderChatFilters(chatFilterIds: folders, mainChatListPosition: 0)
     }
 
     public func createFilter(_ filter: TDLibKit.ChatFilter) async throws {

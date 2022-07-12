@@ -55,7 +55,7 @@ extension Chat {
         replyMarkupMessageId: 0,
         themeName: "",
         title: "Ayy",
-        type: .chatTypePrivate(.init(userId: 0)),
+        type: .private(.init(userId: 0)),
         unreadCount: 0,
         unreadMentionCount: 0,
         unreadReactionCount: 0,

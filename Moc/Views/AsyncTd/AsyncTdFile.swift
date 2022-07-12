@@ -37,11 +37,12 @@ struct AsyncTdFile<Content: View, Placeholder: View>: View {
         .transition(.opacity)
         .animation(.easeInOut, value: isDownloaded)
         .animation(.easeInOut, value: file)
-        .onReceive(SystemUtils.ncPublisher(for: .updateFile)) { notification in
-            let update = notification.object as! UpdateFile
-            if update.file.id == id {
-                file = update.file
-                isDownloaded = update.file.local.isDownloadingCompleted
+        .onReceive(tdApi.client.updateSubject) { update in
+            if case let .file(info) = update {
+                if info.file.id == id {
+                    file = info.file
+                    isDownloaded = info.file.local.isDownloadingCompleted
+                }
             }
         }
         .onChange(of: id) { id in

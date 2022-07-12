@@ -97,7 +97,7 @@ extension ChatView {
                                 ForEach(0 ..< 10) { index in
                                     makeUserRow(
                                         name: "User \(index)",
-                                        status: .userStatusRecently,
+                                        status: .recently,
                                         photo: Image("MockChatPhoto")
                                     )
                                     .padding(.horizontal, 8)
