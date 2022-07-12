@@ -9,14 +9,14 @@ import SwiftUI
 
 extension ChatViewModel {
     func scrollToEnd() {
-        withAnimation(.timingCurve(0, 0.99, 0.31, 1, duration: 1.5)) {
+        withAnimation(.fastStartSlowStop) {
             scrollViewProxy?.scrollTo(messages.last?.first?.id ?? 0)
         }
     }
     
     func scrollToMessage(at id: Int64) {
         highlightMessage(at: id)
-        withAnimation(.timingCurve(0, 0.99, 0.31, 1, duration: 1.5)) {
+        withAnimation(.fastStartSlowStop) {
             scrollViewProxy?.scrollTo(id, anchor: .center)
         }
     }

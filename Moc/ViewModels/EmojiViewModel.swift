@@ -17,7 +17,7 @@ class EmojiViewModel: ObservableObject {
     }
     
     @Published private(set) var didFetchingEmoji = false
-    @Published private(set) var emojis: [Emoji] = []
+    @Published private(set) var emoji: Emoji?
     
     private let emojiService: EmojiServiceable
     
@@ -30,7 +30,7 @@ class EmojiViewModel: ObservableObject {
             let searchText = self.emojiSearch.isEmpty ? "smile" : self.emojiSearch
             do {
                 let result = try await emojiService.getEmoji(searchText, "100")
-                self.emojis = result
+                self.emoji = result
                 didFetchingEmoji = true
             } catch {
                 print("some error in getEmoji")

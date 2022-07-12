@@ -29,6 +29,14 @@ public extension TdApi {
     func startTdLibUpdateHandler() {
         TdApi.logger.debug("Starting handler")
         
+        Task {
+            #if DEBUG
+            try await self.setLogVerbosityLevel(newVerbosityLevel: 2)
+            #else
+            try await self.setLogVerbosityLevel(newVerbosityLevel: 0)
+            #endif
+        }
+        
         client.run {
             let cache = CacheService.shared
             

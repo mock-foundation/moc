@@ -176,15 +176,6 @@ class MainViewModel: ObservableObject {
             logger.debug("There was an issue retrieving cached chat filters (maybe empty?), using empty OrderedSet")
             chatFilters = []
         }
-//        addSubscriber(for: .updateChatPosition, action: updateChatPosition(_:))
-//        addSubscriber(for: .authorizationStateWaitPhoneNumber, action: authorizationStateWaitPhoneNumber(_:))
-//        addSubscriber(for: .updateNewChat, action: updateNewChat(_:))
-//        addSubscriber(for: .updateChatFilters, action: updateChatFilters(_:))
-//        addSubscriber(for: .updateUnreadChatCount, action: updateUnreadChatCount(_:))
-//        addSubscriber(for: .updateChatLastMessage, action: updateChatLastMessage(_:))
-//        addSubscriber(for: .updateChatDraftMessage, action: updateChatDraftMessage(_:))
-//        addSubscriber(for: .updateConnectionState, action: updateConnectionState(_:))
-//        addSubscriber(for: .authorizationStateClosed, action: authorizationStateClosed(_:))
         NWPathMonitor()
             .publisher(queue: nwPathMonitorQueue)
             .receive(on: RunLoop.main)
@@ -202,13 +193,6 @@ class MainViewModel: ObservableObject {
                     }
                 }
             }
-            .store(in: &subscribers)
-    }
-    
-    func addSubscriber(for notification: NSNotification.Name, action: @escaping ((NCPO) -> Void)) {
-        SystemUtils.ncPublisher(for: notification)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: action)
             .store(in: &subscribers)
     }
     
@@ -317,7 +301,7 @@ class MainViewModel: ObservableObject {
     func updateChatFilters(_ update: UpdateChatFilters) {
         logger.debug("Chat filter update")
         
-        withAnimation {
+        withAnimation(.fastStartSlowStop) {
             chatFilters = update.chatFilters
         }
     }
@@ -339,7 +323,7 @@ class MainViewModel: ObservableObject {
     }
     
     func updateNewChat(_ update: UpdateNewChat) {
-        _ = withAnimation {
+        _ = withAnimation(.fastStartSlowStop) {
             allChats.updateOrAppend(update.chat)
         }
     }
@@ -348,7 +332,7 @@ class MainViewModel: ObservableObject {
         if !chatPositions.contains(where: { key, value in
             key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
-            withAnimation {
+            withAnimation(.fastStartSlowStop) {
                 if chatPositions[chatId] == nil {
                     chatPositions[chatId] = []
                 }
