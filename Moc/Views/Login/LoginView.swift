@@ -142,23 +142,22 @@ struct LoginView: View {
             }
             Button("Not really") {}
         }
-        .task {
-            for await update in service.updateStream {
-                if case let .authorizationState(info) = update {
-                    switch info.authorizationState {
-                        case let .waitOtherDeviceConfirmation(info):
-                            self.qrCodeLink = info.link
-                            openedScreen = .qrCode
-                        case .waitRegistration(_):
-                            openedScreen = .registration
-                        case .waitPassword(_):
-                            openedScreen = .twoFACode
-                        case .waitCode(_):
-                            openedScreen = .code
-                        case .ready:
-                            presentationMode.wrappedValue.dismiss()
-                        default: break
-                    }
+        .onReceive(service.updateSubject) { update in
+            if case let .authorizationState(info) = update {
+                // swiftlint:disable empty_enum_arguments
+                switch info.authorizationState {
+                    case let .waitOtherDeviceConfirmation(info):
+                        self.qrCodeLink = info.link
+                        openedScreen = .qrCode
+                    case .waitRegistration(_):
+                        openedScreen = .registration
+                    case .waitPassword(_):
+                        openedScreen = .twoFACode
+                    case .waitCode(_):
+                        openedScreen = .code
+                    case .ready:
+                        presentationMode.wrappedValue.dismiss()
+                    default: break
                 }
             }
         }

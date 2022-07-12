@@ -48,19 +48,19 @@ class ChatViewModel: ObservableObject {
     
     var subscribers: [AnyCancellable] = []
     var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
-    
-    private var updateTask: Task<Void, Swift.Error>?
-    
+        
     init() {
-        updateTask = Task {
-            for await update in service.updateStream {
+        service.updateSubject
+            .receive(on: RunLoop.main)
+            .sink { _ in } receiveValue: { [self] update in
+                // It's a switch-case because it will obviously grow in the future
                 switch update {
                     case let .newMessage(info):
                         updateNewMessage(info)
                     default: break
                 }
             }
-        }
+            .store(in: &subscribers)
     }
     
     deinit {
@@ -82,7 +82,8 @@ class ChatViewModel: ObservableObject {
             .asyncMap { tdMessage in
                 logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 var replyMessage: ReplyMessage?
-                if let id = tdMessage.replyToMessageId, id != 0 {
+                let id = tdMessage.replyToMessageId
+                if id != 0 {
                     let tdReplyMessage = try await self.service.getMessage(by: id)
                     switch tdReplyMessage.senderId {
                         case let .user(user):

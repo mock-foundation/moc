@@ -7,9 +7,10 @@
 
 import TDLibKit
 import Caching
+import Combine
 
 public class MockMainService: MainService {
-    public var updateStream: AsyncStream<TDLibKit.Update> { AsyncStream { _ in } }
+    public var updateSubject = PassthroughSubject<Update, Never>()
     
     public init() { }
     

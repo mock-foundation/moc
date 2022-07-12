@@ -6,12 +6,13 @@
 //
 
 import TDLibKit
+import Combine
 
 public class TdLoginService: LoginService {
     private var tdApi: TdApi = .shared[0]
     
-    public var updateStream: AsyncStream<TDLibKit.Update> {
-        tdApi.client.updateStream
+    public var updateSubject: PassthroughSubject<Update, Never> {
+        tdApi.client.updateSubject
     }
 
     public func resendAuthCode() async throws {

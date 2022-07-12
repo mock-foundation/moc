@@ -93,17 +93,15 @@ struct AccountsPrefView: View {
                 }
             }
         }
-        .task {
-            for await update in viewModel.updateStream {
-                if case let .file(info) = update {
-                    let file = info.file
-                    guard file.id == photoFileId else { return }
-                    
-                    photoLoading = !file.local.isDownloadingCompleted
-                    
-                    if file.local.isDownloadingCompleted {
-                        photos[0] = file
-                    }
+        .onReceive(viewModel.updateSubject) { update in
+            if case let .file(info) = update {
+                let file = info.file
+                guard file.id == photoFileId else { return }
+                
+                photoLoading = !file.local.isDownloadingCompleted
+                
+                if file.local.isDownloadingCompleted {
+                    photos[0] = file
                 }
             }
         }

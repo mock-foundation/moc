@@ -11,6 +11,7 @@ import TDLibKit
 import Resolver
 import Utilities
 import Logs
+import Combine
 
 class AccountsPrefViewModel: ObservableObject {
     var logger = Logs.Logger(category: "Preferences", label: "AccountPaneUI")
@@ -33,7 +34,7 @@ class AccountsPrefViewModel: ObservableObject {
         }
     }
     
-    var updateStream: AsyncStream<Update> { service.updateStream }
+    var updateSubject: PassthroughSubject<Update, Never> { service.updateSubject }
     
     func updateNames() {
         Task {

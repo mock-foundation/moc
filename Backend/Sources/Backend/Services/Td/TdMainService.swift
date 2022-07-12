@@ -8,10 +8,11 @@
 import TDLibKit
 import Caching
 import GRDB
+import Combine
 
 public class TdMainService: MainService {
-    public var updateStream: AsyncStream<TDLibKit.Update> {
-        tdApi.client.updateStream
+    public var updateSubject: PassthroughSubject<Update, Never> {
+        tdApi.client.updateSubject
     }
     
     private var tdApi = TdApi.shared[0]

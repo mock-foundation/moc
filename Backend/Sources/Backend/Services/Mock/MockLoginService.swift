@@ -9,7 +9,7 @@ import Combine
 import TDLibKit
 
 public class MockLoginService: LoginService {
-    public var updateStream: AsyncStream<TDLibKit.Update> { AsyncStream { _ in } }
+    public var updateSubject = PassthroughSubject<Update, Never>()
     
     public func resendAuthCode() async throws { }
     

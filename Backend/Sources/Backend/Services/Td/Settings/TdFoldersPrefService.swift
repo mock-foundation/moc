@@ -8,12 +8,13 @@
 import Caching
 import TDLibKit
 import GRDB
+import Combine
 
 public class TdFoldersPrefService: FoldersPrefService {
     private var tdApi: TdApi = .shared[0]
     
-    public var updateStream: AsyncStream<TDLibKit.Update> {
-        tdApi.client.updateStream
+    public var updateSubject: PassthroughSubject<Update, Never> {
+        tdApi.client.updateSubject
     }
 
     public init() {}

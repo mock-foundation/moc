@@ -132,14 +132,11 @@ class MainViewModel: ObservableObject {
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
-    
-    private var updateTask: Task<Void, Swift.Error>?
 
     init() {
-        updateTask = Task {
-            logger.notice("Update task started")
-            for await update in service.updateStream {
-                logger.debug("Got update")
+        service.updateSubject
+            .receive(on: RunLoop.main)
+            .sink { _ in } receiveValue: { [self] update in
                 switch update {
                     case let .chatPosition(info):
                         updateChatPosition(info)
@@ -168,7 +165,7 @@ class MainViewModel: ObservableObject {
                         break
                 }
             }
-        }
+            .store(in: &subscribers)
         if let filters = try? service.getFilters() {
             logger.debug("Filling chat filter with cached ones: \(filters)")
             chatFilters = filters.map { filter in
@@ -190,6 +187,7 @@ class MainViewModel: ObservableObject {
 //        addSubscriber(for: .authorizationStateClosed, action: authorizationStateClosed(_:))
         NWPathMonitor()
             .publisher(queue: nwPathMonitorQueue)
+            .receive(on: RunLoop.main)
             .sink { value in
                 Task {
                     switch value {
@@ -214,8 +212,7 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    func authorizationStateClosed() {
-    }
+    func authorizationStateClosed() { }
     
     func updateConnectionState(_ update: UpdateConnectionState) {
         logger.debug("UpdateConnectionState")
@@ -376,7 +373,6 @@ class MainViewModel: ObservableObject {
         for subscriber in subscribers {
             subscriber.cancel()
         }
-        updateTask?.cancel()
     }
 }
 

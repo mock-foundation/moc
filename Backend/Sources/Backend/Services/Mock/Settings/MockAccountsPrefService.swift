@@ -6,9 +6,10 @@
 //
 
 import TDLibKit
+import Combine
 
 public class MockAccountsPrefService: AccountsPrefService {
-    public var updateStream: AsyncStream<TDLibKit.Update> { AsyncStream { _ in } }
+    public var updateSubject = PassthroughSubject<Update, Never>()
     
     public func set(firstName _: String, lastName _: String) async throws {}
 

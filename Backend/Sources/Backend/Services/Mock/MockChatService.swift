@@ -8,10 +8,11 @@
 import Resolver
 import TDLibKit
 import Foundation
+import Combine
 
 // swiftlint:disable function_body_length
 public class MockChatService: ChatService {
-    public var updateStream: AsyncStream<TDLibKit.Update> { AsyncStream { _ in } }
+    public var updateSubject = PassthroughSubject<Update, Never>()
 
     public func getMessage(by id: Int64) async throws -> TDLibKit.Message {
         return Message(

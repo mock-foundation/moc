@@ -112,7 +112,6 @@
 		43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF822865183300C0A8EF /* MessageView+Video.swift */; };
 		43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF84286518F900C0A8EF /* MessageView+Album.swift */; };
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
-		43A802C728794FC600309A6A /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43A802C628794FC600309A6A /* TDLibKit */; };
 		43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A9637A2868C8AD0076F5FD /* SkeletonUI */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
@@ -121,6 +120,7 @@
 		43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F499285A58BD009F2419 /* View+SidebarSize.swift */; };
 		43C0F49D285A68ED009F2419 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 43C0F49C285A68ED009F2419 /* Defaults */; };
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
+		43C29C02287D7FEC00D10AB8 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43C29C01287D7FEC00D10AB8 /* TDLibKit */; };
 		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
 		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
@@ -255,7 +255,7 @@
 			files = (
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
-				43A802C728794FC600309A6A /* TDLibKit in Frameworks */,
+				43C29C02287D7FEC00D10AB8 /* TDLibKit in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
@@ -628,7 +628,7 @@
 				43C0F49C285A68ED009F2419 /* Defaults */,
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
-				43A802C628794FC600309A6A /* TDLibKit */,
+				43C29C01287D7FEC00D10AB8 /* TDLibKit */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -691,7 +691,7 @@
 				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
-				43A802C528794FC600309A6A /* XCRemoteSwiftPackageReference "tdlibkit" */,
+				43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1194,14 +1194,6 @@
 				minimumVersion = 0.1.4;
 			};
 		};
-		43A802C528794FC600309A6A /* XCRemoteSwiftPackageReference "tdlibkit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
-			requirement = {
-				kind = exactVersion;
-				version = "2.0.3-1.8.4-d4890143";
-			};
-		};
 		43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
@@ -1216,6 +1208,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.3.0;
+			};
+		};
+		43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
+			requirement = {
+				kind = exactVersion;
+				version = "2.1.1-1.8.4-1dec0e20";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1288,11 +1288,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
 		};
-		43A802C628794FC600309A6A /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43A802C528794FC600309A6A /* XCRemoteSwiftPackageReference "tdlibkit" */;
-			productName = TDLibKit;
-		};
 		43A9637A2868C8AD0076F5FD /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */;
@@ -1302,6 +1297,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
+		};
+		43C29C01287D7FEC00D10AB8 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */;
+			productName = TDLibKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -32,8 +32,6 @@ class FoldersPrefViewModel: ObservableObject {
 
     private var subscribers: [AnyCancellable] = []
     
-    private var updateTask: Task<Void, Swift.Error>?
-
     init() {
         DispatchQueue.main.async {
             Task {
@@ -46,8 +44,9 @@ class FoldersPrefViewModel: ObservableObject {
                 }
             }
         }
-        updateTask = Task {
-            for await update in service.updateStream {
+        service.updateSubject
+            .receive(on: RunLoop.main)
+            .sink { _ in } receiveValue: { update in
                 switch update {
                     case let .chatFilters(info):
                         DispatchQueue.main.async {
@@ -61,7 +60,7 @@ class FoldersPrefViewModel: ObservableObject {
                     default: break
                 }
             }
-        }
+            .store(in: &subscribers)
     }
 
     func getFolder(by id: Int) async throws -> TDLibKit.ChatFilter {

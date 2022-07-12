@@ -112,12 +112,10 @@ struct ChatItemView: View {
                 }
             }
         }
-        .task {
-            for await update in TdApi.shared[0].client.updateStream {
-                if case let .chatLastMessage(info) = update {
-                    if info.chatId == chat.id {
-                        lastMessage = info.lastMessage
-                    }
+        .onReceive(TdApi.shared[0].client.updateSubject) { update in
+            if case let .chatLastMessage(info) = update {
+                if info.chatId == chat.id {
+                    lastMessage = info.lastMessage
                 }
             }
         }

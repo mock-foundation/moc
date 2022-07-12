@@ -16,8 +16,8 @@ import UniformTypeIdentifiers
 
 // swiftlint:disable type_body_length function_body_length
 public class TdChatService: ChatService {
-    public var updateStream: AsyncStream<TDLibKit.Update> {
-        tdApi.client.updateStream
+    public var updateSubject: PassthroughSubject<Update, Never> {
+        tdApi.client.updateSubject
     }
     
     public func getMessage(by id: Int64) async throws -> Message {

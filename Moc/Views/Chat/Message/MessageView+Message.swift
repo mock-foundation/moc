@@ -40,12 +40,10 @@ extension MessageView {
             .frame(maxWidth: 350, alignment: message.first!.isOutgoing ? .trailing : .leading)
             if !message.first!.isOutgoing { Spacer() }
         }
-        .task {
-            for await update in tdApi.client.updateStream {
-                if case let .file(info) = update {
-                    if info.file.id == senderPhotoFileID {
-                        senderPhotoFileID = info.file.id
-                    }
+        .onReceive(tdApi.client.updateSubject) { update in
+            if case let .file(info) = update {
+                if info.file.id == senderPhotoFileID {
+                    senderPhotoFileID = info.file.id
                 }
             }
         }
