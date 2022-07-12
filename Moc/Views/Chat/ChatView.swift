@@ -17,6 +17,7 @@ import Logs
 struct ChatView: View {
     @InjectedObject var viewModel: ChatViewModel
     @FocusState var isInputFieldFocused
+
     
     let logger = Logger(category: "ChatView", label: "UI")
     

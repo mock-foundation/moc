@@ -45,6 +45,7 @@ class ChatViewModel: ObservableObject {
     @Published var chatMemberCount: Int?
     @Published var chatPhoto: File?
     @Published var isChannel = false
+    @Published var isEmojiVisible = false
     
     var subscribers: [AnyCancellable] = []
     var logger = Logs.Logger(category: "ChatViewModel", label: "UI")

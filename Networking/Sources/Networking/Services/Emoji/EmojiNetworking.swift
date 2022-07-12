@@ -36,10 +36,10 @@ extension EmojiEndpoints: Endpoint {
         }
     }
 
-    var body: [String: String] {
+    var body: [String: String]? {
         switch self {
         case .name:
-            return [:]
+            return nil
         }
     }
 }

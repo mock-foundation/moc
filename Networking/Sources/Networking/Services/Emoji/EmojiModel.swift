@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: - Emoji
 public struct Emoji: Codable {
-    let totals: Int
-    let subCategories: [SubCategory]
+    public let totals: Int
+    public let subCategories: [SubCategory]
     
     enum CodingKeys: String, CodingKey {
         case subCategories = "results"
@@ -19,11 +19,11 @@ public struct Emoji: Codable {
 }
 
 // MARK: - SubCategory
-struct SubCategory: Codable {
-    let id: Int
-    let name, emoji, unicode: String
-    let category, subCategory: Category
-    let children: [Child]
+public struct SubCategory: Codable {
+    public let id: Int
+    public let name, emoji, unicode: String
+    public let category, subCategory: Category
+    public let children: [Child]
 
     enum CodingKeys: String, CodingKey {
         case id, name, emoji, unicode, category
@@ -33,13 +33,13 @@ struct SubCategory: Codable {
 }
 
 // MARK: - Category
-struct Category: Codable {
-    let id: Int
-    let name: String
+public struct Category: Codable {
+    public let id: Int
+    public let name: String
 }
 
 // MARK: - Child
-struct Child: Codable {
-    let id: Int
-    let name, emoji, unicode: String
+public struct Child: Codable {
+    public let id: Int
+    public let name, emoji, unicode: String
 }

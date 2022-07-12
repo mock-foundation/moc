@@ -15,6 +15,7 @@ public protocol EmojiServiceable {
 }
 
 public struct EmojiService: HTTPClient, EmojiServiceable {
+    public init() {}
     public func getEmoji(
         _ name: String,
         _ length: String

@@ -121,8 +121,13 @@ extension ChatView {
                         self.isInputFieldFocused = true
                     }
                 }
-                Image(systemName: "face.smiling")
-                    .font(.system(size: 16))
+                Button {
+                    viewModel.isEmojiVisible = true
+                } label: {
+                    Image(systemName: "face.smiling")
+                        .font(.system(size: 16))
+                }
+                .buttonStyle(.plain)
                 if viewModel.inputMessage.isEmpty && viewModel.inputMedia.isEmpty {
                     Image(systemName: "mic")
                         .font(.system(size: 16))
@@ -148,6 +153,11 @@ extension ChatView {
                 }
             }
         }
+        .popover(isPresented: $viewModel.isEmojiVisible, content: {
+            EmojiStickerGIFView()
+                .frame(width: 300, height: 300)
+        })
+        
         .onChange(of: isInputFieldFocused) { value in
             viewModel.isHideKeyboardButtonShown = value
         }
@@ -156,4 +166,5 @@ extension ChatView {
         .animation(.spring(dampingFraction: 0.7), value: viewModel.inputMedia)
         .animation(.spring(dampingFraction: 0.7), value: viewModel.isHideKeyboardButtonShown)
     }
+    
 }

@@ -28,8 +28,9 @@ public extension HTTPClient {
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.header
         
-         let body = endpoint.body
+        if let body = endpoint.body {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        }
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)

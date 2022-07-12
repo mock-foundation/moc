@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		2D229DCF28759E000056A294 /* EmojiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D229DCE28759E000056A294 /* EmojiViewModel.swift */; };
 		2D229DD7287606710056A294 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 2D229DD6287606710056A294 /* Networking */; };
+		2D388773287DE7A30025AB65 /* EmojiStickerGIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388772287DE7A30025AB65 /* EmojiStickerGIFView.swift */; };
+		2D388775287DE8FA0025AB65 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388774287DE8FA0025AB65 /* EmojiView.swift */; };
+		2D388777287DE90A0025AB65 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388776287DE90A0025AB65 /* StickerView.swift */; };
+		2D388779287DE9170025AB65 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388778287DE9170025AB65 /* GIFView.swift */; };
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
 		43016AA92842DE3000C219B4 /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 43016AA82842DE3000C219B4 /* Caching */; };
 		43051C8C287791D0003C5CE2 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43051C8B287791D0003C5CE2 /* RoundedCorners.swift */; };
@@ -140,6 +144,10 @@
 /* Begin PBXFileReference section */
 		2D229DCE28759E000056A294 /* EmojiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiViewModel.swift; sourceTree = "<group>"; };
 		2D229DD22875FC010056A294 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
+		2D388772287DE7A30025AB65 /* EmojiStickerGIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiStickerGIFView.swift; sourceTree = "<group>"; };
+		2D388774287DE8FA0025AB65 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
+		2D388776287DE90A0025AB65 /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
+		2D388778287DE9170025AB65 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFView.swift; sourceTree = "<group>"; };
 		43008543283B59D500ED5961 /* Image+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+File.swift"; sourceTree = "<group>"; };
 		43016AA72842CDF800C219B4 /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
 		43051C8B287791D0003C5CE2 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
@@ -289,6 +297,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D388771287DE7230025AB65 /* EmojiStickerGIF */ = {
+			isa = PBXGroup;
+			children = (
+				2D388772287DE7A30025AB65 /* EmojiStickerGIFView.swift */,
+				2D388774287DE8FA0025AB65 /* EmojiView.swift */,
+				2D388776287DE90A0025AB65 /* StickerView.swift */,
+				2D388778287DE9170025AB65 /* GIFView.swift */,
+			);
+			path = EmojiStickerGIF;
+			sourceTree = "<group>";
+		};
 		43008542283B59C200ED5961 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +473,7 @@
 		43807D6327E213350056A3D3 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				2D388771287DE7230025AB65 /* EmojiStickerGIF */,
 				43807D6827E213350056A3D3 /* ChatView.swift */,
 				43051C9128779363003C5CE2 /* ChatView+Inspector.swift */,
 				43051C8D28779218003C5CE2 /* ChatView+InputField.swift */,
@@ -789,6 +809,7 @@
 				432AF5622874AF3800272AEF /* MessageContent+Preview.swift in Sources */,
 				43807D9627E213350056A3D3 /* LoginView.swift in Sources */,
 				43807D9527E213350056A3D3 /* ChatView.swift in Sources */,
+				2D388773287DE7A30025AB65 /* EmojiStickerGIFView.swift in Sources */,
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
 				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
@@ -833,6 +854,7 @@
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
 				43051C9B28779AE2003C5CE2 /* ChatViewModel+Updates.swift in Sources */,
+				2D388779287DE9170025AB65 /* GIFView.swift in Sources */,
 				438B2283285E3098000D65C8 /* BackportedGradient.swift in Sources */,
 				43A0AF7F2864DFA500C0A8EF /* Shake.swift in Sources */,
 				439BA4302863C57000339375 /* LoginView+Registration.swift in Sources */,
@@ -841,6 +863,8 @@
 				43807D9F27E213350056A3D3 /* TDLibKit+Protocols.swift in Sources */,
 				439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */,
 				433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */,
+				2D388777287DE90A0025AB65 /* StickerView.swift in Sources */,
+				2D388775287DE8FA0025AB65 /* EmojiView.swift in Sources */,
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
 				43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */,
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
@@ -1001,7 +1025,7 @@
 				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "Moc/Preview\\ Assets.xcassets";
-				DEVELOPMENT_TEAM = 9H3XZRTVLY;
+				DEVELOPMENT_TEAM = FQ887UV32J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1043,7 +1067,7 @@
 				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "Moc/Preview\\ Assets.xcassets";
-				DEVELOPMENT_TEAM = 9H3XZRTVLY;
+				DEVELOPMENT_TEAM = FQ887UV32J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
