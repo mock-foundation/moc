@@ -125,6 +125,7 @@
 		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
 		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
+		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +248,7 @@
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -300,7 +302,6 @@
 				43C0F499285A58BD009F2419 /* View+SidebarSize.swift */,
 				43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */,
 				438B2282285E3098000D65C8 /* BackportedGradient.swift */,
-				439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */,
 				432AF5612874AF3800272AEF /* MessageContent+Preview.swift */,
 				43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */,
 			);
@@ -378,6 +379,7 @@
 		43807CF727E1FCEC0056A3D3 /* Moc */ = {
 			isa = PBXGroup;
 			children = (
+				43F7C502287DCF8B0083E9E9 /* Keys */,
 				43C0F49E285A6997009F2419 /* Settings */,
 				43008542283B59C200ED5961 /* Utils */,
 				43807D4A27E213350056A3D3 /* Models */,
@@ -597,6 +599,15 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		43F7C502287DCF8B0083E9E9 /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */,
+				43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -759,6 +770,7 @@
 				43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */,
 				4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */,
 				43807D8B27E213350056A3D3 /* StickersPrefView.swift in Sources */,
+				43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */,
 				438B2285285E558F000D65C8 /* ProfilePlaceholderView.swift in Sources */,
 				436707212861A8A500587A63 /* QuickLookPreviewItem.swift in Sources */,
 				43807D9827E213350056A3D3 /* LottieView.swift in Sources */,
