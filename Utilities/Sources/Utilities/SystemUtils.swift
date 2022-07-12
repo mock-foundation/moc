@@ -6,6 +6,7 @@ import UIKit
 import AVFoundation
 #endif
 import Foundation
+import MacModels
 
 public enum SystemUtils {
     private static let notificationQueue = DispatchQueue.main
@@ -32,7 +33,7 @@ public enum SystemUtils {
 
     #if os(macOS)
     // Thanks to https://www.reddit.com/r/swift/comments/gwf9fa/how_do_i_find_the_model_of_the_mac_in_swift/
-    public static var deviceModel: String {
+    public static func getDeviceModel() async -> String {
         // Get device identifier
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
         var modelIdentifier: String?
@@ -54,29 +55,13 @@ public enum SystemUtils {
         }
 
         // And then find a corresponding marketing name using the identifier
-        let serverInfoBundle = Bundle(path: "/System/Library/PrivateFrameworks/ServerInformation.framework/")
-        let sysInfoFile = serverInfoBundle?.url(forResource: "SIMachineAttributes", withExtension: "plist")
-        let plist = NSDictionary(contentsOfFile: sysInfoFile!.path)
-
-        let modelDict = plist![modelIdentifier!] as? NSDictionary
-
-        if modelDict == nil {
+        let model = await MacModels.getDevice(by: modelIdentifier!) // Force unwrap because it is guaranteed that it will not be nil
+        
+        if let model = model {
+            return model.name
+        } else {
             return modelIdentifier!
         }
-
-        let modelInfo = modelDict!["_LOCALIZABLE"] as? NSDictionary
-
-        if modelInfo == nil {
-            return modelIdentifier!
-        }
-
-        let model = modelInfo!["marketingModel"] as? String
-
-        if model == nil {
-            return modelIdentifier!
-        }
-
-        return model!
     }
     #elseif os(iOS)
     // Thanks https://www.zerotoappstore.com/how-to-get-iphone-device-model-swift.html

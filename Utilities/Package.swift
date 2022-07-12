@@ -13,10 +13,12 @@ let package = Package(
             name: "Utilities",
             targets: ["Utilities"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/mock-foundation/macmodels.git", from: "2022.07.12")
+    ],
     targets: [
         .target(
             name: "Utilities",
-            dependencies: [])
+            dependencies: [.product(name: "MacModels", package: "macmodels")])
     ]
 )
