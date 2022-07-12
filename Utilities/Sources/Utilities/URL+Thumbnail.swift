@@ -33,7 +33,7 @@ public extension URL {
             #if os(macOS)
             return NSImage(systemSymbolName: "exclamationmark.circle", accessibilityDescription: nil)!
             #elseif os(iOS)
-            return UIImage(systemName: "exclamationmark.circle")
+            return UIImage(systemName: "exclamationmark.circle")!
             #endif
         }
                 
