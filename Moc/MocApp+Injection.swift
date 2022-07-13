@@ -93,9 +93,7 @@ struct MocApp: App {
         
         #if os(macOS)
         aboutWindow
-        #endif
-
-        #if os(macOS)
+        
         Settings {
             SettingsContent()
         }

@@ -97,6 +97,7 @@
 		438B2283285E3098000D65C8 /* BackportedGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2282285E3098000D65C8 /* BackportedGradient.swift */; };
 		438B2285285E558F000D65C8 /* ProfilePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */; };
 		438B2287285E55B3000D65C8 /* PlaceholderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B2286285E55B3000D65C8 /* PlaceholderStyle.swift */; };
+		438CFBAB287F6ECE005B9990 /* SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438CFBAA287F6ECE005B9990 /* SidebarSize.swift */; };
 		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
 		439BA4252863BBBC00339375 /* ChatListItemSelectedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */; };
@@ -224,6 +225,7 @@
 		438B2282285E3098000D65C8 /* BackportedGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackportedGradient.swift; sourceTree = "<group>"; };
 		438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlaceholderView.swift; sourceTree = "<group>"; };
 		438B2286285E55B3000D65C8 /* PlaceholderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderStyle.swift; sourceTree = "<group>"; };
+		438CFBAA287F6ECE005B9990 /* SidebarSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSize.swift; sourceTree = "<group>"; };
 		4396B1502859E904004109AE /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabLabelStyle.swift; sourceTree = "<group>"; };
 		439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListItemSelectedKey.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				43807D4F27E213350056A3D3 /* ChatType.swift */,
 				43ABC05C28500648009F529E /* ChatFolder.swift */,
 				4371AC162873126A0081776F /* ReplyMessage.swift */,
+				438CFBAA287F6ECE005B9990 /* SidebarSize.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -799,6 +802,7 @@
 				4371AC172873126A0081776F /* ReplyMessage.swift in Sources */,
 				43807DA127E213350056A3D3 /* ChatViewModel.swift in Sources */,
 				43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */,
+				438CFBAB287F6ECE005B9990 /* SidebarSize.swift in Sources */,
 				439BA4252863BBBC00339375 /* ChatListItemSelectedKey.swift in Sources */,
 				43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */,
 				43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */,
@@ -1043,7 +1047,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = "0.2.0 Debug";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1085,7 +1089,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = "0.2.0 ";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
