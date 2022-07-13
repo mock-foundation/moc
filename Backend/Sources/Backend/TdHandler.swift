@@ -79,7 +79,7 @@ public extension TdApi {
                                         useTestDc: false
                                     ))
                                 }
-                            case .waitEncryptionKey(_):
+                            case .waitEncryptionKey:
                                 Task {
                                     try? await self.checkDatabaseEncryptionKey(
                                         encryptionKey: Data()
