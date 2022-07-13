@@ -15,6 +15,7 @@ import OrderedCollections
 import Backend
 import Caching
 import Network
+import Defaults
 
 class MainViewModel: ObservableObject {
     @Injected var service: MainService
@@ -128,6 +129,8 @@ class MainViewModel: ObservableObject {
     }
 
     @Published var showingLoginScreen = false
+    
+    @Published var sidebarSize: SidebarSize = .medium
 
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
@@ -164,6 +167,12 @@ class MainViewModel: ObservableObject {
                     default:
                         break
                 }
+            }
+            .store(in: &subscribers)
+        Defaults.publisher(.sidebarSize)
+            .sink { value in
+                self.logger.debug("Received sidebar size update, new value: \(value.newValue)")
+                self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
             }
             .store(in: &subscribers)
         if let filters = try? service.getFilters() {

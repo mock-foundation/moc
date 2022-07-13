@@ -5,8 +5,8 @@
 //  Created by Егор Яковенко on 14.07.2022.
 //
 
-enum SidebarSize {
-    case small
-    case medium
-    case large
+enum SidebarSize: Int {
+    case small = 1
+    case medium = 2
+    case large = 3
 }
