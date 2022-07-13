@@ -82,10 +82,10 @@ public enum SystemUtils {
         var systemVersionCodename: String {
             let version = ProcessInfo().operatingSystemVersion.majorVersion
             switch version {
-            case 11:
-                return "macOS 11 Big Sur"
-            case 12:
-                return "macOS 12 Monterey"
+                case 12:
+                    return "macOS 12 Monterey"
+                case 13:
+                    return "macOS 13 Ventura"
             default:
                 return "macOS \(version)"
             }
