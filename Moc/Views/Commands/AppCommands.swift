@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppCommands: Commands {
+struct AppCommands: Commands {    
     var body: some Commands {
         CommandGroup(after: .appSettings) {
             Button(action: {
