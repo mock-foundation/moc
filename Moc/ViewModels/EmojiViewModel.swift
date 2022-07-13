@@ -31,6 +31,7 @@ class EmojiViewModel: ObservableObject {
             let searchText = self.emojiSearch.isEmpty ? "smile" : self.emojiSearch
             do {
                 let result = try await emojiService.getEmoji(searchText, "50")
+                self.emoji = []
                _ =  result.subCategories.map { item in
                     self.emoji.append(item)
                 }

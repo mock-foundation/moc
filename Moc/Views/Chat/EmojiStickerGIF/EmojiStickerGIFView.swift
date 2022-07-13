@@ -11,18 +11,37 @@ import Networking
 struct EmojiStickerGIFView: View {
     
     @StateObject private var emojiViewModel: EmojiViewModel
-
+    @State private var viewIndex = 0
+    
     init() {
         _emojiViewModel = StateObject(wrappedValue: EmojiViewModel(emojiService: EmojiService()))
     }
-
+    
     
     var body: some View {
-        TabView {
-            EmojiView(viewModel: emojiViewModel)
-                .tabItem {
-                    Image(systemName: "face.smiling")
+        ZStack {
+            checkPicker
+                .safeAreaInset(edge: .bottom) {
+                    Picker("", selection: $viewIndex) {
+                        Image(systemName: "face.smiling")
+                        Image(systemName: "face.smiling")
+                        Image(systemName: "face.smiling")
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal, 30)
                 }
+        }
+    }
+    @ViewBuilder private var checkPicker: some View {
+        ZStack{
+            switch viewIndex {
+            case 0:
+                EmojiView(viewModel: emojiViewModel)
+            case 1:
+                EmptyView()
+            default:
+                EmojiView(viewModel: emojiViewModel)
+            }
         }
     }
 }

@@ -13,6 +13,7 @@
 		2D388775287DE8FA0025AB65 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388774287DE8FA0025AB65 /* EmojiView.swift */; };
 		2D388777287DE90A0025AB65 /* StickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388776287DE90A0025AB65 /* StickerView.swift */; };
 		2D388779287DE9170025AB65 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D388778287DE9170025AB65 /* GIFView.swift */; };
+		2D6EE0FB287F6A5E0009D52C /* CustomPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EE0FA287F6A5E0009D52C /* CustomPicker.swift */; };
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
 		43016AA92842DE3000C219B4 /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 43016AA82842DE3000C219B4 /* Caching */; };
 		43051C8C287791D0003C5CE2 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43051C8B287791D0003C5CE2 /* RoundedCorners.swift */; };
@@ -151,6 +152,7 @@
 		2D388774287DE8FA0025AB65 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		2D388776287DE90A0025AB65 /* StickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerView.swift; sourceTree = "<group>"; };
 		2D388778287DE9170025AB65 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFView.swift; sourceTree = "<group>"; };
+		2D6EE0FA287F6A5E0009D52C /* CustomPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPicker.swift; sourceTree = "<group>"; };
 		43008543283B59D500ED5961 /* Image+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+File.swift"; sourceTree = "<group>"; };
 		43016AA72842CDF800C219B4 /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
 		43051C8B287791D0003C5CE2 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				2D388774287DE8FA0025AB65 /* EmojiView.swift */,
 				2D388776287DE90A0025AB65 /* StickerView.swift */,
 				2D388778287DE9170025AB65 /* GIFView.swift */,
+				2D6EE0FA287F6A5E0009D52C /* CustomPicker.swift */,
 			);
 			path = EmojiStickerGIF;
 			sourceTree = "<group>";
@@ -800,6 +803,7 @@
 			files = (
 				4312154B2858C2CF009EFEB5 /* GenerateQRCode.swift in Sources */,
 				43A0AF812865173B00C0A8EF /* AsyncTdVideoPlayer.swift in Sources */,
+				2D6EE0FB287F6A5E0009D52C /* CustomPicker.swift in Sources */,
 				43807DA227E213350056A3D3 /* MainViewModel.swift in Sources */,
 				43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */,
 				4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */,
