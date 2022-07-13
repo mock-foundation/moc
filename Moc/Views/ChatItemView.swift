@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Utilities
 import Backend
+import Defaults
 
 extension Foundation.Date {
     var hoursAndMinutes: String {
@@ -22,6 +23,7 @@ struct ChatItemView: View {
     let chat: Chat
     
     @State private var lastMessage: TDLibKit.Message?
+    @State private var sidebarSize: SidebarSize = .medium
     
     @Environment(\.isChatListItemSelected) var isSelected
     
@@ -62,12 +64,11 @@ struct ChatItemView: View {
             }
             VStack(alignment: .leading) {
                 HStack {
-                    // swiftlint:disable empty_enum_arguments switch_case_alignment
                     Group {
                         switch chat.type {
-                            case .private(_):
+                            case .private:
                                 EmptyView()
-                            case .basicGroup(_):
+                            case .basicGroup:
                                 Image(systemName: "person.2")
                             case .supergroup(let info):
                                 if info.isChannel {
@@ -75,7 +76,7 @@ struct ChatItemView: View {
                                 } else {
                                     Image(systemName: "person.2.fill")
                                 }
-                            case .secret(_):
+                            case .secret:
                                 Image(systemName: "lock")
                         }
                     }
@@ -118,6 +119,9 @@ struct ChatItemView: View {
                     lastMessage = info.lastMessage
                 }
             }
+        }
+        .onReceive(Defaults.publisher(.sidebarSize)) { value in
+            sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
         }
     }
 }
