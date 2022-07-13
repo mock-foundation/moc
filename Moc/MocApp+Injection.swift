@@ -46,6 +46,7 @@ struct MocApp: App {
         TdApi.shared[0].startTdLibUpdateHandler()
     }
     
+    #if os(macOS)
     var aboutWindow: some Scene {
         if #available(macOS 13, *) {
             return WindowGroup(id: "about") {
@@ -64,6 +65,7 @@ struct MocApp: App {
             }.handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
     }
+    #endif
     
     var aboutCommand: some Commands {
         if #available(macOS 13.0, *) {
