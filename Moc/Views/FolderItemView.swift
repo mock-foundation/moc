@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Utilities
+import Defaults
+import Combine
 
 struct FolderItemView<Icon: View>: View {
     let name: String
@@ -15,6 +17,8 @@ struct FolderItemView<Icon: View>: View {
     let horizontal: Bool
     
     @State private var backgroundColor: Color = .clear
+    @State private var sidebarSize: SidebarSize = .medium
+
     private let selectedColor = Color("FolderItemSelectedColor")
     
     init(
@@ -39,12 +43,17 @@ struct FolderItemView<Icon: View>: View {
     private var content: some View {
         if horizontal {
             HStack {
-                Label {
+                let label = Label {
                     Text(name)
                         .lineLimit(1)
                         .fixedSize()
                 } icon: {
                     icon
+                }
+                if sidebarSize != .medium {
+                    label.font(.system(size: sidebarSize == .small ? 10 : 18))
+                } else {
+                    label
                 }
                 if unreadCount != 0 {
                     counter
@@ -67,13 +76,19 @@ struct FolderItemView<Icon: View>: View {
                 }
             }
         } else {
-            VStack {
-                icon
-                    .font(.system(size: 22))
-                Text(name)
+            let stack = VStack {
+                if sidebarSize != .medium {
+                    icon
+                        .font(.system(size: sidebarSize == .small ? 16 : 26))
+                    Text(name)
+                        .font(.system(size: sidebarSize == .small ? 10 : 18))
+                } else {
+                    icon
+                        .font(.system(size: 22))
+                    Text(name)
+                }
             }
             .padding(.vertical, 8)
-            .frame(width: 80, height: 64)
             .onHover { isHovered in
                 if isHovered {
                     backgroundColor = Color("OnHoverColor")
@@ -81,34 +96,45 @@ struct FolderItemView<Icon: View>: View {
                     backgroundColor = Color.clear
                 }
             }
+            
+            if sidebarSize != .medium {
+                stack.frame(width: 80, height: sidebarSize == .small ? 45 : 75)
+            } else {
+                stack.frame(width: 80, height: 64)
+            }
         }
     }
     
     var body: some View {
-        if unreadCount != 0 {
-            if !horizontal {
-                content
-                    .reverseMask(alignment: .topTrailing) {
-                        counter
-                            .background(Capsule(style: .continuous)
-                                .fill(.black))
-                            .vTop()
-                            .hTrailing()
-                    }
-                    .overlay(
-                        counter
-                            .background(Capsule(style: .continuous)
-                                .fill(Color.accentColor)
-                                .padding(4)
-                            ), alignment: .topTrailing)
-                    .background(backgroundColor)
+        Group {
+            if unreadCount != 0 {
+                if !horizontal {
+                    content
+                        .reverseMask(alignment: .topTrailing) {
+                            counter
+                                .background(Capsule(style: .continuous)
+                                    .fill(.black))
+                                .vTop()
+                                .hTrailing()
+                        }
+                        .overlay(
+                            counter
+                                .background(Capsule(style: .continuous)
+                                    .fill(Color.accentColor)
+                                    .padding(4)
+                                ), alignment: .topTrailing)
+                        .background(backgroundColor)
+                } else {
+                    content
+                        .background(backgroundColor)
+                }
             } else {
                 content
                     .background(backgroundColor)
             }
-        } else {
-            content
-                .background(backgroundColor)
+        }
+        .onReceive(Defaults.publisher(.sidebarSize)) { value in
+            sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
         }
     }
 }

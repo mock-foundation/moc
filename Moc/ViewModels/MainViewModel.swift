@@ -130,8 +130,6 @@ class MainViewModel: ObservableObject {
 
     @Published var showingLoginScreen = false
     
-    @Published var sidebarSize: SidebarSize = .medium
-
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
@@ -167,12 +165,6 @@ class MainViewModel: ObservableObject {
                     default:
                         break
                 }
-            }
-            .store(in: &subscribers)
-        Defaults.publisher(.sidebarSize)
-            .sink { value in
-                self.logger.debug("Received sidebar size update, new value: \(value.newValue)")
-                self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
             }
             .store(in: &subscribers)
         if let filters = try? service.getFilters() {
