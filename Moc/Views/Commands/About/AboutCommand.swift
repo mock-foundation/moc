@@ -23,7 +23,7 @@ struct BackportedAboutCommand: Commands {
     }
 }
 
-@available(macOS 13.0, *)
+@available(macOS 13, *)
 struct AboutCommand: Commands {
     @Environment(\.openWindow) private var openWindow
 
