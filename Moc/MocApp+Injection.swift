@@ -54,15 +54,18 @@ struct MocApp: App {
             .defaultPosition(.top)
             .defaultSize(width: 500, height: 300)
             .windowResizability(.contentSize)
-//            .windowToolbarStyle(.unifiedCompact(showsTitle: false))
             .windowStyle(.hiddenTitleBar)
         } else {
             return WindowGroup(id: "about", content: { EmptyView() })
         }
     }
     
-    var mainWindowGroup: some Scene {
-        let group = WindowGroup {
+    var aboutCommand: some Commands {
+            return AboutCommand()
+    }
+    
+    var body: some Scene {
+        WindowGroup {
             ContentView()
         }
         .onChange(of: scenePhase) { phase in
@@ -72,26 +75,14 @@ struct MocApp: App {
                     value: .boolean(.init(value: phase == .active)))
             }
         }
-        
-        if #available(macOS 13, *) {
-            return group
-                .commands {
-                    AboutCommand()
-                    AppCommands()
-                }
-        } else {
-            return group
-                .commands {
-                    AppCommands()
-                }
+        .commands {
+            aboutCommand
+            AppCommands()
         }
-    }
-    
-    var body: some Scene {
+        
         #if os(macOS)
         aboutWindow
         #endif
-        mainWindowGroup
 
         #if os(macOS)
         Settings {
