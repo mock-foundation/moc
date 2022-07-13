@@ -56,12 +56,21 @@ struct MocApp: App {
             .windowResizability(.contentSize)
             .windowStyle(.hiddenTitleBar)
         } else {
-            return WindowGroup(id: "about", content: { EmptyView() })
+            return WindowGroup(id: "about") {
+                AboutView()
+                    .onOpenURL { url in
+                        print(url)
+                    }
+            }.handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
     }
     
     var aboutCommand: some Commands {
+        if #available(macOS 13.0, *) {
             return AboutCommand()
+        } else {
+            return BackportedAboutCommand()
+        }
     }
     
     var body: some Scene {
