@@ -33,7 +33,6 @@ public extension Resolver {
     }
 }
 
-// swiftlint:disable weak_delegate
 @main
 struct MocApp: App {
     @Environment(\.scenePhase) var scenePhase
@@ -46,13 +45,25 @@ struct MocApp: App {
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
     }
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+    
+    var aboutWindow: some Scene {
+        if #available(macOS 13, *) {
+            return WindowGroup(id: "about") {
+                AboutView()
+            }
+            .defaultPosition(.top)
+            .defaultSize(width: 500, height: 300)
+            .windowResizability(.contentSize)
+//            .windowToolbarStyle(.unifiedCompact(showsTitle: false))
+            .windowStyle(.hiddenTitleBar)
+        } else {
+            return WindowGroup(id: "about", content: { EmptyView() })
         }
-        .commands {
-            AppCommands()
+    }
+    
+    var mainWindowGroup: some Scene {
+        let group = WindowGroup {
+            ContentView()
         }
         .onChange(of: scenePhase) { phase in
             Task {
@@ -61,6 +72,26 @@ struct MocApp: App {
                     value: .boolean(.init(value: phase == .active)))
             }
         }
+        
+        if #available(macOS 13, *) {
+            return group
+                .commands {
+                    AboutCommand()
+                    AppCommands()
+                }
+        } else {
+            return group
+                .commands {
+                    AppCommands()
+                }
+        }
+    }
+    
+    var body: some Scene {
+        #if os(macOS)
+        aboutWindow
+        #endif
+        mainWindowGroup
 
         #if os(macOS)
         Settings {
