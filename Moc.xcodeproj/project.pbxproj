@@ -47,6 +47,7 @@
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
+		4371D154287F059100337533 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371D153287F059100337533 /* AboutView.swift */; };
 		437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */; platformFilter = ios; };
 		43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D0A27E1FCEF0056A3D3 /* MocTests.swift */; };
 		43807D7E27E213350056A3D3 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D4B27E213350056A3D3 /* MessageSender.swift */; };
@@ -105,6 +106,7 @@
 		439BA42E2863C4DF00339375 /* LoginView+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA42D2863C4DF00339375 /* LoginView+QRCode.swift */; };
 		439BA4302863C57000339375 /* LoginView+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA42F2863C57000339375 /* LoginView+Registration.swift */; };
 		439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4312863C5BA00339375 /* LoginView+2FACode.swift */; };
+		439E0E27287EE06900013A0F /* AboutCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E0E24287EDEE700013A0F /* AboutCommand.swift */; };
 		439F35EF28736E9800EE1ED7 /* MessageView+Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F35EE28736E9800EE1ED7 /* MessageView+Reply.swift */; };
 		43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */; platformFilters = (macos, ); };
 		43A0AF7F2864DFA500C0A8EF /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7E2864DFA500C0A8EF /* Shake.swift */; };
@@ -172,6 +174,7 @@
 		4367072C28622CD700587A63 /* MessageView+Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Bubble.swift"; sourceTree = "<group>"; };
 		4367072E28622D0400587A63 /* MessageView+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Message.swift"; sourceTree = "<group>"; };
 		4371AC162873126A0081776F /* ReplyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyMessage.swift; sourceTree = "<group>"; };
+		4371D153287F059100337533 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
 		43807CF527E1FCEC0056A3D3 /* Moc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43807D0627E1FCEF0056A3D3 /* MocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +233,7 @@
 		439BA42D2863C4DF00339375 /* LoginView+QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+QRCode.swift"; sourceTree = "<group>"; };
 		439BA42F2863C57000339375 /* LoginView+Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+Registration.swift"; sourceTree = "<group>"; };
 		439BA4312863C5BA00339375 /* LoginView+2FACode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+2FACode.swift"; sourceTree = "<group>"; };
+		439E0E24287EDEE700013A0F /* AboutCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCommand.swift; sourceTree = "<group>"; };
 		439F35EE28736E9800EE1ED7 /* MessageView+Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Reply.swift"; sourceTree = "<group>"; };
 		43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewAccessor.swift; sourceTree = "<group>"; };
 		43A0AF7E2864DFA500C0A8EF /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
@@ -486,6 +490,7 @@
 		43807D6C27E213350056A3D3 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
+				439E0E23287EDEDC00013A0F /* About */,
 				43807D6D27E213350056A3D3 /* AppCommands.swift */,
 			);
 			path = Commands;
@@ -566,6 +571,15 @@
 				439BA4312863C5BA00339375 /* LoginView+2FACode.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		439E0E23287EDEDC00013A0F /* About */ = {
+			isa = PBXGroup;
+			children = (
+				439E0E24287EDEE700013A0F /* AboutCommand.swift */,
+				4371D153287F059100337533 /* AboutView.swift */,
+			);
+			path = About;
 			sourceTree = "<group>";
 		};
 		43C0F49E285A6997009F2419 /* Settings */ = {
@@ -826,6 +840,7 @@
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
 				43051C9228779363003C5CE2 /* ChatView+Inspector.swift in Sources */,
 				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
+				439E0E27287EE06900013A0F /* AboutCommand.swift in Sources */,
 				4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */,
 				4388DC0B2875765100B0A57B /* AsyncTdFileThumbnail.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
@@ -854,6 +869,7 @@
 				439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */,
 				433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */,
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
+				4371D154287F059100337533 /* AboutView.swift in Sources */,
 				43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */,
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
 				43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */,
