@@ -130,6 +130,8 @@ class MainViewModel: ObservableObject {
 
     @Published var showingLoginScreen = false
     
+    @Published var sidebarSize: SidebarSize = .medium
+    
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
@@ -177,6 +179,11 @@ class MainViewModel: ObservableObject {
             logger.debug("There was an issue retrieving cached chat filters (maybe empty?), using empty OrderedSet")
             chatFilters = []
         }
+        Defaults.publisher(.sidebarSize)
+            .sink {
+                self.sidebarSize = SidebarSize(rawValue: $0.newValue) ?? .medium
+            }
+            .store(in: &subscribers)
         NWPathMonitor()
             .publisher(queue: nwPathMonitorQueue)
             .receive(on: RunLoop.main)

@@ -223,7 +223,7 @@ struct ContentView: View {
         }
         if folderLayout == .vertical {
             scroll
-                .frame(width: 90)
+                .frame(width: mainViewModel.sidebarSize == .small ? 75 : 90)
         } else {
             scroll
                 #if os(iOS)

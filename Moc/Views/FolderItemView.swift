@@ -98,9 +98,9 @@ struct FolderItemView<Icon: View>: View {
             }
             
             if sidebarSize != .medium {
-                stack.frame(width: 80, height: sidebarSize == .small ? 45 : 75)
+                stack.frame(width: sidebarSize == .small ? 65 : 80, height: sidebarSize == .small ? 45 : 75)
             } else {
-                stack.frame(width: 80, height: 64)
+                stack.frame(width: sidebarSize == .small ? 65 : 80, height: 64)
             }
         }
     }
