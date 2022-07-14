@@ -206,7 +206,9 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    func authorizationStateClosed() { }
+    func authorizationStateClosed() {
+        
+    }
     
     func updateConnectionState(_ update: UpdateConnectionState) {
         logger.debug("UpdateConnectionState")

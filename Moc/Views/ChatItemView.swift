@@ -120,7 +120,6 @@ struct ChatItemView: View {
                     .foregroundColor(isSelected ? .white : .primary)
                     .font(sidebarSize.iconFont)
                     
-                    
                     Text(chat.title)
                         #if os(macOS)
                         .fontWeight(.bold)
