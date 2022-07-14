@@ -51,7 +51,7 @@ struct FolderItemView<Icon: View>: View {
                     icon
                 }
                 if sidebarSize != .medium {
-                    label.font(.system(size: sidebarSize == .small ? 10 : 18))
+                    label.font(.system(size: sidebarSize == .small ? 10 : 16))
                 } else {
                     label
                 }
@@ -81,7 +81,7 @@ struct FolderItemView<Icon: View>: View {
                     icon
                         .font(.system(size: sidebarSize == .small ? 16 : 26))
                     Text(name)
-                        .font(.system(size: sidebarSize == .small ? 10 : 18))
+                        .font(.system(size: sidebarSize == .small ? 10 : 16))
                 } else {
                     icon
                         .font(.system(size: 22))

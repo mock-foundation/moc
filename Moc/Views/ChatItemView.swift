@@ -56,15 +56,22 @@ struct ChatItemView: View {
         HStack(alignment: .top) {
             VStack {
                 Spacer()
-                chatPhoto
-                    .frame(width: 48, height: 48)
-                    .clipShape(Circle())
-                    .fixedSize()
+                Group {
+                    if sidebarSize != .medium {
+                        chatPhoto
+                            .frame(width: sidebarSize == .small ? 36 : 54, height: sidebarSize == .small ? 36 : 54)
+                    } else {
+                        chatPhoto
+                            .frame(width: 48, height: 48)
+                    }
+                }
+                .clipShape(Circle())
+                .fixedSize()
                 Spacer()
             }
             VStack(alignment: .leading) {
                 HStack {
-                    Group {
+                    let group = Group {
                         switch chat.type {
                             case .private:
                                 EmptyView()
@@ -81,14 +88,28 @@ struct ChatItemView: View {
                         }
                     }
                     .foregroundColor(isSelected ? .white : .primary)
-                    Text(chat.title)
+                    
+                    
+                    let text = Text(chat.title)
                         #if os(macOS)
-                        .font(.title3)
                         .fontWeight(.bold)
                         #elseif os(iOS)
                         .fontWeight(.medium)
                         #endif
                         .foregroundColor(isSelected ? .white : .primary)
+                    
+                    if sidebarSize != .medium {
+                        Group {
+                            group
+                            text
+                        }.font(.system(size: sidebarSize == .small ? 12 : 16))
+                    } else {
+                        group
+                        text
+                            #if os(macOS)
+                            .font(.title3)
+                            #endif
+                    }
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(lastMessage?.date ?? 0)).hoursAndMinutes)
@@ -98,6 +119,7 @@ struct ChatItemView: View {
                 .padding(.vertical, 6)
                 HStack {
                     VStack {
+                        Spacer()
                         lastMessage?.content.preview
                             .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                         Spacer()
@@ -123,5 +145,6 @@ struct ChatItemView: View {
         .onReceive(Defaults.publisher(.sidebarSize)) { value in
             sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
         }
+        .animation(.fastStartSlowStop, value: sidebarSize)
     }
 }

@@ -62,18 +62,25 @@ struct ContentView: View {
                         viewRouter.openedChat = chat
                         viewRouter.currentView = .chat
                     } label: {
-                        ChatItemView(chat: chat)
-                            .frame(height: 52)
-                            .padding(6)
-                            .background(
-                                (viewRouter.currentView == .chat
-                                 && viewRouter.openedChat! == chat)
-                                ? Color.accentColor.opacity(0.8)
-                                : nil
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
-                                                                    && viewRouter.openedChat! == chat))
+                        Group {
+                            if mainViewModel.sidebarSize != .medium {
+                                ChatItemView(chat: chat)
+                                    .frame(height: mainViewModel.sidebarSize == .small ? 42 : 60)
+                            } else {
+                                ChatItemView(chat: chat)
+                                    .frame(height: 52)
+                            }
+                        }
+                        .padding(6)
+                        .background(
+                            (viewRouter.currentView == .chat
+                             && viewRouter.openedChat! == chat)
+                            ? Color.accentColor.opacity(0.8)
+                            : nil
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
+                                                                && viewRouter.openedChat! == chat))
                     }.buttonStyle(.plain)
                 }
             }
