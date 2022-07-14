@@ -10,6 +10,50 @@ import Utilities
 import Defaults
 import Combine
 
+private extension SidebarSize {
+    var textFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 10)
+            case .medium:
+                return .body
+            case .large:
+                return .system(size: 16)
+        }
+    }
+    
+    var iconFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 18)
+            case .medium:
+                return .system(size: 22)
+            case .large:
+                return .system(size: 26)
+        }
+    }
+    
+    var itemWidth: CGFloat {
+        switch self {
+            case .small:
+                return 65
+            default:
+                return 80
+        }
+    }
+    
+    var itemHeight: CGFloat {
+        switch self {
+            case .small:
+                return 45
+            case .medium:
+                return 64
+            case .large:
+                return 75
+        }
+    }
+}
+
 struct FolderItemView<Icon: View>: View {
     let name: String
     let icon: Icon
@@ -43,18 +87,15 @@ struct FolderItemView<Icon: View>: View {
     private var content: some View {
         if horizontal {
             HStack {
-                let label = Label {
+                Label {
                     Text(name)
                         .lineLimit(1)
                         .fixedSize()
                 } icon: {
                     icon
                 }
-                if sidebarSize != .medium {
-                    label.font(.system(size: sidebarSize == .small ? 10 : 16))
-                } else {
-                    label
-                }
+                .font(sidebarSize.textFont)
+                
                 if unreadCount != 0 {
                     counter
                         .background(Capsule(style: .continuous)
@@ -76,17 +117,9 @@ struct FolderItemView<Icon: View>: View {
                 }
             }
         } else {
-            let stack = VStack {
-                if sidebarSize != .medium {
-                    icon
-                        .font(.system(size: sidebarSize == .small ? 16 : 26))
-                    Text(name)
-                        .font(.system(size: sidebarSize == .small ? 10 : 16))
-                } else {
-                    icon
-                        .font(.system(size: 22))
-                    Text(name)
-                }
+            VStack {
+                icon.font(sidebarSize.iconFont)
+                Text(name).font(sidebarSize.textFont)
             }
             .padding(.vertical, 8)
             .onHover { isHovered in
@@ -96,12 +129,7 @@ struct FolderItemView<Icon: View>: View {
                     backgroundColor = Color.clear
                 }
             }
-            
-            if sidebarSize != .medium {
-                stack.frame(width: sidebarSize == .small ? 65 : 80, height: sidebarSize == .small ? 45 : 75)
-            } else {
-                stack.frame(width: sidebarSize == .small ? 65 : 80, height: 64)
-            }
+            .frame(width: sidebarSize.itemWidth, height: sidebarSize.itemHeight)
         }
     }
     

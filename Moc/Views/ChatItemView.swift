@@ -19,6 +19,41 @@ extension Foundation.Date {
     }
 }
 
+private extension SidebarSize {
+    var mainFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 12)
+            case .medium:
+                return .title3
+            case .large:
+                return .system(size: 16)
+        }
+    }
+    
+    var iconFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 12)
+            case .medium:
+                return .system(.body)
+            case .large:
+                return .system(size: 16)
+        }
+    }
+    
+    var chatPhotoSize: CGFloat {
+        switch self {
+            case .small:
+                return 36
+            case .medium:
+                return 48
+            case .large:
+                return 54
+        }
+    }
+}
+
 struct ChatItemView: View {
     let chat: Chat
     
@@ -56,22 +91,17 @@ struct ChatItemView: View {
         HStack(alignment: .top) {
             VStack {
                 Spacer()
-                Group {
-                    if sidebarSize != .medium {
-                        chatPhoto
-                            .frame(width: sidebarSize == .small ? 36 : 54, height: sidebarSize == .small ? 36 : 54)
-                    } else {
-                        chatPhoto
-                            .frame(width: 48, height: 48)
-                    }
-                }
+                chatPhoto
+                .frame(
+                    width: sidebarSize.chatPhotoSize,
+                    height: sidebarSize.chatPhotoSize)
                 .clipShape(Circle())
                 .fixedSize()
                 Spacer()
             }
             VStack(alignment: .leading) {
                 HStack {
-                    let group = Group {
+                    Group {
                         switch chat.type {
                             case .private:
                                 EmptyView()
@@ -88,28 +118,17 @@ struct ChatItemView: View {
                         }
                     }
                     .foregroundColor(isSelected ? .white : .primary)
+                    .font(sidebarSize.iconFont)
                     
                     
-                    let text = Text(chat.title)
+                    Text(chat.title)
                         #if os(macOS)
                         .fontWeight(.bold)
+                        .font(sidebarSize.mainFont)
                         #elseif os(iOS)
                         .fontWeight(.medium)
                         #endif
                         .foregroundColor(isSelected ? .white : .primary)
-                    
-                    if sidebarSize != .medium {
-                        Group {
-                            group
-                            text
-                        }.font(.system(size: sidebarSize == .small ? 12 : 16))
-                    } else {
-                        group
-                        text
-                            #if os(macOS)
-                            .font(.title3)
-                            #endif
-                    }
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(lastMessage?.date ?? 0)).hoursAndMinutes)

@@ -22,6 +22,19 @@ private enum Tab {
     case calls
 }
 
+private extension SidebarSize {
+    var chatItemHeight: CGFloat {
+        switch self {
+            case .small:
+                return 42
+            case .medium:
+                return 52
+            case .large:
+                return 60
+        }
+    }
+}
+
 // swiftlint:disable type_body_length
 struct ContentView: View {
     private let logger = Logs.Logger(category: "ContentView", label: "UI")
@@ -62,25 +75,18 @@ struct ContentView: View {
                         viewRouter.openedChat = chat
                         viewRouter.currentView = .chat
                     } label: {
-                        Group {
-                            if mainViewModel.sidebarSize != .medium {
-                                ChatItemView(chat: chat)
-                                    .frame(height: mainViewModel.sidebarSize == .small ? 42 : 60)
-                            } else {
-                                ChatItemView(chat: chat)
-                                    .frame(height: 52)
-                            }
-                        }
-                        .padding(6)
-                        .background(
-                            (viewRouter.currentView == .chat
-                             && viewRouter.openedChat! == chat)
-                            ? Color.accentColor.opacity(0.8)
-                            : nil
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                        .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
-                                                                && viewRouter.openedChat! == chat))
+                        ChatItemView(chat: chat)
+                            .frame(height: mainViewModel.sidebarSize.chatItemHeight)
+                            .padding(6)
+                            .background(
+                                (viewRouter.currentView == .chat
+                                 && viewRouter.openedChat! == chat)
+                                ? Color.accentColor.opacity(0.8)
+                                : nil
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
+                                                                    && viewRouter.openedChat! == chat))
                     }.buttonStyle(.plain)
                 }
             }
