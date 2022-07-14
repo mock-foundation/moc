@@ -9,7 +9,7 @@ on:
 jobs:
     check:
         name: Check code for possible issues with SwiftLint
-        runs-on: macos-12
+        runs-on: ubuntu-latest
         
         steps:
           - name: Checkout
