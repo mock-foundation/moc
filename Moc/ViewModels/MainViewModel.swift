@@ -180,8 +180,10 @@ class MainViewModel: ObservableObject {
             chatFilters = []
         }
         Defaults.publisher(.sidebarSize)
-            .sink {
-                self.sidebarSize = SidebarSize(rawValue: $0.newValue) ?? .medium
+            .sink { value in
+                withAnimation(.fastStartSlowStop) {
+                    self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+                }
             }
             .store(in: &subscribers)
         NWPathMonitor()

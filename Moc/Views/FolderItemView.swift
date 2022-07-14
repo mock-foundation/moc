@@ -134,7 +134,9 @@ struct FolderItemView<Icon: View>: View {
             }
         }
         .onReceive(Defaults.publisher(.sidebarSize)) { value in
-            sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+            withAnimation(.fastStartSlowStop) {
+                sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+            }
         }
     }
 }
