@@ -132,7 +132,7 @@ struct ChatItemView: View {
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(lastMessage?.date ?? 0)).hoursAndMinutes)
-                        .font(.caption)
+                        .font(sidebarSize == .large ? .body : .caption)
                         .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                 }
                 .padding(.vertical, 6)
