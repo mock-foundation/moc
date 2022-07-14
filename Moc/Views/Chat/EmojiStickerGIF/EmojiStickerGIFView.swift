@@ -17,7 +17,6 @@ struct EmojiStickerGIFView: View {
         _emojiViewModel = StateObject(wrappedValue: EmojiViewModel(emojiService: EmojiService()))
     }
     
-    
     var body: some View {
         ZStack {
             checkPicker
@@ -27,13 +26,14 @@ struct EmojiStickerGIFView: View {
                         Image(systemName: "face.smiling")
                         Image(systemName: "face.smiling")
                     }
+                    .frame(width: 100)
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .pickerStyle(.segmented)
-                    .padding(.horizontal, 30)
                 }
         }
     }
     @ViewBuilder private var checkPicker: some View {
-        ZStack{
+        ZStack {
             switch viewIndex {
             case 0:
                 EmojiView(viewModel: emojiViewModel)
@@ -45,4 +45,3 @@ struct EmojiStickerGIFView: View {
         }
     }
 }
-

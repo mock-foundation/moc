@@ -8,7 +8,6 @@
 import Foundation
 import Networking
 
-
 final class EmojiServiceMock: Mockable, EmojiServiceable {
     func getEmoji(
         _ name: String,
@@ -17,4 +16,9 @@ final class EmojiServiceMock: Mockable, EmojiServiceable {
                             type: Emoji.self
             )
         }
+    public func getFavorite(  ) async throws -> Emoji {
+        return loadJSON(filename: "favoriteEmoji",
+                        type: Emoji.self
+        )
+    }
 }

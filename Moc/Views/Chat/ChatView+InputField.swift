@@ -128,6 +128,10 @@ extension ChatView {
                         .font(.system(size: 16))
                 }
                 .buttonStyle(.plain)
+                .popover(isPresented: $viewModel.isEmojiVisible, content: {
+                    EmojiStickerGIFView()
+                        .frame(width: 300, height: 300)
+                })
                 if viewModel.inputMessage.isEmpty && viewModel.inputMedia.isEmpty {
                     Image(systemName: "mic")
                         .font(.system(size: 16))
@@ -153,10 +157,7 @@ extension ChatView {
                 }
             }
         }
-        .popover(isPresented: $viewModel.isEmojiVisible, content: {
-            EmojiStickerGIFView()
-                .frame(width: 300, height: 300)
-        })
+        
         
         .onChange(of: isInputFieldFocused) { value in
             viewModel.isHideKeyboardButtonShown = value

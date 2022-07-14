@@ -12,6 +12,7 @@ public protocol EmojiServiceable {
         _ name: String,
         _ length: String
     ) async throws -> Emoji
+    func getFavorite() async throws -> Emoji 
 }
 
 public struct EmojiService: HTTPClient, EmojiServiceable {
@@ -25,5 +26,11 @@ public struct EmojiService: HTTPClient, EmojiServiceable {
                                           limit: length),
             responseModel: Emoji.self
         )
+    }
+        public func getFavorite(  ) async throws -> Emoji {
+            return try await sendRequest(
+                endpoint: EmojiEndpoints.getFavorite,
+                responseModel: Emoji.self
+            )
     }
 }

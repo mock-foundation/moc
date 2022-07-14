@@ -23,6 +23,7 @@ let package = Package(
             name: "NetworkingTests",
             dependencies: ["Networking"],
             resources: [
-                .copy("JSON/emoji.json")])
+                .copy("JSON/emoji.json"),
+                .copy("JSON/favoriteEmoji.json")])
     ]
 )

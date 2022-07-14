@@ -7,7 +7,6 @@
 @testable import Networking
 import XCTest
 
-
 final class EmojiTests: XCTestCase {
     
     func testEmoji() async throws {
@@ -19,6 +18,11 @@ final class EmojiTests: XCTestCase {
         XCTAssertEqual(
             emojies.subCategories[0].emoji,
             "🍼"
+        )
+        let favoritEmoji = try await serviceMock.getFavorite()
+        XCTAssertEqual(
+            favoritEmoji.subCategories[0].emoji,
+            "😻"
         )
     }
 }
