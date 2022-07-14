@@ -90,11 +90,11 @@ public extension TdApi {
                                     _ = try await self.loadChats(chatList: .main, limit: 15)
                                     _ = try await self.loadChats(chatList: .archive, limit: 15)
                                 }
-                            case .closed:
-                                TdApi.shared.insert(TdApi(
-                                    client: TdClientImpl(completionQueue: .global())
-                                ), at: 0)
-                                TdApi.shared[0].startTdLibUpdateHandler()
+//                            case .closed:
+//                                TdApi.shared.insert(TdApi(
+//                                    client: TdClientImpl(completionQueue: .global())
+//                                ), at: 0)
+//                                TdApi.shared[0].startTdLibUpdateHandler()
                             default: break
                         }
                     case let .chatFilters(update):
