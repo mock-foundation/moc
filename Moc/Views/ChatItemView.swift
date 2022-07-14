@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Utilities
 import Backend
+import Defaults
 
 extension Foundation.Date {
     var hoursAndMinutes: String {
@@ -18,10 +19,46 @@ extension Foundation.Date {
     }
 }
 
+private extension SidebarSize {
+    var mainFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 12)
+            case .medium:
+                return .title3
+            case .large:
+                return .system(size: 16)
+        }
+    }
+    
+    var iconFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 12)
+            case .medium:
+                return .system(.body)
+            case .large:
+                return .system(size: 16)
+        }
+    }
+    
+    var chatPhotoSize: CGFloat {
+        switch self {
+            case .small:
+                return 36
+            case .medium:
+                return 48
+            case .large:
+                return 54
+        }
+    }
+}
+
 struct ChatItemView: View {
     let chat: Chat
     
     @State private var lastMessage: TDLibKit.Message?
+    @State private var sidebarSize: SidebarSize = .medium
     
     @Environment(\.isChatListItemSelected) var isSelected
     
@@ -55,19 +92,20 @@ struct ChatItemView: View {
             VStack {
                 Spacer()
                 chatPhoto
-                    .frame(width: 48, height: 48)
-                    .clipShape(Circle())
-                    .fixedSize()
+                .frame(
+                    width: sidebarSize.chatPhotoSize,
+                    height: sidebarSize.chatPhotoSize)
+                .clipShape(Circle())
+                .fixedSize()
                 Spacer()
             }
             VStack(alignment: .leading) {
                 HStack {
-                    // swiftlint:disable empty_enum_arguments switch_case_alignment
                     Group {
                         switch chat.type {
-                            case .private(_):
+                            case .private:
                                 EmptyView()
-                            case .basicGroup(_):
+                            case .basicGroup:
                                 Image(systemName: "person.2")
                             case .supergroup(let info):
                                 if info.isChannel {
@@ -75,15 +113,18 @@ struct ChatItemView: View {
                                 } else {
                                     Image(systemName: "person.2.fill")
                                 }
-                            case .secret(_):
+                            case .secret:
                                 Image(systemName: "lock")
                         }
                     }
                     .foregroundColor(isSelected ? .white : .primary)
+                    .font(sidebarSize.iconFont)
+                    
+                    
                     Text(chat.title)
                         #if os(macOS)
-                        .font(.title3)
                         .fontWeight(.bold)
+                        .font(sidebarSize.mainFont)
                         #elseif os(iOS)
                         .fontWeight(.medium)
                         #endif
@@ -91,12 +132,13 @@ struct ChatItemView: View {
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(lastMessage?.date ?? 0)).hoursAndMinutes)
-                        .font(.caption)
+                        .font(sidebarSize == .large ? .body : .caption)
                         .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                 }
                 .padding(.vertical, 6)
                 HStack {
                     VStack {
+                        Spacer()
                         lastMessage?.content.preview
                             .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                         Spacer()
@@ -119,5 +161,9 @@ struct ChatItemView: View {
                 }
             }
         }
+        .onReceive(Defaults.publisher(.sidebarSize)) { value in
+            sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+        }
+        .animation(.fastStartSlowStop, value: sidebarSize)
     }
 }

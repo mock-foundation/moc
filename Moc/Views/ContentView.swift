@@ -22,6 +22,19 @@ private enum Tab {
     case calls
 }
 
+private extension SidebarSize {
+    var chatItemHeight: CGFloat {
+        switch self {
+            case .small:
+                return 42
+            case .medium:
+                return 52
+            case .large:
+                return 60
+        }
+    }
+}
+
 // swiftlint:disable type_body_length
 struct ContentView: View {
     private let logger = Logs.Logger(category: "ContentView", label: "UI")
@@ -63,7 +76,7 @@ struct ContentView: View {
                         viewRouter.currentView = .chat
                     } label: {
                         ChatItemView(chat: chat)
-                            .frame(height: 52)
+                            .frame(height: mainViewModel.sidebarSize.chatItemHeight)
                             .padding(6)
                             .background(
                                 (viewRouter.currentView == .chat
@@ -223,7 +236,7 @@ struct ContentView: View {
         }
         if folderLayout == .vertical {
             scroll
-                .frame(width: 90)
+                .frame(width: mainViewModel.sidebarSize == .small ? 75 : 90)
         } else {
             scroll
                 #if os(iOS)

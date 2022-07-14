@@ -12,6 +12,18 @@ struct AboutView: View {
     @Environment(\.openURL) private var openURL
     @State private var areAcknowledgmentsOpened = false
     
+    var versionString: String {
+        SystemUtils.info(key: "CFBundleShortVersionString") as String
+    }
+    
+    var buildNumberString: String {
+        SystemUtils.info(key: "CFBundleVersion") as String
+    }
+    
+    var aboutApp: String {
+        SystemUtils.info(key: "AboutAppString") as String
+    }
+    
     var body: some View {
         HStack {
             VStack {
@@ -23,10 +35,10 @@ struct AboutView: View {
             VStack(alignment: .leading) {
                 Text("Moc")
                     .font(.system(size: 40, weight: .medium, design: .default))
-                Text("Version \(SystemUtils.info(key: "CFBundleShortVersionString") as String) (\(SystemUtils.info(key: "CFBundleVersion") as String))")
+                Text("Version \(versionString) (\(buildNumberString))")
                     .foregroundColor(.gray)
                 Divider()
-                Text("A (really) native and powerful macOS and iPadOS Telegram client, optimized for moderating large communities and personal use.")
+                Text(aboutApp)
                 Spacer()
                 HStack {
                     Button {

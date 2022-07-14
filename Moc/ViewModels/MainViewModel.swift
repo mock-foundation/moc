@@ -15,6 +15,7 @@ import OrderedCollections
 import Backend
 import Caching
 import Network
+import Defaults
 
 class MainViewModel: ObservableObject {
     @Injected var service: MainService
@@ -128,7 +129,9 @@ class MainViewModel: ObservableObject {
     }
 
     @Published var showingLoginScreen = false
-
+    
+    @Published var sidebarSize: SidebarSize = .medium
+    
     private var subscribers: [AnyCancellable] = []
     private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
@@ -176,6 +179,13 @@ class MainViewModel: ObservableObject {
             logger.debug("There was an issue retrieving cached chat filters (maybe empty?), using empty OrderedSet")
             chatFilters = []
         }
+        Defaults.publisher(.sidebarSize)
+            .sink { value in
+                withAnimation(.fastStartSlowStop) {
+                    self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+                }
+            }
+            .store(in: &subscribers)
         NWPathMonitor()
             .publisher(queue: nwPathMonitorQueue)
             .receive(on: RunLoop.main)

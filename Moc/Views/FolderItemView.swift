@@ -7,6 +7,52 @@
 
 import SwiftUI
 import Utilities
+import Defaults
+import Combine
+
+private extension SidebarSize {
+    var textFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 10)
+            case .medium:
+                return .body
+            case .large:
+                return .system(size: 16)
+        }
+    }
+    
+    var iconFont: Font {
+        switch self {
+            case .small:
+                return .system(size: 18)
+            case .medium:
+                return .system(size: 22)
+            case .large:
+                return .system(size: 26)
+        }
+    }
+    
+    var itemWidth: CGFloat {
+        switch self {
+            case .small:
+                return 65
+            default:
+                return 80
+        }
+    }
+    
+    var itemHeight: CGFloat {
+        switch self {
+            case .small:
+                return 45
+            case .medium:
+                return 64
+            case .large:
+                return 75
+        }
+    }
+}
 
 struct FolderItemView<Icon: View>: View {
     let name: String
@@ -15,6 +61,8 @@ struct FolderItemView<Icon: View>: View {
     let horizontal: Bool
     
     @State private var backgroundColor: Color = .clear
+    @State private var sidebarSize: SidebarSize = .medium
+
     private let selectedColor = Color("FolderItemSelectedColor")
     
     init(
@@ -46,6 +94,8 @@ struct FolderItemView<Icon: View>: View {
                 } icon: {
                     icon
                 }
+                .font(sidebarSize.textFont)
+                
                 if unreadCount != 0 {
                     counter
                         .background(Capsule(style: .continuous)
@@ -68,12 +118,10 @@ struct FolderItemView<Icon: View>: View {
             }
         } else {
             VStack {
-                icon
-                    .font(.system(size: 22))
-                Text(name)
+                icon.font(sidebarSize.iconFont)
+                Text(name).font(sidebarSize.textFont)
             }
             .padding(.vertical, 8)
-            .frame(width: 80, height: 64)
             .onHover { isHovered in
                 if isHovered {
                     backgroundColor = Color("OnHoverColor")
@@ -81,34 +129,42 @@ struct FolderItemView<Icon: View>: View {
                     backgroundColor = Color.clear
                 }
             }
+            .frame(width: sidebarSize.itemWidth, height: sidebarSize.itemHeight)
         }
     }
     
     var body: some View {
-        if unreadCount != 0 {
-            if !horizontal {
-                content
-                    .reverseMask(alignment: .topTrailing) {
-                        counter
-                            .background(Capsule(style: .continuous)
-                                .fill(.black))
-                            .vTop()
-                            .hTrailing()
-                    }
-                    .overlay(
-                        counter
-                            .background(Capsule(style: .continuous)
-                                .fill(Color.accentColor)
-                                .padding(4)
-                            ), alignment: .topTrailing)
-                    .background(backgroundColor)
+        Group {
+            if unreadCount != 0 {
+                if !horizontal {
+                    content
+                        .reverseMask(alignment: .topTrailing) {
+                            counter
+                                .background(Capsule(style: .continuous)
+                                    .fill(.black))
+                                .vTop()
+                                .hTrailing()
+                        }
+                        .overlay(
+                            counter
+                                .background(Capsule(style: .continuous)
+                                    .fill(Color.accentColor)
+                                    .padding(4)
+                                ), alignment: .topTrailing)
+                        .background(backgroundColor)
+                } else {
+                    content
+                        .background(backgroundColor)
+                }
             } else {
                 content
                     .background(backgroundColor)
             }
-        } else {
-            content
-                .background(backgroundColor)
+        }
+        .onReceive(Defaults.publisher(.sidebarSize)) { value in
+            withAnimation(.fastStartSlowStop) {
+                sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+            }
         }
     }
 }
