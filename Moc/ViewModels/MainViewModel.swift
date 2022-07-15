@@ -129,6 +129,7 @@ class MainViewModel: ObservableObject {
     }
 
     @Published var showingLoginScreen = false
+    @Published var isSessionTerminationAlertShown = false
     
     @Published var sidebarSize: SidebarSize = .medium
     
@@ -206,7 +207,9 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    func authorizationStateClosed() { }
+    func authorizationStateClosed() {
+        isSessionTerminationAlertShown = true
+    }
     
     func updateConnectionState(_ update: UpdateConnectionState) {
         logger.debug("UpdateConnectionState")
