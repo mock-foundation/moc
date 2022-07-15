@@ -145,11 +145,10 @@ class MainViewModel: ObservableObject {
                     case let .chatPosition(info):
                         updateChatPosition(info)
                     case let .authorizationState(info):
-                        
                         switch info.authorizationState {
                             case .closed:
                                 isSessionTerminationAlertShown = true
-                            case .ready: break // do nothing
+                            case .ready, .waitEncryptionKey, .waitTdlibParameters: break // do nothing
                             default:
                                 showingLoginScreen = true
                         }
