@@ -27,4 +27,6 @@ public protocol LoginService: Service {
     var countries: [CountryInfo] { get async throws }
 
     var countryCode: String { get async throws }
+    
+    func getAuthorizationState() async throws -> AuthorizationState
 }

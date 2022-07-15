@@ -110,16 +110,20 @@ struct LoginView: View {
                 .combined(with: .opacity))
         }
         .animation(.spring(), value: openedScreen)
-        .task {
-            let countries = try? await service.countries
-            guard countries != nil else { return }
-
-            self.phoneNumberCodes = countries!
-            let countryCode = (try? await service.countryCode) ?? "EN"
-
-            for country in countries! where country.countryCode == countryCode {
-                self.selectedNumberCode = Int(country.callingCodes[0])!
-                logger.info("Country code: \(self.selectedNumberCode)")
+        .onAppear {
+            Task {
+                let countries = try? await service.countries
+                guard countries != nil else { return }
+                
+                self.phoneNumberCodes = countries!
+                let countryCode = (try? await service.countryCode) ?? "EN"
+                
+                for country in countries! where country.countryCode == countryCode {
+                    self.selectedNumberCode = Int(country.callingCodes[0])!
+                    logger.info("Country code: \(self.selectedNumberCode)")
+                }
+                logger.info("\(try await service.getAuthorizationState())")
+                handleAuthorization(state: try await service.getAuthorizationState())
             }
         }
         .alert(
@@ -143,23 +147,28 @@ struct LoginView: View {
             Button("Not really") {}
         }
         .onReceive(service.updateSubject) { update in
-            if case let .authorizationState(info) = update {
-                // swiftlint:disable empty_enum_arguments
-                switch info.authorizationState {
-                    case let .waitOtherDeviceConfirmation(info):
-                        self.qrCodeLink = info.link
-                        openedScreen = .qrCode
-                    case .waitRegistration(_):
-                        openedScreen = .registration
-                    case .waitPassword(_):
-                        openedScreen = .twoFACode
-                    case .waitCode(_):
-                        openedScreen = .code
-                    case .ready:
-                        presentationMode.wrappedValue.dismiss()
-                    default: break
-                }
+            if case let .authorizationState(state) = update {
+                handleAuthorization(state: state.authorizationState)
             }
+        }
+    }
+    
+    private func handleAuthorization(state: AuthorizationState) {
+        switch state {
+            case let .waitOtherDeviceConfirmation(info):
+                self.qrCodeLink = info.link
+                openedScreen = .qrCode
+            case .waitRegistration:
+                openedScreen = .registration
+            case .waitPassword:
+                openedScreen = .twoFACode
+            case .waitPhoneNumber:
+                openedScreen = .phoneNumber
+            case .waitCode:
+                openedScreen = .code
+            case .ready:
+                presentationMode.wrappedValue.dismiss()
+            default: break
         }
     }
 }

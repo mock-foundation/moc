@@ -145,13 +145,13 @@ class MainViewModel: ObservableObject {
                     case let .chatPosition(info):
                         updateChatPosition(info)
                     case let .authorizationState(info):
+                        
                         switch info.authorizationState {
-                            case .waitPhoneNumber:
-                                authorizationStateWaitPhoneNumber()
                             case .closed:
-                                authorizationStateClosed()
+                                isSessionTerminationAlertShown = true
+                            case .ready: break // do nothing
                             default:
-                                break
+                                showingLoginScreen = true
                         }
                     case let .newChat(info):
                         updateNewChat(info)
@@ -205,10 +205,6 @@ class MainViewModel: ObservableObject {
                 }
             }
             .store(in: &subscribers)
-    }
-    
-    func authorizationStateClosed() {
-        isSessionTerminationAlertShown = true
     }
     
     func updateConnectionState(_ update: UpdateConnectionState) {
@@ -359,11 +355,6 @@ class MainViewModel: ObservableObject {
             }
         }
         
-    }
-    
-    func authorizationStateWaitPhoneNumber() {
-        logger.debug("Got authorization state update")
-        showingLoginScreen = true
     }
 
     deinit {

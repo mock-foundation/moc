@@ -9,6 +9,10 @@ import TDLibKit
 import Combine
 
 public class TdLoginService: LoginService {
+    public func getAuthorizationState() async throws -> TDLibKit.AuthorizationState {
+        return try await tdApi.getAuthorizationState()
+    }
+    
     private var tdApi: TdApi = .shared[0]
     
     public var updateSubject: PassthroughSubject<Update, Never> {

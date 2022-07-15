@@ -9,6 +9,10 @@ import Combine
 import TDLibKit
 
 public class MockLoginService: LoginService {
+    public func getAuthorizationState() async throws -> TDLibKit.AuthorizationState {
+        return .ready
+    }
+    
     public var updateSubject = PassthroughSubject<Update, Never>()
     
     public func resendAuthCode() async throws { }
