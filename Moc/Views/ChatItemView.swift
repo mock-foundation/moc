@@ -153,6 +153,7 @@ struct ChatItemView: View {
                 }
             }
         }
+        .animation(.fastStartSlowStop, value: sidebarSize)
         .onAppear {
             Task {
                 if lastMessage == nil {
@@ -170,6 +171,5 @@ struct ChatItemView: View {
         .onReceive(Defaults.publisher(.sidebarSize)) { value in
             sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
         }
-        .animation(.fastStartSlowStop, value: sidebarSize)
     }
 }
