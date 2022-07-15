@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TDLibKit</key>
+	<string>https://github.com/mock-foundation/tdlibkit.git</string>
+	<key>GRDB</key>
+	<string>https://github.com/groue/GRDB.swift</string>
+	<key>Resolver</key>
+	<string>https://github.com/hmlongco/Resolver.git</string>
+	<key>Lottie</key>
+	<string>https://github.com/airbnb/lottie-ios.git</string>
+	<key>AlertToast</key>
+	<string>https://github.com/elai950/AlertToast</string>
+	<key>Introspect</key>
+	<string>https://github.com/siteline/SwiftUI-Introspect.git</string>
+	<key>Swift Algorhitms</key>
+	<string>https://github.com/apple/swift-algorithms.git</string>
+	<key>Swift Collections</key>
+	<string>https://github.com/apple/swift-collections.git</string>
+	<key>Swift Numerics</key>
+	<string>https://github.com/apple/swift-numerics.git</string>
+	<key>Defaults</key>
+	<string>https://github.com/sindresorhus/Defaults</string>
+	<key>SkeletonUI</key>
+	<string>https://github.com/CSolanaM/SkeletonUI.git</string>
+</dict>
+</plist>

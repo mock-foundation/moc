@@ -117,6 +117,8 @@
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
 		43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A9637A2868C8AD0076F5FD /* SkeletonUI */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
+		43B102952882087C009FCF53 /* Acknowledgments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43B102942882087C009FCF53 /* Acknowledgments.plist */; };
+		43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029828820A82009FCF53 /* Acknowledgment.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
 		43BFD91C285D148100D8980A /* NWPathMonitor+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */; };
@@ -244,6 +246,8 @@
 		43A0AF84286518F900C0A8EF /* MessageView+Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Album.swift"; sourceTree = "<group>"; };
 		43A0AF862865197400C0A8EF /* AsyncTdFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdFile.swift; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
+		43B102942882087C009FCF53 /* Acknowledgments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Acknowledgments.plist; sourceTree = "<group>"; };
+		43B1029828820A82009FCF53 /* Acknowledgment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgment.swift; sourceTree = "<group>"; };
 		43BFD914285CC2B000D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD916285CC30B00D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NWPathMonitor+Combine.swift"; sourceTree = "<group>"; };
@@ -395,6 +399,7 @@
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
+				43B102942882087C009FCF53 /* Acknowledgments.plist */,
 				43807D5427E213350056A3D3 /* Info.plist */,
 				43807D5327E213350056A3D3 /* Moc.entitlements */,
 			);
@@ -412,6 +417,7 @@
 		43807D4A27E213350056A3D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				43B1029728820A6B009FCF53 /* Serialization */,
 				438B2286285E55B3000D65C8 /* PlaceholderStyle.swift */,
 				43807D4B27E213350056A3D3 /* MessageSender.swift */,
 				43807D4D27E213350056A3D3 /* Message.swift */,
@@ -585,6 +591,14 @@
 			path = About;
 			sourceTree = "<group>";
 		};
+		43B1029728820A6B009FCF53 /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				43B1029828820A82009FCF53 /* Acknowledgment.swift */,
+			);
+			path = Serialization;
+			sourceTree = "<group>";
+		};
 		43C0F49E285A6997009F2419 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -739,6 +753,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B102952882087C009FCF53 /* Acknowledgments.plist in Resources */,
 				43807D8527E213350056A3D3 /* Preview Assets.xcassets in Resources */,
 				43807D8427E213350056A3D3 /* Assets.xcassets in Resources */,
 			);
@@ -822,6 +837,7 @@
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
 				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
+				43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */,
 				43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */,
 				438B2281285E3077000D65C8 /* LighterDarker.swift in Sources */,
 				43008544283B59D500ED5961 /* Image+File.swift in Sources */,

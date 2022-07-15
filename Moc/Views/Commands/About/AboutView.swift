@@ -24,6 +24,19 @@ struct AboutView: View {
         SystemUtils.info(key: "AboutAppString") as String
     }
     
+    var acknowledgmentList: [Acknowledgment] {
+        let url = Bundle.main.url(forResource: "Acknowledgments", withExtension: "plist")!
+        do {
+            let data = try Data(contentsOf: url)
+            let result = try PropertyListDecoder().decode([String: String].self, from: data)
+            return result.map { value in
+                Acknowledgment(name: value.key, url: URL(string: value.value)!)
+            }
+        } catch {
+            return []
+        }
+    }
+    
     var body: some View {
         HStack {
             VStack {
@@ -51,9 +64,11 @@ struct AboutView: View {
                             VStack {
                                 Text("Acknowledgments")
                                     .font(.system(size: 40, weight: .medium, design: .default))
+                                Link("**Technoblade never dies**", destination: URL(string: "https://www.curesarcoma.org/technoblade-tribute/")!)
                                 Divider()
-                                Link("AlertToast", destination: URL(string: "https://github.com/elai950/AlertToast")!)
-                                Link("Defaults", destination: URL(string: "https://github.com/sindresorhus/Defaults")!)
+                                ForEach(acknowledgmentList, id: \.self) { list in
+                                    Link(list.name, destination: list.url)
+                                }
                             }.padding()
                         }
                         .overlay(alignment: .topTrailing) {
