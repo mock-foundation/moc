@@ -11,7 +11,7 @@ import SkeletonUI
 
 extension MessageView {
     func makeDocument(from info: MessageDocument) -> some View {
-        MessageDocumentView(info: info)
+        MessageDocumentView(info: info, message: message.first!)
     }
     
     func makeMessageDocument(from info: MessageDocument) -> some View {
@@ -24,6 +24,7 @@ extension MessageView {
 
 struct MessageDocumentView: View {
     let info: MessageDocument
+    let message: Message
     
     @State private var showingSavedToDownloadsCheckmark = false
     
@@ -50,10 +51,14 @@ struct MessageDocumentView: View {
                     .font(.system(size: 14, weight: .bold))
                     .lineLimit(2)
                     .truncationMode(.middle)
-                    .foregroundColor(.white)
+                    .if(message.isOutgoing) {
+                        $0.foregroundColor(.white)
+                    }
                 HStack {
                     Text("\(info.document.document.size / 1024) KB")
-                        .foregroundColor(.white)
+                        .if(message.isOutgoing) {
+                            $0.foregroundColor(.white)
+                        }
                     Divider()
                     if showingSavedToDownloadsCheckmark {
                         Image(systemName: "checkmark.circle")
@@ -76,6 +81,6 @@ struct MessageDocumentView: View {
                 }.frame(maxHeight: 30)
                 Spacer()
             }
-        }
+        }.frame(maxHeight: 70)
     }
 }
