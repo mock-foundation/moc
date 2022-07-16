@@ -60,6 +60,8 @@ struct ChatItemView: View {
     @State private var lastMessage: TDLibKit.Message?
     @State private var sidebarSize: SidebarSize = .medium
     
+    private let tdApi = TdApi.shared[0]
+    
     @Environment(\.isChatListItemSelected) var isSelected
     
     private var placeholder: some View {
@@ -82,11 +84,13 @@ struct ChatItemView: View {
         }
     }
     
+    @State private var sender: String?
+    
     init(chat: Chat) {
         self.chat = chat
         self.lastMessage = chat.lastMessage
     }
-
+    
     var body: some View {
         HStack(alignment: .top) {
             VStack {
@@ -99,7 +103,7 @@ struct ChatItemView: View {
                 .fixedSize()
                 Spacer()
             }
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Group {
                         switch chat.type {
@@ -134,15 +138,85 @@ struct ChatItemView: View {
                         .font(sidebarSize == .large ? .body : .caption)
                         .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                 }
-                .padding(.vertical, 6)
-                HStack {
-                    VStack {
-                        Spacer()
-                        lastMessage?.content.preview
-                            .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
-                        Spacer()
+                .padding(.top, 6)
+                VStack(alignment: .leading, spacing: 2) {
+                    if chat.type.isGroup {
+                        if let sender {
+                            Text(sender)
+                                .fontWeight(.medium)
+                        }
                     }
-                    Spacer()
+                    Group {
+                        switch lastMessage?.content {
+                            case let .text(info):
+                                Text(info.text.text)
+                            case let .photo(info):
+                                Label {
+                                    if !info.caption.text.isEmpty {
+                                        Text(info.caption.text)
+                                    } else {
+                                        Text("Photo")
+                                    }
+                                } icon: {
+                                    if let minithumbnail = info.photo.minithumbnail {
+                                        Image(data: minithumbnail.data)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 15, height: 15)
+                                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                                    } else {
+                                        Image(systemName: "photo")
+                                    }
+                                }
+                            case let .video(info):
+                                Label {
+                                    if !info.caption.text.isEmpty {
+                                        Text(info.caption.text)
+                                    } else {
+                                        Text("Video")
+                                    }
+                                } icon: {
+                                    if let minithumbnail = info.video.minithumbnail {
+                                        Image(data: minithumbnail.data)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 15, height: 15)
+                                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                                            .overlay {
+                                                Image(systemName: "play.fill")
+                                                    .font(.system(size: 8))
+                                                    .foregroundColor(.white)
+                                            }
+                                    } else {
+                                        Image(systemName: "play.square")
+                                    }
+                                }
+                            case let .document(info):
+                                Label {
+                                    if !info.caption.text.isEmpty {
+                                        Text(info.caption.text)
+                                    } else {
+                                        Text("Document")
+                                    }
+                                } icon: {
+                                    if let minithumbnail = info.document.minithumbnail {
+                                        Image(data: minithumbnail.data)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 15, height: 15)
+                                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                                    } else {
+                                        Image(systemName: "doc")
+                                    }
+                                }
+                            case let .sticker(info):
+                                Text(info.sticker.emoji) + Text("Sticker")
+                            default:
+                                Text(Constants.unsupportedMessage)
+                        }
+                    }
+                    .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
+                }
 //                    VStack {
 //                        Spacer()
 //                        if chat.isPinned {
@@ -150,18 +224,29 @@ struct ChatItemView: View {
 //                                .rotationEffect(.degrees(15))
 //                        }
 //                    }
-                }
             }
         }
         .animation(.fastStartSlowStop, value: sidebarSize)
         .onAppear {
             Task {
                 if lastMessage == nil {
-                    lastMessage = try await TdApi.shared[0].getChat(chatId: chat.id).lastMessage
+                    lastMessage = try await tdApi.getChat(chatId: chat.id).lastMessage
                 }
             }
         }
-        .onReceive(TdApi.shared[0].client.updateSubject) { update in
+        .onChange(of: lastMessage) { value in
+            Task {
+                switch value?.senderId {
+                    case let .chat(info):
+                        sender = try await tdApi.getChat(chatId: info.chatId).title
+                    case let .user(info):
+                        let user = try await tdApi.getUser(userId: info.userId)
+                        sender = user.firstName + user.lastName
+                    default: break
+                }
+            }
+        }
+        .onReceive(tdApi.client.updateSubject) { update in
             if case let .chatLastMessage(info) = update {
                 if info.chatId == chat.id {
                     lastMessage = info.lastMessage

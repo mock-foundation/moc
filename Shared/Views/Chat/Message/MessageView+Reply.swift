@@ -10,6 +10,13 @@ import TDLibKit
 import Utilities
 
 extension MessageView {
+    private func makePreviewLabel(_ caption: String, icon: String) -> some View {
+        Label(caption, systemImage: icon)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .lineLimit(1)
+    }
+    
     @ViewBuilder
     var replyView: some View {
         if let reply = message.first!.replyToMessage {
@@ -31,13 +38,26 @@ extension MessageView {
                             } else: {
                                 $0.foregroundColor(Color(fromUserId: reply.sender.id))
                             }
-                        reply.content.preview
-                            .if(mainMessage.isOutgoing) {
-                                $0.foregroundColor(.white.darker(by: 50))
+                        Group {
+                            switch reply.content {
+                                case let .text(info):
+                                    Text(info.text.text)
+                                case let .photo(info):
+                                    makePreviewLabel(info.caption.text, icon: "photo")
+                                case let .video(info):
+                                    makePreviewLabel(info.caption.text, icon: "video")
+                                case let .document(info):
+                                    makePreviewLabel(info.caption.text, icon: "doc.text")
+                                default:
+                                    Text(Constants.unsupportedMessage)
                             }
-                            .if(!mainMessage.isOutgoing) {
-                                $0.foregroundStyle(.secondary)
-                            }
+                        }
+                        .if(mainMessage.isOutgoing) {
+                            $0.foregroundColor(.white.darker(by: 50))
+                        }
+                        .if(!mainMessage.isOutgoing) {
+                            $0.foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
