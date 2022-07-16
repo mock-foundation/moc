@@ -222,16 +222,6 @@ public class TdChatService: ChatService {
             try await tdApi.getChat(chatId: chatId).draftMessage
         }
     }
-    
-    public var isChannel: Bool {
-        get async throws {
-            if case .supergroup(let info) = try await chatType {
-                return info.isChannel
-            } else {
-                return false
-            }
-        }
-    }
 
     public var chatId: Int64?
 

@@ -43,8 +43,20 @@ class ChatViewModel: ObservableObject {
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
     @Published var chatMemberCount: Int?
+    @Published var chatOnlineCount: Int?
     @Published var chatPhoto: File?
-    @Published var isChannel = false
+    /// A list of actions that are happening in the chat
+    /// This dictionary will be populated with multiple values if it's a group
+    /// For private and secret chats it will be just one value
+    @Published var chatActions: OrderedDictionary<TDLibKit.MessageSender, ChatAction> = [:]
+    @Published var chatType: TDLibKit.ChatType = .private(.init(userId: 0))
+    var isChannel: Bool {
+        if case let .supergroup(info) = chatType {
+            return info.isChannel
+        } else {
+            return false
+        }
+    }
     
     var subscribers: [AnyCancellable] = []
     var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
@@ -53,10 +65,11 @@ class ChatViewModel: ObservableObject {
         service.updateSubject
             .receive(on: RunLoop.main)
             .sink { _ in } receiveValue: { [self] update in
-                // It's a switch-case because it will obviously grow in the future
                 switch update {
                     case let .newMessage(info):
                         updateNewMessage(info)
+                    case let .chatAction(info):
+                        updateChatAction(info)
                     default: break
                 }
             }
@@ -166,7 +179,7 @@ class ChatViewModel: ObservableObject {
                 self.objectWillChange.send()
                 self.chatPhoto = try await self.service.chatPhoto
                 self.chatMemberCount = try await self.service.chatMemberCount
-                self.isChannel = try await self.service.isChannel
+                self.chatType = try await self.service.chatType
             }
             self.objectWillChange.send()
             self.messages = messageHistory
