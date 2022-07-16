@@ -90,13 +90,21 @@ class ChatViewModel: ObservableObject {
                             let user = try await self.service.getUser(by: user.userId)
                             replyMessage = ReplyMessage(
                                 id: id,
-                                sender: "\(user.firstName) \(user.lastName)",
+                                sender: MessageSender(
+                                    firstName: user.firstName,
+                                    lastName: user.lastName,
+                                    type: .user,
+                                    id: user.id),
                                 content: tdReplyMessage.content)
                         case let .chat(chat):
                             let chat = try await self.service.getChat(by: chat.chatId)
                             replyMessage = ReplyMessage(
                                 id: id,
-                                sender: chat.title,
+                                sender: MessageSender(
+                                    firstName: chat.title,
+                                    lastName: nil,
+                                    type: .chat,
+                                    id: chat.id),
                                 content: tdReplyMessage.content)
                     }
                 }

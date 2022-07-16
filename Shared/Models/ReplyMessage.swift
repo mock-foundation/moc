@@ -9,10 +9,10 @@ import TDLibKit
 
 struct ReplyMessage: Identifiable, Hashable, Equatable {
     let id: Int64
-    let sender: String
+    let sender: MessageSender
     let content: MessageContent
     
-    init(id: Int64, sender: String, content: MessageContent) {
+    init(id: Int64, sender: MessageSender, content: MessageContent) {
         self.id = id
         self.sender = sender
         self.content = content
