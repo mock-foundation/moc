@@ -43,7 +43,7 @@ class ChatViewModel: ObservableObject {
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
     @Published var chatMemberCount: Int?
-    @Published var chatOnlineCount: Int?
+    @Published var chatOnlineCount: Int = 0
     @Published var chatPhoto: File?
     /// A list of actions that are happening in the chat
     /// This dictionary will be populated with multiple values if it's a group
@@ -70,6 +70,8 @@ class ChatViewModel: ObservableObject {
                         updateNewMessage(info)
                     case let .chatAction(info):
                         updateChatAction(info)
+                    case let .chatOnlineMemberCount(info):
+                        updateChatOnlineMemberCount(info)
                     default: break
                 }
             }
@@ -89,6 +91,7 @@ class ChatViewModel: ObservableObject {
             chatID = chat.id
             objectWillChange.send()
             chatTitle = chat.title
+            chatOnlineCount = 0
         }
         
         let buffer = try await service.messageHistory

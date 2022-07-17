@@ -105,4 +105,10 @@ extension ChatViewModel {
             chatActions[update.senderId] = update.action
         }
     }
+    
+    func updateChatOnlineMemberCount(_ update: UpdateChatOnlineMemberCount) {
+        guard update.chatId == chatID else { return }
+        
+        chatOnlineCount = update.onlineMemberCount
+    }
 }
