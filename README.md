@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/ggoraa/moc/raw/master/Moc/Assets.xcassets/AppIcon.appiconset/icon_256x256.png">
+  <img src="https://github.com/mock-foundation/moc/raw/master/Shared/Assets.xcassets/AppIcon.appiconset/icon_256x256.png">
 </p>
 
 <h1 align="center">Moc</h1>
