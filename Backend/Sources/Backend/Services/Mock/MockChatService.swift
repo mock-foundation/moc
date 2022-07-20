@@ -61,9 +61,7 @@ public class MockChatService: ChatService {
     public func sendAlbum(_ urls: [URL], caption: String) async throws {
         
     }
-    
-    public var isChannel: Bool = false
-    
+        
     public func setAction(_ action: ChatAction) async throws {
         
     }

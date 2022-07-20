@@ -36,13 +36,12 @@ public protocol ChatService: Service {
     /// True, if the chat is blocked by the current user and private messages from
     /// the chat can’t be received.
     var blocked: Bool { get async throws }
-    var isChannel: Bool { get async throws }
     /// Will work when you have such powers and permissions 😉
     func set(protected: Bool) async throws
     func set(blocked: Bool) async throws
     func set(chatTitle: String) async throws
     func set(chatId: Int64)
-    
+        
     func setAction(_ action: ChatAction) async throws
     
     func getMessage(by id: Int64) async throws -> Message

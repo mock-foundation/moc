@@ -40,6 +40,8 @@ public extension TdApi {
         client.run {
             let cache = CacheService.shared
             
+            let stringUpdate = String(data: $0, encoding: .utf8) ?? ""
+            
             do {
                 let update = try TdApi.decoder.decode(Update.self, from: $0)
                 

@@ -95,4 +95,20 @@ extension ChatViewModel {
         //                return firstDay! < secondDay!
         //            }
     }
+    
+    func updateChatAction(_ update: UpdateChatAction) {
+        guard update.chatId == chatID else { return }
+        
+        if update.action == .cancel {
+            chatActions.removeValue(forKey: update.senderId)
+        } else {
+            chatActions[update.senderId] = update.action
+        }
+    }
+    
+    func updateChatOnlineMemberCount(_ update: UpdateChatOnlineMemberCount) {
+        guard update.chatId == chatID else { return }
+        
+        chatOnlineCount = update.onlineMemberCount
+    }
 }

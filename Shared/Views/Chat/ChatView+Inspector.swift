@@ -65,7 +65,12 @@ extension ChatView {
                     .padding(.horizontal)
                     .frame(minWidth: 0, idealWidth: nil)
                     .multilineTextAlignment(.center)
-                Text("\(viewModel.chatMemberCount ?? 0) members")
+                switch viewModel.chatType {
+                    case .basicGroup, .supergroup:
+                        Text("\(viewModel.chatMemberCount ?? 0) members") +
+                        Text(viewModel.chatOnlineCount != 0 ? ", \(viewModel.chatOnlineCount) online" : "")
+                    default: EmptyView()
+                }
                 
                 // Quick actions
                 HStack(spacing: 24) {
