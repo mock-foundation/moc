@@ -2,7 +2,7 @@
 
 setopt extended_glob
 
-print("Sourcery was disabled, because it's not needed at the moment.")
+echo "Sourcery was disabled, because it's not needed at the moment."
 
 #sourcery \
 #--sources Moc \
