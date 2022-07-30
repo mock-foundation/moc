@@ -43,6 +43,10 @@ func logWarning(_ message: String) {
     log(message.yellow)
 }
 
+func logNotice(_ message: String) {
+    log(message.cyan)
+}
+
 func logError(_ message: String) {
     log(message.red)
 }
@@ -99,7 +103,46 @@ func run(command: String, with args: [String]) throws -> String {
     }
 }
 
-try install(command: "swiftlint", from: "swiftlint", as: "SwiftLint")
+/// Runs `readLine()` that asks the user for `y` or `n` response.
+/// - Parameter message: The message with the request.
+/// - Parameter explicit: Whether to explicitly ask for `yes` or `no` response.
+/// - Returns: User's choice
+func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
+    print(message.bold.underline + " " + (explicit ? "(yes/no)" : "(Y/n)") + " ", terminator: "")
+    
+    if let result = readLine() {
+        switch result.lowercased() {
+            case "y":
+                if explicit {
+                    print()
+                    logNotice("Please write a full answer:")
+                    askForContinuation(message, explicit: explicit)
+                } else {
+                    return true
+                }
+            case "yes":
+                return true
+            case "n":
+                if explicit {
+                    print()
+                    logNotice("Please write a full answer:")
+                    askForContinuation(message, explicit: explicit)
+                } else {
+                    return false
+                }
+            case "no":
+                return false
+            default:
+                print()
+                logNotice("Wrong response. Please try again:")
+                askForContinuation(message, explicit: explicit)
+        }
+    } else {
+        logError("Unable to ask for continuation.")
+    }
+    
+    return false
+}
 
 enum ScriptError: Error {
     case parseError(String)
