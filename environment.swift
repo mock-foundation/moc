@@ -21,11 +21,35 @@ let projectNameText = """
 """
 
 
-print() // a new line just in case
+struct EnvironmentScript: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "environment.swift",
+        abstract: "This script will set up (and tear down) the development environment by downloading all dependencies and generating all code."
+    )
+    
+    @Argument(help: "Your API ID from my.telegram.org.")
+    var apiId: Int?
+    
+    @Argument(help: "Your API hash from my.telegram.org.")
+    var apiHash: String?
+    
+    @Flag(help: "Pass this argument if you want to tear down the environment")
+    var teardown: Bool = false
+    
+    func run() throws {
+        print() // a new line just in case
+        print(projectNameText.white.bold)
+        print()
+        
+        if teardown {
+            logInfo("You really want to tear down the environment?")
+        } else {
+            
+        }
+    }
+}
 
-print(projectNameText.white.bold)
-
-print("\n  This script will set up (and tear down) the development environment by downloading all dependencies and generating all code.\n".white)
+EnvironmentScript.main()
 
 func log(_ message: String) {
     print(">>> ".white.bold + message.bold)
@@ -124,7 +148,6 @@ func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
                 return true
             case "n":
                 if explicit {
-                    print()
                     logNotice("Please write a full answer:")
                     askForContinuation(message, explicit: explicit)
                 } else {
@@ -133,7 +156,6 @@ func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
             case "no":
                 return false
             default:
-                print()
                 logNotice("Wrong response. Please try again:")
                 askForContinuation(message, explicit: explicit)
         }
