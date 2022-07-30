@@ -89,7 +89,7 @@ func sectionEnd() {
 ///   - brew: Name of the command in Homebrew
 ///   - display: How this command's name is displayed in logs
 func install(command: String, from brew: String, as display: String) throws {
-    if try run(command: "which", with: [command]).contains(command) {
+    if try runWithOutput(command: "which", with: [command]).contains(command) {
         logOk("\(display) is installed")
     } else {
         logInfo("\(display) was not found, installing...")
@@ -106,14 +106,14 @@ func install(command: String, from brew: String, as display: String) throws {
 /// - Throws: Any error, like being unable to parse command's response or a run failure.
 /// - Returns: Command's output
 @discardableResult
-func run(command: String, with args: [String]) throws -> String {
+func runWithOutput(command: String, with args: [String]) throws -> String {
     let which = Process()
     which.executableURL = URL(fileURLWithPath: "/usr/bin/env")
     which.arguments = [command] + args
-
+    
     var pipe = Pipe()
     which.standardOutput = pipe
-
+    
     do {
         try which.run()
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
@@ -125,6 +125,22 @@ func run(command: String, with args: [String]) throws -> String {
     } catch {
         throw ScriptError.runCommandFail("Unable to run command \(command)")
     }
+}
+
+/// Runs a supplied shell command.
+/// - Parameters:
+///   - command: A command to run.
+///   - args: Args supplied to it
+/// - Throws: Any error, like being unable to parse command's response or a run failure.
+/// - Returns: Command's output
+@discardableResult
+func run(command: String, with args: [String]) throws -> Int32 {
+    let task = Process()
+    task.launchPath = "/usr/bin/env"
+    task.arguments = [command] + args
+    task.launch()
+    task.waitUntilExit()
+    return task.terminationStatus
 }
 
 /// Runs `readLine()` that asks the user for `y` or `n` response.
