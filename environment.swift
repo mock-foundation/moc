@@ -42,9 +42,48 @@ struct EnvironmentScript: ParsableCommand {
         print()
         
         if teardown {
-            logInfo("You really want to tear down the environment?")
-        } else {
+            logWarning("This task can remove swiftformat, swiftlint, gyb, swiftgen, and sourcery Homebrew packages.")
+            logWarning("It can also clear all generated code.")
             
+            if askForContinuation(
+                "You really want to tear down the environment?",
+                explicit: true,
+                preferred: .no
+            ) {
+                if askForContinuation("Do you want to remove Homebrew packages related to Moc?") {
+                    sectionStart("Homebrew output")
+                    try environment.run(command: "brew", with: ["remove", "swiftformat"])
+                    try environment.run(command: "brew", with: ["remove", "swiftlint"])
+                    try environment.run(command: "brew", with: ["remove", "gyb"])
+                    try environment.run(command: "brew", with: ["remove", "swiftgen"])
+                    try environment.run(command: "brew", with: ["remove", "sourcery"])
+                    sectionEnd()
+                }
+                
+                if askForContinuation("Do you want to clear generated code?") {
+                    logInfo("Clearing generated code...")
+                    try environment.run(command: "rm", with: ["-rf", "Sources/Utilities/Generated"])
+                    try environment.run(command: "rm", with: ["-rf", "Moc/Generated"])
+                }
+                
+                logOk("Finished!")
+            } else {
+                logOk("Ok, aborting!")
+            }
+        } else {
+            if let apiId, let apiHash {
+                logInfo("Installing dependencies...")
+                try install(command: "swiftlint", from: "swiftlint", as: "SwiftLint")
+                try install(command: "gyb", from: "ggoraa/apps/gyb", as: "GYB")
+                try install(command: "swiftgen", from: "swiftgen", as: "SwiftGen")
+                try install(command: "sourcery", from: "sourcery", as: "Sourcery")
+                
+                logInfo("Running GYB...")
+                
+                logError("Not implemented")
+            } else {
+                logError("Not enought arguments supplied, please check if you did insert API ID and hash values.")
+            }
         }
     }
 }
@@ -147,8 +186,24 @@ func run(command: String, with args: [String]) throws -> Int32 {
 /// - Parameter message: The message with the request.
 /// - Parameter explicit: Whether to explicitly ask for `yes` or `no` response.
 /// - Returns: User's choice
-func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
-    print(message.bold.underline + " " + (explicit ? "(yes/no)" : "(Y/n)") + " ", terminator: "")
+func askForContinuation(_ message: String, explicit: Bool = false, preferred: UserChoice = .yes) -> Bool {
+    // This mess is just a system for lighting the choices in different ways
+    print(
+        message.bold.underline + " "
+        + (explicit
+           ? "(" + (preferred == .yes
+                ? "yes".green
+                : "yes".lightRed)
+           + "/" + (preferred == .no
+                ? "no".green
+                : "no".lightRed) + ")"
+           : "(" + (preferred == .yes
+                ? "Y".green
+                : "Y".lightRed) + "/"
+           + (preferred == .no
+                ? "n".green
+                : "n".lightRed) + ")")
+        + " ", terminator: "")
     
     if let result = readLine() {
         switch result.lowercased() {
@@ -156,7 +211,7 @@ func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
                 if explicit {
                     print()
                     logNotice("Please write a full answer:")
-                    askForContinuation(message, explicit: explicit)
+                    askForContinuation(message, explicit: explicit, preferred: preferred)
                 } else {
                     return true
                 }
@@ -165,7 +220,7 @@ func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
             case "n":
                 if explicit {
                     logNotice("Please write a full answer:")
-                    askForContinuation(message, explicit: explicit)
+                    askForContinuation(message, explicit: explicit, preferred: preferred)
                 } else {
                     return false
                 }
@@ -173,16 +228,21 @@ func askForContinuation(_ message: String, explicit: Bool = false) -> Bool {
                 return false
             default:
                 logNotice("Wrong response. Please try again:")
-                askForContinuation(message, explicit: explicit)
+                askForContinuation(message, explicit: explicit, preferred: preferred)
         }
     } else {
         logError("Unable to ask for continuation.")
     }
-    
+
     return false
 }
 
 enum ScriptError: Error {
     case parseError(String)
     case runCommandFail(String)
+}
+
+enum UserChoice: String {
+    case yes
+    case no
 }
