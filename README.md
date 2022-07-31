@@ -58,6 +58,7 @@ Now run these commands:
 ```shell
 brew install swift-sh
 sudo chmod +x environment.swift 
+sudo chmod +x gyb.sh
 ./environment.swift <api_id> <api_hash>
 ```
 
