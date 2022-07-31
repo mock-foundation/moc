@@ -30,6 +30,11 @@ enum UserChoice {
     case no
 }
 
+extension String {
+    static let fetchSpm = "FETCH_SPM"
+    static let openXcode = "OPEN_XCODE"
+}
+
 struct EnvironmentScript: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "environment.swift",
@@ -93,12 +98,86 @@ struct EnvironmentScript: ParsableCommand {
                     atPath: "Utilities/Sources/Utilities/Generated",
                     withIntermediateDirectories: true)
                 
+                try run(command: "./gyb.sh", with: [String(apiId), String(apiHash)])
                 
-                logError("Not implemented")
+                if let envValue = envValue(for: .fetchSpm) {
+                    if let value = Int(envValue) {
+                        switch value {
+                            case 1:
+                                logInfo("Fetch SPM dependencies up front: using env imported choice...")
+                                try resolveDependencies()
+                            case 0:
+                                logInfo("Fetch SPM dependencies up front: using env imported choice...")
+                                logInfo("Skipping...")
+                            default: logError("Bad value for " + .fetchSpm + " supplied: \(envValue). Should either be 1 or 0.")
+                        }
+                    } else {
+                        logError("Bad value for " + .fetchSpm + " supplied: \(envValue). Should be just a number.")
+                    }
+                } else {
+                    if askForContinuation("Fetch SPM dependencies up front?") {
+                        try resolveDependencies()
+                    } else {
+                        logOk("Skipping...")
+                    }
+                }
+                
+                if let envValue = envValue(for: .openXcode) {
+                    if let value = Int(envValue) {
+                        switch value {
+                            case 1:
+                                logInfo("Open Xcode: using env imported choice...")
+                                logInfo("Opening Xcode...")
+                                try run(command: "open", with: ["Moc.xcodeproj"])
+                            case 0:
+                                logInfo("Open Xcode: using env imported choice...")
+                                logOk("Skipping...")
+                            default:
+                                logError("Bad value for " + .openXcode + " supplied: \(envValue). Should either be 1 or 0.")
+                        }
+                    } else {
+                        logError("Bad value for " + .openXcode + " supplied: \(envValue). Should be just a number.")
+                    }
+                } else {
+                    if askForContinuation("Open Xcode?") {
+                        logInfo("Opening Xcode...")
+                    } else {
+                        logInfo("Skipping...")
+                    }
+                }
             } else {
                 logError("Not enought arguments supplied, please check if you did insert API ID and hash values.")
             }
         }
+        
+        let currentDate = Date()
+        
+        let dateTimeComponents = Calendar.current.dateComponents([.hour], from: currentDate)
+        
+        var timeString = ""
+        
+        if dateTimeComponents.hour! < 5 {
+            timeString = "night".blue
+        } else if dateTimeComponents.hour! < 9 {
+            timeString = "morning".yellow
+        } else if dateTimeComponents.hour! < 17 {
+            timeString = "day".lightYellow
+        } else if dateTimeComponents.hour! < 22 {
+            timeString = "evening".lightBlue
+        } else {
+            timeString = "night".blue
+        }
+        
+        logOk("Finished environment setup! Have a nice \(timeString)!")
+    }
+    
+    func resolveDependencies() throws {
+        logInfo("Resolving dependencies by running xcodebuild -resolvePackageDependencies...")
+        sectionStart("xcodebuild".lightBlue + " output")
+        
+        try run(command: "xcodebuild", with: ["-resolvePackageDependencies"])
+        
+        sectionEnd()
     }
     
     func envValue(for key: String) -> String? {
@@ -188,10 +267,13 @@ struct EnvironmentScript: ParsableCommand {
     /// - Throws: Any error, like being unable to parse command's response or a run failure.
     /// - Returns: Command's output
     @discardableResult
-    func run(pwd: String? = nil, command: String, with args: [String]) throws -> Int32 {
+    func run(pwd: String? = nil, env: [String: String]? = nil, command: String, with args: [String]) throws -> Int32 {
         let task = Process()
         task.launchPath = "/usr/bin/env"
         task.arguments = [command] + args
+        if let env {
+            task.environment = env
+        }
         if let pwd {
             task.currentDirectoryURL = URL(string: pwd)!
         }

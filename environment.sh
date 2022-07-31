@@ -104,19 +104,13 @@ check_dependency gyb ggoraa/apps/gyb GYB
 check_dependency swiftgen swiftgen SwiftGen
 check_dependency sourcery sourcery Sourcery
 
-#PIP_OUTPUT=`pip3 list | grep plistlib`
-#if [$PIP_OUTPUT -ne ""]; then
-#    pip3 install plistlib
-#else
-#    echo "Python plistlib library is available, skipping installation"
-#fi
-
 cd Utilities/Templates
 info "Running GYB..."
 mkdir ../Sources/Utilities/Generated
 find . -name "*.gyb" |
 while read file; do
     filename=$(echo "$file" | sed 's/.\///')
+    echo $filename
     API_ID=$1 API_HASH=$2 gyb --line-directive '' -o "../Sources/Utilities/Generated/${filename%.gyb}" "$filename";
 done
 
