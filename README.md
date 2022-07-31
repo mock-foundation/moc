@@ -11,7 +11,7 @@ for moderating large communities and personal use.
 
 ![](https://img.shields.io/badge/platform-macOS,%20iPadOS-000000?style=flat&logo=apple&logoColor=white)
 ![](https://img.shields.io/badge/minimum%20OS-macOS%2012,%20iPadOS%2015.2-blueviolet?style=flat&logo=apple&logoColor=white)
-![](https://img.shields.io/badge/Swift%205.6-FA7343?style=flat&logo=swift&logoColor=white)
+![](https://img.shields.io/badge/Swift%205.7-FA7343?style=flat&logo=swift&logoColor=white)
 ![](https://img.shields.io/badge/SwiftUI-2E00F1?style=flat&logo=swift&logoColor=white)
 ![](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)
 [![Build app](https://github.com/ggoraa/moc/actions/workflows/build.yml/badge.svg)](https://github.com/ggoraa/moc/actions/workflows/build.yml)
@@ -42,7 +42,7 @@ If you want to contribute a new feature, please make sure you have read the [pro
 
 ## Step 1 - Download right version of Xcode
 
-The development is going with Xcode 14 beta 1. You can download it from
+The development is going with **Xcode 14 beta**. You can download it from
 [Apple Developer](https://developer.apple.com/download/release/).
 
 ## Step 2 - Obtain `api_id` and `api_hash`
