@@ -1,4 +1,5 @@
 #!/usr/bin/env swift sh
+// swiftlint:disable all
 
 //
 // This script will set up development environment. Much wow.
