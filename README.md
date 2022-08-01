@@ -52,9 +52,14 @@ at the bottom of the page. Leave the page open, this will be needed in the next 
 
 ## Step 3 - Set up development environment
 
-Run this command:
+Be sure that you have [Homebrew](https://brew.sh) installed, because it is used a lot here.
+
+Now run these commands:
 ```shell
-./environment.sh <api_id> <api_hash>
+brew install swift-sh
+sudo chmod +x environment.swift 
+sudo chmod +x gyb.sh
+./environment.swift <api_id> <api_hash>
 ```
 
 **Done!** You have everything set up. You can now build Moc 😁

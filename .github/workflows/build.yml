@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install swift-sh
+        run: brew install swift-sh
       - name: Set up environment
         run: |
           if [[ -z "${{ secrets.API_ID }}" || -z "${{ secrets.API_HASH }}" ]]
@@ -27,7 +29,8 @@ jobs:
               API_ID=${{ secrets.API_ID }}
               API_HASH=${{ secrets.API_HASH }}
           fi
-          HOMEBREW_NO_INSTALL_CLEANUP=1 OPEN_XCODE=0 FETCH_SPM=1 ./environment.sh $API_ID $API_HASH
+          HOMEBREW_NO_INSTALL_CLEANUP=1 OPEN_XCODE=0 FETCH_SPM=1 ./environment.swift 
+$API_ID $API_HASH
 
       - name: Build
         run: |
