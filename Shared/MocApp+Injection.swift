@@ -36,6 +36,7 @@ public extension Resolver {
 @main
 struct MocApp: App {
     @Environment(\.scenePhase) var scenePhase
+    @StateObject var updateManager = UpdateManager()
     
     init() {
         Resolver.registerUI()
@@ -88,7 +89,7 @@ struct MocApp: App {
         }
         .commands {
             aboutCommand
-            AppCommands()
+            AppCommands(updateManager: updateManager)
         }
         
         #if os(macOS)

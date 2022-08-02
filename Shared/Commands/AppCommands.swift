@@ -7,11 +7,17 @@
 
 import SwiftUI
 
-struct AppCommands: Commands {    
+struct AppCommands: Commands {
+    @ObservedObject var updateManager: UpdateManager
+
     var body: some Commands {
+        CommandGroup(after: .appInfo) {
+            Button("Check for updates...", action: updateManager.checkForUpdates)
+                .disabled(!updateManager.canCheckForUpdates)
+        }
         CommandGroup(after: .appSettings) {
             Button(action: {
-
+                
             }, label: {
                 Image(systemName: "bookmark")
                 Text("Saved messages")

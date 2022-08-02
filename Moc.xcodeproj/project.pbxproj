@@ -120,6 +120,8 @@
 		43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029828820A82009FCF53 /* Acknowledgment.swift */; };
 		43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029A28831A8D009FCF53 /* Image+Data.swift */; };
 		43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029C288336E0009FCF53 /* ChatType+IsGroup.swift */; };
+		43B5D7BB28996D4600180E65 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 43B5D7BA28996D4600180E65 /* Sparkle */; };
+		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
 		43BFD91C285D148100D8980A /* NWPathMonitor+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */; };
@@ -250,6 +252,7 @@
 		43B1029828820A82009FCF53 /* Acknowledgment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgment.swift; sourceTree = "<group>"; };
 		43B1029A28831A8D009FCF53 /* Image+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Data.swift"; sourceTree = "<group>"; };
 		43B1029C288336E0009FCF53 /* ChatType+IsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatType+IsGroup.swift"; sourceTree = "<group>"; };
+		43B5D7BD28996DF300180E65 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		43BFD914285CC2B000D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD916285CC30B00D8980A /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NWPathMonitor+Combine.swift"; sourceTree = "<group>"; };
@@ -276,6 +279,7 @@
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
+				43B5D7BB28996D4600180E65 /* Sparkle in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -398,6 +402,7 @@
 				43807D4A27E213350056A3D3 /* Models */,
 				43807D7827E213350056A3D3 /* ViewModels */,
 				43807D5527E213350056A3D3 /* Views */,
+				43807D6C27E213350056A3D3 /* Commands */,
 				43807D7427E213350056A3D3 /* SwiftGen */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
@@ -436,7 +441,6 @@
 			isa = PBXGroup;
 			children = (
 				43807D5627E213350056A3D3 /* Settings */,
-				43807D6C27E213350056A3D3 /* Commands */,
 				433EDD982860EB90009D03D5 /* AsyncTd */,
 				43807D6327E213350056A3D3 /* Chat */,
 				439BA4262863C11400339375 /* Login */,
@@ -503,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				439E0E23287EDEDC00013A0F /* About */,
+				43B5D7BD28996DF300180E65 /* UpdateManager.swift */,
 				43807D6D27E213350056A3D3 /* AppCommands.swift */,
 			);
 			path = Commands;
@@ -677,6 +682,7 @@
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
 				43C29C01287D7FEC00D10AB8 /* TDLibKit */,
+				43B5D7BA28996D4600180E65 /* Sparkle */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -740,6 +746,7 @@
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */,
+				43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -880,6 +887,7 @@
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
 				434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */,
 				433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */,
+				43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
 				43807D9C27E213350056A3D3 /* ContentView.swift in Sources */,
 				43051C9B28779AE2003C5CE2 /* ChatViewModel+Updates.swift in Sources */,
@@ -1258,6 +1266,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
@@ -1348,6 +1364,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */;
 			productName = SkeletonUI;
+		};
+		43B5D7BA28996D4600180E65 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		43C0F49C285A68ED009F2419 /* Defaults */ = {
 			isa = XCSwiftPackageProductDependency;
