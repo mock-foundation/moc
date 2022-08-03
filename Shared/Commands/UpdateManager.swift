@@ -6,15 +6,20 @@
 //
 
 import Combine
-import Sparkle
 import Utilities
+#if !Homebrew
+import Sparkle
+#endif
 
 class UpdateManager: ObservableObject {
+    #if !Homebrew
     private let updaterController: SPUStandardUpdaterController
     
     @Published var canCheckForUpdates = false
+    #endif
     
     init() {
+        #if !Homebrew
         // If you want to start the updater manually, pass false to startingUpdater and call .startUpdater() later
         // This is where you can also pass an updater delegate if you need one
         updaterController = SPUStandardUpdaterController(
@@ -29,9 +34,12 @@ class UpdateManager: ObservableObject {
         
         updaterController.updater.publisher(for: \.canCheckForUpdates)
             .assign(to: &$canCheckForUpdates)
+        #endif
     }
     
+    #if !Homebrew
     func checkForUpdates() {
         updaterController.checkForUpdates(nil)
     }
+    #endif
 }

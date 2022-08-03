@@ -120,7 +120,6 @@
 		43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029828820A82009FCF53 /* Acknowledgment.swift */; };
 		43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029A28831A8D009FCF53 /* Image+Data.swift */; };
 		43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029C288336E0009FCF53 /* ChatType+IsGroup.swift */; };
-		43B5D7BB28996D4600180E65 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 43B5D7BA28996D4600180E65 /* Sparkle */; };
 		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
@@ -260,6 +259,7 @@
 		43C0F49F285A69AA009F2419 /* FolderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLayout.swift; sourceTree = "<group>"; };
 		43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+FastStartSlowStop.swift"; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
+		43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Sparkle.xcconfig; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
@@ -279,7 +279,6 @@
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
-				43B5D7BB28996D4600180E65 /* Sparkle in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -408,6 +407,7 @@
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
 				43B102942882087C009FCF53 /* Acknowledgments.plist */,
+				43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */,
 				43807D5427E213350056A3D3 /* Info.plist */,
 				43807D5327E213350056A3D3 /* Moc.entitlements */,
 			);
@@ -658,6 +658,7 @@
 				43807DB927E214710056A3D3 /* Run SwiftLint */,
 				43807CF227E1FCEC0056A3D3 /* Frameworks */,
 				43807CF327E1FCEC0056A3D3 /* Resources */,
+				43CB61BF289AD02A00DB128E /* Remove Sparkle for Homebrew builds */,
 			);
 			buildRules = (
 			);
@@ -682,7 +683,6 @@
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
 				43C29C01287D7FEC00D10AB8 /* TDLibKit */,
-				43B5D7BA28996D4600180E65 /* Sparkle */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -798,6 +798,24 @@
 			shellPath = /bin/sh;
 			shellScript = "swiftlint\n";
 			showEnvVarsInLog = 0;
+		};
+		43CB61BF289AD02A00DB128E /* Remove Sparkle for Homebrew builds */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Remove Sparkle for Homebrew builds";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Remove Sparkle Framework for MacAppStore\nif [ $CONFIGURATION == Homebrew ]\nthen\nrm -rf \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -929,8 +947,127 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		431D1305289AB442007A504A /* Homebrew */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Homebrew;
+		};
+		431D1306289AB442007A504A /* Homebrew */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Shared/Moc.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 12;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "Shared/Preview\\ Assets.xcassets";
+				DEVELOPMENT_TEAM = 9H3XZRTVLY;
+				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Technoblade never dies.";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = "0.2.0 Homebrew";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Homebrew;
+		};
+		431D1307289AB442007A504A /* Homebrew */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 24;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9H3XZRTVLY;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc.MocTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moc.app/Contents/MacOS/Moc";
+			};
+			name = Homebrew;
+		};
 		43807D1827E1FCEF0056A3D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -993,6 +1130,7 @@
 		};
 		43807D1927E1FCEF0056A3D3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1048,6 +1186,7 @@
 		};
 		43807D1B27E1FCEF0056A3D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1067,6 +1206,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Technoblade never dies.";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -1091,6 +1231,7 @@
 		};
 		43807D1C27E1FCEF0056A3D3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1110,6 +1251,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Technoblade never dies.";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -1119,7 +1261,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = "0.2.0 Direct";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1133,6 +1275,7 @@
 		};
 		43807D1E27E1FCEF0056A3D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1153,6 +1296,7 @@
 		};
 		43807D1F27E1FCEF0056A3D3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43CB61BE289ACFC200DB128E /* Sparkle.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1179,6 +1323,7 @@
 			buildConfigurations = (
 				43807D1827E1FCEF0056A3D3 /* Debug */,
 				43807D1927E1FCEF0056A3D3 /* Release */,
+				431D1305289AB442007A504A /* Homebrew */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1188,6 +1333,7 @@
 			buildConfigurations = (
 				43807D1B27E1FCEF0056A3D3 /* Debug */,
 				43807D1C27E1FCEF0056A3D3 /* Release */,
+				431D1306289AB442007A504A /* Homebrew */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1197,6 +1343,7 @@
 			buildConfigurations = (
 				43807D1E27E1FCEF0056A3D3 /* Debug */,
 				43807D1F27E1FCEF0056A3D3 /* Release */,
+				431D1307289AB442007A504A /* Homebrew */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1366,11 +1513,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */;
 			productName = SkeletonUI;
-		};
-		43B5D7BA28996D4600180E65 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		43C0F49C285A68ED009F2419 /* Defaults */ = {
 			isa = XCSwiftPackageProductDependency;
