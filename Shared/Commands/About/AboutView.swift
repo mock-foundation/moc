@@ -64,7 +64,9 @@ struct AboutView: View {
                             VStack {
                                 Text("Acknowledgments")
                                     .font(.system(size: 40, weight: .medium, design: .default))
-                                Link("**Technoblade never dies**", destination: URL(string: "https://www.curesarcoma.org/technoblade-tribute/")!)
+                                Link(
+                                    "**Technoblade never dies**",
+                                    destination: URL(string: "https://www.curesarcoma.org/technoblade-tribute/")!)
                                 Divider()
                                 ForEach(acknowledgmentList, id: \.self) { list in
                                     Link(list.name, destination: list.url)

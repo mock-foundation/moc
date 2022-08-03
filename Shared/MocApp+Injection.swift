@@ -49,7 +49,7 @@ struct MocApp: App {
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
         
-        AppCenter.start(withAppSecret: Secret.appCenterSecret, services:[
+        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
             Analytics.self,
             Crashes.self
         ])

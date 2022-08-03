@@ -14,7 +14,7 @@ import TDLibKit
 import Logs
 import UniformTypeIdentifiers
 
-// swiftlint:disable type_body_length function_body_length
+// swiftlint:disable function_body_length
 public class TdChatService: ChatService {
     public var updateSubject: PassthroughSubject<Update, Never> {
         tdApi.client.updateSubject

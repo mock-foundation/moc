@@ -6,14 +6,12 @@
 //
 import Foundation
 
-
 public protocol HTTPClient {
     func sendRequest<T: Decodable>(
         endpoint: Endpoint,
         responseModel: T.Type
     ) async throws -> T
 }
-
 
 public extension HTTPClient {
     func sendRequest<T: Decodable>(

@@ -5,7 +5,6 @@
 //  Created by DariaMikots on 06.07.2022.
 //
 
-
 public enum RequestError: Error {
     case decode
     case invalidURL

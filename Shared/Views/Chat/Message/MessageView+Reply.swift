@@ -32,6 +32,7 @@ extension MessageView {
                         }
                         .frame(width: 3)
                     VStack(alignment: .leading) {
+                        // swiftlint:disable line_length
                         Text("\(reply.sender.firstName)\(reply.sender.lastName != nil ? "\(reply.sender.lastName!)" : "")")
                             .if(mainMessage.isOutgoing) {
                                 $0.foregroundColor(.white)

@@ -10,6 +10,7 @@ import TDLibKit
 import Utilities
 
 extension ChatViewModel {
+    // swiftlint:disable function_body_length
     func updateNewMessage(_ update: UpdateNewMessage) {
         logger.debug("UpdateNewMessage")
         let tdMessage = update.message
