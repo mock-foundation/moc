@@ -68,9 +68,9 @@ extension MessageContent {
     /// Says whether a message is graphic (photo or video)
     var isGraphic: Bool {
         switch self {
-            case .video(_):
+            case .video:
                 return true
-            case .photo(_):
+            case .photo:
                 return true
             default:
                 return false

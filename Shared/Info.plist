@@ -17,5 +17,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
 </dict>
 </plist>

@@ -10,7 +10,7 @@ import TDLibKit
 import Foundation
 import Combine
 
-// swiftlint:disable function_body_length
+// swiftlint:disable all
 public class MockChatService: ChatService {
     public var updateSubject = PassthroughSubject<Update, Never>()
 

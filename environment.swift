@@ -48,7 +48,15 @@ struct EnvironmentScript: ParsableCommand {
     @Argument(help: "Your API hash from my.telegram.org.")
     var apiHash: String?
     
-    @Flag(help: "Pass this argument if you want to tear down the environment")
+    @Argument(help: """
+        An AppCenter secret. When you are just contributing to the project, \
+        don't care about this thing. You want to supply this value when you \
+        want to make in-app updates working, but again, when just contributing,\
+        you should not care about this argument.
+        """)
+    var appCenterSecret: String?
+    
+    @Flag(help: "Pass this flag if you want to tear down the environment")
     var teardown: Bool = false
     
     func run() throws {
@@ -99,7 +107,10 @@ struct EnvironmentScript: ParsableCommand {
                     atPath: "Utilities/Sources/Utilities/Generated",
                     withIntermediateDirectories: true)
                 
-                try run(command: "./gyb.sh", with: [String(apiId), String(apiHash)])
+                var gybArgs = [String(apiId), String(apiHash)]
+                if let appCenterSecret { gybArgs.append(appCenterSecret) }
+                
+                try run(command: "./gyb.sh", with: gybArgs)
                 
                 if let envValue = envValue(for: .fetchSpm) {
                     if let value = Int(envValue) {

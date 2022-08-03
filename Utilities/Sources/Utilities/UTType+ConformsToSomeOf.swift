@@ -13,11 +13,10 @@ public extension UTType {
     /// - Parameter types: The types to check against
     /// - Returns: Comparation result
     func conforms(toAtLeastOneOf types: [UTType]) -> Bool {
-        for type in types {
-            if type.conforms(to: self) {
-                return true
-            }
+        for type in types where type.conforms(to: self) {
+            return true
         }
+        
         return false
     }
 }
