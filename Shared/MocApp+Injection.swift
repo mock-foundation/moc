@@ -5,9 +5,9 @@
 //  Created by Егор Яковенко on 24.12.2021.
 //
 
-import AppCenter
-import AppCenterAnalytics
-import AppCenterCrashes
+// import AppCenter
+// import AppCenterAnalytics
+// import AppCenterCrashes
 import Backend
 import CryptoKit
 import Resolver
@@ -49,10 +49,10 @@ struct MocApp: App {
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
         
-        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
-            Analytics.self,
-            Crashes.self
-        ])
+//        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
+//            Analytics.self,
+//            Crashes.self
+//        ])
     }
     
     #if os(macOS)
