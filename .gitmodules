@@ -1,0 +1,9 @@
+[submodule "third-party/appcenter-sdk-apple"]
+	path = third-party/appcenter-sdk-apple
+	url = https://github.com/microsoft/appcenter-sdk-apple.git
+[submodule "third-party/Sparkle"]
+	path = third-party/Sparkle
+	url = https://github.com/sparkle-project/Sparkle.git
+[submodule "third-party/tdlibkit"]
+	path = third-party/tdlibkit
+	url = https://github.com/mock-foundation/tdlibkit
