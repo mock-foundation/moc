@@ -22,6 +22,8 @@ class UpdateManager: ObservableObject {
             updaterDelegate: nil,
             userDriverDelegate: nil)
         
+        updaterController.updater.checkForUpdatesInBackground()
+        
         updaterController.updater.setFeedURL(
             URL(string: "https://api.appcenter.ms/v0.1/public/sparkle/apps/\(Secret.appCenterSecret)"))
         
