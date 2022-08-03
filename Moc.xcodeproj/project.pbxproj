@@ -120,7 +120,6 @@
 		43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029828820A82009FCF53 /* Acknowledgment.swift */; };
 		43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029A28831A8D009FCF53 /* Image+Data.swift */; };
 		43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029C288336E0009FCF53 /* ChatType+IsGroup.swift */; };
-		43B5D7BB28996D4600180E65 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 43B5D7BA28996D4600180E65 /* Sparkle */; };
 		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
@@ -128,8 +127,10 @@
 		43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F499285A58BD009F2419 /* View+SidebarSize.swift */; };
 		43C0F49D285A68ED009F2419 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 43C0F49C285A68ED009F2419 /* Defaults */; };
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
-		43C29C02287D7FEC00D10AB8 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43C29C01287D7FEC00D10AB8 /* TDLibKit */; settings = {ATTRIBUTES = (Required, ); }; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
+		43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43CA0873289B340D00ACBEC3 /* Sparkle */; };
+		43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */; };
+		43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43CA0879289B344D00ACBEC3 /* AppCenterCrashes */; };
 		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
 		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
@@ -145,6 +146,19 @@
 			remoteInfo = Moc;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		43CA0870289B32D800ACBEC3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2D229DCE28759E000056A294 /* EmojiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiViewModel.swift; sourceTree = "<group>"; };
@@ -259,6 +273,9 @@
 		43C0F499285A58BD009F2419 /* View+SidebarSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SidebarSize.swift"; sourceTree = "<group>"; };
 		43C0F49F285A69AA009F2419 /* FolderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLayout.swift; sourceTree = "<group>"; };
 		43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+FastStartSlowStop.swift"; sourceTree = "<group>"; };
+		43CA0868289B323F00ACBEC3 /* appcenter-sdk-apple */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "appcenter-sdk-apple"; sourceTree = "<group>"; };
+		43CA0869289B323F00ACBEC3 /* Sparkle */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Sparkle; sourceTree = "<group>"; };
+		43CA0871289B336900ACBEC3 /* tdlibkit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = tdlibkit; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
@@ -272,19 +289,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
-				43C29C02287D7FEC00D10AB8 /* TDLibKit in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
-				43B5D7BB28996D4600180E65 /* Sparkle in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
+				43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */,
 				43807DA827E2138A0056A3D3 /* Lottie in Frameworks */,
 				2D229DD7287606710056A294 /* Networking in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
@@ -293,6 +310,7 @@
 				43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */,
 				43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */,
 				43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */,
+				43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,6 +397,7 @@
 				43F871B7283E21C700B6C717 /* Logs */,
 				43CA7FC9283E3988006E7AC9 /* Utilities */,
 				43807D0927E1FCEF0056A3D3 /* MocTests */,
+				43CA0867289B323F00ACBEC3 /* third-party */,
 				43807CF627E1FCEC0056A3D3 /* Products */,
 				43807DBA27E214970056A3D3 /* Frameworks */,
 			);
@@ -507,7 +526,6 @@
 			isa = PBXGroup;
 			children = (
 				439E0E23287EDEDC00013A0F /* About */,
-				43B5D7BD28996DF300180E65 /* UpdateManager.swift */,
 				43807D6D27E213350056A3D3 /* AppCommands.swift */,
 			);
 			path = Commands;
@@ -616,10 +634,21 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		43CA0867289B323F00ACBEC3 /* third-party */ = {
+			isa = PBXGroup;
+			children = (
+				43CA0871289B336900ACBEC3 /* tdlibkit */,
+				43CA0868289B323F00ACBEC3 /* appcenter-sdk-apple */,
+				43CA0869289B323F00ACBEC3 /* Sparkle */,
+			);
+			path = "third-party";
+			sourceTree = "<group>";
+		};
 		43EC18DD28566F1800FCAD43 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
 				4396B152285A01F4004109AE /* Views */,
+				43B5D7BD28996DF300180E65 /* UpdateManager.swift */,
 				4312154C2858C326009EFEB5 /* GenerateQRCode.swift */,
 				43BFD916285CC30B00D8980A /* MultilineTextField.swift */,
 				438B2280285E3077000D65C8 /* LighterDarker.swift */,
@@ -658,6 +687,7 @@
 				43807DB927E214710056A3D3 /* Run SwiftLint */,
 				43807CF227E1FCEC0056A3D3 /* Frameworks */,
 				43807CF327E1FCEC0056A3D3 /* Resources */,
+				43CA0870289B32D800ACBEC3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -681,8 +711,9 @@
 				43C0F49C285A68ED009F2419 /* Defaults */,
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
-				43C29C01287D7FEC00D10AB8 /* TDLibKit */,
-				43B5D7BA28996D4600180E65 /* Sparkle */,
+				43CA0873289B340D00ACBEC3 /* Sparkle */,
+				43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */,
+				43CA0879289B344D00ACBEC3 /* AppCenterCrashes */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -745,8 +776,6 @@
 				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
-				43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */,
-				43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1119,7 +1148,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "0.2.0 ";
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1268,28 +1297,12 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.3.0;
-			};
-		};
-		43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
-			requirement = {
-				kind = exactVersion;
-				version = "2.1.2-1.8.4-b8bd39dc";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1367,20 +1380,22 @@
 			package = 43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */;
 			productName = SkeletonUI;
 		};
-		43B5D7BA28996D4600180E65 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
-		};
 		43C0F49C285A68ED009F2419 /* Defaults */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
 		};
-		43C29C01287D7FEC00D10AB8 /* TDLibKit */ = {
+		43CA0873289B340D00ACBEC3 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */;
-			productName = TDLibKit;
+			productName = Sparkle;
+		};
+		43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppCenterAnalytics;
+		};
+		43CA0879289B344D00ACBEC3 /* AppCenterCrashes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppCenterCrashes;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

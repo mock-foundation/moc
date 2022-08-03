@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct AppCommands: Commands {
+    #if os(macOS)
     @ObservedObject var updateManager: UpdateManager
+    #endif
 
     var body: some Commands {
+        #if os(macOS)
         CommandGroup(after: .appInfo) {
             Button("Check for updates...", action: updateManager.checkForUpdates)
                 .disabled(!updateManager.canCheckForUpdates)
         }
+        #endif
         CommandGroup(after: .appSettings) {
             Button(action: {
                 
