@@ -45,6 +45,8 @@
 		4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072A286229B000587A63 /* MessageView+Photo.swift */; };
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
+		4368FE57289A4CBB006D9717 /* AppCenterAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4368FE56289A4CBB006D9717 /* AppCenterAnalytics */; };
+		4368FE59289A4CBB006D9717 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 4368FE58289A4CBB006D9717 /* AppCenterCrashes */; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
 		4371D154287F059100337533 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371D153287F059100337533 /* AboutView.swift */; };
 		437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */; platformFilter = ios; };
@@ -274,6 +276,7 @@
 			files = (
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
+				4368FE57289A4CBB006D9717 /* AppCenterAnalytics in Frameworks */,
 				43C29C02287D7FEC00D10AB8 /* TDLibKit in Frameworks */,
 				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
@@ -290,6 +293,7 @@
 				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
 				431215522858E50B009EFEB5 /* ComplexModule in Frameworks */,
+				4368FE59289A4CBB006D9717 /* AppCenterCrashes in Frameworks */,
 				43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */,
 				43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
@@ -683,6 +687,8 @@
 				2D229DD6287606710056A294 /* Networking */,
 				43C29C01287D7FEC00D10AB8 /* TDLibKit */,
 				43B5D7BA28996D4600180E65 /* Sparkle */,
+				4368FE56289A4CBB006D9717 /* AppCenterAnalytics */,
+				4368FE58289A4CBB006D9717 /* AppCenterCrashes */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -747,6 +753,7 @@
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				43C29C00287D7FEC00D10AB8 /* XCRemoteSwiftPackageReference "tdlibkit" */,
 				43B5D7B928996D4500180E65 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				4368FE55289A4CBB006D9717 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1226,6 +1233,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		4368FE55289A4CBB006D9717 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/microsoft/appcenter-sdk-apple.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver.git";
@@ -1335,6 +1350,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		4368FE56289A4CBB006D9717 /* AppCenterAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4368FE55289A4CBB006D9717 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */;
+			productName = AppCenterAnalytics;
+		};
+		4368FE58289A4CBB006D9717 /* AppCenterCrashes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4368FE55289A4CBB006D9717 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */;
+			productName = AppCenterCrashes;
 		};
 		43807DA427E2137A0056A3D3 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
