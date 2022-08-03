@@ -7,6 +7,7 @@
 
 import Combine
 import Sparkle
+import Utilities
 
 class UpdateManager: ObservableObject {
     private let updaterController: SPUStandardUpdaterController
@@ -20,6 +21,8 @@ class UpdateManager: ObservableObject {
             startingUpdater: true,
             updaterDelegate: nil,
             userDriverDelegate: nil)
+        
+        updaterController.updater.setFeedURL(URL(string: "https://api.appcenter.ms/v0.1/public/sparkle/apps/\(Secret.appCenterSecret)"))
         
         updaterController.updater.publisher(for: \.canCheckForUpdates)
             .assign(to: &$canCheckForUpdates)
