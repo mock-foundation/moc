@@ -40,17 +40,25 @@ If you want to contribute a new feature, please make sure you have read the [pro
 
 # Building
 
-## Step 1 - Download right version of Xcode
+## Step 1 - Clone
+
+Use the command below to clone the repo and its submodules:
+
+```shell
+git clone --recurse-submodules https://github.com/mock-foundation/moc.git 
+```
+
+## Step 2 - Download right version of Xcode
 
 The development is going with **Xcode 14 beta**. You can download it from
 [Apple Developer](https://developer.apple.com/download/release/).
 
-## Step 2 - Obtain `api_id` and `api_hash`
+## Step 3 - Obtain `api_id` and `api_hash`
 
 They can be obtained [here](https://my.telegram.org/). Log in, open **API development tools**, and fill up needed info. Then click **Save changes**
 at the bottom of the page. Leave the page open, this will be needed in the next step!
 
-## Step 3 - Set up development environment
+## Step 4 - Set up development environment
 
 Be sure that you have [Homebrew](https://brew.sh) installed, because it is used a lot here.
 
