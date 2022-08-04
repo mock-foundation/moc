@@ -9,3 +9,4 @@ reporter: "xcode"
 excluded:
     - Utilities/Sources/Utilities/Generated
     - Moc/Generated/AutoEquatable.generated.swift
+    - third-party

@@ -14,7 +14,7 @@ let package = Package(
             targets: ["Caching"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/groue/GRDB.swift.git", from: "5.24.1"),
+        .package(path: "../third-party/GRDB.swift"),
         .package(path: "../Utilities"),
         .package(path: "../Logs")
     ],

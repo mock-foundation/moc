@@ -5,9 +5,9 @@
 //  Created by Егор Яковенко on 24.12.2021.
 //
 
-// import AppCenter
-// import AppCenterAnalytics
-// import AppCenterCrashes
+ import AppCenter
+ import AppCenterAnalytics
+ import AppCenterCrashes
 import Backend
 import CryptoKit
 import Resolver
@@ -39,7 +39,9 @@ public extension Resolver {
 @main
 struct MocApp: App {
     @Environment(\.scenePhase) var scenePhase
+    #if os(macOS)
     @StateObject var updateManager = UpdateManager()
+    #endif
     
     init() {
         Resolver.registerUI()
@@ -49,10 +51,10 @@ struct MocApp: App {
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
         
-//        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
-//            Analytics.self,
-//            Crashes.self
-//        ])
+        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
+            Analytics.self,
+            Crashes.self
+        ])
     }
     
     #if os(macOS)
@@ -97,7 +99,11 @@ struct MocApp: App {
         }
         .commands {
             aboutCommand
+            #if os(macOS)
             AppCommands(updateManager: updateManager)
+            #else
+            AppCommands()
+            #endif
         }
         
         #if os(macOS)

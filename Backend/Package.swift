@@ -15,11 +15,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/mock-foundation/tdlibkit.git",
-            exact: "2.1.2-1.8.4-b8bd39dc"
-        ),
-        .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
+        .package(path: "../third-party/tdlibkit"),
+        .package(path: "../third-party/Resolver"),
         .package(path: "../Utilities"),
         .package(path: "../Caching"),
         .package(path: "../Logs")
