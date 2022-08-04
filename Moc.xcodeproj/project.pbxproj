@@ -45,6 +45,10 @@
 		4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072A286229B000587A63 /* MessageView+Photo.swift */; };
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
+		4368EC1B289BC22800CAA505 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC1A289BC22800CAA505 /* Lottie */; };
+		4368EC21289BC2E300CAA505 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC20289BC2E300CAA505 /* Introspect */; };
+		4368EC23289BCEA200CAA505 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC22289BCEA200CAA505 /* TDLibKit */; };
+		4368EC24289BCEA200CAA505 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC22289BCEA200CAA505 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
 		4371D154287F059100337533 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371D153287F059100337533 /* AboutView.swift */; };
 		437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */; platformFilter = ios; };
@@ -82,13 +86,8 @@
 		43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7A27E213350056A3D3 /* AccountsPrefViewModel.swift */; };
 		43807DA127E213350056A3D3 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7B27E213350056A3D3 /* ChatViewModel.swift */; };
 		43807DA227E213350056A3D3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7C27E213350056A3D3 /* MainViewModel.swift */; };
-		43807DA527E2137A0056A3D3 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DA427E2137A0056A3D3 /* Resolver */; };
-		43807DA827E2138A0056A3D3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DA727E2138A0056A3D3 /* Lottie */; };
 		43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DAA27E2139B0056A3D3 /* AlertToast */; };
-		43807DB827E214440056A3D3 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DB727E214440056A3D3 /* Introspect */; settings = {ATTRIBUTES = (Required, ); }; };
 		43807DBC27E214970056A3D3 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 43807DBB27E214970056A3D3 /* Backend */; };
-		43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC527E214D30056A3D3 /* libc++.1.tbd */; };
-		43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43807DC627E214DD0056A3D3 /* libz.1.tbd */; };
 		4388DC0B2875765100B0A57B /* AsyncTdFileThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC0A2875765100B0A57B /* AsyncTdFileThumbnail.swift */; };
 		438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B227C285DCA88000D65C8 /* AsyncTdImage.swift */; };
 		438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B227E285E3050000D65C8 /* LighterDarker.swift */; platformFilter = ios; };
@@ -131,8 +130,6 @@
 		43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43CA0873289B340D00ACBEC3 /* Sparkle */; };
 		43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */; };
 		43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43CA0879289B344D00ACBEC3 /* AppCenterCrashes */; };
-		43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18D92856207C00FCAD43 /* libSystem.B.tbd */; platformFilter = ios; };
-		43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC18DB285620A800FCAD43 /* libc++abi.tbd */; platformFilter = ios; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
@@ -154,6 +151,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4368EC24289BCEA200CAA505 /* TDLibKit in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,6 +172,8 @@
 		43051C98287799BD003C5CE2 /* ChatViewModel+Interactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewModel+Interactions.swift"; sourceTree = "<group>"; };
 		43051C9A28779AE2003C5CE2 /* ChatViewModel+Updates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewModel+Updates.swift"; sourceTree = "<group>"; };
 		4305C475285B1C3200F6E7FF /* DefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeys.swift; sourceTree = "<group>"; };
+		4307B3D6289BACC000A245F4 /* GRDB.swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GRDB.swift; sourceTree = "<group>"; };
+		4307B3D9289BACDE00A245F4 /* Resolver */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Resolver; sourceTree = "<group>"; };
 		4309BCF5283D6E6A00F43170 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		430D745D286D00F10031C2F9 /* MessageView+Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Document.swift"; sourceTree = "<group>"; };
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
@@ -291,25 +291,21 @@
 			files = (
 				43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
-				43807DB827E214440056A3D3 /* Introspect in Frameworks */,
-				43807DA527E2137A0056A3D3 /* Resolver in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
+				4368EC1B289BC22800CAA505 /* Lottie in Frameworks */,
+				4368EC23289BCEA200CAA505 /* TDLibKit in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
 				43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */,
-				43807DA827E2138A0056A3D3 /* Lottie in Frameworks */,
 				2D229DD7287606710056A294 /* Networking in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
 				431215522858E50B009EFEB5 /* ComplexModule in Frameworks */,
-				43807DC827E214E90056A3D3 /* libz.1.tbd in Frameworks */,
-				43807DC727E214E50056A3D3 /* libc++.1.tbd in Frameworks */,
-				43EC18DA2856208A00FCAD43 /* libSystem.B.tbd in Frameworks */,
-				43EC18DC285620AF00FCAD43 /* libc++abi.tbd in Frameworks */,
+				4368EC21289BC2E300CAA505 /* Introspect in Frameworks */,
 				43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
 			);
@@ -637,6 +633,8 @@
 		43CA0867289B323F00ACBEC3 /* third-party */ = {
 			isa = PBXGroup;
 			children = (
+				4307B3D9289BACDE00A245F4 /* Resolver */,
+				4307B3D6289BACC000A245F4 /* GRDB.swift */,
 				43CA0871289B336900ACBEC3 /* tdlibkit */,
 				43CA0868289B323F00ACBEC3 /* appcenter-sdk-apple */,
 				43CA0869289B323F00ACBEC3 /* Sparkle */,
@@ -695,10 +693,7 @@
 			);
 			name = Moc;
 			packageProductDependencies = (
-				43807DA427E2137A0056A3D3 /* Resolver */,
-				43807DA727E2138A0056A3D3 /* Lottie */,
 				43807DAA27E2139B0056A3D3 /* AlertToast */,
-				43807DB727E214440056A3D3 /* Introspect */,
 				43807DBB27E214970056A3D3 /* Backend */,
 				434203B7283CB01D003E344C /* Algorithms */,
 				4360D6E2283FE2BE00D3378F /* Collections */,
@@ -714,6 +709,9 @@
 				43CA0873289B340D00ACBEC3 /* Sparkle */,
 				43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */,
 				43CA0879289B344D00ACBEC3 /* AppCenterCrashes */,
+				4368EC1A289BC22800CAA505 /* Lottie */,
+				4368EC20289BC2E300CAA505 /* Introspect */,
+				4368EC22289BCEA200CAA505 /* TDLibKit */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -767,15 +765,14 @@
 			);
 			mainGroup = 43807CEC27E1FCEC0056A3D3;
 			packageReferences = (
-				43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */,
-				43807DA627E213890056A3D3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */,
 				431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				4368EC1F289BC2E300CAA505 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1257,20 +1254,20 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hmlongco/Resolver.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		43807DA627E213890056A3D3 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.0.0;
+			};
+		};
+		4368EC1F289BC2E300CAA505 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
 			};
 		};
 		43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
@@ -1279,14 +1276,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
-			};
-		};
-		43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.4;
 			};
 		};
 		43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
@@ -1351,25 +1340,24 @@
 			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
 		};
-		43807DA427E2137A0056A3D3 /* Resolver */ = {
+		4368EC1A289BC22800CAA505 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 43807DA327E2137A0056A3D3 /* XCRemoteSwiftPackageReference "Resolver" */;
-			productName = Resolver;
-		};
-		43807DA727E2138A0056A3D3 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43807DA627E213890056A3D3 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		4368EC20289BC2E300CAA505 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4368EC1F289BC2E300CAA505 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+		4368EC22289BCEA200CAA505 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TDLibKit;
 		};
 		43807DAA27E2139B0056A3D3 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
-		};
-		43807DB727E214440056A3D3 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43807DB627E214440056A3D3 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
 		};
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;

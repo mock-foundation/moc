@@ -7,3 +7,12 @@
 [submodule "third-party/tdlibkit"]
 	path = third-party/tdlibkit
 	url = https://github.com/mock-foundation/tdlibkit
+[submodule "third-party/Resolver"]
+	path = third-party/Resolver
+	url = https://github.com/hmlongco/Resolver.git
+[submodule "third-party/SwiftUI-Introspect"]
+	path = third-party/SwiftUI-Introspect
+	url = https://github.com/siteline/SwiftUI-Introspect.git
+[submodule "third-party/GRDB.swift"]
+	path = third-party/GRDB.swift
+	url = https://github.com/groue/GRDB.swift.git
