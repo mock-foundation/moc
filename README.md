@@ -18,11 +18,11 @@ for moderating large communities and personal use.
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg?style=flat)](https://opensource.org/licenses/)
 [![Github All Releases](https://img.shields.io/github/downloads/ggoraa/moc/total.svg?style=flat)]() 
 
-This client is currently **in development** and **barely usable**. You can track progress by observing the [project table](https://github.com/users/ggoraa/projects/1/views/4), [issues](https://github.com/ggoraa/moc/issues), [pull requests](https://github.com/ggoraa/moc/pulls), and a [Telegram channel](https://t.me/moc_updates_ru) (russian).
+This client is currently **in development** and **barely usable**. You can track progress by observing the [project table](https://github.com/orgs/mock-foundation/projects/2), [issues](https://github.com/mock-foundation/moc/issues), [pull requests](https://github.com/mock-foundation/moc/pulls), and a [Telegram channel](https://t.me/moc_updates_ua) (russian, and soon ukrainian).
 
 Project roadmap: [Craft](https://www.craft.do/s/rmUOSbIPXTVbCY)
 
-If you have any questions, ask them in [Discussions](https://github.com/ggoraa/moc/discussions) on GitHub, or in a [Telegram group](https://t.me/moc_discussion) (ukrainian/russian). You are **strongly** encoruaged to use Discussions and the Telegram group instead of Issues for questions. Bug reports and stuff go to Issues. There is a reason why GitHub created Discussions in the first place :D
+If you have any questions, ask them in [Discussions](https://github.com/mock-foundation/moc/discussions) on GitHub, or in a [Telegram group](https://t.me/moc_discussion) (ukrainian/russian). You are **strongly** encoruaged to use Discussions and the Telegram group instead of Issues for questions. Bug reports and stuff go to Issues. There is a reason why GitHub created Discussions in the first place :D
 
 # Screenshots
 ![](.github/images/screenshots/light/main.png)
