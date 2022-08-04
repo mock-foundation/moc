@@ -28,6 +28,9 @@
 		431215522858E50B009EFEB5 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215512858E50B009EFEB5 /* ComplexModule */; };
 		431215542858E50B009EFEB5 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 431215532858E50B009EFEB5 /* Numerics */; };
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
+		43295693289BE1A7001647D5 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43295692289BE1A7001647D5 /* Introspect */; };
+		43295695289BE1B2001647D5 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43295694289BE1B2001647D5 /* TDLibKit */; };
+		43295696289BE5B2001647D5 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43295694289BE1B2001647D5 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */; platformFilters = (macos, ); };
 		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; platformFilters = (macos, ); };
@@ -46,9 +49,6 @@
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
 		4368EC1B289BC22800CAA505 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC1A289BC22800CAA505 /* Lottie */; };
-		4368EC21289BC2E300CAA505 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC20289BC2E300CAA505 /* Introspect */; };
-		4368EC23289BCEA200CAA505 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC22289BCEA200CAA505 /* TDLibKit */; };
-		4368EC24289BCEA200CAA505 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC22289BCEA200CAA505 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
 		4371D154287F059100337533 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371D153287F059100337533 /* AboutView.swift */; };
 		437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */; platformFilter = ios; };
@@ -151,7 +151,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4368EC24289BCEA200CAA505 /* TDLibKit in Embed Frameworks */,
+				43295696289BE5B2001647D5 /* TDLibKit in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +179,7 @@
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
+		43295691289BE182001647D5 /* SwiftUI-Introspect */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "SwiftUI-Introspect"; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
@@ -291,21 +292,21 @@
 			files = (
 				43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
+				43295695289BE1B2001647D5 /* TDLibKit in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
+				43295693289BE1A7001647D5 /* Introspect in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
 				4368EC1B289BC22800CAA505 /* Lottie in Frameworks */,
-				4368EC23289BCEA200CAA505 /* TDLibKit in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
 				43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */,
 				2D229DD7287606710056A294 /* Networking in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
 				431215522858E50B009EFEB5 /* ComplexModule in Frameworks */,
-				4368EC21289BC2E300CAA505 /* Introspect in Frameworks */,
 				43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
 			);
@@ -638,6 +639,7 @@
 				43CA0871289B336900ACBEC3 /* tdlibkit */,
 				43CA0868289B323F00ACBEC3 /* appcenter-sdk-apple */,
 				43CA0869289B323F00ACBEC3 /* Sparkle */,
+				43295691289BE182001647D5 /* SwiftUI-Introspect */,
 			);
 			path = "third-party";
 			sourceTree = "<group>";
@@ -710,8 +712,8 @@
 				43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */,
 				43CA0879289B344D00ACBEC3 /* AppCenterCrashes */,
 				4368EC1A289BC22800CAA505 /* Lottie */,
-				4368EC20289BC2E300CAA505 /* Introspect */,
-				4368EC22289BCEA200CAA505 /* TDLibKit */,
+				43295692289BE1A7001647D5 /* Introspect */,
+				43295694289BE1B2001647D5 /* TDLibKit */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -772,7 +774,6 @@
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				4368EC1F289BC2E300CAA505 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1262,14 +1263,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		4368EC1F289BC2E300CAA505 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.4;
-			};
-		};
 		43807DA927E2139B0056A3D3 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -1320,6 +1313,14 @@
 			package = 431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */;
 			productName = RealModule;
 		};
+		43295692289BE1A7001647D5 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Introspect;
+		};
+		43295694289BE1B2001647D5 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TDLibKit;
+		};
 		434203B7283CB01D003E344C /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */;
@@ -1344,15 +1345,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		4368EC20289BC2E300CAA505 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4368EC1F289BC2E300CAA505 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
-		};
-		4368EC22289BCEA200CAA505 /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TDLibKit;
 		};
 		43807DAA27E2139B0056A3D3 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
