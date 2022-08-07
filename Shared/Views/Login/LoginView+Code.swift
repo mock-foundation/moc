@@ -13,20 +13,34 @@ extension LoginView {
         VStack {
             Text("Enter the code")
                 .font(.title)
-            TextField("Code", text: $code)
-                .onSubmit {
-                    Task {
-                        do {
-                            withAnimation { showLoadingSpinner = true }
-                            try await service.checkAuth(code: code)
-                            withAnimation { showLoadingSpinner = false }
-                        } catch {
-                            showErrorAlert = true
+            PinCodeTextField(code: $code, numberOfDigits: 5)
+                .onChange(of: code) { value in
+                    if value.count == 5 {
+                        Task {
+                            do {
+                                withAnimation { showLoadingSpinner = true }
+                                try await service.checkAuth(code: code)
+                                withAnimation { showLoadingSpinner = false }
+                            } catch {
+                                showErrorAlert = true
+                            }
                         }
                     }
                 }
-                .frame(width: 156)
-                .textFieldStyle(.roundedBorder)
+//            TextField("Code", text: $code)
+//                .onSubmit {
+//                    Task {
+//                        do {
+//                            withAnimation { showLoadingSpinner = true }
+//                            try await service.checkAuth(code: code)
+//                            withAnimation { showLoadingSpinner = false }
+//                        } catch {
+//                            showErrorAlert = true
+//                        }
+//                    }
+//                }
+//                .frame(width: 156)
+//                .textFieldStyle(.roundedBorder)
             
 //            Button {
 //                Task {

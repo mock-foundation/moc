@@ -40,6 +40,7 @@
 		43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; };
 		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; };
 		43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
@@ -183,6 +184,7 @@
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
 		433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdQuickLookView.swift; sourceTree = "<group>"; };
+		43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
 		434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
 		4367071E2861A6CD00587A63 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				43807D7027E213350056A3D3 /* ContentView.swift */,
 				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
 				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
+				43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -840,6 +843,7 @@
 				43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */,
 				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
 				437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */,
+				43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */,
 				2D229DCF28759E000056A294 /* EmojiViewModel.swift in Sources */,
 				439F35EF28736E9800EE1ED7 /* MessageView+Reply.swift in Sources */,
 				4371AC172873126A0081776F /* ReplyMessage.swift in Sources */,
