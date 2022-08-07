@@ -28,14 +28,18 @@
 		431215522858E50B009EFEB5 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215512858E50B009EFEB5 /* ComplexModule */; };
 		431215542858E50B009EFEB5 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 431215532858E50B009EFEB5 /* Numerics */; };
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
-		43295693289BE1A7001647D5 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43295692289BE1A7001647D5 /* Introspect */; };
-		43295695289BE1B2001647D5 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43295694289BE1B2001647D5 /* TDLibKit */; };
-		43295696289BE5B2001647D5 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43295694289BE1B2001647D5 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */; platformFilters = (macos, ); };
 		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; platformFilters = (macos, ); };
 		433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */; };
 		434203B8283CB01D003E344C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 434203B7283CB01D003E344C /* Algorithms */; };
+		43431C7A28A006E6002A72A0 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C7928A006E6002A72A0 /* Introspect */; };
+		43431C7D28A00809002A72A0 /* AppCenterAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C7C28A00809002A72A0 /* AppCenterAnalytics */; };
+		43431C7F28A00809002A72A0 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C7E28A00809002A72A0 /* AppCenterCrashes */; };
+		43431C8228A00AC3002A72A0 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8128A00AC3002A72A0 /* Resolver */; };
+		43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; };
+		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; };
+		43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
@@ -128,8 +132,6 @@
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43CA0873289B340D00ACBEC3 /* Sparkle */; };
-		43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */; };
-		43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43CA0879289B344D00ACBEC3 /* AppCenterCrashes */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
@@ -151,7 +153,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				43295696289BE5B2001647D5 /* TDLibKit in Embed Frameworks */,
+				43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,14 +174,11 @@
 		43051C98287799BD003C5CE2 /* ChatViewModel+Interactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewModel+Interactions.swift"; sourceTree = "<group>"; };
 		43051C9A28779AE2003C5CE2 /* ChatViewModel+Updates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewModel+Updates.swift"; sourceTree = "<group>"; };
 		4305C475285B1C3200F6E7FF /* DefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeys.swift; sourceTree = "<group>"; };
-		4307B3D6289BACC000A245F4 /* GRDB.swift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GRDB.swift; sourceTree = "<group>"; };
-		4307B3D9289BACDE00A245F4 /* Resolver */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Resolver; sourceTree = "<group>"; };
 		4309BCF5283D6E6A00F43170 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		430D745D286D00F10031C2F9 /* MessageView+Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Document.swift"; sourceTree = "<group>"; };
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
-		43295691289BE182001647D5 /* SwiftUI-Introspect */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "SwiftUI-Introspect"; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
@@ -274,9 +273,6 @@
 		43C0F499285A58BD009F2419 /* View+SidebarSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+SidebarSize.swift"; sourceTree = "<group>"; };
 		43C0F49F285A69AA009F2419 /* FolderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLayout.swift; sourceTree = "<group>"; };
 		43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+FastStartSlowStop.swift"; sourceTree = "<group>"; };
-		43CA0868289B323F00ACBEC3 /* appcenter-sdk-apple */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "appcenter-sdk-apple"; sourceTree = "<group>"; };
-		43CA0869289B323F00ACBEC3 /* Sparkle */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Sparkle; sourceTree = "<group>"; };
-		43CA0871289B336900ACBEC3 /* tdlibkit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = tdlibkit; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
@@ -290,25 +286,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43431C8828A00D34002A72A0 /* Sparkle in Frameworks */,
 				43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
-				43295695289BE1B2001647D5 /* TDLibKit in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
+				43431C7A28A006E6002A72A0 /* Introspect in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
-				43295693289BE1A7001647D5 /* Introspect in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
 				4368EC1B289BC22800CAA505 /* Lottie in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
-				43CA087A289B344D00ACBEC3 /* AppCenterCrashes in Frameworks */,
 				2D229DD7287606710056A294 /* Networking in Frameworks */,
+				43431C7D28A00809002A72A0 /* AppCenterAnalytics in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
+				43431C7F28A00809002A72A0 /* AppCenterCrashes in Frameworks */,
 				431215522858E50B009EFEB5 /* ComplexModule in Frameworks */,
-				43CA0878289B344D00ACBEC3 /* AppCenterAnalytics in Frameworks */,
+				43431C8228A00AC3002A72A0 /* Resolver in Frameworks */,
 				4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */,
+				43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +392,6 @@
 				43F871B7283E21C700B6C717 /* Logs */,
 				43CA7FC9283E3988006E7AC9 /* Utilities */,
 				43807D0927E1FCEF0056A3D3 /* MocTests */,
-				43CA0867289B323F00ACBEC3 /* third-party */,
 				43807CF627E1FCEC0056A3D3 /* Products */,
 				43807DBA27E214970056A3D3 /* Frameworks */,
 			);
@@ -631,19 +628,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		43CA0867289B323F00ACBEC3 /* third-party */ = {
-			isa = PBXGroup;
-			children = (
-				4307B3D9289BACDE00A245F4 /* Resolver */,
-				4307B3D6289BACC000A245F4 /* GRDB.swift */,
-				43CA0871289B336900ACBEC3 /* tdlibkit */,
-				43CA0868289B323F00ACBEC3 /* appcenter-sdk-apple */,
-				43CA0869289B323F00ACBEC3 /* Sparkle */,
-				43295691289BE182001647D5 /* SwiftUI-Introspect */,
-			);
-			path = "third-party";
-			sourceTree = "<group>";
-		};
 		43EC18DD28566F1800FCAD43 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,11 +693,13 @@
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
 				43CA0873289B340D00ACBEC3 /* Sparkle */,
-				43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */,
-				43CA0879289B344D00ACBEC3 /* AppCenterCrashes */,
 				4368EC1A289BC22800CAA505 /* Lottie */,
-				43295692289BE1A7001647D5 /* Introspect */,
-				43295694289BE1B2001647D5 /* TDLibKit */,
+				43431C7928A006E6002A72A0 /* Introspect */,
+				43431C7C28A00809002A72A0 /* AppCenterAnalytics */,
+				43431C7E28A00809002A72A0 /* AppCenterCrashes */,
+				43431C8128A00AC3002A72A0 /* Resolver */,
+				43431C8428A00BAB002A72A0 /* TDLibKit */,
+				43431C8728A00D34002A72A0 /* Sparkle */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -774,6 +760,11 @@
 				43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */,
 				43A963792868C8AD0076F5FD /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				43431C7828A006E6002A72A0 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				43431C7B28A00809002A72A0 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */,
+				43431C8028A00AC3002A72A0 /* XCRemoteSwiftPackageReference "Resolver" */,
+				43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */,
+				43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1247,6 +1238,46 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		43431C7828A006E6002A72A0 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
+		43431C7B28A00809002A72A0 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/microsoft/appcenter-sdk-apple.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		43431C8028A00AC3002A72A0 /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
+			requirement = {
+				kind = exactVersion;
+				version = "3.0.1-1.8.4-07b7faf6";
+			};
+		};
+		43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -1313,18 +1344,40 @@
 			package = 431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */;
 			productName = RealModule;
 		};
-		43295692289BE1A7001647D5 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Introspect;
-		};
-		43295694289BE1B2001647D5 /* TDLibKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TDLibKit;
-		};
 		434203B7283CB01D003E344C /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 434203B6283CB01C003E344C /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
+		};
+		43431C7928A006E6002A72A0 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C7828A006E6002A72A0 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+		43431C7C28A00809002A72A0 /* AppCenterAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C7B28A00809002A72A0 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */;
+			productName = AppCenterAnalytics;
+		};
+		43431C7E28A00809002A72A0 /* AppCenterCrashes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C7B28A00809002A72A0 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */;
+			productName = AppCenterCrashes;
+		};
+		43431C8128A00AC3002A72A0 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C8028A00AC3002A72A0 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+		43431C8428A00BAB002A72A0 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */;
+			productName = TDLibKit;
+		};
+		43431C8728A00D34002A72A0 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		4360D6E2283FE2BE00D3378F /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1368,14 +1421,6 @@
 		43CA0873289B340D00ACBEC3 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Sparkle;
-		};
-		43CA0877289B344D00ACBEC3 /* AppCenterAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppCenterAnalytics;
-		};
-		43CA0879289B344D00ACBEC3 /* AppCenterCrashes */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppCenterCrashes;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
