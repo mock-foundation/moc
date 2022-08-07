@@ -490,19 +490,19 @@ struct ContentView: View {
             LoginView()
                 .frame(width: 400, height: 500)
         }
-        .alert("Your session was ended", isPresented: $mainViewModel.isSessionTerminationAlertShown) {
-            Button {
-                #if os(macOS)
-                NSApp.terminate(self)
-                #elseif os(iOS)
-                exit(0)
-                #endif
-            } label: {
-                Text("Close")
-            }
-        } message: {
-            Text("Please relogin to continue using Moc.")
-        }
+//        .alert("Your session was ended", isPresented: $mainViewModel.isSessionTerminationAlertShown) {
+//            Button {
+//                #if os(macOS)
+//                NSApp.terminate(self)
+//                #elseif os(iOS)
+//                exit(0)
+//                #endif
+//            } label: {
+//                Text("Close")
+//            }
+//        } message: {
+//            Text("Please relogin to continue using Moc.")
+//        }
     }
 
     private var chatPlaceholder: some View {

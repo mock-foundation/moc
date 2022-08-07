@@ -51,10 +51,16 @@ struct MocApp: App {
         ))
         TdApi.shared[0].startTdLibUpdateHandler()
         
+        Task {
+            AppCenter.countryCode = try await TdApi.shared[0].getCountryCode().text
+        }
+        
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
             Analytics.self,
             Crashes.self
         ])
+        
+        Analytics.enabled = true
     }
     
     #if os(macOS)

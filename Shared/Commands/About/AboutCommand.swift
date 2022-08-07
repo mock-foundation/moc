@@ -17,6 +17,7 @@ struct BackportedAboutCommand: Commands {
             Button {
                 openURL(URL(string: "moc://internal/openAbout")!)
             } label: {
+                Image(systemName: "info.circle.fill")
                 Text("About Moc")
             }
         }

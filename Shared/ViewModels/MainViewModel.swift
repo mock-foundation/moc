@@ -129,7 +129,7 @@ class MainViewModel: ObservableObject {
     }
 
     @Published var showingLoginScreen = false
-    @Published var isSessionTerminationAlertShown = false
+//    @Published var isSessionTerminationAlertShown = false
     
     @Published var sidebarSize: SidebarSize = .medium
     
@@ -147,7 +147,9 @@ class MainViewModel: ObservableObject {
                     case let .authorizationState(info):
                         switch info.authorizationState {
                             case .closed:
-                                isSessionTerminationAlertShown = true
+//                                isSessionTerminationAlertShown = true
+                                allChats.removeAll()
+                                chatFilters.removeAll()
                             case .ready, .waitEncryptionKey, .waitTdlibParameters: break // do nothing
                             default:
                                 showingLoginScreen = true
