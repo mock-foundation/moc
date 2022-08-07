@@ -59,6 +59,8 @@ struct MocApp: App {
             Analytics.self,
             Crashes.self
         ])
+        
+        Analytics.enabled = true
     }
     
     #if os(macOS)

@@ -8,6 +8,7 @@
 import Combine
 import Sparkle
 import Utilities
+import AppCenterAnalytics
 
 class UpdateManager: ObservableObject {
     private let updaterController: SPUStandardUpdaterController
@@ -32,6 +33,7 @@ class UpdateManager: ObservableObject {
     }
     
     func checkForUpdates() {
+        Analytics.trackEvent("Manually checked for updates")
         updaterController.checkForUpdates(nil)
     }
 }
