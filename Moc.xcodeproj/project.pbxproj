@@ -38,9 +38,9 @@
 		43431C7F28A00809002A72A0 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C7E28A00809002A72A0 /* AppCenterCrashes */; };
 		43431C8228A00AC3002A72A0 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8128A00AC3002A72A0 /* Resolver */; };
 		43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; };
-		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; };
+		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; settings = {ATTRIBUTES = (Required, ); }; };
 		43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; };
+		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; platformFilters = (macos, ); };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
@@ -124,7 +124,7 @@
 		43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029828820A82009FCF53 /* Acknowledgment.swift */; };
 		43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029A28831A8D009FCF53 /* Image+Data.swift */; };
 		43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029C288336E0009FCF53 /* ChatType+IsGroup.swift */; };
-		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; };
+		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; platformFilters = (macos, ); };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
 		43BFD91C285D148100D8980A /* NWPathMonitor+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */; };
@@ -132,7 +132,6 @@
 		43C0F49D285A68ED009F2419 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 43C0F49C285A68ED009F2419 /* Defaults */; };
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
-		43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43CA0873289B340D00ACBEC3 /* Sparkle */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
@@ -289,7 +288,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43431C8828A00D34002A72A0 /* Sparkle in Frameworks */,
-				43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
@@ -467,7 +465,6 @@
 				43807D7027E213350056A3D3 /* ContentView.swift */,
 				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
 				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
-				43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -571,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				433EDD952860E9A5009D03D5 /* QuickLook */,
+				43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */,
 				43807D6227E213350056A3D3 /* SettingsContent.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
@@ -625,8 +623,8 @@
 		43C0F49E285A6997009F2419 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				43C0F49F285A69AA009F2419 /* FolderLayout.swift */,
 				4305C475285B1C3200F6E7FF /* DefaultKeys.swift */,
+				43C0F49F285A69AA009F2419 /* FolderLayout.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -695,7 +693,6 @@
 				43C0F49C285A68ED009F2419 /* Defaults */,
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
-				43CA0873289B340D00ACBEC3 /* Sparkle */,
 				4368EC1A289BC22800CAA505 /* Lottie */,
 				43431C7928A006E6002A72A0 /* Introspect */,
 				43431C7C28A00809002A72A0 /* AppCenterAnalytics */,
@@ -1421,10 +1418,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
-		};
-		43CA0873289B340D00ACBEC3 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

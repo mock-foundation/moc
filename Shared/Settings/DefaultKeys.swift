@@ -10,7 +10,10 @@ import Utilities
 
 extension Defaults.Keys {
     static let folderLayout = Key<FolderLayout>("folderLayout", default: .horizontal)
-    
-    // Keys that are not managed by the app
+    static let chatShortcuts = Key<[Int64]>("chatShortcuts", default: [])
+}
+
+// Keys that are not managed by the app
+extension Defaults.Keys {
     static let sidebarSize = Key<Int>(Constants.sidebarSizeDefaultsKey, default: 0)
 }

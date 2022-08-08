@@ -178,7 +178,7 @@ struct AccountsPrefView: View {
                         .resizable()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
-                    Button(action: {}) {
+                    Button { } label: {
                         Label("Update profile photo",
                               systemImage: "square.and.pencil")
                     }

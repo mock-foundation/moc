@@ -7,11 +7,14 @@
 
 import SwiftUI
 import AppCenterAnalytics
+import Defaults
 
 struct AppCommands: Commands {
     #if os(macOS)
     @ObservedObject var updateManager: UpdateManager
     #endif
+    
+    @Default(.chatShortcuts) private var chatShortcuts
 
     var body: some Commands {
         #if os(macOS)
@@ -31,7 +34,21 @@ struct AppCommands: Commands {
                 Image(systemName: "bookmark")
                 Text("Saved messages")
             }.keyboardShortcut("0")
-            Text("No chat shortcuts")
+            Divider()
+            Group {
+                if chatShortcuts.isEmpty {
+                    Text("No chat shortcuts")
+                } else {
+                    ForEach(chatShortcuts, id: \.self) { chatId in
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "text.bubble") // TODO: make this icon represent the chat type
+                            Text(String(chatId))
+                        }
+                    }
+                }
+            }
             Divider()
             Button(action: {
                 Analytics.trackEvent("Opened \"Telegram Tips\" channel from the menubar")
