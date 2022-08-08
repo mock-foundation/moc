@@ -8,6 +8,7 @@
 import SwiftUI
 import AppCenterAnalytics
 import Defaults
+import Utilities
 
 struct AppCommands: Commands {
     #if os(macOS)
@@ -41,7 +42,7 @@ struct AppCommands: Commands {
                 } else {
                     ForEach(chatShortcuts, id: \.self) { chatId in
                         Button {
-                            
+                            SystemUtils.post(notification: .openChat, with: chatId)
                         } label: {
                             CompactChatItemView(chatId: chatId)
                         }
