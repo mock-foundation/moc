@@ -370,6 +370,17 @@
 			path = AsyncTd;
 			sourceTree = "<group>";
 		};
+		435C9C0A28A111EE00E5D682 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
+				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
+				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
+				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		4367071D2861A69200587A63 /* QuickLook */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,18 +464,15 @@
 		43807D5527E213350056A3D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				435C9C0A28A111EE00E5D682 /* Common */,
 				43807D5627E213350056A3D3 /* Settings */,
 				433EDD982860EB90009D03D5 /* AsyncTd */,
 				43807D6327E213350056A3D3 /* Chat */,
 				439BA4262863C11400339375 /* Login */,
-				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
-				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
-				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
+				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				434A607F2848AA000086B866 /* ChatPickerView.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
-				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
-				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

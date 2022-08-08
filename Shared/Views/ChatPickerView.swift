@@ -11,6 +11,7 @@ struct ChatPickerView: View {
     var body: some View {
         VStack {
             SearchField()
+                .controlSize(.large)
             List {
                 
             }
