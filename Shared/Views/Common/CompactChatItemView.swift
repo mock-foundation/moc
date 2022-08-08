@@ -20,7 +20,12 @@ struct CompactChatItemView: View {
                 switch chat.type {
                     case .secret: Image(systemName: "lock")
                     case .private: Image(systemName: "person")
-                    case .basicGroup: Image(systemName: "person.2")
+                    case .basicGroup(let info):
+                        if info.isChannel {
+                            Image(systemName: "megaphone")
+                        } else {
+                            Image(systemName: "person.2")
+                        }
                     case .supergroup: Image(systemName: "person.2.fill")
                 }
                 Text(chat.title)
