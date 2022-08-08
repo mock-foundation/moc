@@ -38,7 +38,7 @@ extension ChatView {
             Spacer()
         }
     }
-    
+        
     var chatInspector: some View {
         ScrollView {
             LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
@@ -59,13 +59,21 @@ extension ChatView {
                         .frame(width: 86, height: 86)
                         .clipShape(Circle())
                 }
-                Text(viewModel.chatTitle)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.horizontal)
-                    .frame(minWidth: 0, idealWidth: nil)
-                    .multilineTextAlignment(.center)
+                VStack {
+                    Text(viewModel.chatTitle)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                        .frame(minWidth: 0, idealWidth: nil)
+                        .multilineTextAlignment(.center)
+                    if showDeveloperInfo {
+                        Text("ID: \(String(viewModel.chatID).trimmingCharacters(in: .whitespaces))")
+                            .textSelection(.enabled)
+                            .foregroundStyle(.secondary)
+                    }
+                }
                 Text("\(viewModel.chatMemberCount ?? 0) members")
+                    .fontWeight(.medium)
                 
                 // Quick actions
                 HStack(spacing: 24) {

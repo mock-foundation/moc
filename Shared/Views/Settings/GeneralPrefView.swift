@@ -11,17 +11,29 @@ import Defaults
 struct GeneralPrefView: View {
     @State private var isChatShortcutsSheetOpen = false
     @State private var isNewChatShortcutSheetOpen = false
+    @State private var chatId: Int64 = 0
 
     @Default(.chatShortcuts) private var chatShortcuts
-    
+        
     var body: some View {
         Form {
+            Section {
+                Defaults.Toggle("Show developer info", key: .showDeveloperInfo)
+            } footer: {
+                Text("""
+                    When enabled, Moc will show additional data in the \
+                    chat inspector like the chat/user ID.
+                    """)
+                .font(.caption)
+                .fixedSize(horizontal: false, vertical: true)
+            }
             Section {
                 Button("Chat Shortcuts") {
                     isChatShortcutsSheetOpen = true
                 }
             } footer: {
                 Text("Save chats to app's menubar and easily access them")
+                    .font(.caption)
             }
             .sheet(isPresented: $isChatShortcutsSheetOpen) {
                 VStack {

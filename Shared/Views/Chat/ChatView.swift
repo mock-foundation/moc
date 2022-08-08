@@ -13,10 +13,12 @@ import Utilities
 import TDLibKit
 import UniformTypeIdentifiers
 import Logs
+import Defaults
 
 struct ChatView: View {
     @InjectedObject var viewModel: ChatViewModel
     @FocusState var isInputFieldFocused
+    @Default(.showDeveloperInfo) var showDeveloperInfo
     
     let logger = Logger(category: "ChatView", label: "UI")
     
