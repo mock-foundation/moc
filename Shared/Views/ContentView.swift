@@ -49,34 +49,37 @@ struct ContentView: View {
     @State private var areSettingsOpen = false
     #endif
 
-    @InjectedObject private var chatViewModel: ChatViewModel
-    @InjectedObject private var mainViewModel: MainViewModel
+    @InjectedObject private var viewModel: MainViewModel
     
     @StateObject private var viewRouter = ViewRouter()
     
     @Environment(\.colorScheme) var colorScheme
     
+    private func openChat(_ chat: Chat) {
+        Task {
+            do {
+                SystemUtils.post(notification: .openChatWithInstance, with: chat)
+                _ = try await TdApi.shared[0].openChat(chatId: chat.id)
+                if let openedChat = viewRouter.openedChat {
+                    _ = try await TdApi.shared[0].closeChat(chatId: openedChat.id)
+                }
+            } catch {
+                logger.error("Error in \(error.localizedDescription)")
+            }
+        }
+        viewRouter.openedChat = chat
+        viewRouter.currentView = .chat
+    }
+    
     private var chatList: some View {
         ScrollView {
             let stack = LazyVStack {
-                ForEach(mainViewModel.chatList) { chat in
+                ForEach(viewModel.chatList) { chat in
                     Button {
-                        Task {
-                            do {
-                                try await chatViewModel.update(chat: chat)
-                                _ = try await TdApi.shared[0].openChat(chatId: chat.id)
-                                if let openedChat = viewRouter.openedChat {
-                                    _ = try await TdApi.shared[0].closeChat(chatId: openedChat.id)
-                                }
-                            } catch {
-                                logger.error("Error in \(error.localizedDescription)")
-                            }
-                        }
-                        viewRouter.openedChat = chat
-                        viewRouter.currentView = .chat
+                        openChat(chat)
                     } label: {
                         ChatItemView(chat: chat)
-                            .frame(height: mainViewModel.sidebarSize.chatItemHeight)
+                            .frame(height: viewModel.sidebarSize.chatItemHeight)
                             .padding(6)
                             .background(
                                 (viewRouter.currentView == .chat
@@ -87,7 +90,15 @@ struct ContentView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
                                                                     && viewRouter.openedChat! == chat))
-                    }.buttonStyle(.plain)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .onReceive(SystemUtils.ncPublisher(for: .openChatWithId)) { notification in
+                Task {
+                    guard let chatId = notification.object as? Int64 else { return }
+                    
+                    openChat(try await TdApi.shared[0].getChat(chatId: chatId))
                 }
             }
             if folderLayout == .vertical {
@@ -120,7 +131,7 @@ struct ContentView: View {
                         Label("Toggle chat list", systemImage: "sidebar.left")
                     }
                 }
-                if mainViewModel.isChatListVisible {
+                if viewModel.isChatListVisible {
                     Picker("", selection: $selectedTab) {
                         Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
                         Image(systemName: "phone.and.waveform").tag(Tab.calls)
@@ -133,9 +144,9 @@ struct ContentView: View {
                 Spacer()
             }
             ToolbarItemGroup(placement: placement) {
-                if mainViewModel.isChatListVisible {
-                    Toggle(isOn: $mainViewModel.isArchiveOpen) {
-                        Image(systemName: mainViewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
+                if viewModel.isChatListVisible {
+                    Toggle(isOn: $viewModel.isArchiveOpen) {
+                        Image(systemName: viewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                     }
                     Button {
                         logger.info("Pressed add chat")
@@ -155,20 +166,20 @@ struct ContentView: View {
         horizontal: Bool
     ) -> some View {
         Button {
-            mainViewModel.openChatList = chatList
+            viewModel.openChatList = chatList
         } label: {
             FolderItemView(
                 name: name,
                 icon: icon,
                 unreadCount: unreadCount,
                 horizontal: horizontal)
-            .background(mainViewModel.openChatList == chatList
+            .background(viewModel.openChatList == chatList
                         ? Color("SelectedColor") : Color.clear)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         }
         .buttonStyle(.plain)
         #if os(iOS)
-        .hoverEffect(mainViewModel.openChatList == chatList ? .lift : .highlight)
+        .hoverEffect(viewModel.openChatList == chatList ? .lift : .highlight)
         #endif
     }
     
@@ -177,10 +188,10 @@ struct ContentView: View {
         makeFolderItem(
             name: "All Chats",
             icon: Image(systemName: "bubble.left.and.bubble.right"),
-            unreadCount: mainViewModel.mainUnreadCounter,
+            unreadCount: viewModel.mainUnreadCounter,
             chatList: .main,
             horizontal: horizontal)
-        ForEach(mainViewModel.folders) { folder in
+        ForEach(viewModel.folders) { folder in
             makeFolderItem(
                 name: folder.title,
                 icon: Image(tdIcon: folder.iconName),
@@ -236,7 +247,7 @@ struct ContentView: View {
         }
         if folderLayout == .vertical {
             scroll
-                .frame(width: mainViewModel.sidebarSize == .small ? 75 : 90)
+                .frame(width: viewModel.sidebarSize == .small ? 75 : 90)
         } else {
             scroll
                 #if os(iOS)
@@ -295,12 +306,12 @@ struct ContentView: View {
             Spacer()
             HStack(spacing: 16) {
                 Spacer()
-                if !mainViewModel.isConnected {
+                if !viewModel.isConnected {
                     ProgressView()
                         .progressViewStyle(.circular)
                         .transition(.opacity)
                 }
-                Text(mainViewModel.connectionStateTitle)
+                Text(viewModel.connectionStateTitle)
                     .font(.system(size: 20, weight: .medium, design: .rounded))
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                 Spacer()
@@ -310,7 +321,7 @@ struct ContentView: View {
         #if os(macOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected
+                viewModel.isConnected
                 ? .accentColor.opacity(0.7)
                 : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
@@ -319,7 +330,7 @@ struct ContentView: View {
         #elseif os(iOS)
         .background(.linearGradient(
             Gradient(colors: [
-                mainViewModel.isConnected
+                viewModel.isConnected
                 ? .accentColor.opacity(0.7)
                 : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
@@ -359,7 +370,7 @@ struct ContentView: View {
                     }
                     #endif
                     .safeAreaInset(edge: .top) {
-                        if !mainViewModel.isArchiveOpen {
+                        if !viewModel.isArchiveOpen {
                             filterBar
                                 #if os(macOS)
                                 .padding(.horizontal)
@@ -396,15 +407,15 @@ struct ContentView: View {
         }
         #endif
         .overlay(alignment: .bottom) {
-            if mainViewModel.isConnectionStateShown {
+            if viewModel.isConnectionStateShown {
                 connectionState
                     .frame(height: 100)
                     .allowsHitTesting(false)
             }
         }
-        .animation(.easeInOut(duration: 0.5), value: mainViewModel.isConnectionStateShown)
-        .animation(.easeInOut, value: mainViewModel.connectionStateTitle)
-        .animation(.easeInOut, value: mainViewModel.isConnected)
+        .animation(.easeInOut(duration: 0.5), value: viewModel.isConnectionStateShown)
+        .animation(.easeInOut, value: viewModel.connectionStateTitle)
+        .animation(.easeInOut, value: viewModel.isConnected)
     }
 
     var body: some View {
@@ -416,7 +427,7 @@ struct ContentView: View {
                             chatListToolbar
                         }
                         #if os(macOS)
-                        .background(SplitViewAccessor(sideCollapsed: $mainViewModel.isChatListVisible))
+                        .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
                         #endif
                 } detail: {
                     NavigationStack {
@@ -451,7 +462,7 @@ struct ContentView: View {
                                 chatListToolbar
                             }
                             #if os(macOS)
-                            .background(SplitViewAccessor(sideCollapsed: $mainViewModel.isChatListVisible))
+                            .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
                             #endif
                         
                         switch viewRouter.currentView {
@@ -486,11 +497,11 @@ struct ContentView: View {
             SettingsContent()
         }
         #endif
-        .sheet(isPresented: $mainViewModel.showingLoginScreen) {
+        .sheet(isPresented: $viewModel.showingLoginScreen) {
             LoginView()
                 .frame(width: 400, height: 500)
         }
-//        .alert("Your session was ended", isPresented: $mainViewModel.isSessionTerminationAlertShown) {
+//        .alert("Your session was ended", isPresented: $viewModel.isSessionTerminationAlertShown) {
 //            Button {
 //                #if os(macOS)
 //                NSApp.terminate(self)

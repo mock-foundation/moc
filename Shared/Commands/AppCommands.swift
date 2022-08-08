@@ -42,7 +42,7 @@ struct AppCommands: Commands {
                 } else {
                     ForEach(chatShortcuts, id: \.self) { chatId in
                         Button {
-                            SystemUtils.post(notification: .openChat, with: chatId)
+                            SystemUtils.post(notification: .openChatWithId, with: chatId)
                         } label: {
                             CompactChatItemView(chatId: chatId)
                         }

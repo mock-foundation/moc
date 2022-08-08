@@ -8,5 +8,6 @@
 import Foundation
 
 extension Notification.Name {
-    static let openChat = Notification.Name("OpenChat")
+    static let openChatWithId = Notification.Name("OpenChatWithID")
+    static let openChatWithInstance = Notification.Name("OpenChatWithInstance")
 }

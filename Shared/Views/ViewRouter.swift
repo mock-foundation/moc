@@ -15,6 +15,10 @@ final class ViewRouter: ObservableObject {
         case chat
     }
 
-    @Published var openedChat: Chat?
+    @Published var openedChat: Chat? {
+        didSet {
+            print("Set openedChat, new value: \(String(describing: openedChat?.id))")
+        }
+    }
     @Published var currentView: Views = .selectChat
 }
