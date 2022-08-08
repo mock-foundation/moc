@@ -42,15 +42,16 @@ struct GeneralPrefView: View {
                     }
                     List {
                         ForEach(chatShortcuts, id: \.self) { chatId in
-                            CompactChatItemView(chatId: chatId)
-//                            Label(String(chatId), systemImage: "text.bubble") // TODO: make this icon represent the chat type
-                                .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) {
-                                        chatShortcuts.removeAll(where: { $0 == chatId })
-                                    } label: {
-                                        Label("Remove", systemImage: "trash")
-                                    }
+                            HStack {
+                                CompactChatItemView(chatId: chatId)
+                            }
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    chatShortcuts.removeAll(where: { $0 == chatId })
+                                } label: {
+                                    Label("Remove", systemImage: "trash")
                                 }
+                            }
                         }
                     }
                     Button("Add") {

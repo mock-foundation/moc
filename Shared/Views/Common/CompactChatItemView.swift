@@ -30,8 +30,8 @@ struct CompactChatItemView: View {
                 }
                 Text(chat.title)
             } else {
-                Text(String(chatId))
-//                ProgressView()
+                Image(systemName: "exclamationmark.circle")
+                Text("Failed to load chat \(String(chatId).trimmingCharacters(in: .whitespaces))")
             }
         }
         .task {
