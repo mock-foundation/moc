@@ -27,19 +27,14 @@ struct GeneralPrefView: View {
             VStack {
                 List {
                     ForEach(chatShortcuts, id: \.self) { chatId in
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "text.bubble") // TODO: make this icon represent the chat type
-                            Text(String(chatId))
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                chatShortcuts.removeAll(where: { $0 == chatId })
-                            } label: {
-                                Label("Remove", systemImage: "trash")
+                        Label(String(chatId), systemImage: "text.bubble") // TODO: make this icon represent the chat type
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    chatShortcuts.removeAll(where: { $0 == chatId })
+                                } label: {
+                                    Label("Remove", systemImage: "trash")
+                                }
                             }
-                        }
                     }
                 }
                 Button("Add") {
