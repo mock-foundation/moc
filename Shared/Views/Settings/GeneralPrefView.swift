@@ -42,7 +42,8 @@ struct GeneralPrefView: View {
                     }
                     List {
                         ForEach(chatShortcuts, id: \.self) { chatId in
-                            Label(String(chatId), systemImage: "text.bubble") // TODO: make this icon represent the chat type
+                            CompactChatItemView(chatId: chatId)
+//                            Label(String(chatId), systemImage: "text.bubble") // TODO: make this icon represent the chat type
                                 .swipeActions(edge: .trailing) {
                                     Button(role: .destructive) {
                                         chatShortcuts.removeAll(where: { $0 == chatId })
@@ -53,16 +54,27 @@ struct GeneralPrefView: View {
                         }
                     }
                     Button("Add") {
-                        chatShortcuts.append(.random(in: 0...Int64.max))
                         isNewChatShortcutSheetOpen = true
                     }
                     .sheet(isPresented: $isNewChatShortcutSheetOpen) {
                         Button("Close") {
                             isNewChatShortcutSheetOpen = false
-                        }
-                        ChatPickerView()
-                            .frame(width: 300, height: 500)
-                            .padding()
+                        }.padding()
+                        Text(
+                            """
+                            Chat picker is in development, will be done in Stage 3
+                            Please insert the chat ID instead, you can find it \
+                            in the chat inspector with "Show developer info" \
+                            enabled
+                            """)
+                        TextField("Chat ID", value: $chatId, formatter: NumberFormatter())
+                            .onSubmit {
+                                chatShortcuts.append(chatId)
+                                chatId = 0
+                            }
+//                        ChatPickerView()
+//                            .frame(width: 300, height: 500)
+//                            .padding()
                     }
                 }
                 .frame(minWidth: 250, minHeight: 300)

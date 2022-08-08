@@ -43,8 +43,7 @@ struct AppCommands: Commands {
                         Button {
                             
                         } label: {
-                            Image(systemName: "text.bubble") // TODO: make this icon represent the chat type
-                            Text(String(chatId))
+                            CompactChatItemView(chatId: chatId)
                         }
                     }
                 }
