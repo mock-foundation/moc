@@ -12,6 +12,7 @@ extension Defaults.Keys {
     static let folderLayout = Key<FolderLayout>("folderLayout", default: .horizontal)
     static let chatShortcuts = Key<[Int64]>("chatShortcuts", default: [])
     static let showDeveloperInfo = Key<Bool>("showDeveloperInfo", default: false)
+//    static let chatInspectorOpenByDefault = Key<Bool>("chatInspectorOpenByDefault", default: true)
 }
 
 // Keys that are not managed by the app

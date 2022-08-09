@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Defaults
+import Utilities
 
 struct GeneralPrefView: View {
     @State private var isChatShortcutsSheetOpen = false
@@ -37,9 +38,14 @@ struct GeneralPrefView: View {
             }
             .sheet(isPresented: $isChatShortcutsSheetOpen) {
                 VStack {
-                    Button("Close") {
+                    Button {
                         isChatShortcutsSheetOpen = false
+                    } label: {
+                        Image(systemName: "xmark")
                     }
+                    .buttonStyle(.plain)
+                    .hTrailing()
+                    .padding()
                     List {
                         ForEach(chatShortcuts, id: \.self) { chatId in
                             HStack {
@@ -54,28 +60,43 @@ struct GeneralPrefView: View {
                             }
                         }
                     }
+                    #if os(macOS)
+                    .listStyle(.bordered(alternatesRowBackgrounds: true))
+                    #endif
                     Button("Add") {
                         isNewChatShortcutSheetOpen = true
                     }
                     .sheet(isPresented: $isNewChatShortcutSheetOpen) {
-                        Button("Close") {
-                            isNewChatShortcutSheetOpen = false
-                        }.padding()
-                        Text(
+                        VStack(spacing: 8) {
+                            Button {
+                                isNewChatShortcutSheetOpen = false
+                            } label: {
+                                Image(systemName: "xmark")
+                            }
+                            .buttonStyle(.plain)
+                            .hTrailing()
+                            Text(
                             """
                             Chat picker is in development, will be done in Stage 3
                             Please insert the chat ID instead, you can find it \
                             in the chat inspector with "Show developer info" \
                             enabled
                             """)
-                        TextField("Chat ID", value: $chatId, formatter: NumberFormatter())
-                            .onSubmit {
-                                chatShortcuts.append(chatId)
-                                chatId = 0
-                            }
-//                        ChatPickerView()
-//                            .frame(width: 300, height: 500)
-//                            .padding()
+                                .lineLimit(nil)
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                            TextField("Chat ID", value: $chatId, formatter: NumberFormatter())
+                                .onSubmit {
+                                    if chatId != 0 {
+                                        chatShortcuts.append(chatId)
+                                        isNewChatShortcutSheetOpen = false
+                                        self.chatId = 0
+                                    }
+                                }
+                                .textFieldStyle(.roundedBorder)
+                        }
+                        .frame(maxWidth: 200, maxHeight: 300)
+                        .padding()
                     }
                 }
                 .frame(minWidth: 250, minHeight: 300)
