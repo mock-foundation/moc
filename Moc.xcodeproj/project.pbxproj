@@ -1112,7 +1112,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = "0.2.0 Pre-release Debug";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1155,7 +1155,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = "0.2.0 Pre-release";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
