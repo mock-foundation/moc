@@ -17,9 +17,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Install swift-sh
         run: brew install swift-sh
+      - name: Set Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_14.0.app
       - name: Set up environment
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_14.0.app/Contents/Developer
         run: |
           if [[ -z "${{ secrets.API_ID }}" || -z "${{ secrets.API_HASH }}" ]]
           then
@@ -34,8 +34,6 @@ jobs:
           HOMEBREW_NO_INSTALL_CLEANUP=1 OPEN_XCODE=0 FETCH_SPM=1 ./environment.swift $API_ID $API_HASH
 
       - name: Build
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_14.0.app/Contents/Developer
         run: |
           xcodebuild -scheme Moc -configuration Release clean build
 
