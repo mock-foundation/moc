@@ -86,9 +86,11 @@ struct GeneralPrefView: View {
                             TextField("Chat ID", value: $chatId, formatter: NumberFormatter())
                                 .onSubmit {
                                     if chatId != 0 {
-                                        chatShortcuts.append(chatId)
-                                        isNewChatShortcutSheetOpen = false
-                                        self.chatId = 0
+                                        if !chatShortcuts.contains(chatId) {
+                                            chatShortcuts.append(chatId)
+                                            isNewChatShortcutSheetOpen = false
+                                            self.chatId = 0
+                                        }
                                     }
                                 }
                                 .textFieldStyle(.roundedBorder)
