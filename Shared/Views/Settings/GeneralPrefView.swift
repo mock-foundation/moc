@@ -26,6 +26,20 @@ struct GeneralPrefView: View {
                     Text("Chat shortcuts")
                         .font(.largeTitle)
                     Text("Save chats to app's menubar for easy access from any place in Moc.")
+                    Divider()
+                    Form {
+                        Section {
+                            Defaults.Toggle("Use \"Saved Messages\" shortcut", key: .useSavedMessagesShortcut)
+                        } footer: {
+                            Text("""
+                            If enabled, will use the ⌘0 shortcut. If \
+                            disabled, the ⌘0 shortcut will be used by \
+                            the first shortcut in the list.
+                            """)
+                            .font(.caption)
+                            .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
                     Spacer()
                 }
                 .frame(width: 300)

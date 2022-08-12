@@ -16,6 +16,7 @@ struct AppCommands: Commands {
     #endif
     
     @Default(.chatShortcuts) private var chatShortcuts
+    @Default(.useSavedMessagesShortcut) private var useSavedMessagesShortcut
 
     var body: some Commands {
         #if os(macOS)
@@ -30,11 +31,13 @@ struct AppCommands: Commands {
         #endif
         CommandGroup(after: .appSettings) {
             Button {
-
+                // TODO: implement opening saved messages chat
             } label: {
                 Image(systemName: "bookmark")
                 Text("Saved messages")
-            }.keyboardShortcut("0")
+            }.if(useSavedMessagesShortcut) {
+                $0.keyboardShortcut("0")
+            }
             Divider()
             Group {
                 if chatShortcuts.isEmpty {
@@ -46,8 +49,8 @@ struct AppCommands: Commands {
                         } label: {
                             CompactChatItemView(chatId: chatId)
                         }
-                        .if(index + 1 <= 9) {
-                            $0.keyboardShortcut(.init(Character("\(index + 1)")))
+                        .if(index + (useSavedMessagesShortcut ? 1 : 0) <= 9) {
+                            $0.keyboardShortcut(.init(Character("\(index + (useSavedMessagesShortcut ? 1 : 0))")))
                         }
                     }
                 }
