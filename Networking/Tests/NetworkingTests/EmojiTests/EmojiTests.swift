@@ -7,7 +7,6 @@
 @testable import Networking
 import XCTest
 
-
 final class EmojiTests: XCTestCase {
     
     func testEmoji() async throws {

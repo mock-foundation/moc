@@ -63,7 +63,7 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
             updateText()
         }
     }
-    var codeDidChange: ((String) -> Void)? = nil
+    var codeDidChange: ((String) -> Void)?
     
     private let numberOfDigits: Int
     private let stackView: NSStackView = .init(frame: .zero)
@@ -187,7 +187,7 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
 // MARK: - PinCodeCharacterTextField
 
 class PinCodeCharacterTextField: NSTextField {
-    var character: Character? = nil {
+    var character: Character? {
         didSet {
             stringValue = character.map(String.init) ?? ""
         }

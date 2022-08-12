@@ -112,16 +112,31 @@ struct LoginView: View {
         .animation(.spring(), value: openedScreen)
         .onAppear {
             Task {
-                let countries = try? await service.countries
-                guard countries != nil else { return }
-                
-                self.phoneNumberCodes = countries!
+                guard var countries = try? await service.countries else { return }
                 let countryCode = (try? await service.countryCode) ?? "EN"
                 
-                for country in countries! where country.countryCode == countryCode {
-                    self.selectedNumberCode = Int(country.callingCodes[0])!
+                var callingCode = 0
+                
+                for country in countries where country.countryCode == countryCode {
+                    callingCode = Int(country.callingCodes[0])!
                     logger.info("Country code: \(self.selectedNumberCode)")
                 }
+                
+                for (index, country) in countries.enumerated() where country.countryCode.lowercased() == "ru" {
+                    countries.removeAll(where: { $0.countryCode.lowercased() == "ru" })
+                    countries.insert(
+                        CountryInfo(
+                            callingCodes: country.callingCodes,
+                            countryCode: country.countryCode + " [TERR]",
+                            englishName: country.englishName,
+                            isHidden: country.isHidden,
+                            name: country.name),
+                        at: index)
+                }
+                
+                self.phoneNumberCodes = countries
+                self.selectedNumberCode = callingCode
+                
                 logger.info("\(try await service.getAuthorizationState())")
                 handleAuthorization(state: try await service.getAuthorizationState())
             }

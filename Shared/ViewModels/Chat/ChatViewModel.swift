@@ -61,6 +61,15 @@ class ChatViewModel: ObservableObject {
                 }
             }
             .store(in: &subscribers)
+        SystemUtils.ncPublisher(for: .openChatWithInstance)
+            .sink { notification in
+                guard let chat = notification.object as? Chat else { return }
+                
+                Task {
+                    try await self.update(chat: chat)
+                }
+            }
+            .store(in: &subscribers)
     }
     
     deinit {

@@ -38,11 +38,13 @@
 		43431C7F28A00809002A72A0 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C7E28A00809002A72A0 /* AppCenterCrashes */; };
 		43431C8228A00AC3002A72A0 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8128A00AC3002A72A0 /* Resolver */; };
 		43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; };
-		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; };
+		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; settings = {ATTRIBUTES = (Required, ); }; };
 		43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; };
+		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; platformFilters = (macos, ); };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
+		435C9C0C28A13FB700E5D682 /* CompactChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */; };
+		435C9C0E28A1915F00E5D682 /* Notification.Name+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
 		4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E4283FE2BE00D3378F /* DequeModule */; };
 		4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E6283FE2BE00D3378F /* OrderedCollections */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -124,7 +126,7 @@
 		43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029828820A82009FCF53 /* Acknowledgment.swift */; };
 		43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029A28831A8D009FCF53 /* Image+Data.swift */; };
 		43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1029C288336E0009FCF53 /* ChatType+IsGroup.swift */; };
-		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; };
+		43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5D7BD28996DF300180E65 /* UpdateManager.swift */; platformFilters = (macos, ); };
 		43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD914285CC2B000D8980A /* MultilineTextField.swift */; platformFilter = ios; };
 		43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD916285CC30B00D8980A /* MultilineTextField.swift */; platformFilters = (macos, ); };
 		43BFD91C285D148100D8980A /* NWPathMonitor+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BFD91B285D148100D8980A /* NWPathMonitor+Combine.swift */; };
@@ -132,7 +134,6 @@
 		43C0F49D285A68ED009F2419 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 43C0F49C285A68ED009F2419 /* Defaults */; };
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
-		43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43CA0873289B340D00ACBEC3 /* Sparkle */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
@@ -187,6 +188,8 @@
 		43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
 		434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
+		435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactChatItemView.swift; sourceTree = "<group>"; };
+		435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Constants.swift"; sourceTree = "<group>"; };
 		4367071E2861A6CD00587A63 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		436707202861A8A500587A63 /* QuickLookPreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewItem.swift; sourceTree = "<group>"; };
 		436707222861A8CA00587A63 /* View+QuickLook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+QuickLook.swift"; sourceTree = "<group>"; };
@@ -289,7 +292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43431C8828A00D34002A72A0 /* Sparkle in Frameworks */,
-				43CA0874289B340D00ACBEC3 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
@@ -336,6 +338,7 @@
 				43C0F499285A58BD009F2419 /* View+SidebarSize.swift */,
 				438B2282285E3098000D65C8 /* BackportedGradient.swift */,
 				43B1029A28831A8D009FCF53 /* Image+Data.swift */,
+				435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -370,6 +373,18 @@
 				433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */,
 			);
 			path = AsyncTd;
+			sourceTree = "<group>";
+		};
+		435C9C0A28A111EE00E5D682 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
+				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
+				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
+				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
+				435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		4367071D2861A69200587A63 /* QuickLook */ = {
@@ -455,19 +470,15 @@
 		43807D5527E213350056A3D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				435C9C0A28A111EE00E5D682 /* Common */,
 				43807D5627E213350056A3D3 /* Settings */,
 				433EDD982860EB90009D03D5 /* AsyncTd */,
 				43807D6327E213350056A3D3 /* Chat */,
 				439BA4262863C11400339375 /* Login */,
-				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
-				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
-				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
+				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
 				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				434A607F2848AA000086B866 /* ChatPickerView.swift */,
 				43807D7027E213350056A3D3 /* ContentView.swift */,
-				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
-				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
-				43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -571,6 +582,7 @@
 			isa = PBXGroup;
 			children = (
 				433EDD952860E9A5009D03D5 /* QuickLook */,
+				43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */,
 				43807D6227E213350056A3D3 /* SettingsContent.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
@@ -625,8 +637,8 @@
 		43C0F49E285A6997009F2419 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				43C0F49F285A69AA009F2419 /* FolderLayout.swift */,
 				4305C475285B1C3200F6E7FF /* DefaultKeys.swift */,
+				43C0F49F285A69AA009F2419 /* FolderLayout.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -695,7 +707,6 @@
 				43C0F49C285A68ED009F2419 /* Defaults */,
 				43A9637A2868C8AD0076F5FD /* SkeletonUI */,
 				2D229DD6287606710056A294 /* Networking */,
-				43CA0873289B340D00ACBEC3 /* Sparkle */,
 				4368EC1A289BC22800CAA505 /* Lottie */,
 				43431C7928A006E6002A72A0 /* Introspect */,
 				43431C7C28A00809002A72A0 /* AppCenterAnalytics */,
@@ -853,6 +864,7 @@
 				439BA4252863BBBC00339375 /* ChatListItemSelectedKey.swift in Sources */,
 				43BFD917285CC30B00D8980A /* MultilineTextField.swift in Sources */,
 				43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */,
+				435C9C0C28A13FB700E5D682 /* CompactChatItemView.swift in Sources */,
 				4396B1512859E904004109AE /* SettingsContent.swift in Sources */,
 				4367071F2861A6CD00587A63 /* QuickLookPreviewWrapper.swift in Sources */,
 				43051C8C287791D0003C5CE2 /* RoundedCorners.swift in Sources */,
@@ -920,6 +932,7 @@
 				43ABC05D28500648009F529E /* ChatFolder.swift in Sources */,
 				43807D9F27E213350056A3D3 /* TDLibKit+Protocols.swift in Sources */,
 				439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */,
+				435C9C0E28A1915F00E5D682 /* Notification.Name+Constants.swift in Sources */,
 				433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */,
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
 				4371D154287F059100337533 /* AboutView.swift in Sources */,
@@ -1080,7 +1093,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "Shared/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = 9H3XZRTVLY;
@@ -1089,6 +1102,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Technoblade never dies.";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -1099,7 +1113,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = "0.2.0 Debug";
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1123,7 +1137,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "Shared/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = 9H3XZRTVLY;
@@ -1132,6 +1146,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Technoblade never dies.";
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -1142,7 +1157,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1193,6 +1208,124 @@
 			};
 			name = Release;
 		};
+		43BB1D2C28A4E21400C9C661 /* Nightly */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Nightly;
+		};
+		43BB1D2D28A4E21400C9C661 /* Nightly */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Shared/Moc.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 13;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "Shared/Preview\\ Assets.xcassets";
+				DEVELOPMENT_TEAM = 9H3XZRTVLY;
+				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Technoblade never dies.";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = "0.2.0 Nightly";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Nightly;
+		};
+		43BB1D2E28A4E21400C9C661 /* Nightly */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 24;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9H3XZRTVLY;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ggoraa.moc.MocTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moc.app/Contents/MacOS/Moc";
+			};
+			name = Nightly;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1201,6 +1334,7 @@
 			buildConfigurations = (
 				43807D1827E1FCEF0056A3D3 /* Debug */,
 				43807D1927E1FCEF0056A3D3 /* Release */,
+				43BB1D2C28A4E21400C9C661 /* Nightly */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1210,6 +1344,7 @@
 			buildConfigurations = (
 				43807D1B27E1FCEF0056A3D3 /* Debug */,
 				43807D1C27E1FCEF0056A3D3 /* Release */,
+				43BB1D2D28A4E21400C9C661 /* Nightly */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1219,6 +1354,7 @@
 			buildConfigurations = (
 				43807D1E27E1FCEF0056A3D3 /* Debug */,
 				43807D1F27E1FCEF0056A3D3 /* Release */,
+				43BB1D2E28A4E21400C9C661 /* Nightly */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1421,10 +1557,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43C0F49B285A68ED009F2419 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
-		};
-		43CA0873289B340D00ACBEC3 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
