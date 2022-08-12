@@ -43,7 +43,7 @@ struct GeneralPrefView: View {
                     Spacer()
                 }
                 .frame(width: 300)
-                VStack {
+                VStack(alignment: .leading) {
                     List {
                         ForEach(chatShortcuts, id: \.self) { chatId in
                             HStack {
@@ -58,12 +58,24 @@ struct GeneralPrefView: View {
                             }
                         }
                     }
-#if os(macOS)
+                    #if os(macOS)
                     .listStyle(.bordered(alternatesRowBackgrounds: true))
-#endif
-                    Button("Add") {
-                        isNewChatShortcutSheetOpen = true
+                    #endif
+                    HStack {
+                        Button {
+                            isNewChatShortcutSheetOpen = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                        Divider()
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "minus")
+                        }
                     }
+                    .buttonStyle(.borderless)
+                    .frame(maxHeight: 20)
                     .sheet(isPresented: $isNewChatShortcutSheetOpen) {
                         VStack(spacing: 8) {
                             Button {
