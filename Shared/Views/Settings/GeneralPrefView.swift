@@ -23,7 +23,7 @@ struct GeneralPrefView: View {
                 }
             HStack(spacing: 16) {
                 VStack {
-                    Text("Chat shortcuts")
+                    Text("Chat Shortcuts")
                         .font(.largeTitle)
                     Text("Save chats to app's menubar for easy access from any place in Moc.")
                     Divider()
@@ -115,7 +115,7 @@ struct GeneralPrefView: View {
             .frame(minWidth: 250, minHeight: 300)
             .padding(8)
             .tabItem {
-                Text("Chat shortcuts")
+                Text("Chat Shortcuts")
             }
             VStack {
                 Form {
