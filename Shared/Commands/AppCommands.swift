@@ -40,11 +40,14 @@ struct AppCommands: Commands {
                 if chatShortcuts.isEmpty {
                     Text("No chat shortcuts")
                 } else {
-                    ForEach(chatShortcuts, id: \.self) { chatId in
+                    ForEach(Array(chatShortcuts.enumerated()), id: \.element) { index, chatId in
                         Button {
                             SystemUtils.post(notification: .openChatWithId, with: chatId)
                         } label: {
                             CompactChatItemView(chatId: chatId)
+                        }
+                        .if(index + 1 <= 9) {
+                            $0.keyboardShortcut(.init(Character("\(index + 1)")))
                         }
                     }
                 }
