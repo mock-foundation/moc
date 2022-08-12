@@ -120,16 +120,15 @@ struct GeneralPrefView: View {
                     }
                     .buttonStyle(.plain)
                     .hTrailing()
-                    Text(
-                            """
-                            Chat picker is in development, will be done in Stage 3
-                            Please insert the chat ID instead, you can find it \
-                            in the chat inspector with "Show developer info" \
-                            enabled
-                            """)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
+                    Text("""
+                        Chat picker is in development, will be done in Stage 3
+                        Please insert the chat ID instead, you can find it \
+                        in the chat inspector with "Show developer info" \
+                        enabled
+                        """)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
                     TextField("Chat ID", value: $chatId, formatter: NumberFormatter())
                         .onSubmit {
                             if chatId != 0 {
