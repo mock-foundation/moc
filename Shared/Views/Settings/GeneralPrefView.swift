@@ -68,6 +68,7 @@ struct GeneralPrefView: View {
                             Image(systemName: "plus")
                         }
                         Divider()
+                            .frame(maxHeight: 10)
                         Button {
                             
                         } label: {
@@ -75,7 +76,6 @@ struct GeneralPrefView: View {
                         }
                     }
                     .buttonStyle(.borderless)
-                    .frame(maxHeight: 20)
                     .sheet(isPresented: $isNewChatShortcutSheetOpen) {
                         VStack(spacing: 8) {
                             Button {
