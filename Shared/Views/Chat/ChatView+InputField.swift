@@ -107,11 +107,6 @@ extension ChatView {
                 }
                 .textFieldStyle(.plain)
                 .padding(6)
-                .onChange(of: viewModel.inputMessage) { value in
-                    logger.debug("Input message changed, value: \(value)")
-                    viewModel.updateAction(with: .typing)
-                    viewModel.updateDraft()
-                }
                 .onSubmit {
                     viewModel.sendMessage()
                 }
