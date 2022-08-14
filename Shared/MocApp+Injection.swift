@@ -82,15 +82,15 @@ struct MocApp: App {
             }.handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
     }
-    #endif
     
     var aboutCommand: some Commands {
-        if #available(macOS 13.0, *) {
+        if #available(macOS 13.0, iOS 16, *) {
             return AboutCommand()
         } else {
             return BackportedAboutCommand()
         }
     }
+    #endif
     
     var body: some Scene {
         WindowGroup {
@@ -104,8 +104,8 @@ struct MocApp: App {
             }
         }
         .commands {
-            aboutCommand
             #if os(macOS)
+            aboutCommand
             AppCommands(updateManager: updateManager)
             #else
             AppCommands()
