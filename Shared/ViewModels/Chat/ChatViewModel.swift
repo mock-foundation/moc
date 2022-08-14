@@ -48,19 +48,8 @@ class ChatViewModel: ObservableObject {
     
     var subscribers: [AnyCancellable] = []
     var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
-    
-    private var draftUpdateTimer: Timer?
-    
-    func resetDraftUpdateTimer() {
-        draftUpdateTimer?.invalidate()
-        draftUpdateTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
-            self.updateAction(with: .typing)
-            self.updateDraft()
-        }
-    }
         
     init() {
-        resetDraftUpdateTimer()
         service.updateSubject
             .receive(on: RunLoop.main)
             .sink { _ in } receiveValue: { [self] update in
@@ -82,9 +71,13 @@ class ChatViewModel: ObservableObject {
             }
             .store(in: &subscribers)
         inputMessage.publisher
-            .sink { _ in
-                self.logger.debug("Updated input message")
-                self.resetDraftUpdateTimer()
+            .debounce(for: .seconds(3), scheduler: RunLoop.main)
+            .sink { completion in
+                self.logger.debug("Input message completion update: \(completion)")
+            } receiveValue: { value in
+                self.logger.debug("Input message value update: \(value)")
+                self.updateAction(with: .typing)
+                self.updateDraft()
             }
             .store(in: &subscribers)
     }
