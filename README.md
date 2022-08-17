@@ -28,7 +28,7 @@ If you have any questions, ask them in [Discussions](https://github.com/mock-fou
 
 # Installation
 
-You can install the latest release using Homebrew, GitHub, and MS AppCenter/
+You can install the latest release using Homebrew, GitHub, and MS AppCenter:
 
 ## Homebrew
 
