@@ -26,6 +26,40 @@ Project roadmap: [Craft](https://www.craft.do/s/rmUOSbIPXTVbCY)
 
 If you have any questions, ask them in [Discussions](https://github.com/mock-foundation/moc/discussions) on GitHub, or in a [Telegram group](https://t.me/moc_discussion) (ukrainian/russian). You are **strongly** encoruaged to use Discussions and the Telegram group instead of Issues for questions. Bug reports and stuff go to Issues. There is a reason why GitHub created Discussions in the first place :D
 
+# Installation
+
+You can install the latest release using Homebrew, GitHub, and MS AppCenter/
+
+## Homebrew
+
+This is a preferred method of installation:
+
+```shell
+brew install --cask ggoraa/apps/moc
+```
+
+By the way, Moc will soon move from a custom tap to an official one, homebrew-casks!
+
+## GitHub
+
+You can find any release in the [Releases](https://github.com/mock-foundation/moc/releases) page of this
+repository.
+
+## AppCenter
+
+You can also find releases from [MS AppCenter Moc page](https://install.appcenter.ms/orgs/mock-foundation/apps/moc/distribution_groups/releases). By the way,
+this is a place from which the in-app updated fetches updates :)
+
+# OS support
+
+Moc's OS support model is N-1, which means "latest and previous major release",
+for example macOS 13 and 12. When there is a new OS release announced, Moc 
+will get ready to drop support for an oldest release. For example, if 
+there is macOS 13 and 12 supported, and then macOS 14 is announced, the development
+team will start to remove code for supporting the macOS 12 release, and a new release
+with macOS 12 support removed will be available right after a stable release of macOS
+14.
+
 # Screenshots
 ![](.github/images/screenshots/light/main.png)
 ![](.github/images/screenshots/dark/main.png)
