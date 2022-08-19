@@ -50,7 +50,7 @@ struct AboutView: View {
                 Text("Moc")
                     .font(.system(size: 40, weight: .medium, design: .default))
                 Text("Version \(versionString) (\(buildNumberString))")
-                    .foregroundColor(.gray)
+                    .foregroundColor(.gray.darker(by: 50))
                 Divider()
                 Text(aboutApp)
                 Spacer()
@@ -92,6 +92,7 @@ struct AboutView: View {
                         }
                         .frame(width: 450, height: 350)
                     }
+                    .buttonStyle(.automatic)
                     Button {
                         Analytics.trackEvent(
                             "Opened GitHub page of Mock Foundation",
@@ -102,6 +103,7 @@ struct AboutView: View {
                         Text("Our GitHub")
                         Spacer()
                     }
+                    .buttonStyle(.automatic)
                 }.padding(.trailing)
             }
             .padding(.vertical)
