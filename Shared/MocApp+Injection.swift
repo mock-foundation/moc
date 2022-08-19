@@ -81,7 +81,8 @@ struct MocApp: App {
                     .onOpenURL { url in
                         print(url)
                     }
-            }.handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
+            }
+            .handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
     }
     

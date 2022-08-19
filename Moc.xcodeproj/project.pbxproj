@@ -136,6 +136,7 @@
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
+		43F610FE28B01E830098C3BD /* MessageBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
 
@@ -284,6 +285,7 @@
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleShape.swift; sourceTree = "<group>"; };
 		43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -434,6 +436,7 @@
 				43807D4A27E213350056A3D3 /* Models */,
 				43807D7827E213350056A3D3 /* ViewModels */,
 				43807D5527E213350056A3D3 /* Views */,
+				43F610FC28B01E6A0098C3BD /* Shapes */,
 				43807D6C27E213350056A3D3 /* Commands */,
 				43807D7427E213350056A3D3 /* SwiftGen */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
@@ -669,6 +672,14 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		43F610FC28B01E6A0098C3BD /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
 		43F7C502287DCF8B0083E9E9 /* Keys */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,6 +893,7 @@
 				43807D9527E213350056A3D3 /* ChatView.swift in Sources */,
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
+				43F610FE28B01E830098C3BD /* MessageBubbleShape.swift in Sources */,
 				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
 				43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */,
 				43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */,

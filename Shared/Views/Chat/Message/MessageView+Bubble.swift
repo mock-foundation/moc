@@ -21,13 +21,7 @@ extension MessageView {
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .foregroundColor(Color("MessageFromMeColor"))
                 } else {
-                    Image("ChatMessageBubbleRecipient")
-                        .resizable(capInsets: EdgeInsets(
-                            top: 18,
-                            leading: 18,
-                            bottom: 18,
-                            trailing: 18
-                        ), resizingMode: .stretch)
+                    MessageBubbleShape()
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .foregroundColor(Color("MessageFromRecepientColor"))
                 }
