@@ -68,6 +68,7 @@ struct MocApp: App {
         if #available(macOS 13, *) {
             return WindowGroup(id: "about") {
                 AboutView()
+                    .background(VisualEffect().ignoresSafeArea())
             }
             .defaultPosition(.top)
             .defaultSize(width: 500, height: 300)
@@ -76,21 +77,22 @@ struct MocApp: App {
         } else {
             return WindowGroup(id: "about") {
                 AboutView()
+                    .background(VisualEffect().ignoresSafeArea())
                     .onOpenURL { url in
                         print(url)
                     }
             }.handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
     }
-    #endif
     
     var aboutCommand: some Commands {
-        if #available(macOS 13.0, *) {
+        if #available(macOS 13.0, iOS 16, *) {
             return AboutCommand()
         } else {
             return BackportedAboutCommand()
         }
     }
+    #endif
     
     var body: some Scene {
         WindowGroup {
@@ -104,8 +106,8 @@ struct MocApp: App {
             }
         }
         .commands {
-            aboutCommand
             #if os(macOS)
+            aboutCommand
             AppCommands(updateManager: updateManager)
             #else
             AppCommands()

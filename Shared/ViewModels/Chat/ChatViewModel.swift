@@ -35,7 +35,14 @@ class ChatViewModel: ObservableObject {
     @Published var isHideKeyboardButtonShown = false
     @Published var selectedInspectorTab: InspectorTab = .users
     @Published var isDropping = false
-    @Published var inputMessage = ""
+    @Published var inputMessage = "" {
+        didSet {
+            if inputMessage.isEmpty {
+                self.updateDraft() // instantly update the draft when the input field is empty
+            }
+            inputMessageSubject.send(inputMessage)
+        }
+    }
     @Published var inputMedia: [URL] = []
     @Published var messages: [[Message]] = []
     @Published var highlightedMessageId: Int64?
@@ -48,6 +55,7 @@ class ChatViewModel: ObservableObject {
     
     var subscribers: [AnyCancellable] = []
     var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
+    var inputMessageSubject = CurrentValueSubject<String, Never>("")
         
     init() {
         service.updateSubject
@@ -68,6 +76,14 @@ class ChatViewModel: ObservableObject {
                 Task {
                     try await self.update(chat: chat)
                 }
+            }
+            .store(in: &subscribers)
+        inputMessageSubject
+            .debounce(for: .seconds(3), scheduler: RunLoop.main)
+            .sink { value in
+                self.logger.debug("Processing input message value update: \(value)")
+                self.updateAction(with: .typing)
+                self.updateDraft()
             }
             .store(in: &subscribers)
     }

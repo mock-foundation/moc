@@ -38,7 +38,6 @@
 		43431C7F28A00809002A72A0 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C7E28A00809002A72A0 /* AppCenterCrashes */; };
 		43431C8228A00AC3002A72A0 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8128A00AC3002A72A0 /* Resolver */; };
 		43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; };
-		43431C8828A00D34002A72A0 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 43431C8728A00D34002A72A0 /* Sparkle */; settings = {ATTRIBUTES = (Required, ); }; };
 		43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; platformFilters = (macos, ); };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
@@ -105,6 +104,7 @@
 		438CFBAB287F6ECE005B9990 /* SidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438CFBAA287F6ECE005B9990 /* SidebarSize.swift */; };
 		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
+		439B4FB728A9731F00E9ABA9 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 439B4FB628A9731F00E9ABA9 /* Sparkle */; };
 		439BA4252863BBBC00339375 /* ChatListItemSelectedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */; };
 		439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4272863C3CC00339375 /* LoginView+Welcome.swift */; };
 		439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4292863C43000339375 /* LoginView+PhoneNumber.swift */; };
@@ -135,6 +135,7 @@
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
+		43F610FB28AFB8AE0098C3BD /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffect.swift */; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
 
@@ -282,6 +283,7 @@
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		43F610FA28AFB8AE0098C3BD /* VisualEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
 		43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -291,12 +293,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43431C8828A00D34002A72A0 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				43431C7A28A006E6002A72A0 /* Introspect in Frameworks */,
+				439B4FB728A9731F00E9ABA9 /* Sparkle in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -588,6 +590,7 @@
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 				43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */,
 				434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */,
+				43F610FA28AFB8AE0098C3BD /* VisualEffect.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -713,7 +716,7 @@
 				43431C7E28A00809002A72A0 /* AppCenterCrashes */,
 				43431C8128A00AC3002A72A0 /* Resolver */,
 				43431C8428A00BAB002A72A0 /* TDLibKit */,
-				43431C8728A00D34002A72A0 /* Sparkle */,
+				439B4FB628A9731F00E9ABA9 /* Sparkle */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -880,6 +883,7 @@
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
 				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
+				43F610FB28AFB8AE0098C3BD /* VisualEffect.swift in Sources */,
 				43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */,
 				43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */,
 				438B2281285E3077000D65C8 /* LighterDarker.swift in Sources */,
@@ -1514,11 +1518,6 @@
 			package = 43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */;
 			productName = TDLibKit;
 		};
-		43431C8728A00D34002A72A0 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
-		};
 		4360D6E2283FE2BE00D3378F /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
@@ -1547,6 +1546,11 @@
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
+		};
+		439B4FB628A9731F00E9ABA9 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		43A9637A2868C8AD0076F5FD /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
