@@ -1,0 +1,15 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">  
+<plist version="1.0">  
+<dict>  
+  <key>method</key>  
+  <string>development</string>
+  <key>provisioningProfiles</key>
+  <dict>
+      <key>org.mock-foundation.moc</key>
+      <string>9a64c6aa-0d7b-4e55-a18f-4b297e31d72f</string>
+  </dict>
+  <key>signingCertificate</key>
+  <string>5d703a9a6e4537f81d14d9dcd58474985d80a340</string>  
+</dict>  
+</plist> 
