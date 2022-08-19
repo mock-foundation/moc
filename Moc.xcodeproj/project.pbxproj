@@ -135,7 +135,7 @@
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
-		43F610FB28AFB8AE0098C3BD /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffect.swift */; };
+		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 /* End PBXBuildFile section */
 
@@ -283,7 +283,7 @@
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
 		43EC18DB285620A800FCAD43 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libc++abi.tbd"; sourceTree = DEVELOPER_DIR; };
 		43EC18E12856782F00FCAD43 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
-		43F610FA28AFB8AE0098C3BD /* VisualEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
+		43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -590,7 +590,7 @@
 				43807D7227E213350056A3D3 /* SearchField.swift */,
 				43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */,
 				434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */,
-				43F610FA28AFB8AE0098C3BD /* VisualEffect.swift */,
+				43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -883,7 +883,7 @@
 				43807D8327E213350056A3D3 /* MocApp+Injection.swift in Sources */,
 				43807D8C27E213350056A3D3 /* FoldersPrefView.swift in Sources */,
 				43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */,
-				43F610FB28AFB8AE0098C3BD /* VisualEffect.swift in Sources */,
+				43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */,
 				43B1029928820A82009FCF53 /* Acknowledgment.swift in Sources */,
 				43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */,
 				438B2281285E3077000D65C8 /* LighterDarker.swift in Sources */,
