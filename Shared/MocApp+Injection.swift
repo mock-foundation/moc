@@ -68,7 +68,7 @@ struct MocApp: App {
         if #available(macOS 13, *) {
             return WindowGroup(id: "about") {
                 AboutView()
-                    .background(VisualEffect().ignoresSafeArea())
+                    .background(VisualEffectView(material: .popover).ignoresSafeArea())
             }
             .defaultPosition(.top)
             .defaultSize(width: 500, height: 300)
@@ -77,11 +77,11 @@ struct MocApp: App {
         } else {
             return WindowGroup(id: "about") {
                 AboutView()
-                    .background(VisualEffect().ignoresSafeArea())
                     .onOpenURL { url in
                         print(url)
                     }
-            }.handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
+            }
+            .handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
     }
     
