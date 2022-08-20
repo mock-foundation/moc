@@ -103,42 +103,43 @@ struct ChatItemView: View {
                 .fixedSize()
                 Spacer()
             }
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 2) {
                 HStack {
-                    Group {
-                        switch chat.type {
-                            case .private:
-                                EmptyView()
-                            case .basicGroup:
-                                Image(systemName: "person.2")
-                            case .supergroup(let info):
-                                if info.isChannel {
-                                    Image(systemName: "megaphone")
-                                } else {
-                                    Image(systemName: "person.2.fill")
-                                }
-                            case .secret:
-                                Image(systemName: "lock")
+                    Label {
+                        Text(chat.title)
+                            #if os(macOS)
+                            .fontWeight(.bold)
+                            .font(sidebarSize.mainFont)
+                            #elseif os(iOS)
+                            .fontWeight(.medium)
+                            #endif
+                    } icon: {
+                        Group {
+                            switch chat.type {
+                                case .private:
+                                    EmptyView()
+                                case .basicGroup:
+                                    Image(systemName: "person.2")
+                                case .supergroup(let info):
+                                    if info.isChannel {
+                                        Image(systemName: "megaphone")
+                                    } else {
+                                        Image(systemName: "person.2.fill")
+                                    }
+                                case .secret:
+                                    Image(systemName: "lock")
+                            }
                         }
+                        .font(sidebarSize.iconFont)
                     }
                     .foregroundColor(isSelected ? .white : .primary)
-                    .font(sidebarSize.iconFont)
-                    
-                    Text(chat.title)
-                        #if os(macOS)
-                        .fontWeight(.bold)
-                        .font(sidebarSize.mainFont)
-                        #elseif os(iOS)
-                        .fontWeight(.medium)
-                        #endif
-                        .foregroundColor(isSelected ? .white : .primary)
                     Spacer()
 //                    Image(/* chat.seen ? */ "MessageSeenIcon" /* : "MessageSentIcon" */)
                     Text(Date(timeIntervalSince1970: Double(lastMessage?.date ?? 0)).hoursAndMinutes)
                         .font(sidebarSize == .large ? .body : .caption)
                         .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                 }
-                .padding(.top, 6)
+                .padding(.top, 4)
                 VStack(alignment: .leading, spacing: 2) {
                     if chat.type.isGroup {
                         if let sender {
@@ -217,6 +218,7 @@ struct ChatItemView: View {
                     }
                     .foregroundColor(isSelected ? .white.darker(by: 20) : .secondary)
                 }
+                
 //                    VStack {
 //                        Spacer()
 //                        if chat.isPinned {
