@@ -383,10 +383,10 @@
 			isa = PBXGroup;
 			children = (
 				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
-				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
-				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
 				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
 				435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */,
+				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
+				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";

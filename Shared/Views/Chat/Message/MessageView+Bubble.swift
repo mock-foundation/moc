@@ -14,7 +14,7 @@ extension MessageView {
     ) -> some View {
         content()
             .if(!isOutgoing) {
-                $0.padding(.leading, 7)
+                $0.padding(.leading, 4)
             }
             .background {
                 if isOutgoing {
