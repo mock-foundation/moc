@@ -145,6 +145,7 @@ struct ChatItemView: View {
                         if let sender {
                             Text(sender)
                                 .fontWeight(.medium)
+                                .foregroundColor(isSelected ? .white : .primary)
                         }
                     }
                     Group {
