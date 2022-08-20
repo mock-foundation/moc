@@ -68,7 +68,6 @@ struct MocApp: App {
         if #available(macOS 13, *) {
             return WindowGroup(id: "about") {
                 AboutView()
-                    .background(.ultraThinMaterial, ignoresSafeAreaEdges: .all)
                     .background(VisualEffectView(material: .popover).ignoresSafeArea())
             }
             .defaultPosition(.top)
