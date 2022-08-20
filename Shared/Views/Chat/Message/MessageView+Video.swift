@@ -22,7 +22,6 @@ extension MessageView {
                 .buttonStyle(.plain)
                 .background(.ultraThinMaterial, in: Circle())
             }
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
             .onDrag {
                 return NSItemProvider(object: NSURL(fileURLWithPath: info.video.video.local.path))
             }
@@ -36,6 +35,7 @@ extension MessageView {
             VStack(spacing: 0) {
                 makeVideo(from: getVideo(from: message.first!.content)!)
                     .frame(height: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
                 
                 if !info.caption.text.isEmpty {
                     Text(info.caption.text)
