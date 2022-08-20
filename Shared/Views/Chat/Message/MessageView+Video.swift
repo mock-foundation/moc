@@ -10,7 +10,7 @@ import TDLibKit
 
 extension MessageView {
     func makeVideo(from info: MessageVideo) -> some View {
-        AsyncTdFileThumbnail(id: info.video.video.id)
+        AsyncTdFileThumbnail(id: info.video.video.id, contentMode: .fit)
             .overlay {
                 Button {
                     openedMediaFileID = OpenedMediaFile(id: info.video.video.id, isVideo: true)
