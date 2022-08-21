@@ -40,8 +40,20 @@ extension LoginView {
                     #endif
                     ForEach(phoneNumberCodes, id: \.countryCode) { info in
                         if !info.isHidden {
-                            Text("\(info.countryCode) (\(generateCallingCodesInfo(from: info.callingCodes)))")
-                                .tag(info)
+//                            if info.callingCodes.count > 1 {
+//                                Menu {
+//                                    ForEach(info.callingCodes, id: \.self) { code in
+//                                        Text("\(info.countryCode) (+\(code))")
+//                                            .tag(info)
+//                                    }
+//                                } label: {
+//                                    Text("\(info.countryCode) (\(generateCallingCodesInfo(from: info.callingCodes)))")
+//                                        .tag(info)
+//                                }
+//                            } else {
+                                Text("\(info.countryCode) (\(generateCallingCodesInfo(from: info.callingCodes)))")
+                                    .tag(info)
+//                            }
                         }
                     }
                 }
