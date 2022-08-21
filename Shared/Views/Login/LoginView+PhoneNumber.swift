@@ -9,6 +9,18 @@ import SwiftUI
 import TDLibKit
 
 extension LoginView {
+    func generateCallingCodesInfo(from codes: [String]) -> String {
+        if codes.count == 1 {
+            return "+\(codes.first!)"
+        } else {
+            return codes
+                .map { code in
+                    "+\(code)"
+                }
+                .joined(separator: ", ")
+        }
+    }
+    
     var phoneNumberView: some View {
         VStack {
             Spacer()
@@ -18,12 +30,19 @@ extension LoginView {
                 Picker("", selection: $selectedNumberCode) {
                     #if DEBUG
                     Text("TEST (999)")
-                        .tag(Int(999))
+                        .tag(CountryInfo(
+                            callingCodes: ["999"],
+                            countryCode: "TS",
+                            englishName: "Test",
+                            isHidden: false,
+                            name: "TEST"))
                     Divider()
                     #endif
-                    ForEach(phoneNumberCodes, id: \.name) { info in
-                        Text("\(info.countryCode) (+\(info.callingCodes[0]))")
-                            .tag(Int(info.callingCodes[0])!)
+                    ForEach(phoneNumberCodes, id: \.countryCode) { info in
+                        if !info.isHidden {
+                            Text("\(info.countryCode) (\(generateCallingCodesInfo(from: info.callingCodes)))")
+                                .tag(info)
+                        }
                     }
                 }
                 .frame(width: 110)
@@ -32,13 +51,13 @@ extension LoginView {
                         Task {
                             withAnimation { showLoadingSpinner = true }
                             do {
-                                if selectedNumberCode == 999 {
+                                if Int(selectedNumberCode.callingCodes.first!)! == 999 {
                                     try await service.checkAuth(
-                                        phoneNumber: "\(selectedNumberCode)\(phoneNumber)"
+                                        phoneNumber: "\(selectedNumberCode.callingCodes.first!)\(phoneNumber)"
                                     )
                                 } else {
                                     try await service.checkAuth(
-                                        phoneNumber: "+\(selectedNumberCode)\(phoneNumber)"
+                                        phoneNumber: "+\(selectedNumberCode.callingCodes.first!)\(phoneNumber)"
                                     )
                                 }
                             } catch {

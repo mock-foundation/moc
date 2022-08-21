@@ -63,7 +63,7 @@ struct LoginView: View {
     @State var qrCodeLink = ""
     
     @State var phoneNumberCodes: [CountryInfo] = []
-    @State var selectedNumberCode: Int = 0
+    @State var selectedNumberCode: CountryInfo = CountryInfo(callingCodes: [], countryCode: "", englishName: "", isHidden: false, name: "")
 
     @State var openedScreen = OpenedLoginScreen.welcome
     
@@ -115,11 +115,11 @@ struct LoginView: View {
                 guard var countries = try? await service.countries else { return }
                 let countryCode = (try? await service.countryCode) ?? "EN"
                 
-                var callingCode = 0
+                var callingCode: CountryInfo = CountryInfo(callingCodes: [], countryCode: "", englishName: "", isHidden: false, name: "")
                 
                 for country in countries where country.countryCode == countryCode {
-                    callingCode = Int(country.callingCodes[0])!
-                    logger.info("Country code: \(self.selectedNumberCode)")
+                    callingCode = country
+                    logger.info("Country code: \(String(describing: self.selectedNumberCode))")
                 }
                 
                 for (index, country) in countries.enumerated() where country.countryCode.lowercased() == "ru" {
