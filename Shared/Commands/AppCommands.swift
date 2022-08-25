@@ -9,6 +9,7 @@ import SwiftUI
 import AppCenterAnalytics
 import Defaults
 import Utilities
+import TDLibKit
 
 struct AppCommands: Commands {
     #if os(macOS)
@@ -31,7 +32,10 @@ struct AppCommands: Commands {
         #endif
         CommandGroup(after: .appSettings) {
             Button {
-                // TODO: implement opening saved messages chat
+                Task {
+                    let me = try await TdApi.shared[0].getMe()
+                    SystemUtils.post(notification: .openChatWithId, with: me.id)
+                }
             } label: {
                 Image(systemName: "bookmark")
                 Text("Saved messages")

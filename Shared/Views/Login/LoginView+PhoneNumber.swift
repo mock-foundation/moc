@@ -18,12 +18,16 @@ extension LoginView {
                 Picker("", selection: $selectedNumberCode) {
                     #if DEBUG
                     Text("TEST (999)")
-                        .tag(Int(999))
+                        .tag(PhoneNumberInfo(country: "TEST", phoneNumberPrefix: "999"))
                     Divider()
                     #endif
-                    ForEach(phoneNumberCodes, id: \.name) { info in
-                        Text("\(info.countryCode) (+\(info.callingCodes[0]))")
-                            .tag(Int(info.callingCodes[0])!)
+                    ForEach(phoneNumberCodes, id: \.countryCode) { info in
+                        if !info.isHidden {
+                            ForEach(info.callingCodes, id: \.self) { code in
+                                Text("\(info.countryCode) (+\(code))")
+                                    .tag(PhoneNumberInfo(country: info.countryCode, phoneNumberPrefix: code))
+                            }
+                        }
                     }
                 }
                 .frame(width: 110)
@@ -32,13 +36,13 @@ extension LoginView {
                         Task {
                             withAnimation { showLoadingSpinner = true }
                             do {
-                                if selectedNumberCode == 999 {
+                                if selectedNumberCode.phoneNumberPrefix == "999" {
                                     try await service.checkAuth(
-                                        phoneNumber: "\(selectedNumberCode)\(phoneNumber)"
+                                        phoneNumber: "\(selectedNumberCode.phoneNumberPrefix)\(phoneNumber)"
                                     )
                                 } else {
                                     try await service.checkAuth(
-                                        phoneNumber: "+\(selectedNumberCode)\(phoneNumber)"
+                                        phoneNumber: "+\(selectedNumberCode.phoneNumberPrefix)\(phoneNumber)"
                                     )
                                 }
                             } catch {
