@@ -84,16 +84,6 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            Button {
-                showExitAlert = true
-            } label: {
-                Image(systemName: "xmark")
-            }
-            .buttonStyle(.plain)
-            .keyboardShortcut(.escape, modifiers: [])
-            .hTrailing()
-            .vTop()
-            .padding()
 
             Group {
                 switch openedScreen {
