@@ -14,7 +14,7 @@ extension LoginView {
             if showLogo {
                 Image("WelcomeScreenImage")
                     .resizable()
-                    .frame(width: showContent ? 206 : 240, height: showContent ? 206 : 240)
+                    .frame(width: showContent ? 250 : 320, height: showContent ? 250 : 320)
                     .padding(.top)
                     .transition(.scale)
                     .zIndex(1)
@@ -22,9 +22,8 @@ extension LoginView {
             Group {
                 if showContent {
                     Text("Welcome to Moc!")
-                        .font(.largeTitle)
+                        .font(.system(size: 36, weight: .bold))
                     Text("Choose your login method")
-                    Spacer()
                     Button {
                         Task {
                             try? await service.requestQrCodeAuth()
@@ -35,15 +34,16 @@ extension LoginView {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .padding(.bottom, 8)
+                    .padding(.top, 56)
                     Button {
                         openedScreen = .phoneNumber
                     } label: {
                         Label("Continue using phone number", systemImage: "phone")
                     }
                     .controlSize(.large)
-                    Spacer()
                 }
-            }.transition(.move(edge: .top).combined(with: .opacity))
+            }
+            .transition(.move(edge: .top).combined(with: .opacity))
         }
         .animation(.spring(dampingFraction: 0.6), value: showLogo)
         .animation(.spring(), value: showContent)

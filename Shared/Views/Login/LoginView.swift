@@ -42,7 +42,7 @@ private extension String {
 struct LoginView: View {
     let logger = Logs.Logger(category: "Login", label: "UI")
     @Injected var service: LoginService
-
+    
     func stepView(number: Int, text: String) -> some View {
         HStack {
             ZStack {
@@ -74,22 +74,15 @@ struct LoginView: View {
     @State var showLoadingSpinner = false
     @State var showLogo = false
     @State var showContent = false
-
-    @Environment(\.presentationMode) var presentationMode
+    
+    let onClose: () -> Void
+    
+    init(onClose: @escaping () -> Void) {
+        self.onClose = onClose
+    }
 
     var body: some View {
         ZStack {
-            Button {
-                showExitAlert = true
-            } label: {
-                Image(systemName: "xmark")
-            }
-            .buttonStyle(.plain)
-            .keyboardShortcut(.escape, modifiers: [])
-            .hTrailing()
-            .vTop()
-            .padding()
-
             Group {
                 switch openedScreen {
                     case .welcome:
@@ -110,6 +103,7 @@ struct LoginView: View {
                 .combined(with: .opacity))
         }
         .animation(.spring(), value: openedScreen)
+        .frame(maxWidth: 400)
         .onAppear {
             Task {
                 guard var countries = try? await service.countries else { return }
@@ -155,7 +149,7 @@ struct LoginView: View {
         )
         .alert("You sure you want to exit?", isPresented: $showExitAlert) {
             Button("Yea!") {
-                presentationMode.wrappedValue.dismiss()
+                onClose()
                 Task {
                     try? await Task.sleep(nanoseconds: UInt64(0.5 * Double(NSEC_PER_SEC)))
                     #if os(macOS)
@@ -188,7 +182,7 @@ struct LoginView: View {
             case .waitCode:
                 openedScreen = .code
             case .ready:
-                presentationMode.wrappedValue.dismiss()
+                onClose()
             default: break
         }
     }
@@ -196,6 +190,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(onClose: { })
     }
 }

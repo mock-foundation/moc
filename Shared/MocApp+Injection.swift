@@ -5,9 +5,9 @@
 //  Created by Егор Яковенко on 24.12.2021.
 //
 
- import AppCenter
- import AppCenterAnalytics
- import AppCenterCrashes
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
 import Backend
 import CryptoKit
 import Resolver
