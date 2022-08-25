@@ -418,88 +418,90 @@ struct ContentView: View {
         .animation(.easeInOut, value: viewModel.isConnected)
     }
 
+    @ViewBuilder
     var body: some View {
-        Group {
-            if #available(macOS 13, iOS 16, *) {
-                NavigationSplitView {
-                    sidebar
-                        .toolbar {
-                            chatListToolbar
-                        }
-                        #if os(macOS)
-                        .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
-                        #endif
-                } detail: {
-                    NavigationStack {
-                        switch viewRouter.currentView {
-                            case .selectChat:
-                                chatPlaceholder
-                            case .chat:
-                                ChatView()
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    #if os(iOS)
-                                    .introspectNavigationController { vc in
-                                        let navBar = vc.navigationBar
-                                        
-                                        let newNavBarAppearance = UINavigationBarAppearance()
-                                        newNavBarAppearance.configureWithDefaultBackground()
-                                        
-                                        navBar.scrollEdgeAppearance = newNavBarAppearance
-                                        navBar.compactAppearance = newNavBarAppearance
-                                        navBar.standardAppearance = newNavBarAppearance
-                                        navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                                    }
-                                    #endif
-                        }
-                    }
-                }
-            } else {
-                Group {
-                    NavigationView {
+        if !viewModel.showingLoginScreen {
+            Group {
+                if #available(macOS 13, iOS 16, *) {
+                    NavigationSplitView {
                         sidebar
-                            .listStyle(.sidebar)
                             .toolbar {
                                 chatListToolbar
                             }
                             #if os(macOS)
                             .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
                             #endif
-                        
-                        switch viewRouter.currentView {
-                            case .selectChat:
-                                chatPlaceholder
-                            case .chat:
-                                ChatView()
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    #if os(iOS)
-                                    .introspectNavigationController { vc in
-                                        let navBar = vc.navigationBar
-                                        
-                                        let newNavBarAppearance = UINavigationBarAppearance()
-                                        newNavBarAppearance.configureWithDefaultBackground()
-                                        
-                                        navBar.scrollEdgeAppearance = newNavBarAppearance
-                                        navBar.compactAppearance = newNavBarAppearance
-                                        navBar.standardAppearance = newNavBarAppearance
-                                        navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                                    }
-                                    #endif
+                    } detail: {
+                        NavigationStack {
+                            switch viewRouter.currentView {
+                                case .selectChat:
+                                    chatPlaceholder
+                                case .chat:
+                                    ChatView()
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        #if os(iOS)
+                                        .introspectNavigationController { vc in
+                                            let navBar = vc.navigationBar
+                                            
+                                            let newNavBarAppearance = UINavigationBarAppearance()
+                                            newNavBarAppearance.configureWithDefaultBackground()
+                                            
+                                            navBar.scrollEdgeAppearance = newNavBarAppearance
+                                            navBar.compactAppearance = newNavBarAppearance
+                                            navBar.standardAppearance = newNavBarAppearance
+                                            navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                                        }
+                                        #endif
+                            }
                         }
                     }
+                } else {
+                    Group {
+                        NavigationView {
+                            sidebar
+                                .listStyle(.sidebar)
+                                .toolbar {
+                                    chatListToolbar
+                                }
+                                #if os(macOS)
+                                .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
+                                #endif
+                            
+                            switch viewRouter.currentView {
+                                case .selectChat:
+                                    chatPlaceholder
+                                case .chat:
+                                    ChatView()
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        #if os(iOS)
+                                        .introspectNavigationController { vc in
+                                            let navBar = vc.navigationBar
+                                            
+                                            let newNavBarAppearance = UINavigationBarAppearance()
+                                            newNavBarAppearance.configureWithDefaultBackground()
+                                            
+                                            navBar.scrollEdgeAppearance = newNavBarAppearance
+                                            navBar.compactAppearance = newNavBarAppearance
+                                            navBar.standardAppearance = newNavBarAppearance
+                                            navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                                        }
+                                        #endif
+                            }
+                        }
+                    }
+                    #if os(iOS)
+                    .sidebarSize(folderLayout == .vertical ? 400 : 330)
+                    #endif
                 }
-                #if os(iOS)
-                .sidebarSize(folderLayout == .vertical ? 400 : 330)
-                #endif
             }
-        }
-        #if os(iOS)
-        .fullScreenCover(isPresented: $areSettingsOpen) {
-            SettingsContent()
-        }
-        #endif
-        .sheet(isPresented: $viewModel.showingLoginScreen) {
+            #if os(iOS)
+            .fullScreenCover(isPresented: $areSettingsOpen) {
+                SettingsContent()
+            }
+            #endif
+        } else {
             LoginView()
-                .frame(width: 400, height: 500)
+                .ignoresSafeArea()
         }
 //        .alert("Your session was ended", isPresented: $viewModel.isSessionTerminationAlertShown) {
 //            Button {

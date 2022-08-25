@@ -110,6 +110,7 @@ struct LoginView: View {
                 .combined(with: .opacity))
         }
         .animation(.spring(), value: openedScreen)
+        .frame(maxWidth: 400)
         .onAppear {
             Task {
                 guard var countries = try? await service.countries else { return }
