@@ -40,6 +40,7 @@
 		43431C8528A00BAB002A72A0 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; };
 		43431C8928A00D43002A72A0 /* TDLibKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 43431C8428A00BAB002A72A0 /* TDLibKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; platformFilters = (macos, ); };
+		434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */; };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
 		435C9C0C28A13FB700E5D682 /* CompactChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */; };
@@ -188,6 +189,7 @@
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
 		433EDD992860EBAA009D03D5 /* AsyncTdQuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdQuickLookView.swift; sourceTree = "<group>"; };
 		43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
+		434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberInfo.swift; sourceTree = "<group>"; };
 		434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
 		435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactChatItemView.swift; sourceTree = "<group>"; };
@@ -434,7 +436,7 @@
 				43C0F49E285A6997009F2419 /* Settings */,
 				43008542283B59C200ED5961 /* Utils */,
 				43807D4A27E213350056A3D3 /* Models */,
-				43807D7827E213350056A3D3 /* ViewModels */,
+				43807D7827E213350056A3D3 /* View Models */,
 				43807D5527E213350056A3D3 /* Views */,
 				43F610FC28B01E6A0098C3BD /* Shapes */,
 				43807D6C27E213350056A3D3 /* Commands */,
@@ -468,6 +470,7 @@
 				43ABC05C28500648009F529E /* ChatFolder.swift */,
 				4371AC162873126A0081776F /* ReplyMessage.swift */,
 				438CFBAA287F6ECE005B9990 /* SidebarSize.swift */,
+				434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -552,7 +555,7 @@
 			path = SwiftGen;
 			sourceTree = "<group>";
 		};
-		43807D7827E213350056A3D3 /* ViewModels */ = {
+		43807D7827E213350056A3D3 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
 				43807D7927E213350056A3D3 /* Settings */,
@@ -560,7 +563,7 @@
 				43807D7C27E213350056A3D3 /* MainViewModel.swift */,
 				2D229DCE28759E000056A294 /* EmojiViewModel.swift */,
 			);
-			path = ViewModels;
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		43807D7927E213350056A3D3 /* Settings */ = {
@@ -884,6 +887,7 @@
 				43051C8C287791D0003C5CE2 /* RoundedCorners.swift in Sources */,
 				43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */,
 				434A60802848AA000086B866 /* ChatPickerView.swift in Sources */,
+				434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */,
 				43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */,
 				436707232861A8CA00587A63 /* View+QuickLook.swift in Sources */,
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,

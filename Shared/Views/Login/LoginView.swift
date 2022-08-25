@@ -63,7 +63,7 @@ struct LoginView: View {
     @State var qrCodeLink = ""
     
     @State var phoneNumberCodes: [CountryInfo] = []
-    @State var selectedNumberCode: CountryInfo = CountryInfo(callingCodes: [], countryCode: "", englishName: "", isHidden: false, name: "")
+    @State var selectedNumberCode = PhoneNumberInfo(country: "", phoneNumberPrefix: "")
 
     @State var openedScreen = OpenedLoginScreen.welcome
     
@@ -115,10 +115,13 @@ struct LoginView: View {
                 guard var countries = try? await service.countries else { return }
                 let countryCode = (try? await service.countryCode) ?? "EN"
                 
-                var callingCode: CountryInfo = CountryInfo(callingCodes: [], countryCode: "", englishName: "", isHidden: false, name: "")
+                var callingCode = PhoneNumberInfo(country: "", phoneNumberPrefix: "")
                 
                 for country in countries where country.countryCode == countryCode {
-                    callingCode = country
+                    callingCode = PhoneNumberInfo(
+                        country: country.countryCode,
+                        phoneNumberPrefix: country.callingCodes[0])
+                    
                     logger.info("Country code: \(String(describing: self.selectedNumberCode))")
                 }
                 
@@ -133,6 +136,9 @@ struct LoginView: View {
                             name: country.name),
                         at: index)
                 }
+                
+                countries.sort(by: { $0.countryCode < $1.countryCode })
+                countries.removeDuplicates()
                 
                 self.phoneNumberCodes = countries
                 self.selectedNumberCode = callingCode

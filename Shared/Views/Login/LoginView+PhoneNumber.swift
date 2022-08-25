@@ -9,18 +9,6 @@ import SwiftUI
 import TDLibKit
 
 extension LoginView {
-    func generateCallingCodesInfo(from codes: [String]) -> String {
-        if codes.count == 1 {
-            return "+\(codes.first!)"
-        } else {
-            return codes
-                .map { code in
-                    "+\(code)"
-                }
-                .joined(separator: ", ")
-        }
-    }
-    
     var phoneNumberView: some View {
         VStack {
             Spacer()
@@ -30,30 +18,15 @@ extension LoginView {
                 Picker("", selection: $selectedNumberCode) {
                     #if DEBUG
                     Text("TEST (999)")
-                        .tag(CountryInfo(
-                            callingCodes: ["999"],
-                            countryCode: "TS",
-                            englishName: "Test",
-                            isHidden: false,
-                            name: "TEST"))
+                        .tag(PhoneNumberInfo(country: "TEST", phoneNumberPrefix: "999"))
                     Divider()
                     #endif
                     ForEach(phoneNumberCodes, id: \.countryCode) { info in
                         if !info.isHidden {
-//                            if info.callingCodes.count > 1 {
-//                                Menu {
-//                                    ForEach(info.callingCodes, id: \.self) { code in
-//                                        Text("\(info.countryCode) (+\(code))")
-//                                            .tag(info)
-//                                    }
-//                                } label: {
-//                                    Text("\(info.countryCode) (\(generateCallingCodesInfo(from: info.callingCodes)))")
-//                                        .tag(info)
-//                                }
-//                            } else {
-                                Text("\(info.countryCode) (\(generateCallingCodesInfo(from: info.callingCodes)))")
-                                    .tag(info)
-//                            }
+                            ForEach(info.callingCodes, id: \.self) { code in
+                                Text("\(info.countryCode) (+\(code))")
+                                    .tag(PhoneNumberInfo(country: info.countryCode, phoneNumberPrefix: code))
+                            }
                         }
                     }
                 }
@@ -63,13 +36,13 @@ extension LoginView {
                         Task {
                             withAnimation { showLoadingSpinner = true }
                             do {
-                                if Int(selectedNumberCode.callingCodes.first!)! == 999 {
+                                if selectedNumberCode.phoneNumberPrefix == "999" {
                                     try await service.checkAuth(
-                                        phoneNumber: "\(selectedNumberCode.callingCodes.first!)\(phoneNumber)"
+                                        phoneNumber: "\(selectedNumberCode.phoneNumberPrefix)\(phoneNumber)"
                                     )
                                 } else {
                                     try await service.checkAuth(
-                                        phoneNumber: "+\(selectedNumberCode.callingCodes.first!)\(phoneNumber)"
+                                        phoneNumber: "+\(selectedNumberCode.phoneNumberPrefix)\(phoneNumber)"
                                     )
                                 }
                             } catch {
