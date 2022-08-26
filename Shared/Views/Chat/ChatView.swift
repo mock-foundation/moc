@@ -16,7 +16,7 @@ import Logs
 import Defaults
 
 struct ChatView: View {
-    @StateObject var viewModel: ChatViewModel
+    @StateObject var viewModel = ChatViewModel()
     @FocusState var isInputFieldFocused
     @Default(.showDeveloperInfo) var showDeveloperInfo
     

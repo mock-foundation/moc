@@ -49,7 +49,7 @@ struct ContentView: View {
     @State private var areSettingsOpen = false
     #endif
 
-    @StateObject private var viewModel: MainViewModel
+    @StateObject private var viewModel = MainViewModel()
     @StateObject private var viewRouter = ViewRouter()
     
     @Environment(\.colorScheme) var colorScheme
