@@ -18,7 +18,7 @@ import Logs
 import AVKit
 
 class ChatViewModel: ObservableObject {
-    @Injected var service: ChatService
+    @Environment(\.chatService) private var service: ChatService
     
     enum InspectorTab {
         case users
@@ -34,7 +34,7 @@ class ChatViewModel: ObservableObject {
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
     @Published var selectedInspectorTab: InspectorTab = .users
-    @Published var isDropping = false
+    @Published var isDroppingMedia = false
     @Published var inputMessage = "" {
         didSet {
             if inputMessage.isEmpty {
