@@ -49,8 +49,7 @@ struct ContentView: View {
     @State private var areSettingsOpen = false
     #endif
 
-    @InjectedObject private var viewModel: MainViewModel
-    
+    @StateObject private var viewModel: MainViewModel
     @StateObject private var viewRouter = ViewRouter()
     
     @Environment(\.colorScheme) var colorScheme
@@ -506,20 +505,6 @@ struct ContentView: View {
         }
         .transition(.scale)
         .animation(.spring(), value: viewModel.showingLoginScreen)
-
-//        .alert("Your session was ended", isPresented: $viewModel.isSessionTerminationAlertShown) {
-//            Button {
-//                #if os(macOS)
-//                NSApp.terminate(self)
-//                #elseif os(iOS)
-//                exit(0)
-//                #endif
-//            } label: {
-//                Text("Close")
-//            }
-//        } message: {
-//            Text("Please relogin to continue using Moc.")
-//        }
     }
 
     private var chatPlaceholder: some View {

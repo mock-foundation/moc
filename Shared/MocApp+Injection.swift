@@ -17,11 +17,6 @@ import TDLibKit
 import Logs
 
 public extension Resolver {
-    static func registerUI() {
-        register { MainViewModel() }.scope(.shared)
-        register { ChatViewModel() }.scope(.shared)
-    }
-
     static func registerBackend() {
         register { TdChatService() as ChatService }
             .scope(.shared)
@@ -44,7 +39,6 @@ struct MocApp: App {
     #endif
     
     init() {
-        Resolver.registerUI()
         Resolver.registerBackend()
         TdApi.shared.append(TdApi(
             client: TdClientImpl(completionQueue: .global())
@@ -59,7 +53,6 @@ struct MocApp: App {
             Analytics.self,
             Crashes.self
         ])
-        
         Analytics.enabled = true
     }
     
