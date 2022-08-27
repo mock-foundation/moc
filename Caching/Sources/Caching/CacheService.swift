@@ -69,6 +69,10 @@ private extension CacheService {
                 t.column("chatList", .text).notNull().primaryKey(onConflict: .replace, autoincrement: false)
             }
         }
+        
+        migrator.registerMigration("v2") { db in
+            try db.execute(sql: "UPDATE unreadCounter SET chatList = REPLACE(chatList, 'filter', 'folder')")
+        }
     }
 
     private func save<Record>(db: Database, record: Record) throws
