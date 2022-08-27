@@ -11,5 +11,5 @@ public enum ChatList: Codable, Equatable, Hashable, DatabaseValueConvertible {
     case main
     case archive
     /// A filter chat list with an `id`.
-    case filter(Int)
+    case folder(Int)
 }

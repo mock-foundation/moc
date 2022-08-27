@@ -9,7 +9,7 @@ import Foundation
 import GRDB
 import Logs
 
-// MARK: - Definition
+// MARK: Definition
 
 public class CacheService {
     public static var shared = CacheService()
@@ -49,7 +49,7 @@ public class CacheService {
     }
 }
 
-// MARK: - Private methods
+// MARK: Private methods
 
 private extension CacheService {
     private func registerMigrations() {
@@ -116,7 +116,7 @@ private extension CacheService {
     }
 }
 
-// MARK: - Public methods
+// MARK: Public methods
 
 public extension CacheService {
     func save<Record>(record: Record) throws
@@ -164,5 +164,13 @@ public extension CacheService {
         try dbQueue.write { db in
             try modify(record: record, at: key, from: db, transform: transform)
         }
+    }
+}
+
+// MARK: Convenience methods
+
+public extension CacheService {
+    func getChatFolders() throws -> [ChatFolder] {
+        return try getRecords(as: ChatFolder.self, ordered: [Column("order").asc])
     }
 }

@@ -94,9 +94,9 @@ public extension TdApi {
                             default: break
                         }
                     case let .chatFilters(update):
-                        try cache.deleteAll(records: Caching.ChatFilter.self)
+                        try cache.deleteAll(records: Caching.ChatFolder.self)
                         for (index, filter) in update.chatFilters.enumerated() {
-                            try cache.save(record: Caching.ChatFilter(
+                            try cache.save(record: Caching.ChatFolder(
                                 title: filter.title,
                                 id: filter.id,
                                 iconName: filter.iconName,

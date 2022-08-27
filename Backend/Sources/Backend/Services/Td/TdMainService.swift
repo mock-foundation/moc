@@ -21,7 +21,7 @@ public class TdMainService: MainService {
     public init() { }
     
     public func getFilters() throws -> [ChatFilter] {
-        return try cache.getRecords(as: Caching.ChatFilter.self, ordered: [Column("order").asc])
+        return try cache.getChatFolders()
             .map { record in
                 ChatFilter(
                     title: record.title,

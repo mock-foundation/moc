@@ -195,7 +195,7 @@ struct ContentView: View {
                 name: folder.title,
                 icon: Image(tdIcon: folder.iconName),
                 unreadCount: folder.unreadCounter,
-                chatList: .filter(folder.id),
+                chatList: .folder(folder.id),
                 horizontal: horizontal)
         }
     }

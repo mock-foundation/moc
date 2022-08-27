@@ -59,7 +59,7 @@ class MainViewModel: ObservableObject {
                 return chats(from: .main)
             case .archive:
                 return chats(from: .archive)
-            case .filter(let id):
+            case .folder(let id):
                 return chats(from: .filter(.init(chatFilterId: id)))
         }
     }
@@ -79,7 +79,7 @@ class MainViewModel: ObservableObject {
                 id: filter.id,
                 iconName: filter.iconName,
                 unreadCounter: unreadCounters
-                    .first { $0.chatList == .filter(filter.id) }?
+                    .first { $0.chatList == .folder(filter.id) }?
                     .chats ?? 0)
         }
     }
@@ -103,7 +103,7 @@ class MainViewModel: ObservableObject {
                         _ = try await TdApi.shared.loadChats(
                             chatList: .archive,
                             limit: 30)
-                    case .filter(let id):
+                    case .folder(let id):
                         _ = try await TdApi.shared.loadChats(
                             chatList: .filter(.init(chatFilterId: id)),
                             limit: 30)
