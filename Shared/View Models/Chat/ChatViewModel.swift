@@ -186,16 +186,15 @@ class ChatViewModel: ObservableObject {
         
         logger.debug("Chunked message history, length: \(messageHistory.count)")
 
-        // TODO: Reimplement this abomination
+        // TODO: Finish reimplementing this
         
-//        DispatchQueue.main.async {
-//            self.objectWillChange.send()
-//            self.chatPhoto = self.service.chatPhoto
-//            self.chatMemberCount = self.service.chatMemberCount
-//            self.isChannel = self.service.isChannel
-//            self.objectWillChange.send()
-//            self.messages = messageHistory
-//            self.scrollToEnd()
-//        }
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+            self.chatPhoto = chat.photo?.small
+            self.chatMemberCount = nil
+            self.isChannel = false
+            self.messages = messageHistory
+            self.scrollToEnd()
+        }
     }
 }
