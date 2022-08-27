@@ -24,9 +24,9 @@ public protocol LoginService: Service {
     
     func resendAuthCode() async throws
 
-    var countries: [CountryInfo] { get async throws }
+    func getCountries() async throws -> [CountryInfo]
 
-    var countryCode: String { get async throws }
+    func getCountryCode() async throws -> String
     
     func getAuthorizationState() async throws -> AuthorizationState
 }
