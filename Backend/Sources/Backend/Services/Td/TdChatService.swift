@@ -14,8 +14,6 @@ import TDLibKit
 import Logs
 import UniformTypeIdentifiers
 
-// TODO: Reimplement TdChatService
-
 // swiftlint:disable function_body_length
 public class TdChatService: ChatService {
     private var logger = Logs.Logger(category: "Services", label: "TdChatDataSource")
