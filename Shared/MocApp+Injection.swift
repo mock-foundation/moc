@@ -18,15 +18,15 @@ import Logs
 
 public extension Resolver {
     static func registerBackend() {
-        register { TdChatService() as ChatService }
+        register { TdChatService() as (any ChatService) }
             .scope(.shared)
-        register { TdLoginService() as LoginService }
+        register { TdLoginService() as (any LoginService) }
             .scope(.shared)
-        register { TdAccountsPrefService() as AccountsPrefService }
+        register { TdAccountsPrefService() as (any AccountsPrefService) }
             .scope(.shared)
-        register { TdFoldersPrefService() as FoldersPrefService }
+        register { TdFoldersPrefService() as (any FoldersPrefService) }
             .scope(.shared)
-        register { TdMainService() as MainService }
+        register { TdMainService() as (any MainService) }
             .scope(.shared)
     }
 }
@@ -40,13 +40,10 @@ struct MocApp: App {
     
     init() {
         Resolver.registerBackend()
-        TdApi.shared.append(TdApi(
-            client: TdClientImpl(completionQueue: .global())
-        ))
-        TdApi.shared[0].startTdLibUpdateHandler()
+        TdApi.shared.startTdLibUpdateHandler()
         
         Task {
-            AppCenter.countryCode = try await TdApi.shared[0].getCountryCode().text
+            AppCenter.countryCode = try await TdApi.shared.getCountryCode().text
         }
         
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
@@ -93,7 +90,7 @@ struct MocApp: App {
         }
         .onChange(of: scenePhase) { phase in
             Task {
-                try await TdApi.shared[0].setOption(
+                try await TdApi.shared.setOption(
                     name: .online,
                     value: .boolean(.init(value: phase == .active)))
             }

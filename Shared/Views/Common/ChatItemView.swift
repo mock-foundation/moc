@@ -60,7 +60,7 @@ struct ChatItemView: View {
     @State private var lastMessage: TDLibKit.Message?
     @State private var sidebarSize: SidebarSize = .medium
     
-    private let tdApi = TdApi.shared[0]
+    private let tdApi = TdApi.shared
     
     @Environment(\.isChatListItemSelected) var isSelected
     

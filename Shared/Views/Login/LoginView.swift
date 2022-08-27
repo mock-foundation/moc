@@ -41,7 +41,7 @@ private extension String {
 
 struct LoginView: View {
     let logger = Logs.Logger(category: "Login", label: "UI")
-    @Injected var service: LoginService
+    @Injected var service: any LoginService
     
     func stepView(number: Int, text: String) -> some View {
         HStack {

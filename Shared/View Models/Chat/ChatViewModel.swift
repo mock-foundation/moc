@@ -18,7 +18,7 @@ import Logs
 import AVKit
 
 class ChatViewModel: ObservableObject {
-    @Environment(\.chatService) private var service: ChatService
+    @Injected var service: any ChatService
     
     enum InspectorTab {
         case users
@@ -96,14 +96,14 @@ class ChatViewModel: ObservableObject {
     
     // swiftlint:disable function_body_length
     func update(chat: Chat) async throws {
-        service.set(chatId: chat.id)
+        service.chatId = chat.id
         DispatchQueue.main.async { [self] in
             chatID = chat.id
             objectWillChange.send()
             chatTitle = chat.title
         }
         
-        let buffer = try await service.messageHistory
+        let buffer = try await service.getMessageHistory()
             .asyncMap { tdMessage in
                 logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 var replyMessage: ReplyMessage?
@@ -186,16 +186,16 @@ class ChatViewModel: ObservableObject {
         
         logger.debug("Chunked message history, length: \(messageHistory.count)")
 
-        DispatchQueue.main.async {
-            Task {
-                self.objectWillChange.send()
-                self.chatPhoto = try await self.service.chatPhoto
-                self.chatMemberCount = try await self.service.chatMemberCount
-                self.isChannel = try await self.service.isChannel
-            }
-            self.objectWillChange.send()
-            self.messages = messageHistory
-            self.scrollToEnd()
-        }
+        // TODO: Reimplement this abomination
+        
+//        DispatchQueue.main.async {
+//            self.objectWillChange.send()
+//            self.chatPhoto = self.service.chatPhoto
+//            self.chatMemberCount = self.service.chatMemberCount
+//            self.isChannel = self.service.isChannel
+//            self.objectWillChange.send()
+//            self.messages = messageHistory
+//            self.scrollToEnd()
+//        }
     }
 }

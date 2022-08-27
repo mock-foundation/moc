@@ -55,7 +55,6 @@
 		4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072A286229B000587A63 /* MessageView+Photo.swift */; };
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
-		43688D9228B97C0B008441FB /* ChatServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43688D9128B97C0B008441FB /* ChatServiceKey.swift */; };
 		4368EC1B289BC22800CAA505 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC1A289BC22800CAA505 /* Lottie */; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
 		4371D154287F059100337533 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371D153287F059100337533 /* AboutView.swift */; };
@@ -202,7 +201,6 @@
 		4367072A286229B000587A63 /* MessageView+Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Photo.swift"; sourceTree = "<group>"; };
 		4367072C28622CD700587A63 /* MessageView+Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Bubble.swift"; sourceTree = "<group>"; };
 		4367072E28622D0400587A63 /* MessageView+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Message.swift"; sourceTree = "<group>"; };
-		43688D9128B97C0B008441FB /* ChatServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceKey.swift; sourceTree = "<group>"; };
 		4371AC162873126A0081776F /* ReplyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyMessage.swift; sourceTree = "<group>"; };
 		4371D153287F059100337533 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
@@ -403,14 +401,6 @@
 				436707222861A8CA00587A63 /* View+QuickLook.swift */,
 			);
 			path = QuickLook;
-			sourceTree = "<group>";
-		};
-		43688D9028B97BF4008441FB /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				43688D9128B97C0B008441FB /* ChatServiceKey.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		43807CEC27E1FCEC0056A3D3 = {
@@ -696,7 +686,6 @@
 		43F7C502287DCF8B0083E9E9 /* Keys */ = {
 			isa = PBXGroup;
 			children = (
-				43688D9028B97BF4008441FB /* Services */,
 				439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */,
 				43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */,
 			);
@@ -951,7 +940,6 @@
 				433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */,
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
 				434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */,
-				43688D9228B97C0B008441FB /* ChatServiceKey.swift in Sources */,
 				433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */,
 				43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,

@@ -13,7 +13,7 @@ public class TdAccountsPrefService: AccountsPrefService {
         tdApi.client.updateSubject
     }
     
-    public var tdApi: TdApi = .shared[0]
+    public var tdApi: TdApi = .shared
 
     public func logOut() async throws {
         _ = try await tdApi.logOut()

@@ -12,69 +12,10 @@ import Combine
 
 // swiftlint:disable all
 public class MockChatService: ChatService {
-    public var updateSubject = PassthroughSubject<Update, Never>()
-
-    public func getMessage(by id: Int64) async throws -> TDLibKit.Message {
-        return Message(
-            authorSignature: "",
-            canBeDeletedForAllUsers: false,
-            canBeDeletedOnlyForSelf: false,
-            canBeEdited: false,
-            canBeForwarded: false,
-            canBeSaved: false,
-            canGetAddedReactions: false,
-            canGetMediaTimestampLinks: false,
-            canGetMessageThread: false,
-            canGetStatistics: false,
-            canGetViewers: false,
-            chatId: 0,
-            containsUnreadMention: false,
-            content: .text(.init(text: .init(entities: [], text: ""), webPage: nil)),
-            date: 0,
-            editDate: 0,
-            forwardInfo: nil,
-            hasTimestampedMedia: false,
-            id: 0,
-            interactionInfo: nil,
-            isChannelPost: false,
-            isOutgoing: false,
-            isPinned: false,
-            mediaAlbumId: 0,
-            messageThreadId: 0,
-            replyInChatId: 0,
-            replyMarkup: nil,
-            replyToMessageId: 0,
-            restrictionReason: "",
-            schedulingState: nil,
-            senderId: .chat(.init(chatId: 0)),
-            sendingState: nil,
-            ttl: 0,
-            ttlExpiresIn: 0,
-            unreadReactions: [],
-            viaBotUserId: 0)
-    }
+    public func updateDraft(_ newDraft: TDLibKit.DraftMessage?, threadId: Int64?) async throws { }
     
-    public func sendMedia(_ url: URL, caption: String) async throws {
-        
-    }
-    
-    public func sendAlbum(_ urls: [URL], caption: String) async throws {
-        
-    }
-    
-    public var isChannel: Bool = false
-    
-    public func setAction(_ action: ChatAction) async throws {
-        
-    }
-    
-    public func sendMessage(_ message: String) async throws {
-        
-    }
-    
-    public var chatPhoto: File?
-    
-    public func getUser(by id: Int64) async throws -> User {
+    public func getUser(by id: Int64) async throws -> TDLibKit.User {
+        // TODO: Move this to a static `mock` variable
         User(
             addedToAttachmentMenu: false,
             firstName: "First",
@@ -97,35 +38,42 @@ public class MockChatService: ChatService {
             username: "username"
         )
     }
-
-    public func getChat(by id: Int64) async throws -> Chat {
+    
+    public func getChat(by id: Int64) async throws -> TDLibKit.Chat {
         Chat.mock
     }
-
-    public init() {}
-    public var messageHistory: [Message] = []
-
-    public var draftMessage: DraftMessage?
-
-    public func set(draft _: DraftMessage?) async throws {}
-
-    public var chatId: Int64? = 0
-
-    public var chatTitle: String = "Ninjas from the Reeds"
-
-    public var chatType: ChatType = .supergroup(.init(isChannel: false, supergroupId: 0))
-
-    public var chatMemberCount: Int? = 20
-
-    public var protected: Bool = false
-
-    public var blocked: Bool = false
-
-    public func set(chatId _: Int64) {}
-
-    public func set(protected _: Bool) async throws {}
-
-    public func set(blocked _: Bool) async throws {}
-
-    public func set(chatTitle _: String) async throws {}
+    
+    public func sendTextMessage(_ message: TDLibKit.FormattedText, clearDraft: Bool, disablePreview: Bool) async throws -> TDLibKit.Message {
+        Message.mock
+    }
+    
+    public func sendMedia(_ url: URL, caption: String) async throws -> TDLibKit.Message {
+        Message.mock
+    }
+    
+    public func sendAlbum(_ urls: [URL], caption: String) async throws -> [TDLibKit.Message]? {
+        [Message.mock, Message.mock]
+    }
+    
+    public func setProtected(_ isProtected: Bool) async throws { }
+    
+    public func setBlocked(_ isBlocked: Bool) async throws { }
+    
+    public func setChatTitle(_ title: String) async throws { }
+    
+    public func setAction(_ action: TDLibKit.ChatAction) async throws { }
+    
+    public func getMessage(by id: Int64) async throws -> TDLibKit.Message {
+        Message.mock
+    }
+    
+    public func getMessageHistory() async throws -> [TDLibKit.Message] {
+        [Message.mock, Message.mock, Message.mock]
+    }
+    
+    public var chatId: Int64? = 1234567890
+    
+    public var updateSubject = PassthroughSubject<TDLibKit.Update, Never>()
+    
+    public init() { }
 }

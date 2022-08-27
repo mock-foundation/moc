@@ -15,7 +15,7 @@ import Combine
 
 class AccountsPrefViewModel: ObservableObject {
     var logger = Logs.Logger(category: "Preferences", label: "AccountPaneUI")
-    @Injected var service: AccountsPrefService
+    @Injected var service: any AccountsPrefService
     
     @Published var firstName: String = "" {
         didSet {

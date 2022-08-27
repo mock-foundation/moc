@@ -15,7 +15,7 @@ public class TdMainService: MainService {
         tdApi.client.updateSubject
     }
     
-    private var tdApi = TdApi.shared[0]
+    private var tdApi = TdApi.shared
     private var cache = CacheService.shared
     
     public init() { }

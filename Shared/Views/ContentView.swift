@@ -58,9 +58,9 @@ struct ContentView: View {
         Task {
             do {
                 SystemUtils.post(notification: .openChatWithInstance, with: chat)
-                _ = try await TdApi.shared[0].openChat(chatId: chat.id)
+                _ = try await TdApi.shared.openChat(chatId: chat.id)
                 if let openedChat = viewRouter.openedChat {
-                    _ = try await TdApi.shared[0].closeChat(chatId: openedChat.id)
+                    _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
                 }
             } catch {
                 logger.error("Error in \(error.localizedDescription)")
@@ -97,7 +97,7 @@ struct ContentView: View {
                 Task {
                     guard let chatId = notification.object as? Int64 else { return }
                     
-                    openChat(try await TdApi.shared[0].getChat(chatId: chatId))
+                    openChat(try await TdApi.shared.getChat(chatId: chatId))
                 }
             }
             if folderLayout == .vertical {
@@ -523,8 +523,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     init() {
-        Resolver.register { MockChatService() as ChatService }
-        Resolver.register { MockMainService() as MainService }
+        Resolver.register { MockChatService() as (any ChatService) }
+        Resolver.register { MockMainService() as (any MainService) }
     }
     
     static var previews: some View {
