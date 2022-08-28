@@ -11,51 +11,20 @@ import Combine
 public class MockAccountsPrefService: AccountsPrefService {
     public var updateSubject = PassthroughSubject<Update, Never>()
     
-    public func set(firstName _: String, lastName _: String) async throws {}
-
-    public func set(username _: String) async throws {}
-
-    public func set(bio _: String) async throws {}
+    public func setFirstLastNames(_ first: String, _ last: String) async throws { }
+    
+    public func setUsername(_ username: String) async throws { }
+    
+    public func setBio(_ bio: String) async throws { }
 
     public func logOut() async throws {}
 
     public func getMe() async throws -> User {
-        User(
-            addedToAttachmentMenu: false,
-            firstName: "First name",
-            haveAccess: true,
-            id: 0,
-            isContact: false,
-            isFake: false,
-            isMutualContact: false,
-            isPremium: true,
-            isScam: false,
-            isSupport: false,
-            isVerified: true,
-            languageCode: "ua",
-            lastName: "Last name",
-            phoneNumber: "+0987654",
-            profilePhoto: nil,
-            restrictionReason: "",
-            status: .empty,
-            type: .regular,
-            username: "username"
-        )
+        User.mock
     }
 
     public func getFullInfo() async throws -> UserFullInfo {
-        UserFullInfo(
-            bio: FormattedText(entities: [], text: "Bio"),
-            botInfo: nil,
-            canBeCalled: false,
-            groupInCommonCount: 2,
-            hasPrivateCalls: false,
-            hasPrivateForwards: false,
-            isBlocked: true,
-            needPhoneNumberPrivacyException: true,
-            photo: nil,
-            supportsVideoCalls: true
-        )
+        UserFullInfo.mock
     }
 
     public func getProfilePhotos() async throws -> [ChatPhoto] {

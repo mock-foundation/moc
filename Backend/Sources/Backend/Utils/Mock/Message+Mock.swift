@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Message+Mock.swift
 //  
 //
 //  Created by Егор Яковенко on 27.08.2022.
@@ -7,7 +7,7 @@
 
 import TDLibKit
 
-public extension Message {
+extension Message {
     static let mock = Message(
         authorSignature: "",
         canBeDeletedForAllUsers: false,

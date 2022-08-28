@@ -16,19 +16,19 @@ public class TdAccountsPrefService: AccountsPrefService {
     public var tdApi: TdApi = .shared
 
     public func logOut() async throws {
-        _ = try await tdApi.logOut()
+        try await tdApi.logOut()
+    }
+    
+    public func setFirstLastNames(_ first: String, _ last: String) async throws {
+        try await tdApi.setName(firstName: first, lastName: last)
     }
 
-    public func set(firstName: String, lastName: String) async throws {
-        _ = try await tdApi.setName(firstName: firstName, lastName: lastName)
+    public func setUsername(_ username: String) async throws {
+        try await tdApi.setUsername(username: username)
     }
 
-    public func set(username: String) async throws {
-        _ = try await tdApi.setUsername(username: username)
-    }
-
-    public func set(bio: String) async throws {
-        _ = try await tdApi.setBio(bio: bio)
+    public func setBio(_ bio: String) async throws {
+        try await tdApi.setBio(bio: bio)
     }
 
     public func getMe() async throws -> User {

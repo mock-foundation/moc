@@ -39,9 +39,7 @@ class AccountsPrefViewModel: ObservableObject {
     func updateNames() {
         Task {
             do {
-                try await service.set(
-                    firstName: firstName,
-                    lastName: lastName)
+                try await service.setFirstLastNames(firstName, lastName)
             } catch let error {
                 logger.error(error.localizedDescription)
             }
