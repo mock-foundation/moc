@@ -204,7 +204,7 @@ struct AccountsPrefView: View {
                 .frame(width: 150)
                 .onSubmit {
                     Task {
-                        try await viewModel.service.set(username: username)
+                        try await viewModel.service.setUsername(username)
                     }
                 }
             Section {
@@ -212,7 +212,7 @@ struct AccountsPrefView: View {
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         Task {
-                            try await viewModel.service.set(bio: bioText)
+                            try await viewModel.service.setBio(bioText)
                         }
                     }
                     .frame(width: 350)

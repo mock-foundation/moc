@@ -15,7 +15,7 @@ import Combine
 
 class AccountsPrefViewModel: ObservableObject {
     var logger = Logs.Logger(category: "Preferences", label: "AccountPaneUI")
-    @Injected var service: AccountsPrefService
+    @Injected var service: any AccountsPrefService
     
     @Published var firstName: String = "" {
         didSet {
@@ -39,9 +39,7 @@ class AccountsPrefViewModel: ObservableObject {
     func updateNames() {
         Task {
             do {
-                try await service.set(
-                    firstName: firstName,
-                    lastName: lastName)
+                try await service.setFirstLastNames(firstName, lastName)
             } catch let error {
                 logger.error(error.localizedDescription)
             }

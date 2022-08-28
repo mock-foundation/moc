@@ -11,7 +11,7 @@ import GRDB
 import Combine
 
 public class TdFoldersPrefService: FoldersPrefService {
-    private var tdApi: TdApi = .shared[0]
+    private var tdApi: TdApi = .shared
     
     public var updateSubject: PassthroughSubject<Update, Never> {
         tdApi.client.updateSubject
@@ -20,7 +20,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     public init() {}
 
     public func getFilters() async throws -> [ChatFilterInfo] {
-        try! CacheService.shared.getRecords(as: Caching.ChatFilter.self, ordered: [Column("order").asc])
+        try! CacheService.shared.getRecords(as: Caching.ChatFolder.self, ordered: [Column("order").asc])
             .map { cached in
                 ChatFilterInfo(from: cached)
             }

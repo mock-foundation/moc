@@ -9,11 +9,11 @@ import TDLibKit
 import Combine
 
 public class TdLoginService: LoginService {
-    public func getAuthorizationState() async throws -> TDLibKit.AuthorizationState {
+    public func getAuthorizationState() async throws -> AuthorizationState {
         return try await tdApi.getAuthorizationState()
     }
     
-    private var tdApi: TdApi = .shared[0]
+    private var tdApi: TdApi = .shared
     
     public var updateSubject: PassthroughSubject<Update, Never> {
         tdApi.client.updateSubject
@@ -39,17 +39,13 @@ public class TdLoginService: LoginService {
     public func checkAuth(password: String) async throws {
         _ = try await tdApi.checkAuthenticationPassword(password: password)
     }
-
-    public var countries: [CountryInfo] {
-        get async throws {
-            (try? await tdApi.getCountries().countries) ?? []
-        }
+    
+    public func getCountries() async throws -> [CountryInfo] {
+        return try await tdApi.getCountries().countries
     }
-
-    public var countryCode: String {
-        get async throws {
-            (try? await tdApi.getCountryCode().text) ?? "en"
-        }
+    
+    public func getCountryCode() async throws -> String {
+        return try await tdApi.getCountryCode().text
     }
 
     public func requestQrCodeAuth() async throws {

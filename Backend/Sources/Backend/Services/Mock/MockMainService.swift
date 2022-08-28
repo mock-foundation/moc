@@ -19,7 +19,7 @@ public class MockMainService: MainService {
     }
     
     public func getUnreadCounters() throws -> [Caching.UnreadCounter] {
-        return [UnreadCounter(chats: 50, messages: 60, chatList: .filter(0))]
+        return [UnreadCounter(chats: 50, messages: 60, chatList: .folder(0))]
     }
 
     public func getChat(by id: Int64) async throws -> TDLibKit.Chat {

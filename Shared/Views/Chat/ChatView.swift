@@ -65,7 +65,7 @@ struct ChatView: View {
                 }
                 .animation(.easeInOut, value: viewModel.highlightedMessageId)
             }
-            .onDrop(of: [.fileURL], isTargeted: $viewModel.isDropping) { itemProviders in
+            .onDrop(of: [.fileURL], isTargeted: $viewModel.isDroppingMedia) { itemProviders in
                 guard !itemProviders.isEmpty else { return false }
                 
                 for itemProvider in itemProviders {
@@ -162,7 +162,7 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     init() {
-        Resolver.register { MockChatService() as ChatService }
+        Resolver.register { MockChatService() as (any ChatService) }
     }
 
     static var previews: some View {

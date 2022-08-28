@@ -17,13 +17,13 @@ extension ChatViewModel {
     
     func updateDraft() {
         Task {
-            try await service.set(draft: .init(
+            try await service.updateDraft(.init(
                 date: Int(Date.now.timeIntervalSince1970),
                 inputMessageText: .text(.init(
                     clearDraft: true,
                     disableWebPagePreview: false,
                     text: .init(entities: [], text: inputMessage))),
-                replyToMessageId: 0))
+                replyToMessageId: 0), threadId: nil)
         }
     }
     
@@ -31,7 +31,10 @@ extension ChatViewModel {
         Task {
             do {
                 if inputMedia.isEmpty {
-                    try await service.sendMessage(inputMessage)
+                    try await service.sendTextMessage(
+                        FormattedText(entities: [], text: inputMessage),
+                        clearDraft: true,
+                        disablePreview: false)
                 } else {
                     if inputMedia.count > 1 {
                         try await service.sendAlbum(inputMedia, caption: inputMessage)

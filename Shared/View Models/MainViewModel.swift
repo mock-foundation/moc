@@ -18,7 +18,7 @@ import Network
 import Defaults
 
 class MainViewModel: ObservableObject {
-    @Injected var service: MainService
+    @Injected var service: any MainService
     
     @Published var connectionStateTitle = ""
     @Published var isConnectionStateShown = true
@@ -59,7 +59,7 @@ class MainViewModel: ObservableObject {
                 return chats(from: .main)
             case .archive:
                 return chats(from: .archive)
-            case .filter(let id):
+            case .folder(let id):
                 return chats(from: .filter(.init(chatFilterId: id)))
         }
     }
@@ -79,7 +79,7 @@ class MainViewModel: ObservableObject {
                 id: filter.id,
                 iconName: filter.iconName,
                 unreadCounter: unreadCounters
-                    .first { $0.chatList == .filter(filter.id) }?
+                    .first { $0.chatList == .folder(filter.id) }?
                     .chats ?? 0)
         }
     }
@@ -96,15 +96,15 @@ class MainViewModel: ObservableObject {
             Task {
                 switch openChatList {
                     case .main:
-                        _ = try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared.loadChats(
                             chatList: .main,
                             limit: 30)
                     case .archive:
-                        _ = try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared.loadChats(
                             chatList: .archive,
                             limit: 30)
-                    case .filter(let id):
-                        _ = try await TdApi.shared[0].loadChats(
+                    case .folder(let id):
+                        _ = try await TdApi.shared.loadChats(
                             chatList: .filter(.init(chatFilterId: id)),
                             limit: 30)
                 }
@@ -195,13 +195,13 @@ class MainViewModel: ObservableObject {
                 Task {
                     switch value {
                         case .satisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .other)
+                            _ = try await TdApi.shared.setNetworkType(type: .other)
                         case .unsatisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
+                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
                         case .requiresConnection:
-                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
+                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
                         @unknown default:
-                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
+                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
                     }
                 }
             }

@@ -18,7 +18,7 @@ import Logs
 import AVKit
 
 class ChatViewModel: ObservableObject {
-    @Injected var service: ChatService
+    @Injected var service: any ChatService
     
     enum InspectorTab {
         case users
@@ -34,7 +34,7 @@ class ChatViewModel: ObservableObject {
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
     @Published var selectedInspectorTab: InspectorTab = .users
-    @Published var isDropping = false
+    @Published var isDroppingMedia = false
     @Published var inputMessage = "" {
         didSet {
             if inputMessage.isEmpty {
@@ -96,14 +96,14 @@ class ChatViewModel: ObservableObject {
     
     // swiftlint:disable function_body_length
     func update(chat: Chat) async throws {
-        service.set(chatId: chat.id)
+        service.chatId = chat.id
         DispatchQueue.main.async { [self] in
             chatID = chat.id
             objectWillChange.send()
             chatTitle = chat.title
         }
         
-        let buffer = try await service.messageHistory
+        let buffer = try await service.getMessageHistory()
             .asyncMap { tdMessage in
                 logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 var replyMessage: ReplyMessage?
@@ -186,14 +186,13 @@ class ChatViewModel: ObservableObject {
         
         logger.debug("Chunked message history, length: \(messageHistory.count)")
 
+        // TODO: Finish reimplementing this
+        
         DispatchQueue.main.async {
-            Task {
-                self.objectWillChange.send()
-                self.chatPhoto = try await self.service.chatPhoto
-                self.chatMemberCount = try await self.service.chatMemberCount
-                self.isChannel = try await self.service.isChannel
-            }
             self.objectWillChange.send()
+            self.chatPhoto = chat.photo?.small
+            self.chatMemberCount = nil
+            self.isChannel = false
             self.messages = messageHistory
             self.scrollToEnd()
         }

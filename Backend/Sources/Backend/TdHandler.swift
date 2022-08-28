@@ -17,11 +17,7 @@ import UIKit
 #endif
 
 public extension TdApi {
-    /// A list of shared instances. Why list? There could be multiple `TDLib` instances
-    /// with multiple clients and multiple windows, which use their `TDLib` instance.
-    /// Right now there is no multi-window and multi-account support, so just
-    /// use `shared[0]`.
-    static var shared: [TdApi] = []
+    static var shared: TdApi = TdApi(client: TdClientImpl(completionQueue: .global()))
 
     private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
@@ -91,16 +87,16 @@ public extension TdApi {
                                     _ = try await self.loadChats(chatList: .archive, limit: 15)
                                 }
                             case .closed:
-                                TdApi.shared.insert(TdApi(
+                                TdApi.shared = TdApi(
                                     client: TdClientImpl(completionQueue: .global())
-                                ), at: 0)
-                                TdApi.shared[0].startTdLibUpdateHandler()
+                                )
+                                TdApi.shared.startTdLibUpdateHandler()
                             default: break
                         }
                     case let .chatFilters(update):
-                        try cache.deleteAll(records: Caching.ChatFilter.self)
+                        try cache.deleteAll(records: Caching.ChatFolder.self)
                         for (index, filter) in update.chatFilters.enumerated() {
-                            try cache.save(record: Caching.ChatFilter(
+                            try cache.save(record: Caching.ChatFolder(
                                 title: filter.title,
                                 id: filter.id,
                                 iconName: filter.iconName,
@@ -170,11 +166,11 @@ public extension TdApi {
                                                 to: URL(fileURLWithPath: info.destinationPath))
                                         }
                                         TdApi.logger.debug("Conversion with id \(info.generationId.rawValue) is done")
-                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                        _ = try await TdApi.shared.finishFileGeneration(
                                             error: nil,
                                             generationId: info.generationId)
                                     } catch {
-                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                        _ = try await TdApi.shared.finishFileGeneration(
                                             error: Error(code: 400, message: error.localizedDescription),
                                             generationId: info.generationId)
                                     }
@@ -199,13 +195,13 @@ public extension TdApi {
                                                 options: .atomic)
                                         }
                                         #endif
-                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                        _ = try await TdApi.shared.finishFileGeneration(
                                             error: nil,
                                             generationId: info.generationId)
                                         TdApi.logger.debug("File generation with ID \(info.generationId) is done")
                                     } catch {
                                         TdApi.logger.debug("File generation with ID \(info.generationId) failed")
-                                        _ = try await TdApi.shared[0].finishFileGeneration(
+                                        _ = try await TdApi.shared.finishFileGeneration(
                                             error: Error(code: 400, message: error.localizedDescription),
                                             generationId: info.generationId)
                                     }

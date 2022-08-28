@@ -9,7 +9,7 @@ import Caching
 import TDLibKit
 
 extension TDLibKit.ChatFilterInfo {
-    init(from cached: Caching.ChatFilter) {
+    init(from cached: Caching.ChatFolder) {
         self.init(
             iconName: cached.iconName,
             id: cached.id,

@@ -36,7 +36,7 @@ struct CompactChatItemView: View {
         }
         .task {
             do {
-                chat = try await TdApi.shared[0].getChat(chatId: chatId)
+                chat = try await TdApi.shared.getChat(chatId: chatId)
             } catch {
                 print(error)
             }

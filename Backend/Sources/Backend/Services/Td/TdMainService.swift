@@ -15,13 +15,13 @@ public class TdMainService: MainService {
         tdApi.client.updateSubject
     }
     
-    private var tdApi = TdApi.shared[0]
+    private var tdApi = TdApi.shared
     private var cache = CacheService.shared
     
     public init() { }
     
     public func getFilters() throws -> [ChatFilter] {
-        return try cache.getRecords(as: Caching.ChatFilter.self, ordered: [Column("order").asc])
+        return try cache.getChatFolders()
             .map { record in
                 ChatFilter(
                     title: record.title,

@@ -41,7 +41,7 @@ private extension String {
 
 struct LoginView: View {
     let logger = Logs.Logger(category: "Login", label: "UI")
-    @Injected var service: LoginService
+    @Injected var service: any LoginService
     
     func stepView(number: Int, text: String) -> some View {
         HStack {
@@ -106,8 +106,8 @@ struct LoginView: View {
         .frame(maxWidth: 400)
         .onAppear {
             Task {
-                guard var countries = try? await service.countries else { return }
-                let countryCode = (try? await service.countryCode) ?? "EN"
+                var countries = try await service.getCountries()
+                let countryCode = try await service.getCountryCode()
                 
                 var callingCode = PhoneNumberInfo(country: "", phoneNumberPrefix: "")
                 
@@ -119,7 +119,7 @@ struct LoginView: View {
                     logger.info("Country code: \(String(describing: self.selectedNumberCode))")
                 }
                 
-                for (index, country) in countries.enumerated() where country.countryCode.lowercased() == "ru" {
+                for (index, country) in countries.enumerated() where country.countryCode == "RU" {
                     countries.removeAll(where: { $0.countryCode.lowercased() == "ru" })
                     countries.insert(
                         CountryInfo(

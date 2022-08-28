@@ -16,7 +16,7 @@ public extension Caching.ChatList {
             case .archive:
                 return .archive
             case let .filter(info):
-                return .filter(info.chatFilterId)
+                return .folder(info.chatFilterId)
         }
     }
 }
