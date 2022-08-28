@@ -5,7 +5,7 @@
 //  Created by Егор Яковенко on 28.05.2022.
 //
 
-import Caching
+import Storage
 import TDLibKit
 import GRDB
 import Combine
@@ -20,7 +20,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     public init() {}
 
     public func getFilters() async throws -> [ChatFilterInfo] {
-        try! CacheService.shared.getRecords(as: Caching.ChatFolder.self, ordered: [Column("order").asc])
+        try! CacheService.shared.getRecords(as: Storage.ChatFolder.self, ordered: [Column("order").asc])
             .map { cached in
                 ChatFilterInfo(from: cached)
             }

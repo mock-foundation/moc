@@ -6,7 +6,7 @@
 //
 
 import TDLibKit
-import Caching
+import Storage
 import GRDB
 import Combine
 

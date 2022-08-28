@@ -229,13 +229,13 @@ struct AccountsPrefView: View {
         }
         .frame(width: 450)
         // Text length restrictions
-        .onReceive(username.publisher) { _ in
+        .onChange(of: username) { _ in
             if username.count > 32 {
                 username = String(username.prefix(32))
                 SystemUtils.playAlertSound()
             }
         }
-        .onReceive(bioText.publisher) { _ in
+        .onChange(of: bioText) { _ in
             if bioText.count > 70 {
                 bioText = String(bioText.prefix(70))
                 SystemUtils.playAlertSound()

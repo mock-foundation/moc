@@ -5,7 +5,7 @@
 //  Created by Егор Яковенко on 18.01.2022.
 //
 
-import Caching
+import Storage
 import Foundation
 import Logs
 import TDLibKit
@@ -94,9 +94,9 @@ public extension TdApi {
                             default: break
                         }
                     case let .chatFilters(update):
-                        try cache.deleteAll(records: Caching.ChatFolder.self)
+                        try cache.deleteAll(records: Storage.ChatFolder.self)
                         for (index, filter) in update.chatFilters.enumerated() {
-                            try cache.save(record: Caching.ChatFolder(
+                            try cache.save(record: Storage.ChatFolder(
                                 title: filter.title,
                                 id: filter.id,
                                 iconName: filter.iconName,
@@ -104,7 +104,7 @@ public extension TdApi {
                         }
                     case let .unreadChatCount(update):
                         var shouldBeAdded = true
-                        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+                        let chatList = Storage.ChatList.from(tdChatList: update.chatList)
                         let records = try cache.getRecords(as: UnreadCounter.self)
                         
                         for record in records where chatList == record.chatList {
@@ -123,7 +123,7 @@ public extension TdApi {
                         }
                     case let .unreadMessageCount(update):
                         var shouldBeAdded = true
-                        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+                        let chatList = Storage.ChatList.from(tdChatList: update.chatList)
                         let records = try cache.getRecords(as: UnreadCounter.self)
                         
                         for record in records where chatList == record.chatList {

@@ -13,7 +13,7 @@ import TDLibKit
 import Logs
 import OrderedCollections
 import Backend
-import Caching
+import Storage
 import Network
 import Defaults
 
@@ -64,7 +64,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    @Published var unreadCounters: [Caching.UnreadCounter] = []
+    @Published var unreadCounters: [Storage.UnreadCounter] = []
     @Published var chatFilters: [TDLibKit.ChatFilterInfo] = []
     
     var mainUnreadCounter: Int {
@@ -87,7 +87,7 @@ class MainViewModel: ObservableObject {
     @Published var allChats: OrderedSet<Chat> = []
     @Published var chatPositions: [Int64: [ChatPosition]] = [:]
     
-    @Published var openChatList: Caching.ChatList = .main {
+    @Published var openChatList: Storage.ChatList = .main {
         didSet {
             logger.trace("openChatList: \(openChatList)")
             if openChatList != .archive {
@@ -112,7 +112,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    private var openChatListBuffer: Caching.ChatList = .main {
+    private var openChatListBuffer: Storage.ChatList = .main {
         didSet {
             logger.trace("openChatListBuffer: \(openChatListBuffer)")
         }
@@ -280,7 +280,7 @@ class MainViewModel: ObservableObject {
         logger.debug("UpdateUnreadChatCount")
         
         var shouldBeAdded = true
-        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+        let chatList = Storage.ChatList.from(tdChatList: update.chatList)
         let unreads = try! service.getUnreadCounters()
         
         logger.debug("Going through unreads")

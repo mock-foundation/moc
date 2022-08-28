@@ -5,7 +5,7 @@
 //  Created by Егор Яковенко on 08.06.2022.
 //
 
-import Caching
+import Storage
 
 struct ChatFolder: Hashable, Identifiable {
     var title: String

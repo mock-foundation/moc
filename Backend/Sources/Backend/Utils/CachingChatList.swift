@@ -5,10 +5,10 @@
 //  Created by Егор Яковенко on 05.06.2022.
 //
 
-import Caching
+import Storage
 import TDLibKit
 
-public extension Caching.ChatList {
+public extension Storage.ChatList {
     static func from(tdChatList: TDLibKit.ChatList) -> Self {
         switch tdChatList {
             case .main:

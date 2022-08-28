@@ -7,7 +7,7 @@
 
 import Combine
 import TDLibKit
-import Caching
+import Storage
 
 public protocol MainService: Service {
     func getFilters() throws -> [ChatFilter]

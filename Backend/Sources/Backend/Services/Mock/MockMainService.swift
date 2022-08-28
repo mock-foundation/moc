@@ -6,7 +6,7 @@
 //
 
 import TDLibKit
-import Caching
+import Storage
 import Combine
 
 public class MockMainService: MainService {
@@ -18,7 +18,7 @@ public class MockMainService: MainService {
         return [ChatFilter(title: "Title", id: 0, iconName: "Travel", order: 0)]
     }
     
-    public func getUnreadCounters() throws -> [Caching.UnreadCounter] {
+    public func getUnreadCounters() throws -> [Storage.UnreadCounter] {
         return [UnreadCounter(chats: 50, messages: 60, chatList: .folder(0))]
     }
 

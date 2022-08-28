@@ -12,7 +12,7 @@ import SwiftUI
 import Utilities
 import TDLibKit
 import OrderedCollections
-import Caching
+import Storage
 import Introspect
 import Defaults
 
@@ -161,7 +161,7 @@ struct ContentView: View {
         name: String,
         icon: Image,
         unreadCount: Int,
-        chatList: Caching.ChatList,
+        chatList: Storage.ChatList,
         horizontal: Bool
     ) -> some View {
         Button {

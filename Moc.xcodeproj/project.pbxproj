@@ -10,7 +10,6 @@
 		2D229DCF28759E000056A294 /* EmojiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D229DCE28759E000056A294 /* EmojiViewModel.swift */; };
 		2D229DD7287606710056A294 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 2D229DD6287606710056A294 /* Networking */; };
 		43008544283B59D500ED5961 /* Image+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43008543283B59D500ED5961 /* Image+File.swift */; };
-		43016AA92842DE3000C219B4 /* Caching in Frameworks */ = {isa = PBXBuildFile; productRef = 43016AA82842DE3000C219B4 /* Caching */; };
 		43051C8C287791D0003C5CE2 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43051C8B287791D0003C5CE2 /* RoundedCorners.swift */; };
 		43051C8E28779218003C5CE2 /* ChatView+InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43051C8D28779218003C5CE2 /* ChatView+InputField.swift */; };
 		43051C902877932D003C5CE2 /* ChatView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43051C8F2877932D003C5CE2 /* ChatView+Utils.swift */; };
@@ -121,6 +120,7 @@
 		43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF822865183300C0A8EF /* MessageView+Video.swift */; };
 		43A0AF85286518F900C0A8EF /* MessageView+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF84286518F900C0A8EF /* MessageView+Album.swift */; };
 		43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF862865197400C0A8EF /* AsyncTdFile.swift */; };
+		43A7CC5828BB82B300C43822 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 43A7CC5728BB82B300C43822 /* Storage */; };
 		43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A9637A2868C8AD0076F5FD /* SkeletonUI */; };
 		43ABC05D28500648009F529E /* ChatFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ABC05C28500648009F529E /* ChatFolder.swift */; };
 		43B102952882087C009FCF53 /* Acknowledgments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43B102942882087C009FCF53 /* Acknowledgments.plist */; };
@@ -169,7 +169,6 @@
 		2D229DCE28759E000056A294 /* EmojiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiViewModel.swift; sourceTree = "<group>"; };
 		2D229DD22875FC010056A294 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		43008543283B59D500ED5961 /* Image+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+File.swift"; sourceTree = "<group>"; };
-		43016AA72842CDF800C219B4 /* Caching */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Caching; sourceTree = "<group>"; };
 		43051C8B287791D0003C5CE2 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		43051C8D28779218003C5CE2 /* ChatView+InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatView+InputField.swift"; sourceTree = "<group>"; };
 		43051C8F2877932D003C5CE2 /* ChatView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatView+Utils.swift"; sourceTree = "<group>"; };
@@ -270,6 +269,7 @@
 		43A0AF822865183300C0A8EF /* MessageView+Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Video.swift"; sourceTree = "<group>"; };
 		43A0AF84286518F900C0A8EF /* MessageView+Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Album.swift"; sourceTree = "<group>"; };
 		43A0AF862865197400C0A8EF /* AsyncTdFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdFile.swift; sourceTree = "<group>"; };
+		43A7CC5628BB81BD00C43822 /* Storage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Storage; sourceTree = "<group>"; };
 		43ABC05C28500648009F529E /* ChatFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFolder.swift; sourceTree = "<group>"; };
 		43B102942882087C009FCF53 /* Acknowledgments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Acknowledgments.plist; sourceTree = "<group>"; };
 		43B1029828820A82009FCF53 /* Acknowledgment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Acknowledgment.swift; sourceTree = "<group>"; };
@@ -298,7 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
-				43016AA92842DE3000C219B4 /* Caching in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				43431C7A28A006E6002A72A0 /* Introspect in Frameworks */,
@@ -306,6 +305,7 @@
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
+				43A7CC5828BB82B300C43822 /* Storage in Frameworks */,
 				4368EC1B289BC22800CAA505 /* Lottie in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
@@ -411,7 +411,7 @@
 				43EC18DE28566F1E00FCAD43 /* iOS */,
 				2D229DD22875FC010056A294 /* Networking */,
 				43807D2327E2129C0056A3D3 /* Backend */,
-				43016AA72842CDF800C219B4 /* Caching */,
+				43A7CC5628BB81BD00C43822 /* Storage */,
 				43F871B7283E21C700B6C717 /* Logs */,
 				43CA7FC9283E3988006E7AC9 /* Utilities */,
 				43807D0927E1FCEF0056A3D3 /* MocTests */,
@@ -717,7 +717,6 @@
 				4360D6E2283FE2BE00D3378F /* Collections */,
 				4360D6E4283FE2BE00D3378F /* DequeModule */,
 				4360D6E6283FE2BE00D3378F /* OrderedCollections */,
-				43016AA82842DE3000C219B4 /* Caching */,
 				431215512858E50B009EFEB5 /* ComplexModule */,
 				431215532858E50B009EFEB5 /* Numerics */,
 				431215552858E50B009EFEB5 /* RealModule */,
@@ -731,6 +730,7 @@
 				43431C8128A00AC3002A72A0 /* Resolver */,
 				43431C8428A00BAB002A72A0 /* TDLibKit */,
 				439B4FB628A9731F00E9ABA9 /* Sparkle */,
+				43A7CC5728BB82B300C43822 /* Storage */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -1485,10 +1485,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Networking;
 		};
-		43016AA82842DE3000C219B4 /* Caching */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Caching;
-		};
 		431215512858E50B009EFEB5 /* ComplexModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */;
@@ -1567,6 +1563,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		43A7CC5728BB82B300C43822 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Storage;
 		};
 		43A9637A2868C8AD0076F5FD /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
