@@ -34,7 +34,7 @@ public extension TdApi {
         }
         
         client.run {
-            let cache = CacheService.shared
+            let cache = StorageService.shared
             
             do {
                 let update = try TdApi.decoder.decode(Update.self, from: $0)

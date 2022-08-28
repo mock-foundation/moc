@@ -16,7 +16,7 @@ public class TdMainService: MainService {
     }
     
     private var tdApi = TdApi.shared
-    private var cache = CacheService.shared
+    private var cache = StorageService.shared
     
     public init() { }
     

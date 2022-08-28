@@ -20,7 +20,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     public init() {}
 
     public func getFilters() async throws -> [ChatFilterInfo] {
-        try! CacheService.shared.getRecords(as: Storage.ChatFolder.self, ordered: [Column("order").asc])
+        try! StorageService.shared.getRecords(as: Storage.ChatFolder.self, ordered: [Column("order").asc])
             .map { cached in
                 ChatFilterInfo(from: cached)
             }
