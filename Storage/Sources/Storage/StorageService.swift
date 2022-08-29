@@ -55,8 +55,8 @@ public class StorageService {
 private extension StorageService {
     private func registerMigrations() {
         migrator.registerMigration("v1") { [self] db in
-            logger.debug("Creating chatFilter table")
-            try db.create(table: "chatFilter") { t in
+            logger.debug("Creating chatFolder table")
+            try db.create(table: "chatFolder") { t in
                 t.column("title", .text).notNull()
                 t.column("id", .integer).notNull().primaryKey(onConflict: .replace, autoincrement: false)
                 t.column("iconName", .text).notNull()
@@ -69,10 +69,6 @@ private extension StorageService {
                 t.column("messages", .integer).notNull()
                 t.column("chatList", .text).notNull().primaryKey(onConflict: .replace, autoincrement: false)
             }
-        }
-        
-        migrator.registerMigration("v2") { db in
-            try db.execute(sql: "UPDATE unreadCounter SET chatList = REPLACE(chatList, 'filter', 'folder')")
         }
     }
 
