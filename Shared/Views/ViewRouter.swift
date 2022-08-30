@@ -8,6 +8,8 @@
 import SwiftUI
 import TDLibKit
 
+// TODO: Rewrite ViewRouter
+
 /// A simple view router for managing open chat state. Is **not** designed for more.
 final class ViewRouter: ObservableObject {
     public enum Views: CaseIterable {

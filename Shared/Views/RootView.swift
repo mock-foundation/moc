@@ -16,25 +16,6 @@ import Storage
 import Introspect
 import Defaults
 
-private enum Tab {
-    case chat
-    case contacts
-    case calls
-}
-
-private extension SidebarSize {
-    var chatItemHeight: CGFloat {
-        switch self {
-            case .small:
-                return 42
-            case .medium:
-                return 52
-            case .large:
-                return 60
-        }
-    }
-}
-
 // swiftlint:disable type_body_length
 struct RootView: View {
     private let logger = Logs.Logger(category: "RootView", label: "UI")
@@ -53,6 +34,12 @@ struct RootView: View {
     @StateObject private var viewRouter = ViewRouter()
     
     @Environment(\.colorScheme) var colorScheme
+    
+    private enum Tab {
+        case chat
+        case contacts
+        case calls
+    }
     
     private func openChat(_ chat: Chat) {
         Task {
@@ -380,6 +367,7 @@ struct RootView: View {
         }
         #if os(macOS)
         .frame(minWidth: folderLayout == .vertical ? 400 : 380)
+        .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
         #elseif os(iOS)
         .safeAreaInset(edge: .bottom) {
             HStack {
@@ -415,6 +403,33 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.5), value: viewModel.isConnectionStateShown)
         .animation(.easeInOut, value: viewModel.connectionStateTitle)
         .animation(.easeInOut, value: viewModel.isConnected)
+        .toolbar {
+            chatListToolbar
+        }
+    }
+    
+    @ViewBuilder
+    var content: some View {
+        switch viewRouter.currentView {
+            case .selectChat:
+                chatPlaceholder
+            case .chat:
+                ChatView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    #if os(iOS)
+                    .introspectNavigationController { vc in
+                        let navBar = vc.navigationBar
+                        
+                        let newNavBarAppearance = UINavigationBarAppearance()
+                        newNavBarAppearance.configureWithDefaultBackground()
+                        
+                        navBar.scrollEdgeAppearance = newNavBarAppearance
+                        navBar.compactAppearance = newNavBarAppearance
+                        navBar.standardAppearance = newNavBarAppearance
+                        navBar.compactScrollEdgeAppearance = newNavBarAppearance
+                    }
+                    #endif
+        }
     }
 
     @ViewBuilder
@@ -425,69 +440,16 @@ struct RootView: View {
                     if #available(macOS 13, iOS 16, *) {
                         NavigationSplitView {
                             sidebar
-                                .toolbar {
-                                    chatListToolbar
-                                }
-                                #if os(macOS)
-                                .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
-                                #endif
                         } detail: {
                             NavigationStack {
-                                switch viewRouter.currentView {
-                                    case .selectChat:
-                                        chatPlaceholder
-                                    case .chat:
-                                        ChatView()
-                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                            #if os(iOS)
-                                            .introspectNavigationController { vc in
-                                                let navBar = vc.navigationBar
-                                                
-                                                let newNavBarAppearance = UINavigationBarAppearance()
-                                                newNavBarAppearance.configureWithDefaultBackground()
-                                                
-                                                navBar.scrollEdgeAppearance = newNavBarAppearance
-                                                navBar.compactAppearance = newNavBarAppearance
-                                                navBar.standardAppearance = newNavBarAppearance
-                                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                                            }
-                                            #endif
-                                }
+                                content
                             }
                         }
                     } else {
-                        Group {
-                            NavigationView {
-                                sidebar
-                                    .listStyle(.sidebar)
-                                    .toolbar {
-                                        chatListToolbar
-                                    }
-                                    #if os(macOS)
-                                    .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
-                                    #endif
-                                
-                                switch viewRouter.currentView {
-                                    case .selectChat:
-                                        chatPlaceholder
-                                    case .chat:
-                                        ChatView()
-                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                            #if os(iOS)
-                                            .introspectNavigationController { vc in
-                                                let navBar = vc.navigationBar
-                                                
-                                                let newNavBarAppearance = UINavigationBarAppearance()
-                                                newNavBarAppearance.configureWithDefaultBackground()
-                                                
-                                                navBar.scrollEdgeAppearance = newNavBarAppearance
-                                                navBar.compactAppearance = newNavBarAppearance
-                                                navBar.standardAppearance = newNavBarAppearance
-                                                navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                                            }
-                                            #endif
-                                }
-                            }
+                        NavigationView {
+                            sidebar
+                                .listStyle(.sidebar)
+                            content
                         }
                         #if os(iOS)
                         .sidebarSize(folderLayout == .vertical ? 400 : 330)
@@ -529,5 +491,18 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         RootView()
+    }
+}
+
+private extension SidebarSize {
+    var chatItemHeight: CGFloat {
+        switch self {
+            case .small:
+                return 42
+            case .medium:
+                return 52
+            case .large:
+                return 60
+        }
     }
 }

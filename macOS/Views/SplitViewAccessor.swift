@@ -9,6 +9,8 @@
 import SwiftUI
 import Logs
 
+// TODO: Replace usage of SplitViewAccessor with Introspect
+
 struct SplitViewAccessor: NSViewRepresentable {
     @Binding var sideCollapsed: Bool
     
