@@ -86,7 +86,7 @@ struct MocApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
         .onChange(of: scenePhase) { phase in
             Task {
