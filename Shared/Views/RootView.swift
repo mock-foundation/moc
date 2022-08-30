@@ -261,6 +261,17 @@ struct RootView: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             #endif
         }
+        #if os(macOS)
+        .safeAreaInset(edge: .top) {
+            SearchField()
+                .controlSize(.large)
+                .if(folderLayout == .vertical) {
+                    $0.padding(.trailing, 12)
+                } else: {
+                    $0.padding(.horizontal, 12)
+                }
+        }
+        #endif
     }
     
     #if os(iOS)
@@ -331,30 +342,8 @@ struct RootView: View {
             if folderLayout == .vertical {
                 filterBar
                 chats
-                #if os(macOS)
-                    .safeAreaInset(edge: .top) {
-                        let field = SearchField()
-                            .controlSize(.large)
-                        if folderLayout == .vertical {
-                            field.padding(.trailing, 12)
-                        } else {
-                            field.padding(.horizontal, 12)
-                        }
-                    }
-                #endif
             } else {
                 chats
-                    #if os(macOS)
-                    .safeAreaInset(edge: .top) {
-                        let field = SearchField()
-                            .controlSize(.large)
-                        if folderLayout == .vertical {
-                            field.padding(.trailing, 12)
-                        } else {
-                            field.padding(.horizontal, 12)
-                        }
-                    }
-                    #endif
                     .safeAreaInset(edge: .top) {
                         if !viewModel.isArchiveOpen {
                             filterBar
@@ -370,27 +359,7 @@ struct RootView: View {
         .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
         #elseif os(iOS)
         .safeAreaInset(edge: .bottom) {
-            HStack {
-                Spacer()
-                makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
-                makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
-                makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
-                Menu {
-                    Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
-                    Divider()
-                    Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
-                    Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
-                    Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
-                    Button { } label: { Label("Saved messages", systemImage: "bookmark") }
-                } label: {
-                    makeTabBarItem("More", systemImage: "ellipsis")
-                }
-                .buttonStyle(.plain)
-                .foregroundColor(colorScheme == .dark ? .gray : Color(uiColor: .darkGray))
-                Spacer()
-            }
-            .padding(.vertical)
-            .background(.ultraThinMaterial, in: Rectangle())
+            tabBar
         }
         #endif
         .overlay(alignment: .bottom) {
@@ -408,11 +377,46 @@ struct RootView: View {
         }
     }
     
+    #if os(iOS)
+    var tabBar: some View {
+        HStack {
+            Spacer()
+            makeTabBarButton("Contacts", systemImage: "person.2.fill", value: .contacts)
+            makeTabBarButton("Calls", systemImage: "phone.and.waveform.fill", value: .calls)
+            makeTabBarButton("Chats", systemImage: "bubble.left.and.bubble.right.fill", value: .chat)
+            Menu {
+                Button { areSettingsOpen = true } label: { Label("Settings", systemImage: "gear") }
+                Divider()
+                Button { } label: { Label("Moc Updates", systemImage: "newspaper") }
+                Button { } label: { Label("Telegram Tips", systemImage: "text.book.closed") }
+                Button { } label: { Label("Find people nearby", systemImage: "person.wave.2") }
+                Button { } label: { Label("Saved messages", systemImage: "bookmark") }
+            } label: {
+                makeTabBarItem("More", systemImage: "ellipsis")
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(colorScheme == .dark ? .gray : Color(uiColor: .darkGray))
+            Spacer()
+        }
+        .padding(.vertical)
+        .background(.ultraThinMaterial, in: Rectangle())
+    }
+    #endif
+    
     @ViewBuilder
     var content: some View {
         switch viewRouter.currentView {
             case .selectChat:
-                chatPlaceholder
+                VStack {
+                    Image(systemName: "bubble.left.and.bubble.right")
+                        .font(.system(size: 96))
+                        .foregroundColor(.gray)
+                    Text("Open a chat or start a new one!")
+                        .font(.largeTitle)
+                        .foregroundStyle(Color.secondary)
+                    Text("Pick any chat on the left sidebar, and have fun chatting!")
+                        .foregroundStyle(Color.secondary)
+                }
             case .chat:
                 ChatView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -467,19 +471,6 @@ struct RootView: View {
         }
         .transition(.scale)
         .animation(.spring(), value: viewModel.showingLoginScreen)
-    }
-
-    private var chatPlaceholder: some View {
-        VStack {
-            Image(systemName: "bubble.left.and.bubble.right")
-                .font(.system(size: 96))
-                .foregroundColor(.gray)
-            Text("Open a chat or start a new one!")
-                .font(.largeTitle)
-                .foregroundStyle(Color.secondary)
-            Text("Pick any chat on the left sidebar, and have fun chatting!")
-                .foregroundStyle(Color.secondary)
-        }
     }
 }
 

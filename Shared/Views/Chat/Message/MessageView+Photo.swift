@@ -13,7 +13,7 @@ extension MessageView {
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
         ZStack {
             AsyncTdImage(
-                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+                id: info.photo.sizes[0].photo.id
             ) { image in
                 image
                     .resizable()
@@ -26,7 +26,7 @@ extension MessageView {
         .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
         .background {
             AsyncTdImage(
-                id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id
+                id: info.photo.sizes[0].photo.id
             ) { image in
                 image
                     .resizable()
