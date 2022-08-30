@@ -42,6 +42,7 @@
 		434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */; };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
 		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
+		43505ECE28BE16FA00E8C5CD /* Color+Additional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */; };
 		435C9C0C28A13FB700E5D682 /* CompactChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */; };
 		435C9C0E28A1915F00E5D682 /* Notification.Name+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
@@ -191,6 +192,7 @@
 		434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberInfo.swift; sourceTree = "<group>"; };
 		434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
 		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
+		43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Additional.swift"; sourceTree = "<group>"; };
 		435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactChatItemView.swift; sourceTree = "<group>"; };
 		435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Constants.swift"; sourceTree = "<group>"; };
 		4367071E2861A6CD00587A63 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				438B2282285E3098000D65C8 /* BackportedGradient.swift */,
 				43B1029A28831A8D009FCF53 /* Image+Data.swift */,
 				435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */,
+				43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -927,6 +930,7 @@
 				439E0E27287EE06900013A0F /* AboutCommand.swift in Sources */,
 				4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */,
 				4388DC0B2875765100B0A57B /* AsyncTdFileThumbnail.swift in Sources */,
+				43505ECE28BE16FA00E8C5CD /* Color+Additional.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
 				433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */,

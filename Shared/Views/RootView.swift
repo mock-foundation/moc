@@ -315,25 +315,14 @@ struct RootView: View {
             }
             .padding()
         }
-        #if os(macOS)
         .background(.linearGradient(
             Gradient(colors: [
                 viewModel.isConnected
                 ? .accentColor.opacity(0.7)
-                : (colorScheme == .dark ? Color(nsColor: .darkGray) : .white),
+                : (colorScheme == .dark ? .darkGray : .white),
                 (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
             startPoint: .bottom,
             endPoint: .top))
-        #elseif os(iOS)
-        .background(.linearGradient(
-            Gradient(colors: [
-                viewModel.isConnected
-                ? .accentColor.opacity(0.7)
-                : (colorScheme == .dark ? Color(uiColor: .darkGray) : .white),
-                (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
-            startPoint: .bottom,
-            endPoint: .top))
-        #endif
         .transition(.move(edge: .bottom).combined(with: .opacity))
     }
     
