@@ -69,6 +69,15 @@ class ChatViewModel: ObservableObject {
                 }
             }
             .store(in: &subscribers)
+        SystemUtils.ncPublisher(for: .openChatWithId)
+            .sink { notification in
+                guard let chatId = notification.object as? Int64 else { return }
+                                
+                Task {
+                    try await self.update(chat: try await TdApi.shared.getChat(chatId: chatId))
+                }
+            }
+            .store(in: &subscribers)
         SystemUtils.ncPublisher(for: .openChatWithInstance)
             .sink { notification in
                 guard let chat = notification.object as? Chat else { return }

@@ -80,13 +80,6 @@ struct RootView: View {
                     .buttonStyle(.plain)
                 }
             }
-            .onReceive(SystemUtils.ncPublisher(for: .openChatWithId)) { notification in
-                Task {
-                    guard let chatId = notification.object as? Int64 else { return }
-                    
-                    openChat(try await TdApi.shared.getChat(chatId: chatId))
-                }
-            }
             if folderLayout == .vertical {
                 stack.padding(.trailing, 12)
             } else {
@@ -95,20 +88,22 @@ struct RootView: View {
         }
     }
     
-    private var chatListToolbar: some ToolbarContent {
+    private var chatListToolbarPlacement: ToolbarItemPlacement {
         #if os(macOS)
-        let placement: ToolbarItemPlacement
         if #available(macOS 13, *) {
-            placement = .automatic
+            return .automatic
         } else {
-            placement = .status
+            return .status
         }
         #elseif os(iOS)
-        let placement: ToolbarItemPlacement = .navigationBarLeading
+        return .navigationBarLeading
         #endif
+    }
+    
+    private var chatListToolbar: some ToolbarContent {
         return Group {
             #if os(macOS)
-            ToolbarItemGroup(placement: placement) {
+            ToolbarItemGroup(placement: chatListToolbarPlacement) {
                 if #unavailable(macOS 13) {
                     Button {
                         NSApp.keyWindow?.firstResponder?.tryToPerform(
@@ -126,10 +121,10 @@ struct RootView: View {
                 }
             }
             #endif
-            ToolbarItem(placement: placement) {
+            ToolbarItem(placement: chatListToolbarPlacement) {
                 Spacer()
             }
-            ToolbarItemGroup(placement: placement) {
+            ToolbarItemGroup(placement: chatListToolbarPlacement) {
                 if viewModel.isChatListVisible {
                     Toggle(isOn: $viewModel.isArchiveOpen) {
                         Image(systemName: viewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
@@ -298,6 +293,7 @@ struct RootView: View {
     }
     #endif
     
+    // TODO: Change connection state UI design
     private var connectionState: some View {
         VStack {
             Spacer()
