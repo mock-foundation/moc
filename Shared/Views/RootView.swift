@@ -16,7 +16,7 @@ import Storage
 import Introspect
 import Defaults
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 struct RootView: View {
     private let logger = Logs.Logger(category: "RootView", label: "UI")
 
@@ -41,28 +41,24 @@ struct RootView: View {
         case calls
     }
     
-    private func openChat(_ chat: Chat) {
-        Task {
-            do {
-                SystemUtils.post(notification: .openChatWithInstance, with: chat)
-                _ = try await TdApi.shared.openChat(chatId: chat.id)
-                if let openedChat = viewRouter.openedChat {
-                    _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
-                }
-            } catch {
-                logger.error("Error in \(error.localizedDescription)")
-            }
-        }
-        viewRouter.openedChat = chat
-        viewRouter.currentView = .chat
-    }
-    
     private var chatList: some View {
         ScrollView {
-            let stack = LazyVStack {
+            LazyVStack {
                 ForEach(viewModel.chatList) { chat in
                     Button {
-                        openChat(chat)
+                        Task {
+                            do {
+                                SystemUtils.post(notification: .openChatWithInstance, with: chat)
+                                _ = try await TdApi.shared.openChat(chatId: chat.id)
+                                if let openedChat = viewRouter.openedChat {
+                                    _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
+                                }
+                            } catch {
+                                logger.error("Error in \(error.localizedDescription)")
+                            }
+                        }
+                        viewRouter.openedChat = chat
+                        viewRouter.currentView = .chat
                     } label: {
                         ChatItemView(chat: chat)
                             .frame(height: viewModel.sidebarSize.chatItemHeight)
@@ -80,10 +76,10 @@ struct RootView: View {
                     .buttonStyle(.plain)
                 }
             }
-            if folderLayout == .vertical {
-                stack.padding(.trailing, 12)
-            } else {
-                stack.padding(8)
+            .if(folderLayout == .vertical) {
+                $0.padding(.trailing, 12)
+            } else: {
+                $0.padding(8)
             }
         }
     }
@@ -184,8 +180,8 @@ struct RootView: View {
         
     @ViewBuilder
     private var filterBar: some View {
-        let scroll = ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
-            let group = Group {
+        ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
+            Group {
                 switch selectedTab {
                     case .chat:
                         if folderLayout == .vertical {
@@ -216,26 +212,24 @@ struct RootView: View {
                 }
             }
             .frame(alignment: .center)
-            if folderLayout == .vertical {
-                group.padding(.bottom)
-            } else {
+            .if(folderLayout == .vertical) {
+                $0.padding(.bottom)
+            } else: {
                 #if os(macOS)
-                group
+                $0
                 #elseif os(iOS)
-                group.padding(8)
+                $0.padding(8)
                 #endif
             }
         }
-        if folderLayout == .vertical {
-            scroll
-                .frame(width: viewModel.sidebarSize == .small ? 75 : 90)
-        } else {
-            scroll
-                #if os(iOS)
-                .background(.bar, in: Rectangle())
-                #endif
-                .frame(minWidth: 0, maxWidth: .infinity)
-            
+        .if(folderLayout == .vertical) {
+            $0.frame(width: viewModel.sidebarSize == .small ? 75 : 90)
+        } else: {
+            $0
+            #if os(iOS)
+            .background(.bar, in: Rectangle())
+            #endif
+            .frame(minWidth: 0, maxWidth: .infinity)
         }
     }
     
