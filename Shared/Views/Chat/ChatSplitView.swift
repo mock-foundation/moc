@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: Rewrite this mess with usage of the detail column of Navigation(Split)View
+
 struct ChatSplitView<Left: View, Right: View>: View {
     var isRightViewVisible: Bool = true
     @ViewBuilder var leftView: () -> Left

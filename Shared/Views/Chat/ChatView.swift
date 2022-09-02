@@ -144,6 +144,7 @@ struct ChatView: View {
         }
     }
     
+    // TODO: Make inspector an independent view and move it's usage to RootView
     var body: some View {
         ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
             chatView
@@ -153,7 +154,6 @@ struct ChatView: View {
                 .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle("")
-        // MARK: - Toolbar
         .toolbar {
             toolbar
         }
