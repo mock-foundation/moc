@@ -31,7 +31,7 @@ struct RootView: View {
     #endif
 
     @StateObject private var viewModel = MainViewModel()
-    @StateObject private var viewRouter = ViewRouter()
+    @State private var openedChat: Chat?
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -50,28 +50,21 @@ struct RootView: View {
                             do {
                                 SystemUtils.post(notification: .openChatWithInstance, with: chat)
                                 _ = try await TdApi.shared.openChat(chatId: chat.id)
-                                if let openedChat = viewRouter.openedChat {
+                                if let openedChat {
                                     _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
                                 }
                             } catch {
                                 logger.error("Error in \(error.localizedDescription)")
                             }
                         }
-                        viewRouter.openedChat = chat
-                        viewRouter.currentView = .chat
+                        openedChat = chat
                     } label: {
                         ChatItemView(chat: chat)
                             .frame(height: viewModel.sidebarSize.chatItemHeight)
                             .padding(6)
-                            .background(
-                                (viewRouter.currentView == .chat
-                                 && viewRouter.openedChat! == chat)
-                                ? Color.accentColor.opacity(0.8)
-                                : nil
-                            )
+                            .background(openedChat == chat ? Color.accentColor.opacity(0.8) : nil)
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            .environment(\.isChatListItemSelected, (viewRouter.currentView == .chat
-                                                                    && viewRouter.openedChat! == chat))
+                            .environment(\.isChatListItemSelected, openedChat == chat)
                     }
                     .buttonStyle(.plain)
                 }
@@ -386,34 +379,33 @@ struct RootView: View {
     
     @ViewBuilder
     var content: some View {
-        switch viewRouter.currentView {
-            case .selectChat:
-                VStack {
-                    Image(systemName: "bubble.left.and.bubble.right")
-                        .font(.system(size: 96))
-                        .foregroundColor(.gray)
-                    Text("Open a chat or start a new one!")
-                        .font(.largeTitle)
-                        .foregroundStyle(Color.secondary)
-                    Text("Pick any chat on the left sidebar, and have fun chatting!")
-                        .foregroundStyle(Color.secondary)
+        if openedChat != nil {
+            ChatView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                #if os(iOS)
+                .introspectNavigationController { vc in
+                    let navBar = vc.navigationBar
+                    
+                    let newNavBarAppearance = UINavigationBarAppearance()
+                    newNavBarAppearance.configureWithDefaultBackground()
+                    
+                    navBar.scrollEdgeAppearance = newNavBarAppearance
+                    navBar.compactAppearance = newNavBarAppearance
+                    navBar.standardAppearance = newNavBarAppearance
+                    navBar.compactScrollEdgeAppearance = newNavBarAppearance
                 }
-            case .chat:
-                ChatView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    #if os(iOS)
-                    .introspectNavigationController { vc in
-                        let navBar = vc.navigationBar
-                        
-                        let newNavBarAppearance = UINavigationBarAppearance()
-                        newNavBarAppearance.configureWithDefaultBackground()
-                        
-                        navBar.scrollEdgeAppearance = newNavBarAppearance
-                        navBar.compactAppearance = newNavBarAppearance
-                        navBar.standardAppearance = newNavBarAppearance
-                        navBar.compactScrollEdgeAppearance = newNavBarAppearance
-                    }
-                    #endif
+                #endif
+        } else {
+            VStack {
+                Image(systemName: "bubble.left.and.bubble.right")
+                    .font(.system(size: 96))
+                    .foregroundColor(.gray)
+                Text("Open a chat or start a new one!")
+                    .font(.largeTitle)
+                    .foregroundStyle(Color.secondary)
+                Text("Pick any chat on the left sidebar, and have fun chatting!")
+                    .foregroundStyle(Color.secondary)
+            }
         }
     }
 

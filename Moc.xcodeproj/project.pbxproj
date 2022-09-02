@@ -85,7 +85,6 @@
 		43807D9827E213350056A3D3 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6B27E213350056A3D3 /* LottieView.swift */; platformFilters = (macos, ); };
 		43807D9927E213350056A3D3 /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6D27E213350056A3D3 /* AppCommands.swift */; };
 		43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6E27E213350056A3D3 /* FolderItemView.swift */; };
-		43807D9B27E213350056A3D3 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6F27E213350056A3D3 /* ViewRouter.swift */; };
 		43807D9C27E213350056A3D3 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7027E213350056A3D3 /* RootView.swift */; };
 		43807D9D27E213350056A3D3 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7227E213350056A3D3 /* SearchField.swift */; platformFilters = (macos, ); };
 		43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7527E213350056A3D3 /* XCAssets+Generated.swift */; };
@@ -236,7 +235,6 @@
 		43807D6B27E213350056A3D3 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		43807D6D27E213350056A3D3 /* AppCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		43807D6E27E213350056A3D3 /* FolderItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderItemView.swift; sourceTree = "<group>"; };
-		43807D6F27E213350056A3D3 /* ViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		43807D7027E213350056A3D3 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		43807D7227E213350056A3D3 /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		43807D7527E213350056A3D3 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
@@ -487,7 +485,6 @@
 				43807D6327E213350056A3D3 /* Chat */,
 				439BA4262863C11400339375 /* Login */,
 				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
-				43807D6F27E213350056A3D3 /* ViewRouter.swift */,
 				434A607F2848AA000086B866 /* ChatPickerView.swift */,
 				43807D7027E213350056A3D3 /* RootView.swift */,
 			);
@@ -909,7 +906,6 @@
 				43008544283B59D500ED5961 /* Image+File.swift in Sources */,
 				43807D8F27E213350056A3D3 /* GeneralPrefView.swift in Sources */,
 				43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */,
-				43807D9B27E213350056A3D3 /* ViewRouter.swift in Sources */,
 				43051C902877932D003C5CE2 /* ChatView+Utils.swift in Sources */,
 				430D745E286D00F10031C2F9 /* MessageView+Document.swift in Sources */,
 				43051C99287799BD003C5CE2 /* ChatViewModel+Interactions.swift in Sources */,
