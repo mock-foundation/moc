@@ -27,6 +27,8 @@
 		431215522858E50B009EFEB5 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215512858E50B009EFEB5 /* ComplexModule */; };
 		431215542858E50B009EFEB5 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 431215532858E50B009EFEB5 /* Numerics */; };
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
+		4328D4D428C1FAB2009622CF /* ChatInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4328D4D328C1FAB2009622CF /* ChatInspector.swift */; };
+		4328D4D628C1FCD8009622CF /* ChatInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4328D4D528C1FCD8009622CF /* ChatInspectorViewModel.swift */; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */; platformFilters = (macos, ); };
 		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; platformFilters = (macos, ); };
@@ -41,7 +43,7 @@
 		43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */; platformFilters = (macos, ); };
 		434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */; };
 		434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */; platformFilters = (macos, ); };
-		434A60802848AA000086B866 /* ChatPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPickerView.swift */; };
+		434A60802848AA000086B866 /* ChatPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434A607F2848AA000086B866 /* ChatPicker.swift */; };
 		43505ECE28BE16FA00E8C5CD /* Color+Additional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */; };
 		435C9C0C28A13FB700E5D682 /* CompactChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */; };
 		435C9C0E28A1915F00E5D682 /* Notification.Name+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */; };
@@ -183,6 +185,8 @@
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
+		4328D4D328C1FAB2009622CF /* ChatInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspector.swift; sourceTree = "<group>"; };
+		4328D4D528C1FCD8009622CF /* ChatInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspectorViewModel.swift; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
@@ -190,7 +194,7 @@
 		43431C8A28A013BC002A72A0 /* PinCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
 		434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberInfo.swift; sourceTree = "<group>"; };
 		434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerViewWrapper.swift; sourceTree = "<group>"; };
-		434A607F2848AA000086B866 /* ChatPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPickerView.swift; sourceTree = "<group>"; };
+		434A607F2848AA000086B866 /* ChatPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPicker.swift; sourceTree = "<group>"; };
 		43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Additional.swift"; sourceTree = "<group>"; };
 		435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactChatItemView.swift; sourceTree = "<group>"; };
 		435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Constants.swift"; sourceTree = "<group>"; };
@@ -357,6 +361,7 @@
 				43051C9A28779AE2003C5CE2 /* ChatViewModel+Updates.swift */,
 				43051C98287799BD003C5CE2 /* ChatViewModel+Interactions.swift */,
 				43051C962877993E003C5CE2 /* ChatViewModel+Utils.swift */,
+				4328D4D528C1FCD8009622CF /* ChatInspectorViewModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -485,7 +490,7 @@
 				43807D6327E213350056A3D3 /* Chat */,
 				439BA4262863C11400339375 /* Login */,
 				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
-				434A607F2848AA000086B866 /* ChatPickerView.swift */,
+				434A607F2848AA000086B866 /* ChatPicker.swift */,
 				43807D7027E213350056A3D3 /* RootView.swift */,
 			);
 			path = Views;
@@ -518,6 +523,7 @@
 				43051C8F2877932D003C5CE2 /* ChatView+Utils.swift */,
 				43807D6527E213350056A3D3 /* Message */,
 				43807D6427E213350056A3D3 /* ChatSplitView.swift */,
+				4328D4D328C1FAB2009622CF /* ChatInspector.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -869,6 +875,7 @@
 				43051C94287794E6003C5CE2 /* ChatView+Toolbar.swift in Sources */,
 				43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */,
 				43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */,
+				4328D4D628C1FCD8009622CF /* ChatInspectorViewModel.swift in Sources */,
 				43807D8827E213350056A3D3 /* PrivacyPrefView.swift in Sources */,
 				437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */,
 				43431C8B28A013BC002A72A0 /* PinCodeTextField.swift in Sources */,
@@ -886,7 +893,7 @@
 				4367071F2861A6CD00587A63 /* QuickLookPreviewWrapper.swift in Sources */,
 				43051C8C287791D0003C5CE2 /* RoundedCorners.swift in Sources */,
 				43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */,
-				434A60802848AA000086B866 /* ChatPickerView.swift in Sources */,
+				434A60802848AA000086B866 /* ChatPicker.swift in Sources */,
 				434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */,
 				43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */,
 				436707232861A8CA00587A63 /* View+QuickLook.swift in Sources */,
@@ -928,6 +935,7 @@
 				4388DC0B2875765100B0A57B /* AsyncTdFileThumbnail.swift in Sources */,
 				43505ECE28BE16FA00E8C5CD /* Color+Additional.swift in Sources */,
 				43BFD915285CC2B000D8980A /* MultilineTextField.swift in Sources */,
+				4328D4D428C1FAB2009622CF /* ChatInspector.swift in Sources */,
 				43807D8A27E213350056A3D3 /* AppearancePrefView.swift in Sources */,
 				433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */,
 				43807D8927E213350056A3D3 /* DataAndStoragePrefView.swift in Sources */,
