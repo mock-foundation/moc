@@ -66,6 +66,7 @@ struct MessageView: View {
                                     .if(mainMessage.isOutgoing) { view in
                                         view.foregroundColor(.white)
                                     }
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                             .padding(8)
                         }
