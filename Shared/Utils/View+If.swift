@@ -8,10 +8,10 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder func `if`<Content: View>(
+    @ViewBuilder func `if`<TrueContent: View, FalseContent: View>(
         _ condition: Bool,
-        transform: (Self) -> Content,
-        else elseTransform: ((Self) -> Content)? = nil
+        transform: (Self) -> TrueContent,
+        else elseTransform: ((Self) -> FalseContent)? = nil
     ) -> some View {
         if condition {
             transform(self)
@@ -21,6 +21,17 @@ extension View {
             } else {
                 self
             }
+        }
+    }
+    
+    @ViewBuilder func `if`<Content: View>(
+        _ condition: Bool,
+        transform: (Self) -> Content
+    ) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
         }
     }
 }
