@@ -101,10 +101,7 @@ struct RootView: View {
             #if os(macOS)
             ToolbarItemGroup(placement: chatListToolbarPlacement) {
                 if #unavailable(macOS 13) {
-                    Button {
-                        NSApp.keyWindow?.firstResponder?.tryToPerform(
-                            #selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-                    } label: {
+                    Button(action: toggleSidebar) {
                         Label("Toggle chat list", systemImage: "sidebar.left")
                     }
                 }
@@ -133,6 +130,11 @@ struct RootView: View {
                 }
             }
         }
+    }
+    
+    private func toggleSidebar() {
+        NSApp.keyWindow?.firstResponder?.tryToPerform(
+            #selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
     }
     
     private func makeFolderItem(
