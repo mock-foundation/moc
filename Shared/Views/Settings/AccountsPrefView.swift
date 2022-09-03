@@ -12,7 +12,6 @@ import Combine
 import Utilities
 import Logs
 import Resolver
-import TDLibKit
 
 // swiftlint:disable type_body_length
 struct AccountsPrefView: View {

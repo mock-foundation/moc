@@ -10,7 +10,6 @@ import Combine
 import Foundation
 import Resolver
 import Utilities
-import TDLibKit
 import Algorithms
 import Collections
 import SwiftUI
@@ -20,20 +19,11 @@ import AVKit
 class ChatViewModel: ObservableObject {
     @Injected var service: any ChatService
     
-    enum InspectorTab {
-        case users
-        case media
-        case links
-        case files
-        case voice
-    }
-    
     var scrollViewProxy: ScrollViewProxy?
     
     @Published var isScrollToBottomButtonShown = true
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
-    @Published var selectedInspectorTab: InspectorTab = .users
     @Published var isDroppingMedia = false
     @Published var inputMessage = "" {
         didSet {
@@ -60,7 +50,7 @@ class ChatViewModel: ObservableObject {
     init() {
         service.updateSubject
             .receive(on: RunLoop.main)
-            .sink { _ in } receiveValue: { [self] update in
+            .sink { [self] update in
                 // It's a switch-case because it will obviously grow in the future
                 switch update {
                     case let .newMessage(info):

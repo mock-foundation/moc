@@ -10,7 +10,6 @@ import Logs
 import Resolver
 import SwiftUI
 import Utilities
-import TDLibKit
 import OrderedCollections
 import Storage
 import Introspect

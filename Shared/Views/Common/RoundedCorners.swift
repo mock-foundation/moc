@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: Name this something better
+
 // thx https://stackoverflow.com/a/56763282
 // swiftlint:disable identifier_name
 struct RoundedCorners: Shape {

@@ -10,7 +10,6 @@ import CoreImage.CIFilterBuiltins
 import Logs
 import Resolver
 import SwiftUI
-import TDLibKit
 import Utilities
 
 enum OpenedLoginScreen {

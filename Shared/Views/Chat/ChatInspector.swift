@@ -13,7 +13,7 @@ struct ChatInspector: View {
     @StateObject private var viewModel: ChatInspectorViewModel
     
     init(id: Int64) {
-        self.id = id
+        self.chatId = id
         self._viewModel = StateObject(wrappedValue: ChatInspectorViewModel(chatId: id))
     }
     
@@ -60,8 +60,8 @@ struct ChatInspector: View {
         ScrollView {
             LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
                 // Header
-                if viewModel.chatPhoto != nil {
-                    AsyncTdImage(id: viewModel.chatPhoto!.id) { image in
+                if let photo = viewModel.chatPhoto {
+                    AsyncTdImage(id: photo.id) { image in
                         image
                             .resizable()
                             .interpolation(.medium)
@@ -83,7 +83,7 @@ struct ChatInspector: View {
                         .padding(.horizontal)
                         .frame(minWidth: 0, idealWidth: nil)
                         .multilineTextAlignment(.center)
-                    // TODO: Implement this
+                    // TODO: Implement chat ID string
 //                    if showDeveloperInfo {
                         Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
                             .textSelection(.enabled)
@@ -141,11 +141,11 @@ struct ChatInspector: View {
                     }
                 } header: {
                     Picker("", selection: $viewModel.selectedInspectorTab) {
-                        Text("Users").tag(ChatViewModel.InspectorTab.users)
-                        Text("Media").tag(ChatViewModel.InspectorTab.media)
-                        Text("Links").tag(ChatViewModel.InspectorTab.links)
-                        Text("Files").tag(ChatViewModel.InspectorTab.files)
-                        Text("Voice").tag(ChatViewModel.InspectorTab.voice)
+                        Text("Users").tag(ChatInspectorTab.users)
+                        Text("Media").tag(ChatInspectorTab.media)
+                        Text("Links").tag(ChatInspectorTab.links)
+                        Text("Files").tag(ChatInspectorTab.files)
+                        Text("Voice").tag(ChatInspectorTab.voice)
                     }
                     .pickerStyle(.segmented)
                     .padding()

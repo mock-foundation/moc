@@ -29,6 +29,7 @@
 		431215562858E50B009EFEB5 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = 431215552858E50B009EFEB5 /* RealModule */; };
 		4328D4D428C1FAB2009622CF /* ChatInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4328D4D328C1FAB2009622CF /* ChatInspector.swift */; };
 		4328D4D628C1FCD8009622CF /* ChatInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4328D4D528C1FCD8009622CF /* ChatInspectorViewModel.swift */; };
+		4328D4D828C41A17009622CF /* ChatInspectorTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4328D4D728C41A16009622CF /* ChatInspectorTab.swift */; };
 		433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433464E9284179090010406F /* FoldersPrefViewModel.swift */; };
 		433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */; platformFilters = (macos, ); };
 		433EDD972860E9C0009D03D5 /* QuickLookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EDD962860E9C0009D03D5 /* QuickLookView.swift */; platformFilters = (macos, ); };
@@ -187,6 +188,7 @@
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
 		4328D4D328C1FAB2009622CF /* ChatInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspector.swift; sourceTree = "<group>"; };
 		4328D4D528C1FCD8009622CF /* ChatInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspectorViewModel.swift; sourceTree = "<group>"; };
+		4328D4D728C41A16009622CF /* ChatInspectorTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspectorTab.swift; sourceTree = "<group>"; };
 		433464E9284179090010406F /* FoldersPrefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersPrefViewModel.swift; sourceTree = "<group>"; };
 		433EDD932860E7CB009D03D5 /* QuickLookPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewWrapper.swift; sourceTree = "<group>"; };
 		433EDD962860E9C0009D03D5 /* QuickLookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookView.swift; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 				4371AC162873126A0081776F /* ReplyMessage.swift */,
 				438CFBAA287F6ECE005B9990 /* SidebarSize.swift */,
 				434889ED28B798B200EE4455 /* PhoneNumberInfo.swift */,
+				4328D4D728C41A16009622CF /* ChatInspectorTab.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -896,6 +899,7 @@
 				434A60802848AA000086B866 /* ChatPicker.swift in Sources */,
 				434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */,
 				43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */,
+				4328D4D828C41A17009622CF /* ChatInspectorTab.swift in Sources */,
 				436707232861A8CA00587A63 /* View+QuickLook.swift in Sources */,
 				43807D9927E213350056A3D3 /* AppCommands.swift in Sources */,
 				43807D9D27E213350056A3D3 /* SearchField.swift in Sources */,

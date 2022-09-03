@@ -13,7 +13,6 @@ import CryptoKit
 import Resolver
 import SwiftUI
 import Utilities
-import TDLibKit
 import Logs
 
 public extension Resolver {

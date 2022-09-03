@@ -9,7 +9,6 @@ import Resolver
 import SwiftUI
 import Utilities
 import Combine
-import TDLibKit
 import Logs
 import OrderedCollections
 import Backend

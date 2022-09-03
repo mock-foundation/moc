@@ -10,7 +10,6 @@ import Combine
 import Foundation
 import OrderedCollections
 import Resolver
-import TDLibKit
 import Utilities
 import SwiftUI
 

@@ -10,7 +10,6 @@ import Introspect
 import Resolver
 import SwiftUI
 import Utilities
-import TDLibKit
 import UniformTypeIdentifiers
 import Logs
 import Defaults
@@ -146,13 +145,13 @@ struct ChatView: View {
     
     // TODO: Make inspector an independent view and move it's usage to RootView
     var body: some View {
-        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
+//        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
             chatView
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } rightView: {
-            chatInspector
-                .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
-        }
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        } rightView: {
+//            chatInspector
+//                .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
+//        }
         .navigationTitle("")
         .toolbar {
             toolbar
