@@ -16,8 +16,10 @@ import Utilities
 import Logs
 
 public extension Resolver {
-    static func registerBackend() {
+    static func registerServices() {
         register { TdChatService() as (any ChatService) }
+            .scope(.shared)
+        register { TdChatInspectorService() as (any ChatInspectorService) }
             .scope(.shared)
         register { TdLoginService() as (any LoginService) }
             .scope(.shared)
@@ -38,7 +40,7 @@ struct MocApp: App {
     #endif
     
     init() {
-        Resolver.registerBackend()
+        Resolver.registerServices()
         TdApi.shared.startTdLibUpdateHandler()
         
         Task {

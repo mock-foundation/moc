@@ -20,7 +20,7 @@ struct RootView: View {
     private let logger = Logs.Logger(category: "RootView", label: "UI")
 
     @State private var selectedFolder: Int = 0
-    @State private var selectedChat: Int? = 0
+    @State private var openedChat: Chat?
     @State private var selectedTab: Tab = .chat
     @State private var searchText = ""
     @Default(.folderLayout) private var folderLayout
@@ -30,7 +30,6 @@ struct RootView: View {
     #endif
 
     @StateObject private var viewModel = MainViewModel()
-    @State private var openedChat: Chat?
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -414,12 +413,20 @@ struct RootView: View {
             if !viewModel.showingLoginScreen {
                 Group {
                     if #available(macOS 13, iOS 16, *) {
-                        NavigationSplitView {
-                            sidebar
-                        } detail: {
-                            NavigationStack {
-                                content
+                        HStack(spacing: 0) {
+                            NavigationSplitView {
+                                sidebar
+                            } content: {
+                                NavigationStack {
+                                    content
+                                }
+                            } detail: {
+                                if let openedChat {
+                                    ChatInspector(id: openedChat.id)
+                                        .frame(width: 316)
+                                }
                             }
+                            .navigationSplitViewStyle(.balanced)
                         }
                     } else {
                         NavigationView {
