@@ -8,5 +8,7 @@
 import SwiftUI
 
 extension Animation {
-    static let fastStartSlowStop: Animation = .timingCurve(0.54, -0.07, 0, 1, duration: 0.7)
+    static func fastStartSlowStop(_ duration: Double = 0.7) -> Animation {
+        .timingCurve(0.54, -0.07, 0, 1, duration: duration)
+    }
 }

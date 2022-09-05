@@ -162,7 +162,7 @@ struct FolderItemView<Icon: View>: View {
             }
         }
         .onReceive(Defaults.publisher(.sidebarSize)) { value in
-            withAnimation(.fastStartSlowStop) {
+            withAnimation(.fastStartSlowStop()) {
                 sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
             }
         }

@@ -17,25 +17,20 @@ struct ChatSplitView<Left: View, Right: View>: View {
     @ViewBuilder
     private var content: some View {
         leftView()
-        rightView()
-            .frame(
-                minWidth: isRightViewVisible ? 316 : 0,
-                idealWidth: isRightViewVisible ? 316 : 0,
-                maxWidth: isRightViewVisible ? nil : 0
-            )
-            #if os(macOS)
-            .animation(.easeInOut, value: isRightViewVisible)
-            #elseif os(iOS)
-            .animation(.easeOut, value: isRightViewVisible)
-            #endif
+        if isRightViewVisible {
+            HStack {
+                Divider()
+                    .frame(width: 2)
+                rightView()
+                    .frame(width: 256)
+            }
+            .transition(.move(edge: .trailing))
+        }
     }
 
     var body: some View {
-        #if os(macOS)
-        HSplitView { content }
-        #elseif os(iOS)
         HStack { content }
-        #endif
+            .animation(.fastStartSlowStop(0.4), value: isRightViewVisible)
     }
 }
 

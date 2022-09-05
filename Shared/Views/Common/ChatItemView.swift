@@ -228,7 +228,7 @@ struct ChatItemView: View {
 //                    }
             }
         }
-        .animation(.fastStartSlowStop, value: sidebarSize)
+        .animation(.fastStartSlowStop(), value: sidebarSize)
         .onAppear {
             Task {
                 if lastMessage == nil {

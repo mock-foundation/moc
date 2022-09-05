@@ -413,20 +413,12 @@ struct RootView: View {
             if !viewModel.showingLoginScreen {
                 Group {
                     if #available(macOS 13, iOS 16, *) {
-                        HStack(spacing: 0) {
-                            NavigationSplitView {
-                                sidebar
-                            } content: {
-                                NavigationStack {
-                                    content
-                                }
-                            } detail: {
-                                if let openedChat {
-                                    ChatInspector(id: openedChat.id)
-                                        .frame(width: 316)
-                                }
+                        NavigationSplitView {
+                            sidebar
+                        } detail: {
+                            NavigationStack {
+                                content
                             }
-                            .navigationSplitViewStyle(.balanced)
                         }
                     } else {
                         NavigationView {

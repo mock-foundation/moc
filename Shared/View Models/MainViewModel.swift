@@ -182,7 +182,7 @@ class MainViewModel: ObservableObject {
         }
         Defaults.publisher(.sidebarSize)
             .sink { value in
-                withAnimation(.fastStartSlowStop) {
+                withAnimation(.fastStartSlowStop()) {
                     self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
                 }
             }
@@ -310,7 +310,7 @@ class MainViewModel: ObservableObject {
     func updateChatFilters(_ update: UpdateChatFilters) {
         logger.debug("Chat filter update")
         
-        withAnimation(.fastStartSlowStop) {
+        withAnimation(.fastStartSlowStop()) {
             chatFilters = update.chatFilters
         }
     }
@@ -332,7 +332,7 @@ class MainViewModel: ObservableObject {
     }
     
     func updateNewChat(_ update: UpdateNewChat) {
-        _ = withAnimation(.fastStartSlowStop) {
+        _ = withAnimation(.fastStartSlowStop()) {
             allChats.updateOrAppend(update.chat)
         }
     }
@@ -341,7 +341,7 @@ class MainViewModel: ObservableObject {
         if !chatPositions.contains(where: { key, value in
             key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
-            withAnimation(.fastStartSlowStop) {
+            withAnimation(.fastStartSlowStop()) {
                 if chatPositions[chatId] == nil {
                     chatPositions[chatId] = []
                 }

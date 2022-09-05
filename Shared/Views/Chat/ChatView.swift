@@ -54,7 +54,7 @@ struct ChatView: View {
                 .onReceive(SystemUtils.ncPublisher(for: .scrollToMessage)) { notification in
                     let id = notification.object as! Int64
                     viewModel.highlightMessage(at: id)
-                    withAnimation(.fastStartSlowStop) {
+                    withAnimation(.fastStartSlowStop()) {
                         proxy.scrollTo(id, anchor: .center)
                     }
                 }
@@ -129,10 +129,10 @@ struct ChatView: View {
                     .hTrailing()
                     .vBottom()
                     .padding(.horizontal)
-                    .transition(.move(edge: .trailing))
+                    .transition(.move(edge: .bottom))
                 }
             }
-            .animation(.fastStartSlowStop, value: viewModel.isScrollToBottomButtonShown)
+            .animation(.fastStartSlowStop(), value: viewModel.isScrollToBottomButtonShown)
         }
         .safeAreaInset(edge: .bottom) {
             inputField
@@ -143,15 +143,13 @@ struct ChatView: View {
         }
     }
     
-    // TODO: Make inspector an independent view and move it's usage to RootView
     var body: some View {
-//        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
+        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
             chatView
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        } rightView: {
-//            chatInspector
-//                .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
-//        }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } rightView: {
+            ChatInspector(id: viewModel.chatID)
+        }
         .navigationTitle("")
         .toolbar {
             toolbar
