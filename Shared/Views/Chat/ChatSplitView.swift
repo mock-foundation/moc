@@ -18,9 +18,8 @@ struct ChatSplitView<Left: View, Right: View>: View {
     private var content: some View {
         leftView()
         if isRightViewVisible {
-            HStack {
+            HStack(spacing: 0) {
                 Divider()
-                    .frame(width: 2)
                 rightView()
                     .frame(width: 256)
             }
@@ -29,7 +28,7 @@ struct ChatSplitView<Left: View, Right: View>: View {
     }
 
     var body: some View {
-        HStack { content }
+        HStack(spacing: 0) { content }
             .animation(.fastStartSlowStop(0.4), value: isRightViewVisible)
     }
 }
