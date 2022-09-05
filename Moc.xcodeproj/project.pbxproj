@@ -80,7 +80,6 @@
 		43807D8F27E213350056A3D3 /* GeneralPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6027E213350056A3D3 /* GeneralPrefView.swift */; };
 		43807D9027E213350056A3D3 /* NotificationsAndSoundsPrefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6127E213350056A3D3 /* NotificationsAndSoundsPrefView.swift */; };
 		43807D9127E213350056A3D3 /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6227E213350056A3D3 /* SettingsContent.swift */; platformFilters = (macos, ); };
-		43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6427E213350056A3D3 /* ChatSplitView.swift */; };
 		43807D9427E213350056A3D3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6727E213350056A3D3 /* MessageView.swift */; };
 		43807D9527E213350056A3D3 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6827E213350056A3D3 /* ChatView.swift */; };
 		43807D9627E213350056A3D3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6927E213350056A3D3 /* LoginView.swift */; };
@@ -233,7 +232,6 @@
 		43807D6027E213350056A3D3 /* GeneralPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPrefView.swift; sourceTree = "<group>"; };
 		43807D6127E213350056A3D3 /* NotificationsAndSoundsPrefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsAndSoundsPrefView.swift; sourceTree = "<group>"; };
 		43807D6227E213350056A3D3 /* SettingsContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
-		43807D6427E213350056A3D3 /* ChatSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSplitView.swift; sourceTree = "<group>"; };
 		43807D6727E213350056A3D3 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		43807D6827E213350056A3D3 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		43807D6927E213350056A3D3 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -525,7 +523,6 @@
 				43051C93287794E6003C5CE2 /* ChatView+Toolbar.swift */,
 				43051C8F2877932D003C5CE2 /* ChatView+Utils.swift */,
 				43807D6527E213350056A3D3 /* Message */,
-				43807D6427E213350056A3D3 /* ChatSplitView.swift */,
 				4328D4D328C1FAB2009622CF /* ChatInspector.swift */,
 			);
 			path = Chat;
@@ -916,7 +913,6 @@
 				438B2281285E3077000D65C8 /* LighterDarker.swift in Sources */,
 				43008544283B59D500ED5961 /* Image+File.swift in Sources */,
 				43807D8F27E213350056A3D3 /* GeneralPrefView.swift in Sources */,
-				43807D9227E213350056A3D3 /* ChatSplitView.swift in Sources */,
 				43051C902877932D003C5CE2 /* ChatView+Utils.swift in Sources */,
 				430D745E286D00F10031C2F9 /* MessageView+Document.swift in Sources */,
 				43051C99287799BD003C5CE2 /* ChatViewModel+Interactions.swift in Sources */,

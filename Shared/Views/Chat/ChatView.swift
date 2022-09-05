@@ -144,12 +144,19 @@ struct ChatView: View {
     }
     
     var body: some View {
-        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
+        HStack(spacing: 0) {
             chatView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } rightView: {
-            ChatInspector(id: viewModel.chatID)
+            if viewModel.isInspectorShown {
+                HStack(spacing: 0) {
+                    Divider()
+                    ChatInspector(id: viewModel.chatID)
+                        .frame(width: 256)
+                }
+                .transition(.move(edge: .trailing))
+            }
         }
+        .animation(.spring(), value: viewModel.isInspectorShown)
         .navigationTitle("")
         .toolbar {
             toolbar
