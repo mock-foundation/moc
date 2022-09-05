@@ -50,8 +50,8 @@ struct ChatInspector: View {
     private func makePlaceholder(_ style: PlaceholderStyle) -> some View {
         ProfilePlaceholderView(
             userId: chatId,
-            firstName: "Left to implement", // TODO: Fix this
-            lastName: "",
+            firstName: "N", // TODO: Fix this
+            lastName: "A",
             style: style
         )
     }
@@ -148,6 +148,7 @@ struct ChatInspector: View {
                         Text("Voice").tag(ChatInspectorTab.voice)
                     }
                     .pickerStyle(.segmented)
+                    .controlSize(.large)
                     .padding()
                     .frame(minWidth: 0, idealWidth: nil)
                     .background(.ultraThinMaterial, in: RoundedCorners(tl: 0, tr: 0, bl: 8, br: 8))
