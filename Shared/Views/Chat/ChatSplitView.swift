@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO: Rewrite this mess with usage of the detail column of Navigation(Split)View
+// TODO: Merge ChatSplitView with ChatView
 
 struct ChatSplitView<Left: View, Right: View>: View {
     var isRightViewVisible: Bool = true
@@ -29,7 +29,7 @@ struct ChatSplitView<Left: View, Right: View>: View {
 
     var body: some View {
         HStack(spacing: 0) { content }
-            .animation(.fastStartSlowStop(0.4), value: isRightViewVisible)
+            .animation(.spring(), value: isRightViewVisible)
     }
 }
 
