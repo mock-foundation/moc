@@ -57,7 +57,7 @@ struct RootView: View {
                         }
                         openedChat = chat
                     } label: {
-                        ChatItemView(chat: chat)
+                        ChatItem(chat: chat)
                             .frame(height: viewModel.sidebarSize.chatItemHeight)
                             .padding(6)
                             .background(openedChat == chat ? Color.accentColor.opacity(0.8) : nil)
@@ -138,7 +138,7 @@ struct RootView: View {
         Button {
             viewModel.openChatList = chatList
         } label: {
-            FolderItemView(
+            FolderItem(
                 name: name,
                 icon: icon,
                 unreadCount: unreadCount,
@@ -187,18 +187,18 @@ struct RootView: View {
                             }
                         }
                     case .contacts:
-                        FolderItemView(name: "Nearby chats", icon: Image(systemName: "map"))
+                        FolderItem(name: "Nearby chats", icon: Image(systemName: "map"))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItemView(name: "Invite", icon: Image(systemName: "person.badge.plus"))
+                        FolderItem(name: "Invite", icon: Image(systemName: "person.badge.plus"))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     case .calls:
-                        FolderItemView(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
+                        FolderItem(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green, .primary))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItemView(name: "Outgoing", icon: Image(systemName: "phone.arrow.up.right"))
+                        FolderItem(name: "Outgoing", icon: Image(systemName: "phone.arrow.up.right"))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItemView(name: "Missed", icon: Image(systemName: "phone.arrow.down.left")
+                        FolderItem(name: "Missed", icon: Image(systemName: "phone.arrow.down.left")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.red, .primary))
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))

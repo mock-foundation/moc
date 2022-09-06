@@ -83,10 +83,10 @@
 		43807D9427E213350056A3D3 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6727E213350056A3D3 /* MessageView.swift */; };
 		43807D9527E213350056A3D3 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6827E213350056A3D3 /* ChatView.swift */; };
 		43807D9627E213350056A3D3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6927E213350056A3D3 /* LoginView.swift */; };
-		43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6A27E213350056A3D3 /* ChatItemView.swift */; };
+		43807D9727E213350056A3D3 /* ChatItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6A27E213350056A3D3 /* ChatItem.swift */; };
 		43807D9827E213350056A3D3 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6B27E213350056A3D3 /* LottieView.swift */; platformFilters = (macos, ); };
 		43807D9927E213350056A3D3 /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6D27E213350056A3D3 /* AppCommands.swift */; };
-		43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6E27E213350056A3D3 /* FolderItemView.swift */; };
+		43807D9A27E213350056A3D3 /* FolderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D6E27E213350056A3D3 /* FolderItem.swift */; };
 		43807D9C27E213350056A3D3 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7027E213350056A3D3 /* RootView.swift */; };
 		43807D9D27E213350056A3D3 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7227E213350056A3D3 /* SearchField.swift */; platformFilters = (macos, ); };
 		43807D9E27E213350056A3D3 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43807D7527E213350056A3D3 /* XCAssets+Generated.swift */; };
@@ -236,10 +236,10 @@
 		43807D6727E213350056A3D3 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		43807D6827E213350056A3D3 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		43807D6927E213350056A3D3 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		43807D6A27E213350056A3D3 /* ChatItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatItemView.swift; sourceTree = "<group>"; };
+		43807D6A27E213350056A3D3 /* ChatItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatItem.swift; sourceTree = "<group>"; };
 		43807D6B27E213350056A3D3 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		43807D6D27E213350056A3D3 /* AppCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
-		43807D6E27E213350056A3D3 /* FolderItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderItemView.swift; sourceTree = "<group>"; };
+		43807D6E27E213350056A3D3 /* FolderItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderItem.swift; sourceTree = "<group>"; };
 		43807D7027E213350056A3D3 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		43807D7227E213350056A3D3 /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		43807D7527E213350056A3D3 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
@@ -392,11 +392,12 @@
 		435C9C0A28A111EE00E5D682 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				43807D6E27E213350056A3D3 /* FolderItemView.swift */,
-				43807D6A27E213350056A3D3 /* ChatItemView.swift */,
+				43807D6E27E213350056A3D3 /* FolderItem.swift */,
+				43807D6A27E213350056A3D3 /* ChatItem.swift */,
 				435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */,
 				43051C8B287791D0003C5CE2 /* RoundedCorners.swift */,
 				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
+				43C227C628C73E9900AE237C /* FormattedTextView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -526,7 +527,6 @@
 				43051C8F2877932D003C5CE2 /* ChatView+Utils.swift */,
 				43807D6527E213350056A3D3 /* Message */,
 				4328D4D328C1FAB2009622CF /* ChatInspector.swift */,
-				43C227C628C73E9900AE237C /* FormattedTextView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -926,7 +926,7 @@
 				438B227F285E3050000D65C8 /* LighterDarker.swift in Sources */,
 				43C227C728C73E9900AE237C /* FormattedTextView.swift in Sources */,
 				439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */,
-				43807D9A27E213350056A3D3 /* FolderItemView.swift in Sources */,
+				43807D9A27E213350056A3D3 /* FolderItem.swift in Sources */,
 				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,
 				43807D9427E213350056A3D3 /* MessageView.swift in Sources */,
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
@@ -968,7 +968,7 @@
 				433464EA284179090010406F /* FoldersPrefViewModel.swift in Sources */,
 				43807D8D27E213350056A3D3 /* LanguagePrefView.swift in Sources */,
 				4371D154287F059100337533 /* AboutView.swift in Sources */,
-				43807D9727E213350056A3D3 /* ChatItemView.swift in Sources */,
+				43807D9727E213350056A3D3 /* ChatItem.swift in Sources */,
 				43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */,
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
 				43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */,

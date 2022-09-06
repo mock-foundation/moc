@@ -53,7 +53,7 @@ private extension SidebarSize {
     }
 }
 
-struct ChatItemView: View {
+struct ChatItem: View {
     let chat: Chat
     
     @State private var lastMessage: TDLibKit.Message?
@@ -64,6 +64,7 @@ struct ChatItemView: View {
     @Environment(\.isChatListItemSelected) var isSelected
     
     private var placeholder: some View {
+        // TODO: Make use of the last name
         ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
     }
         
@@ -243,7 +244,7 @@ struct ChatItemView: View {
                         sender = try await tdApi.getChat(chatId: info.chatId).title
                     case let .user(info):
                         let user = try await tdApi.getUser(userId: info.userId)
-                        sender = user.firstName + user.lastName
+                        sender = user.firstName + " " + user.lastName
                     default: break
                 }
             }
