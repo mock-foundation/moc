@@ -32,7 +32,10 @@ struct FormattedTextView: View {
                     start: entity.offset,
                     length: entity.length),
                 for: resultString)
-            let rawStringPart = String(formattedText.text[self.range(for: formattedText.text, start: entity.offset, length: entity.length)])
+            let rawStringPart = String(formattedText.text[self.range(
+                for: formattedText.text,
+                start: entity.offset,
+                length: entity.length)])
             
             switch entity.type {
                 case .bold:
