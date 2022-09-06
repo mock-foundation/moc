@@ -16,7 +16,7 @@ struct AsyncTdFile<Content: View, Placeholder: View>: View {
     @ViewBuilder let placeholder: () -> Placeholder
     
     private let tdApi = TdApi.shared
-    private let logger = Logs.Logger(category: "AsyncTdFile", label: "UI")
+    private let logger = Logs.Logger(category: "UI", label: "AsyncTdFile")
     
     @State private var file: File?
     @State private var isDownloaded = true

@@ -19,7 +19,7 @@ struct ChatView: View {
     @FocusState var isInputFieldFocused
     @Default(.showDeveloperInfo) var showDeveloperInfo
     
-    let logger = Logger(category: "ChatView", label: "UI")
+    let logger = Logger(category: "UI", label: "ChatView")
     
     var chatView: some View {
         ZStack {

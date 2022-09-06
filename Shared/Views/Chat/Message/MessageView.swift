@@ -27,12 +27,9 @@ struct MessageView: View {
     
     @State var openedMediaFileID: OpenedMediaFile?
     @State var senderPhotoFileID: Int?
-    // swiftlint:disable orphaned_doc_comment
-    /// Download progress of a media file, represented by a tuple of current progress and overall size
-//    @State var downloadProgress: (Int64?, Int64)?
     
     let tdApi = TdApi.shared
-    let logger = Logger(category: "MessageView", label: "UI")
+    let logger = Logger(category: "UI", label: "MessageView")
     
     var avatarPlaceholder: some View {
         ProfilePlaceholderView(
@@ -44,6 +41,15 @@ struct MessageView: View {
     
     var mainMessage: Message {
         return message.first!
+    }
+    
+    func makeText(for formattedText: FormattedText) -> some View {
+        FormattedTextView(formattedText)
+            .textSelection(.enabled)
+            .if(mainMessage.isOutgoing) {
+                $0.foregroundColor(.white)
+            }
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder
@@ -61,12 +67,7 @@ struct MessageView: View {
                                     Text(mainMessage.sender.name)
                                         .foregroundColor(Color(fromUserId: message.first!.sender.id))
                                 }
-                                Text(info.text.text)
-                                    .textSelection(.enabled)
-                                    .if(mainMessage.isOutgoing) { view in
-                                        view.foregroundColor(.white)
-                                    }
-                                    .fixedSize(horizontal: false, vertical: true)
+                                makeText(for: info.text)
                             }
                             .padding(8)
                         }

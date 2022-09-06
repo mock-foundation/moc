@@ -44,7 +44,7 @@ class ChatViewModel: ObservableObject {
     @Published var isChannel = false
     
     var subscribers: [AnyCancellable] = []
-    var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
+    var logger = Logs.Logger(category: "UI", label: "ChatViewModel")
     var inputMessageSubject = CurrentValueSubject<String, Never>("")
         
     init() {

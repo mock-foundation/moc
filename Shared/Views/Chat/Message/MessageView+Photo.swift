@@ -62,11 +62,7 @@ extension MessageView {
                 makePhoto(from: getPhoto(from: message.first!.content)!)
                 
                 if !info.caption.text.isEmpty {
-                    Text(info.caption.text)
-                        .if(message.first!.isOutgoing) { view in
-                            view.foregroundColor(.white)
-                        }
-                        .multilineTextAlignment(.leading)
+                    makeText(for: info.caption)
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         .padding(8)
                 }

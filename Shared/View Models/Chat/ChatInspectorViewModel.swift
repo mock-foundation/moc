@@ -12,7 +12,7 @@ import Resolver
 import Logs
 
 class ChatInspectorViewModel: ObservableObject {
-    private var logger = Logs.Logger(category: "ChatInspectorViewModel", label: "UI")
+    private var logger = Logs.Logger(category: "UI", label: "ChatInspectorViewModel")
     private var subscribers: [AnyCancellable] = []
     @Injected private var service: any ChatInspectorService
 

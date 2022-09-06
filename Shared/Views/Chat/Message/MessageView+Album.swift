@@ -156,11 +156,7 @@ extension MessageView {
                 }
                                 
                 if !getCaption(from: message.first!.content).text.isEmpty {
-                    Text(getCaption(from: message.first!.content).text)
-                        .if(message.first!.isOutgoing) { view in
-                            view.foregroundColor(.white)
-                        }
-                        .multilineTextAlignment(.leading)
+                    makeText(for: getCaption(from: message.first!.content))
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         .padding(8)
                 }

@@ -133,7 +133,7 @@ class MainViewModel: ObservableObject {
     @Published var sidebarSize: SidebarSize = .medium
     
     private var subscribers: [AnyCancellable] = []
-    private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
+    private var logger = Logs.Logger(category: "UI", label: "MainViewModel")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
     init() {
