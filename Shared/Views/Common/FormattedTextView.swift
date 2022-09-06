@@ -36,7 +36,7 @@ struct FormattedTextView: View {
                 for: formattedText.text,
                 start: entity.offset,
                 length: entity.length)])
-            
+                        
             switch entity.type {
                 case .bold:
                     if #available(macOS 13.0, *) {
@@ -53,9 +53,17 @@ struct FormattedTextView: View {
                 case .url:
                     resultString[range].link = URL(string: rawStringPart)
                     resultString[range].underlineStyle = .single
+                    resultString[range].cursor = .pointingHand
                 case let .textUrl(info):
                     resultString[range].link = URL(string: info.url)
                     resultString[range].underlineStyle = .single
+                    resultString[range].cursor = .pointingHand
+                case .phoneNumber:
+                    resultString[range].link = URL(string: "tel:\(rawStringPart)")
+                    resultString[range].cursor = .pointingHand
+                case .emailAddress:
+                    resultString[range].link = URL(string: "mailto:\(rawStringPart)")
+                    resultString[range].cursor = .pointingHand
                 default:
                     break
             }

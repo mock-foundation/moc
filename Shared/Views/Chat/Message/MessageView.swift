@@ -47,7 +47,9 @@ struct MessageView: View {
         FormattedTextView(formattedText)
             .textSelection(.enabled)
             .if(mainMessage.isOutgoing) {
-                $0.foregroundColor(.white)
+                $0
+                .tint(.white)
+                .foregroundColor(.white)
             }
             .fixedSize(horizontal: false, vertical: true)
     }
