@@ -7,10 +7,12 @@
 
 import SwiftUI
 import TDLibKit
+import Defaults
 
 struct ChatInspector: View {
     let chatId: Int64
     @StateObject private var viewModel: ChatInspectorViewModel
+    @Default(.showDeveloperInfo) var showDeveloperInfo
     
     init(id: Int64) {
         self.chatId = id
@@ -83,12 +85,11 @@ struct ChatInspector: View {
                         .padding(.horizontal)
                         .frame(minWidth: 0, idealWidth: nil)
                         .multilineTextAlignment(.center)
-                    // TODO: Implement chat ID string
-//                    if showDeveloperInfo {
+                    if showDeveloperInfo {
                         Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
                             .textSelection(.enabled)
                             .foregroundStyle(.secondary)
-//                    }
+                    }
                 }
                 Text("\(viewModel.chatMemberCount ?? 0) members")
                     .fontWeight(.medium)
