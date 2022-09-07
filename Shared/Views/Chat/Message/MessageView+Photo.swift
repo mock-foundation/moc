@@ -12,6 +12,7 @@ import SkeletonUI
 extension MessageView {
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
         ZStack {
+            // TODO: Properly use sizes array using thumbnail types (https://core.telegram.org/api/files#image-thumbnail-types)
             AsyncTdImage(
                 id: info.photo.sizes[0].photo.id
             ) { image in

@@ -12,8 +12,8 @@ extension ChatView {
         Group {
             ToolbarItemGroup(placement: .navigation) {
                 // Chat photo
-                if viewModel.chatPhoto != nil {
-                    AsyncTdImage(id: viewModel.chatPhoto!.id) { image in
+                if let photo = viewModel.chatPhoto {
+                    AsyncTdImage(id: photo.id) { image in
                         image
                             .resizable()
                             .interpolation(.medium)
