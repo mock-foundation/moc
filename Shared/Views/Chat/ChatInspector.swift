@@ -52,8 +52,8 @@ struct ChatInspector: View {
     private func makePlaceholder(_ style: PlaceholderStyle) -> some View {
         ProfilePlaceholderView(
             userId: chatId,
-            firstName: "N", // TODO: Fix this
-            lastName: "A",
+            firstName: viewModel.chatTitle,
+            lastName: "",
             style: style
         )
     }

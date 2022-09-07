@@ -64,7 +64,6 @@ struct ChatItem: View {
     @Environment(\.isChatListItemSelected) var isSelected
     
     private var placeholder: some View {
-        // TODO: Make use of the last name
         ProfilePlaceholderView(userId: chat.id, firstName: chat.title, lastName: "", style: .normal)
     }
         
