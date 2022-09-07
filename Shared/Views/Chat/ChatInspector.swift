@@ -152,7 +152,7 @@ struct ChatInspector: View {
                     .controlSize(.large)
                     .padding()
                     .frame(minWidth: 0, idealWidth: nil)
-                    .background(.ultraThinMaterial, in: RoundedCorners(tl: 0, tr: 0, bl: 8, br: 8))
+                    .background(.ultraThinMaterial, in: CornerRectangle(tl: 0, tr: 0, bl: 8, br: 8))
                 }
             }
             .padding(.top)

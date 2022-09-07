@@ -16,6 +16,7 @@ import Storage
 import Network
 import Defaults
 
+// swiftlint:disable type_body_length
 class MainViewModel: ObservableObject {
     @Injected var service: any MainService
     
@@ -136,6 +137,7 @@ class MainViewModel: ObservableObject {
     private var logger = Logs.Logger(category: "UI", label: "MainViewModel")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
+    // swiftlint:disable cyclomatic_complexity function_body_length
     init() {
         service.updateSubject
             .receive(on: RunLoop.main)
@@ -207,6 +209,7 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
+    // TODO: Refactor this mess into a different view
     func updateConnectionState(_ update: UpdateConnectionState) {
         logger.debug("UpdateConnectionState")
         loadingAnimationTimer?.invalidate()

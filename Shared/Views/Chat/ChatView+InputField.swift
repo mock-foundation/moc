@@ -73,7 +73,6 @@ extension ChatView {
             .transition(.move(edge: .bottom).combined(with: .opacity))
         }
     }
-    // TODO: Fix icons being pushed up with multiline text
     var inputField: some View {
         VStack(spacing: 8) {
             inputFieldAttaches
