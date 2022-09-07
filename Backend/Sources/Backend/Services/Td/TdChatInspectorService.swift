@@ -16,4 +16,8 @@ public class TdChatInspectorService: ChatInspectorService {
     }
     
     public init() { }
+    
+    public func getChat(with id: Int64) async throws -> Chat {
+        try await tdApi.getChat(chatId: id)
+    }
 }

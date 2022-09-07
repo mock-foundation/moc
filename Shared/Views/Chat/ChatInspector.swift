@@ -157,6 +157,8 @@ struct ChatInspector: View {
             }
             .padding(.top)
         }
-
+        .onChange(of: chatId) { newValue in
+            viewModel.chatId = newValue
+        }
     }
 }

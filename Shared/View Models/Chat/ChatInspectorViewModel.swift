@@ -16,7 +16,17 @@ class ChatInspectorViewModel: ObservableObject {
     private var subscribers: [AnyCancellable] = []
     @Injected private var service: any ChatInspectorService
 
-    var chatId: Int64
+    var chatId: Int64 {
+        didSet {
+            Task {
+                do {
+                    try await updateInfo()
+                } catch {
+                    logger.error("Got error: \(error)")
+                }
+            }
+        }
+    }
     
     @Published var chatPhoto: File?
     @Published var chatTitle = ""
@@ -25,12 +35,32 @@ class ChatInspectorViewModel: ObservableObject {
     
     init(chatId: Int64) {
         self.chatId = chatId
+
+        Task { try await updateInfo() }
         
         service.updateSubject
             .receive(on: RunLoop.main)
             .sink { update in
-                
+                switch update {
+                    case let .chatPhoto(info):
+                        if info.chatId == chatId {
+                            self.chatPhoto = info.photo?.big
+                        }
+                    case let .chatTitle(info):
+                        if info.chatId == chatId {
+                            self.chatTitle = info.title
+                        }
+                    default: break
+                }
             }
             .store(in: &subscribers)
+    }
+    
+    func updateInfo() async throws {
+        let chat = try await service.getChat(with: chatId)
+        DispatchQueue.main.async {
+            self.chatPhoto = chat.photo?.big
+            self.chatTitle = chat.title
+        }
     }
 }
