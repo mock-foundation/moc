@@ -141,12 +141,14 @@ struct ChatInspector: View {
                         }
                     }
                 } header: {
-                    Picker("", selection: $viewModel.selectedInspectorTab) {
+                    Picker(selection: $viewModel.selectedInspectorTab) {
                         Text("Users").tag(ChatInspectorTab.users)
                         Text("Media").tag(ChatInspectorTab.media)
                         Text("Links").tag(ChatInspectorTab.links)
                         Text("Files").tag(ChatInspectorTab.files)
                         Text("Voice").tag(ChatInspectorTab.voice)
+                    } label: {
+                        EmptyView()
                     }
                     .pickerStyle(.segmented)
                     .controlSize(.large)
