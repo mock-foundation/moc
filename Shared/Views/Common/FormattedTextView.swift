@@ -50,6 +50,7 @@ struct FormattedTextView: View {
                     } else {
                         resultString[range].font = .body.italic()
                     }
+                    // TODO: Fix coloring of links for outgoing messages
                 case .url:
                     resultString[range].link = URL(string: rawStringPart)
                     resultString[range].underlineStyle = .single
