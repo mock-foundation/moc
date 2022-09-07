@@ -209,7 +209,7 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    // TODO: Refactor this mess into a different view
+    // TODO: Refactor this meme into a different view
     func updateConnectionState(_ update: UpdateConnectionState) {
         logger.debug("UpdateConnectionState")
         loadingAnimationTimer?.invalidate()
