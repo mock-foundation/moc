@@ -20,11 +20,7 @@ import Defaults
 class MainViewModel: ObservableObject {
     @Injected var service: any MainService
     
-    @Published var connectionStateTitle = ""
-    @Published var isConnectionStateShown = true
-    @Published var isConnected = true
-    private var loadingAnimationTimer: Timer?
-    private var loadingAnimationState = 3
+    @Published var connectionState: ConnectionState = .waitingForNetwork
     
     @Published var isChatListVisible = true
         
@@ -209,73 +205,10 @@ class MainViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    // TODO: Refactor this meme into a different view
     func updateConnectionState(_ update: UpdateConnectionState) {
-        logger.debug("UpdateConnectionState")
-        loadingAnimationTimer?.invalidate()
-        loadingAnimationTimer = nil
-        loadingAnimationState = 3
+        logger.debug("UpdateConnectionState: \(update.state)")
         
-        DispatchQueue.main.async { [self] in
-            var needStartTimer = true
-
-            switch update.state {
-                case .waitingForNetwork:
-                    connectionStateTitle = "Waiting for network..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .connectingToProxy:
-                    connectionStateTitle = "Connecting to proxy..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .connecting:
-                    connectionStateTitle = "Connecting..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .updating:
-                    connectionStateTitle = "Updating..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .ready:
-                    loadingAnimationTimer?.invalidate()
-                    loadingAnimationTimer = nil
-                    needStartTimer = false
-
-                    connectionStateTitle = "Connected!"
-                    isConnected = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        self.isConnectionStateShown = false
-                    }
-            }
-            
-            if needStartTimer {
-                loadingAnimationTimer = Timer.scheduledTimer(
-                    withTimeInterval: 0.5,
-                    repeats: true
-                ) { [weak self] timer in
-                    guard let strongSelf = self else { return }
-                    guard self?.isConnected == false else {
-                        timer.invalidate()
-                        return
-                    }
-                    
-                    if strongSelf.loadingAnimationState != 3 {
-                        strongSelf.loadingAnimationState += 1
-                        DispatchQueue.main.async {
-                            var buffer = strongSelf.connectionStateTitle
-                            buffer.append(".")
-                            strongSelf.connectionStateTitle = buffer
-                        }
-                    } else {
-                        strongSelf.loadingAnimationState = 0
-                        DispatchQueue.main.async {
-                            strongSelf.connectionStateTitle = String(
-                                strongSelf.connectionStateTitle.prefix(strongSelf.connectionStateTitle.count - 3))
-                        }
-                    }
-                }
-            }
-        }
+        self.connectionState = update.state
     }
     
     func updateUnreadChatCount(_ update: UpdateUnreadChatCount) {

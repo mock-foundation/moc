@@ -23,6 +23,8 @@ struct RootView: View {
     @State private var openedChat: Chat?
     @State private var selectedTab: Tab = .chat
     @State private var searchText = ""
+    @State private var connectionStateColor = Color.clear
+    @State private var isConnectionStateShown = true
     @Default(.folderLayout) private var folderLayout
     
     #if os(iOS)
@@ -280,18 +282,17 @@ struct RootView: View {
     }
     #endif
     
-    // TODO: Change connection state UI design
     private var connectionState: some View {
         VStack {
             Spacer()
             HStack(spacing: 16) {
                 Spacer()
-                if !viewModel.isConnected {
+                if viewModel.connectionState != .ready {
                     ProgressView()
                         .progressViewStyle(.circular)
                         .transition(.opacity)
                 }
-                Text(viewModel.connectionStateTitle)
+                Text(viewModel.connectionState.title)
                     .font(.system(size: 20, weight: .medium, design: .rounded))
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                 Spacer()
@@ -300,13 +301,32 @@ struct RootView: View {
         }
         .background(.linearGradient(
             Gradient(colors: [
-                viewModel.isConnected
-                ? .accentColor.opacity(0.7)
-                : (colorScheme == .dark ? .darkGray : .white),
-                (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))]),
+                connectionStateColor,
+                (colorScheme == .dark ? Color.black.opacity(0) : .white.opacity(0))
+            ]),
             startPoint: .bottom,
             endPoint: .top))
         .transition(.move(edge: .bottom).combined(with: .opacity))
+        .onChange(of: viewModel.connectionState) { value in
+            switch value {
+                case .ready:
+                    connectionStateColor = .accentColor.opacity(0.7)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        isConnectionStateShown = false
+                    }
+                case .updating:
+                    connectionStateColor = .green.opacity(0.7)
+                    isConnectionStateShown = true
+                case .connectingToProxy:
+                    connectionStateColor = .yellow.opacity(0.7)
+                    isConnectionStateShown = true
+                default:
+                    connectionStateColor = colorScheme == .dark ? .darkGray.opacity(0.7) : .white
+                    isConnectionStateShown = true
+            }
+        }
+        .animation(.easeInOut, value: connectionStateColor)
+        .animation(.easeInOut, value: viewModel.connectionState)
     }
     
     private var sidebar: some View {
@@ -335,15 +355,12 @@ struct RootView: View {
         }
         #endif
         .overlay(alignment: .bottom) {
-            if viewModel.isConnectionStateShown {
+            if isConnectionStateShown {
                 connectionState
                     .frame(height: 100)
                     .allowsHitTesting(false)
             }
         }
-        .animation(.easeInOut(duration: 0.5), value: viewModel.isConnectionStateShown)
-        .animation(.easeInOut, value: viewModel.connectionStateTitle)
-        .animation(.easeInOut, value: viewModel.isConnected)
         .toolbar {
             chatListToolbar
         }
