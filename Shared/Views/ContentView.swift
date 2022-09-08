@@ -1,9 +1,11 @@
 //
-//  ContentView.swift
+//  RootView.swift
 //  Moc
 //
 //  Created by Егор Яковенко on 24.12.2021.
 //
+
+// swiftlint:disable file_length
 
 import Backend
 import Logs
@@ -12,7 +14,7 @@ import SwiftUI
 import Utilities
 import TDLibKit
 import OrderedCollections
-import Caching
+import Storage
 import Introspect
 import Defaults
 
@@ -36,8 +38,8 @@ private extension SidebarSize {
 }
 
 // swiftlint:disable type_body_length
-struct ContentView: View {
-    private let logger = Logs.Logger(category: "ContentView", label: "UI")
+struct RootView: View {
+    private let logger = Logs.Logger(category: "RootView", label: "UI")
 
     @State private var selectedFolder: Int = 0
     @State private var selectedChat: Int? = 0
@@ -49,8 +51,7 @@ struct ContentView: View {
     @State private var areSettingsOpen = false
     #endif
 
-    @InjectedObject private var viewModel: MainViewModel
-    
+    @StateObject private var viewModel = MainViewModel()
     @StateObject private var viewRouter = ViewRouter()
     
     @Environment(\.colorScheme) var colorScheme
@@ -59,9 +60,9 @@ struct ContentView: View {
         Task {
             do {
                 SystemUtils.post(notification: .openChatWithInstance, with: chat)
-                _ = try await TdApi.shared[0].openChat(chatId: chat.id)
+                _ = try await TdApi.shared.openChat(chatId: chat.id)
                 if let openedChat = viewRouter.openedChat {
-                    _ = try await TdApi.shared[0].closeChat(chatId: openedChat.id)
+                    _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
                 }
             } catch {
                 logger.error("Error in \(error.localizedDescription)")
@@ -98,7 +99,7 @@ struct ContentView: View {
                 Task {
                     guard let chatId = notification.object as? Int64 else { return }
                     
-                    openChat(try await TdApi.shared[0].getChat(chatId: chatId))
+                    openChat(try await TdApi.shared.getChat(chatId: chatId))
                 }
             }
             if folderLayout == .vertical {
@@ -162,7 +163,7 @@ struct ContentView: View {
         name: String,
         icon: Image,
         unreadCount: Int,
-        chatList: Caching.ChatList,
+        chatList: Storage.ChatList,
         horizontal: Bool
     ) -> some View {
         Button {
@@ -196,7 +197,7 @@ struct ContentView: View {
                 name: folder.title,
                 icon: Image(tdIcon: folder.iconName),
                 unreadCount: folder.unreadCounter,
-                chatList: .filter(folder.id),
+                chatList: .folder(folder.id),
                 horizontal: horizontal)
         }
     }
@@ -506,20 +507,6 @@ struct ContentView: View {
         }
         .transition(.scale)
         .animation(.spring(), value: viewModel.showingLoginScreen)
-
-//        .alert("Your session was ended", isPresented: $viewModel.isSessionTerminationAlertShown) {
-//            Button {
-//                #if os(macOS)
-//                NSApp.terminate(self)
-//                #elseif os(iOS)
-//                exit(0)
-//                #endif
-//            } label: {
-//                Text("Close")
-//            }
-//        } message: {
-//            Text("Please relogin to continue using Moc.")
-//        }
     }
 
     private var chatPlaceholder: some View {
@@ -536,13 +523,13 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct RoottView_Previews: PreviewProvider {
     init() {
-        Resolver.register { MockChatService() as ChatService }
-        Resolver.register { MockMainService() as MainService }
+        Resolver.register { MockChatService() as (any ChatService) }
+        Resolver.register { MockMainService() as (any MainService) }
     }
     
     static var previews: some View {
-        ContentView()
+        RootView()
     }
 }

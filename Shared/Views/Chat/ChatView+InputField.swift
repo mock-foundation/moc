@@ -77,7 +77,7 @@ extension ChatView {
         VStack(spacing: 8) {
             inputFieldAttaches
             
-            HStack(spacing: 16) {
+            HStack(alignment: .bottom, spacing: 16) {
                 #if os(iOS)
                 if viewModel.isHideKeyboardButtonShown {
                     Button {
@@ -90,10 +90,12 @@ extension ChatView {
                     .background(Color.white)
                     .clipShape(Circle())
                     .transition(.scale.combined(with: .opacity))
+                    .frame(height: 28)
                 }
                 #endif
                 Image(systemName: "paperclip")
                     .font(.system(size: 16))
+                    .frame(height: 28)
                 Group {
                     if #available(macOS 13, iOS 16, *) {
                         TextField(
@@ -118,10 +120,12 @@ extension ChatView {
                 }
                 Image(systemName: "face.smiling")
                     .font(.system(size: 16))
+                    .frame(height: 28)
                 if viewModel.inputMessage.isEmpty && viewModel.inputMedia.isEmpty {
                     Image(systemName: "mic")
                         .font(.system(size: 16))
                         .transition(.scale.combined(with: .opacity))
+                        .frame(height: 28)
                 }
                 if !viewModel.inputMessage.isEmpty || !viewModel.inputMedia.isEmpty {
                     Button {

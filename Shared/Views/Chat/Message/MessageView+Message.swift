@@ -17,8 +17,8 @@ extension MessageView {
             if message.first!.isOutgoing { Spacer() }
             if !message.first!.isOutgoing {
                 Group {
-                    if senderPhotoFileID != nil {
-                        AsyncTdImage(id: senderPhotoFileID!) { image in
+                    if let senderPhotoFileID {
+                        AsyncTdImage(id: senderPhotoFileID) { image in
                             image
                                 .resizable()
                         } placeholder: {

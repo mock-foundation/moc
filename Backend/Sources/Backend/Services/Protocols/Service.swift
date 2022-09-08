@@ -9,6 +9,6 @@ import TDLibKit
 import Combine
 
 /// A base service.
-public protocol Service {
+public protocol Service: ObservableObject {
     var updateSubject: PassthroughSubject<Update, Never> { get }
 }

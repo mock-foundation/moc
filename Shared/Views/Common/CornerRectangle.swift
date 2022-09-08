@@ -1,5 +1,5 @@
 //
-//  RoundedCorners.swift
+//  CornerRectangle.swift
 //  Moc
 //
 //  Created by Егор Яковенко on 08.07.2022.
@@ -9,7 +9,7 @@ import SwiftUI
 
 // thx https://stackoverflow.com/a/56763282
 // swiftlint:disable identifier_name
-struct RoundedCorners: Shape {
+struct CornerRectangle: Shape {
     var tl: CGFloat = 0.0
     var tr: CGFloat = 0.0
     var bl: CGFloat = 0.0

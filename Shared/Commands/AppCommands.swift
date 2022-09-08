@@ -33,7 +33,7 @@ struct AppCommands: Commands {
         CommandGroup(after: .appSettings) {
             Button {
                 Task {
-                    let me = try await TdApi.shared[0].getMe()
+                    let me = try await TdApi.shared.getMe()
                     SystemUtils.post(notification: .openChatWithId, with: me.id)
                 }
             } label: {

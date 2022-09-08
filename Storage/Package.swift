@@ -3,15 +3,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "Caching",
+    name: "Storage",
     platforms: [
         .macOS(.v12),
         .iOS(.v15)
     ],
     products: [
         .library(
-            name: "Caching",
-            targets: ["Caching"]),
+            name: "Storage",
+            targets: ["Storage"]),
     ],
     dependencies: [
         .package(url: "https://github.com/groue/GRDB.swift.git", from: "5.26.0"),
@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Caching",
+            name: "Storage",
             dependencies: [
                 .product(name: "GRDB", package: "GRDB.swift"),
                 "Utilities",

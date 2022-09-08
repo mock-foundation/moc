@@ -7,7 +7,6 @@
 
 import Foundation
 import Backend
-import TDLibKit
 import Resolver
 import Utilities
 import Logs
@@ -15,7 +14,7 @@ import Combine
 
 class AccountsPrefViewModel: ObservableObject {
     var logger = Logs.Logger(category: "Preferences", label: "AccountPaneUI")
-    @Injected var service: AccountsPrefService
+    @Injected private var service: any AccountsPrefService
     
     @Published var firstName: String = "" {
         didSet {
@@ -39,12 +38,34 @@ class AccountsPrefViewModel: ObservableObject {
     func updateNames() {
         Task {
             do {
-                try await service.set(
-                    firstName: firstName,
-                    lastName: lastName)
+                try await service.setFirstLastNames(firstName, lastName)
             } catch let error {
                 logger.error(error.localizedDescription)
             }
         }
+    }
+    
+    func logOut() async throws {
+        try await service.logOut()
+    }
+    
+    func setUsername(_ username: String) async throws {
+        try await service.setUsername(username)
+    }
+    
+    func setBio(_ bio: String) async throws {
+        try await service.setBio(bio)
+    }
+    
+    func getMe() async throws -> User {
+        try await service.getMe()
+    }
+    
+    func getMeFullInfo() async throws -> UserFullInfo {
+        try await service.getFullInfo()
+    }
+    
+    func getProfilePhotos() async throws -> [ChatPhoto] {
+        try await service.getProfilePhotos()
     }
 }

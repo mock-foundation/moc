@@ -13,25 +13,21 @@ import CryptoKit
 import Resolver
 import SwiftUI
 import Utilities
-import TDLibKit
 import Logs
 
 public extension Resolver {
-    static func registerUI() {
-        register { MainViewModel() }.scope(.shared)
-        register { ChatViewModel() }.scope(.shared)
-    }
-
-    static func registerBackend() {
-        register { TdChatService() as ChatService }
+    static func registerServices() {
+        register { TdChatService() as (any ChatService) }
             .scope(.shared)
-        register { TdLoginService() as LoginService }
+        register { TdChatInspectorService() as (any ChatInspectorService) }
             .scope(.shared)
-        register { TdAccountsPrefService() as AccountsPrefService }
+        register { TdLoginService() as (any LoginService) }
             .scope(.shared)
-        register { TdFoldersPrefService() as FoldersPrefService }
+        register { TdAccountsPrefService() as (any AccountsPrefService) }
             .scope(.shared)
-        register { TdMainService() as MainService }
+        register { TdFoldersPrefService() as (any FoldersPrefService) }
+            .scope(.shared)
+        register { TdMainService() as (any MainService) }
             .scope(.shared)
     }
 }
@@ -44,22 +40,17 @@ struct MocApp: App {
     #endif
     
     init() {
-        Resolver.registerUI()
-        Resolver.registerBackend()
-        TdApi.shared.append(TdApi(
-            client: TdClientImpl(completionQueue: .global())
-        ))
-        TdApi.shared[0].startTdLibUpdateHandler()
+        Resolver.registerServices()
+        TdApi.shared.startTdLibUpdateHandler()
         
         Task {
-            AppCenter.countryCode = try await TdApi.shared[0].getCountryCode().text
+            AppCenter.countryCode = try await TdApi.shared.getCountryCode().text
         }
         
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
             Analytics.self,
             Crashes.self
         ])
-        
         Analytics.enabled = true
     }
     
@@ -96,11 +87,11 @@ struct MocApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
         .onChange(of: scenePhase) { phase in
             Task {
-                try await TdApi.shared[0].setOption(
+                try await TdApi.shared.setOption(
                     name: .online,
                     value: .boolean(.init(value: phase == .active)))
             }

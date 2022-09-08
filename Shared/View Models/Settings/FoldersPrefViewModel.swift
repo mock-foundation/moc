@@ -10,12 +10,11 @@ import Combine
 import Foundation
 import OrderedCollections
 import Resolver
-import TDLibKit
 import Utilities
 import SwiftUI
 
 class FoldersPrefViewModel: ObservableObject {
-    @Injected private var service: FoldersPrefService
+    @Injected private var service: any FoldersPrefService
 
     @Published var showDeleteConfirmationAlert = false
     @Published var showCreateFolderSheet = false

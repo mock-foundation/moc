@@ -10,17 +10,16 @@ import Introspect
 import Resolver
 import SwiftUI
 import Utilities
-import TDLibKit
 import UniformTypeIdentifiers
 import Logs
 import Defaults
 
 struct ChatView: View {
-    @InjectedObject var viewModel: ChatViewModel
+    @StateObject var viewModel = ChatViewModel()
     @FocusState var isInputFieldFocused
     @Default(.showDeveloperInfo) var showDeveloperInfo
     
-    let logger = Logger(category: "ChatView", label: "UI")
+    let logger = Logger(category: "UI", label: "ChatView")
     
     var chatView: some View {
         ZStack {
@@ -55,7 +54,7 @@ struct ChatView: View {
                 .onReceive(SystemUtils.ncPublisher(for: .scrollToMessage)) { notification in
                     let id = notification.object as! Int64
                     viewModel.highlightMessage(at: id)
-                    withAnimation(.fastStartSlowStop) {
+                    withAnimation(.fastStartSlowStop()) {
                         proxy.scrollTo(id, anchor: .center)
                     }
                 }
@@ -65,7 +64,7 @@ struct ChatView: View {
                 }
                 .animation(.easeInOut, value: viewModel.highlightedMessageId)
             }
-            .onDrop(of: [.fileURL], isTargeted: $viewModel.isDropping) { itemProviders in
+            .onDrop(of: [.fileURL], isTargeted: $viewModel.isDroppingMedia) { itemProviders in
                 guard !itemProviders.isEmpty else { return false }
                 
                 for itemProvider in itemProviders {
@@ -130,10 +129,10 @@ struct ChatView: View {
                     .hTrailing()
                     .vBottom()
                     .padding(.horizontal)
-                    .transition(.move(edge: .trailing))
+                    .transition(.move(edge: .bottom))
                 }
             }
-            .animation(.fastStartSlowStop, value: viewModel.isScrollToBottomButtonShown)
+            .animation(.fastStartSlowStop(), value: viewModel.isScrollToBottomButtonShown)
         }
         .safeAreaInset(edge: .bottom) {
             inputField
@@ -145,15 +144,20 @@ struct ChatView: View {
     }
     
     var body: some View {
-        ChatSplitView(isRightViewVisible: viewModel.isInspectorShown) {
+        HStack(spacing: 0) {
             chatView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } rightView: {
-            chatInspector
-                .frame(idealWidth: 256, maxWidth: .infinity, maxHeight: .infinity)
+            if viewModel.isInspectorShown {
+                HStack(spacing: 0) {
+                    Divider()
+                    ChatInspector(id: viewModel.chatID)
+                        .frame(width: 256)
+                }
+                .transition(.move(edge: .trailing))
+            }
         }
+        .animation(.spring(), value: viewModel.isInspectorShown)
         .navigationTitle("")
-        // MARK: - Toolbar
         .toolbar {
             toolbar
         }
@@ -162,7 +166,7 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     init() {
-        Resolver.register { MockChatService() as ChatService }
+        Resolver.register { MockChatService() as (any ChatService) }
     }
 
     static var previews: some View {

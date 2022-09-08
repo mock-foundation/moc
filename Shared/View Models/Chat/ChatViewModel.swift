@@ -10,7 +10,6 @@ import Combine
 import Foundation
 import Resolver
 import Utilities
-import TDLibKit
 import Algorithms
 import Collections
 import SwiftUI
@@ -18,23 +17,14 @@ import Logs
 import AVKit
 
 class ChatViewModel: ObservableObject {
-    @Injected var service: ChatService
-    
-    enum InspectorTab {
-        case users
-        case media
-        case links
-        case files
-        case voice
-    }
+    @Injected var service: any ChatService
     
     var scrollViewProxy: ScrollViewProxy?
     
     @Published var isScrollToBottomButtonShown = true
     @Published var isInspectorShown = false
     @Published var isHideKeyboardButtonShown = false
-    @Published var selectedInspectorTab: InspectorTab = .users
-    @Published var isDropping = false
+    @Published var isDroppingMedia = false
     @Published var inputMessage = "" {
         didSet {
             if inputMessage.isEmpty {
@@ -49,23 +39,31 @@ class ChatViewModel: ObservableObject {
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
-    @Published var chatMemberCount: Int?
     @Published var chatPhoto: File?
     @Published var isChannel = false
     
     var subscribers: [AnyCancellable] = []
-    var logger = Logs.Logger(category: "ChatViewModel", label: "UI")
+    var logger = Logs.Logger(category: "UI", label: "ChatViewModel")
     var inputMessageSubject = CurrentValueSubject<String, Never>("")
         
     init() {
         service.updateSubject
             .receive(on: RunLoop.main)
-            .sink { _ in } receiveValue: { [self] update in
+            .sink { [self] update in
                 // It's a switch-case because it will obviously grow in the future
                 switch update {
                     case let .newMessage(info):
                         updateNewMessage(info)
                     default: break
+                }
+            }
+            .store(in: &subscribers)
+        SystemUtils.ncPublisher(for: .openChatWithId)
+            .sink { notification in
+                guard let chatId = notification.object as? Int64 else { return }
+                                
+                Task {
+                    try await self.update(chat: try await TdApi.shared.getChat(chatId: chatId))
                 }
             }
             .store(in: &subscribers)
@@ -96,14 +94,14 @@ class ChatViewModel: ObservableObject {
     
     // swiftlint:disable function_body_length
     func update(chat: Chat) async throws {
-        service.set(chatId: chat.id)
+        service.chatId = chat.id
         DispatchQueue.main.async { [self] in
             chatID = chat.id
             objectWillChange.send()
             chatTitle = chat.title
         }
         
-        let buffer = try await service.messageHistory
+        let buffer = try await service.getMessageHistory()
             .asyncMap { tdMessage in
                 logger.debug("Processing message \(tdMessage.id), mediaAlbumId: \(tdMessage.mediaAlbumId.rawValue)")
                 var replyMessage: ReplyMessage?
@@ -186,14 +184,14 @@ class ChatViewModel: ObservableObject {
         
         logger.debug("Chunked message history, length: \(messageHistory.count)")
 
+        
         DispatchQueue.main.async {
-            Task {
-                self.objectWillChange.send()
-                self.chatPhoto = try await self.service.chatPhoto
-                self.chatMemberCount = try await self.service.chatMemberCount
-                self.isChannel = try await self.service.isChannel
+            self.chatPhoto = chat.photo?.small
+            switch chat.type {
+                case let .supergroup(info):
+                    self.isChannel = info.isChannel
+                default: self.isChannel = false
             }
-            self.objectWillChange.send()
             self.messages = messageHistory
             self.scrollToEnd()
         }

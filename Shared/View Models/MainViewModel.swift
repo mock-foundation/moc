@@ -9,22 +9,17 @@ import Resolver
 import SwiftUI
 import Utilities
 import Combine
-import TDLibKit
 import Logs
 import OrderedCollections
 import Backend
-import Caching
+import Storage
 import Network
 import Defaults
 
 class MainViewModel: ObservableObject {
-    @Injected var service: MainService
+    @Injected var service: any MainService
     
-    @Published var connectionStateTitle = ""
-    @Published var isConnectionStateShown = true
-    @Published var isConnected = true
-    private var loadingAnimationTimer: Timer?
-    private var loadingAnimationState = 3
+    @Published var connectionState: ConnectionState = .waitingForNetwork
     
     @Published var isChatListVisible = true
         
@@ -59,12 +54,12 @@ class MainViewModel: ObservableObject {
                 return chats(from: .main)
             case .archive:
                 return chats(from: .archive)
-            case .filter(let id):
+            case .folder(let id):
                 return chats(from: .filter(.init(chatFilterId: id)))
         }
     }
     
-    @Published var unreadCounters: [Caching.UnreadCounter] = []
+    @Published var unreadCounters: [Storage.UnreadCounter] = []
     @Published var chatFilters: [TDLibKit.ChatFilterInfo] = []
     
     var mainUnreadCounter: Int {
@@ -79,7 +74,7 @@ class MainViewModel: ObservableObject {
                 id: filter.id,
                 iconName: filter.iconName,
                 unreadCounter: unreadCounters
-                    .first { $0.chatList == .filter(filter.id) }?
+                    .first { $0.chatList == .folder(filter.id) }?
                     .chats ?? 0)
         }
     }
@@ -87,7 +82,7 @@ class MainViewModel: ObservableObject {
     @Published var allChats: OrderedSet<Chat> = []
     @Published var chatPositions: [Int64: [ChatPosition]] = [:]
     
-    @Published var openChatList: Caching.ChatList = .main {
+    @Published var openChatList: Storage.ChatList = .main {
         didSet {
             logger.trace("openChatList: \(openChatList)")
             if openChatList != .archive {
@@ -96,15 +91,15 @@ class MainViewModel: ObservableObject {
             Task {
                 switch openChatList {
                     case .main:
-                        _ = try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared.loadChats(
                             chatList: .main,
                             limit: 30)
                     case .archive:
-                        _ = try await TdApi.shared[0].loadChats(
+                        _ = try await TdApi.shared.loadChats(
                             chatList: .archive,
                             limit: 30)
-                    case .filter(let id):
-                        _ = try await TdApi.shared[0].loadChats(
+                    case .folder(let id):
+                        _ = try await TdApi.shared.loadChats(
                             chatList: .filter(.init(chatFilterId: id)),
                             limit: 30)
                 }
@@ -112,7 +107,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    private var openChatListBuffer: Caching.ChatList = .main {
+    private var openChatListBuffer: Storage.ChatList = .main {
         didSet {
             logger.trace("openChatListBuffer: \(openChatListBuffer)")
         }
@@ -134,9 +129,10 @@ class MainViewModel: ObservableObject {
     @Published var sidebarSize: SidebarSize = .medium
     
     private var subscribers: [AnyCancellable] = []
-    private var logger = Logs.Logger(category: "MainViewModel", label: "UI")
+    private var logger = Logs.Logger(category: "UI", label: "MainViewModel")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
+    // swiftlint:disable cyclomatic_complexity function_body_length
     init() {
         service.updateSubject
             .receive(on: RunLoop.main)
@@ -183,7 +179,7 @@ class MainViewModel: ObservableObject {
         }
         Defaults.publisher(.sidebarSize)
             .sink { value in
-                withAnimation(.fastStartSlowStop) {
+                withAnimation(.fastStartSlowStop()) {
                     self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
                 }
             }
@@ -195,13 +191,13 @@ class MainViewModel: ObservableObject {
                 Task {
                     switch value {
                         case .satisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: .other)
+                            _ = try await TdApi.shared.setNetworkType(type: .other)
                         case .unsatisfied:
-                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
+                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
                         case .requiresConnection:
-                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
+                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
                         @unknown default:
-                            _ = try await TdApi.shared[0].setNetworkType(type: NetworkType.none)
+                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
                     }
                 }
             }
@@ -209,78 +205,16 @@ class MainViewModel: ObservableObject {
     }
     
     func updateConnectionState(_ update: UpdateConnectionState) {
-        logger.debug("UpdateConnectionState")
-        loadingAnimationTimer?.invalidate()
-        loadingAnimationTimer = nil
-        loadingAnimationState = 3
+        logger.debug("UpdateConnectionState: \(update.state)")
         
-        DispatchQueue.main.async { [self] in
-            var needStartTimer = true
-
-            switch update.state {
-                case .waitingForNetwork:
-                    connectionStateTitle = "Waiting for network..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .connectingToProxy:
-                    connectionStateTitle = "Connecting to proxy..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .connecting:
-                    connectionStateTitle = "Connecting..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .updating:
-                    connectionStateTitle = "Updating..."
-                    isConnectionStateShown = true
-                    isConnected = false
-                case .ready:
-                    loadingAnimationTimer?.invalidate()
-                    loadingAnimationTimer = nil
-                    needStartTimer = false
-
-                    connectionStateTitle = "Connected!"
-                    isConnected = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        self.isConnectionStateShown = false
-                    }
-            }
-            
-            if needStartTimer {
-                loadingAnimationTimer = Timer.scheduledTimer(
-                    withTimeInterval: 0.5,
-                    repeats: true
-                ) { [weak self] timer in
-                    guard let strongSelf = self else { return }
-                    guard self?.isConnected == false else {
-                        timer.invalidate()
-                        return
-                    }
-                    
-                    if strongSelf.loadingAnimationState != 3 {
-                        strongSelf.loadingAnimationState += 1
-                        DispatchQueue.main.async {
-                            var buffer = strongSelf.connectionStateTitle
-                            buffer.append(".")
-                            strongSelf.connectionStateTitle = buffer
-                        }
-                    } else {
-                        strongSelf.loadingAnimationState = 0
-                        DispatchQueue.main.async {
-                            strongSelf.connectionStateTitle = String(
-                                strongSelf.connectionStateTitle.prefix(strongSelf.connectionStateTitle.count - 3))
-                        }
-                    }
-                }
-            }
-        }
+        self.connectionState = update.state
     }
     
     func updateUnreadChatCount(_ update: UpdateUnreadChatCount) {
         logger.debug("UpdateUnreadChatCount")
         
         var shouldBeAdded = true
-        let chatList = Caching.ChatList.from(tdChatList: update.chatList)
+        let chatList = Storage.ChatList.from(tdChatList: update.chatList)
         let unreads = try! service.getUnreadCounters()
         
         logger.debug("Going through unreads")
@@ -311,7 +245,7 @@ class MainViewModel: ObservableObject {
     func updateChatFilters(_ update: UpdateChatFilters) {
         logger.debug("Chat filter update")
         
-        withAnimation(.fastStartSlowStop) {
+        withAnimation(.fastStartSlowStop()) {
             chatFilters = update.chatFilters
         }
     }
@@ -333,7 +267,7 @@ class MainViewModel: ObservableObject {
     }
     
     func updateNewChat(_ update: UpdateNewChat) {
-        _ = withAnimation(.fastStartSlowStop) {
+        _ = withAnimation(.fastStartSlowStop()) {
             allChats.updateOrAppend(update.chat)
         }
     }
@@ -342,7 +276,7 @@ class MainViewModel: ObservableObject {
         if !chatPositions.contains(where: { key, value in
             key == chatId && getPosition(from: value, chatList: position.list) == position
         }) {
-            withAnimation(.fastStartSlowStop) {
+            withAnimation(.fastStartSlowStop()) {
                 if chatPositions[chatId] == nil {
                     chatPositions[chatId] = []
                 }

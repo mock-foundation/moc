@@ -1,5 +1,5 @@
 //
-//  CacheService.swift
+//  StorageService.swift
 //
 //
 //  Created by Егор Яковенко on 29.05.2022.
@@ -9,14 +9,14 @@ import Foundation
 import GRDB
 import Logs
 
-// MARK: - Definition
+// MARK: Definition
 
-public class CacheService {
-    public static var shared = CacheService()
+public class StorageService {
+    public static var shared = StorageService()
 
     let dbQueue: DatabaseQueue
     var migrator = DatabaseMigrator()
-    let logger = Logger(category: "CacheService", label: "Caching")
+    let logger = Logger(category: "StorageService", label: "Storage")
 
     init() {
         #if DEBUG
@@ -25,14 +25,15 @@ public class CacheService {
         #endif
         
         var url = try! FileManager.default.url(
-            for: .cachesDirectory,
+            for: .applicationSupportDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
             create: true)
+
         if #available(macOS 13, iOS 16, *) {
-            url.append(path: "cache.sqlite")
+            url.append(path: "database.sqlite")
         } else {
-            url.appendPathComponent("cache.sqlite")
+            url.appendPathComponent("database.sqlite")
         }
         var dir = ""
         if #available(macOS 13, iOS 16, *) {
@@ -45,17 +46,17 @@ public class CacheService {
 
         registerMigrations()
         try! migrator.migrate(dbQueue)
-        logger.notice("Started CacheService")
+        logger.notice("Started StorageService")
     }
 }
 
-// MARK: - Private methods
+// MARK: Private methods
 
-private extension CacheService {
+private extension StorageService {
     private func registerMigrations() {
         migrator.registerMigration("v1") { [self] db in
-            logger.debug("Creating chatFilter table")
-            try db.create(table: "chatFilter") { t in
+            logger.debug("Creating chatFolder table")
+            try db.create(table: "chatFolder") { t in
                 t.column("title", .text).notNull()
                 t.column("id", .integer).notNull().primaryKey(onConflict: .replace, autoincrement: false)
                 t.column("iconName", .text).notNull()
@@ -116,9 +117,9 @@ private extension CacheService {
     }
 }
 
-// MARK: - Public methods
+// MARK: Public methods
 
-public extension CacheService {
+public extension StorageService {
     func save<Record>(record: Record) throws
     where Record: FetchableRecord & PersistableRecord {
         try dbQueue.write { db in
@@ -164,5 +165,13 @@ public extension CacheService {
         try dbQueue.write { db in
             try modify(record: record, at: key, from: db, transform: transform)
         }
+    }
+}
+
+// MARK: Convenience methods
+
+public extension StorageService {
+    func getChatFolders() throws -> [ChatFolder] {
+        return try getRecords(as: ChatFolder.self, ordered: [Column("order").asc])
     }
 }

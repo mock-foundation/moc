@@ -9,7 +9,7 @@ import Combine
 import TDLibKit
 
 public class MockLoginService: LoginService {
-    public func getAuthorizationState() async throws -> TDLibKit.AuthorizationState {
+    public func getAuthorizationState() async throws -> AuthorizationState {
         return .ready
     }
     
@@ -24,16 +24,18 @@ public class MockLoginService: LoginService {
     public func checkAuth(code _: String) async throws { }
 
     public func checkAuth(password _: String) async throws { }
-
-    public var countries: [CountryInfo] = [
-        CountryInfo(
+    
+    public func getCountries() async throws -> [CountryInfo] {
+        return [CountryInfo(
             callingCodes: ["380"],
             countryCode: "UA",
             englishName: "UA",
             isHidden: false,
             name: "Ukraine"
-        ),
-    ]
-
-    public var countryCode: String = "380"
+        )]
+    }
+    
+    public func getCountryCode() async throws -> String {
+        "UA"
+    }
 }

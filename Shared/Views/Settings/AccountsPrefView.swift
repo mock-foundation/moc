@@ -12,15 +12,13 @@ import Combine
 import Utilities
 import Logs
 import Resolver
-import TDLibKit
 
 // swiftlint:disable type_body_length
 struct AccountsPrefView: View {
     @StateObject private var viewModel = AccountsPrefViewModel()
 
-    @State private var photos: [File] = []
+    @State private var photos: [Int] = []
     @State private var photoLoading = false
-    @State private var photoFileId: Int64 = 0
     @State private var miniThumbnail: Image?
 
     @State private var userId: Int64 = 0
@@ -44,13 +42,18 @@ struct AccountsPrefView: View {
     private var photoSwitcher: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(photos, id: \.id) { photo in
-                    makePhoto(from: photo)
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 256, height: 256)
-                        .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+                ForEach(photos, id: \.self) { photo in
+                    AsyncTdImage(id: photo) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 256, height: 256)
+                            .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+                    } placeholder: {
+                        ProgressView()
+                            .frame(width: 256, height: 256)
+                    }
                 }
             }
         }
@@ -93,18 +96,6 @@ struct AccountsPrefView: View {
                 }
             }
         }
-        .onReceive(viewModel.updateSubject) { update in
-            if case let .file(info) = update {
-                let file = info.file
-                guard file.id == photoFileId else { return }
-                
-                photoLoading = !file.local.isDownloadingCompleted
-                
-                if file.local.isDownloadingCompleted {
-                    photos[0] = file
-                }
-            }
-        }
     }
 
     private var leftColumnContent: some View {
@@ -144,7 +135,7 @@ struct AccountsPrefView: View {
                 Button(role: .destructive, action: {
                     Task {
                         do {
-                            _ = try await viewModel.service.logOut()
+                            try await viewModel.logOut()
                             #if os(macOS)
                             NSSound(named: "Glass")?.play()
                             #endif
@@ -174,10 +165,12 @@ struct AccountsPrefView: View {
         Form {
             Section {
                 HStack {
-                    makePhoto(from: photos[0])
-                        .resizable()
-                        .frame(width: 32, height: 32)
-                        .clipShape(Circle())
+                    AsyncTdImage(id: photos[0]) { image in
+                        image
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .clipShape(Circle())
+                    } placeholder: { ProgressView() }
                     Button { } label: {
                         Label("Update profile photo",
                               systemImage: "square.and.pencil")
@@ -204,7 +197,7 @@ struct AccountsPrefView: View {
                 .frame(width: 150)
                 .onSubmit {
                     Task {
-                        try await viewModel.service.set(username: username)
+                        try await viewModel.setUsername(username)
                     }
                 }
             Section {
@@ -212,7 +205,7 @@ struct AccountsPrefView: View {
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         Task {
-                            try await viewModel.service.set(bio: bioText)
+                            try await viewModel.setBio(bioText)
                         }
                     }
                     .frame(width: 350)
@@ -229,13 +222,13 @@ struct AccountsPrefView: View {
         }
         .frame(width: 450)
         // Text length restrictions
-        .onReceive(username.publisher) { _ in
+        .onChange(of: username) { _ in
             if username.count > 32 {
                 username = String(username.prefix(32))
                 SystemUtils.playAlertSound()
             }
         }
-        .onReceive(bioText.publisher) { _ in
+        .onChange(of: bioText) { _ in
             if bioText.count > 70 {
                 bioText = String(bioText.prefix(70))
                 SystemUtils.playAlertSound()
@@ -244,13 +237,13 @@ struct AccountsPrefView: View {
     }
 
     private func getAccountData() async {
-        let user = try? await viewModel.service.getMe()
+        let user = try? await viewModel.getMe()
         guard user != nil else {
             showInitErrorAlert = true
             return
         }
 
-        let userFullInfo = try? await viewModel.service.getFullInfo()
+        let userFullInfo = try? await viewModel.getMeFullInfo()
         guard userFullInfo != nil else {
             showInitErrorAlert = true
             return
@@ -263,33 +256,13 @@ struct AccountsPrefView: View {
         phoneNumber = "+\(user!.phoneNumber)"
         userId = user!.id
 
-        guard let profilePhoto = user!.profilePhoto else {
+        guard let photos = (try? await viewModel.getProfilePhotos()) else {
             loading = false
             return
         }
-        photoFileId = Int64(profilePhoto.big.id)
-        #if os(macOS)
-        miniThumbnail = Image(nsImage: NSImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
-        #elseif os(iOS)
-        miniThumbnail = Image(uiImage: UIImage(data: profilePhoto.minithumbnail?.data ?? Data())!)
-        #endif
-
-        guard let photos = (try? await viewModel.service.getProfilePhotos()) else {
-            loading = false
-            return
-        }
-
-        for photo in photos {
-            guard let file = try? await viewModel.service.downloadFile(
-                by: photo.sizes[2].photo.id,
-                priority: 32,
-                synchronous: true
-            ) else {
-                viewModel.logger.error("Failed to download photo \(photo.sizes[2].photo.id)")
-                loading = false
-                return
-            }
-            self.photos.append(file)
+        
+        self.photos = photos.compactMap { chatPhoto in
+            return chatPhoto.sizes.last?.photo.id
         }
 
         loading = false

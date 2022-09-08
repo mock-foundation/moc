@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TDLibKit
 import Utilities
 import Backend
 import Defaults
@@ -54,13 +53,13 @@ private extension SidebarSize {
     }
 }
 
-struct ChatItemView: View {
+struct ChatItem: View {
     let chat: Chat
     
     @State private var lastMessage: TDLibKit.Message?
     @State private var sidebarSize: SidebarSize = .medium
     
-    private let tdApi = TdApi.shared[0]
+    private let tdApi = TdApi.shared
     
     @Environment(\.isChatListItemSelected) var isSelected
     
@@ -229,7 +228,7 @@ struct ChatItemView: View {
 //                    }
             }
         }
-        .animation(.fastStartSlowStop, value: sidebarSize)
+        .animation(.fastStartSlowStop(), value: sidebarSize)
         .onAppear {
             Task {
                 if lastMessage == nil {
@@ -244,7 +243,7 @@ struct ChatItemView: View {
                         sender = try await tdApi.getChat(chatId: info.chatId).title
                     case let .user(info):
                         let user = try await tdApi.getUser(userId: info.userId)
-                        sender = user.firstName + user.lastName
+                        sender = user.firstName + " " + user.lastName
                     default: break
                 }
             }
