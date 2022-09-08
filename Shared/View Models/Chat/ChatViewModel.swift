@@ -178,13 +178,10 @@ class ChatViewModel: ObservableObject {
                     return $0.mediaAlbumID == $1.mediaAlbumID
                 }
             })
-            .map {
-                Array($0)
-            }
+            .map(Array.init(_:))
         
         logger.debug("Chunked message history, length: \(messageHistory.count)")
 
-        
         DispatchQueue.main.async {
             self.chatPhoto = chat.photo?.small
             switch chat.type {

@@ -93,17 +93,22 @@ struct RootView: View {
         return Group {
             #if os(macOS)
             ToolbarItemGroup(placement: chatListToolbarPlacement) {
-                if #unavailable(macOS 13) {
-                    Button(action: toggleSidebar) {
-                        Label("Toggle chat list", systemImage: "sidebar.left")
+                if folderLayout == .horizontal {
+                    if #unavailable(macOS 13) {
+                        Button(action: toggleSidebar) {
+                            Label("Toggle chat list", systemImage: "sidebar.left")
+                        }
                     }
-                }
-                if viewModel.isChatListVisible {
-                    Picker("", selection: $selectedTab) {
-                        Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
-                        Image(systemName: "phone.and.waveform").tag(Tab.calls)
-                        Image(systemName: "person.2").tag(Tab.contacts)
-                    }.pickerStyle(.segmented)
+                    if viewModel.isChatListVisible {
+                        Picker(selection: $selectedTab) {
+                            Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
+                            Image(systemName: "phone.and.waveform").tag(Tab.calls)
+                            Image(systemName: "person.2").tag(Tab.contacts)
+                        } label: {
+                            EmptyView()
+                        }
+                        .pickerStyle(.segmented)
+                    }
                 }
             }
             #endif
@@ -217,14 +222,31 @@ struct RootView: View {
                 #endif
             }
         }
-        .if(folderLayout == .vertical) {
-            $0.frame(width: viewModel.sidebarSize == .small ? 75 : 90)
+        .if(folderLayout == .vertical) { view in
+            view
+                .frame(width: viewModel.sidebarSize == .small ? 75 : 90)
+                .safeAreaInset(edge: .bottom) {
+                    tabSwitcher
+                        .padding(.bottom, 4)
+                }
         } else: {
             $0
             #if os(iOS)
             .background(.bar, in: Rectangle())
             #endif
             .frame(minWidth: 0, maxWidth: .infinity)
+        }
+    }
+    
+    // Vertical tab switcher
+    private var tabSwitcher: some View {
+        VStack {
+            Divider()
+                .frame(width: 40)
+            FolderItem(icon: Image(systemName: "phone.and.waveform"))
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            FolderItem(icon: Image(systemName: "person.2"))
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         }
     }
     
