@@ -5,6 +5,8 @@
 //  Created by Егор Яковенко on 24.12.2021.
 //
 
+// swiftlint:disable file_length
+
 import Backend
 import Logs
 import Resolver
@@ -521,7 +523,7 @@ struct RootView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct RoottView_Previews: PreviewProvider {
     init() {
         Resolver.register { MockChatService() as (any ChatService) }
         Resolver.register { MockMainService() as (any MainService) }

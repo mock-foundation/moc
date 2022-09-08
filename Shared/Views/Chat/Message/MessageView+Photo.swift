@@ -10,6 +10,7 @@ import Backend
 import SkeletonUI
 
 extension MessageView {
+    // swiftlint:disable function_body_length
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
         ZStack {
             if let size = info.photo.sizes.getSize(.sBox) {
