@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import TDLibKit
+import Backend
 import SkeletonUI
 
 extension MessageView {
@@ -14,46 +14,66 @@ extension MessageView {
         ZStack {
             // TODO: Properly use sizes array using thumbnail types
             // https://core.telegram.org/api/files#image-thumbnail-types
-            AsyncTdImage(
-                id: info.photo.sizes[0].photo.id
-            ) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: contentMode)
-            } placeholder: {
-                Rectangle()
-                    .skeleton(with: true)
+            if let size = info.photo.sizes.getSize(.sBox) {
+                AsyncTdImage(
+                    id: size.photo.id
+                ) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: contentMode)
+                } placeholder: {
+                    Rectangle()
+                        .skeleton(with: true)
+                }
+            } else {
+                VStack {
+                    Image(systemName: "exclamationmark.triangle")
+                    Text("Failed to find a photo to display :(")
+                }
             }
         }
         .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
         .background {
-            AsyncTdImage(
-                id: info.photo.sizes[0].photo.id
-            ) { image in
-                image
-                    .resizable()
-            } placeholder: {
-                ProgressView()
-            }.overlay {
-                Color.clear
-                    .background(.ultraThinMaterial, in: Rectangle())
+            if let size = info.photo.sizes.getSize(.sBox) {
+                AsyncTdImage(
+                    id: size.photo.id
+                ) { image in
+                    image
+                        .resizable()
+                } placeholder: {
+                    Rectangle()
+                        .skeleton(with: true)
+                }.overlay {
+                    Color.clear
+                        .background(.ultraThinMaterial, in: Rectangle())
+                }
+            } else {
+                VStack {
+                    Image(systemName: "exclamationmark.triangle")
+                    Text("Failed to find a photo to display :(")
+                }
             }
         }
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
         .onTapGesture {
-            openedMediaFileID = OpenedMediaFile(id: info.photo.sizes[info.photo.sizes.endIndex - 1].photo.id)
+            if let id = info.photo.sizes.getSize(.dCrop)?.photo.id {
+                openedMediaFileID = OpenedMediaFile(id: id)
+            }
         }
         .onDrag {
-            let path = info.photo.sizes[info.photo.sizes.endIndex - 1].photo.local.path
-            if #available(macOS 13.0, *) {
-                #if os(macOS)
-                return NSItemProvider(object: NSImage(contentsOfFile: path)!)
-                #elseif os(iOS)
-                return NSItemProvider(object: UIImage(contentsOfFile: path)!)
-                #endif
+            if let path = info.photo.sizes.getSize(.dCrop)?.photo.local.path {
+                if #available(macOS 13.0, *) {
+                    #if os(macOS)
+                    return NSItemProvider(object: NSImage(contentsOfFile: path)!)
+                    #elseif os(iOS)
+                    return NSItemProvider(object: UIImage(contentsOfFile: path)!)
+                    #endif
+                } else {
+                    return NSItemProvider(object: NSURL(fileURLWithPath: path))
+                }
             } else {
-                return NSItemProvider(object: NSURL(fileURLWithPath: path))
+                return NSItemProvider() // I think a blank one will work alright
             }
         }
     }
