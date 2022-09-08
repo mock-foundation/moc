@@ -12,8 +12,6 @@ import SkeletonUI
 extension MessageView {
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
         ZStack {
-            // TODO: Properly use sizes array using thumbnail types
-            // https://core.telegram.org/api/files#image-thumbnail-types
             if let size = info.photo.sizes.getSize(.sBox) {
                 AsyncTdImage(
                     id: size.photo.id
@@ -63,7 +61,7 @@ extension MessageView {
         }
         .onDrag {
             if let path = info.photo.sizes.getSize(.dCrop)?.photo.local.path {
-                if #available(macOS 13.0, *) {
+                if #available(macOS 13, iOS 16, *) {
                     #if os(macOS)
                     return NSItemProvider(object: NSImage(contentsOfFile: path)!)
                     #elseif os(iOS)
