@@ -16,7 +16,6 @@ import Storage
 import Network
 import Defaults
 
-// swiftlint:disable type_body_length
 class MainViewModel: ObservableObject {
     @Injected var service: any MainService
     

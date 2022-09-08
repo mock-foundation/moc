@@ -4,27 +4,29 @@ import os
 /// Logging implementation. Uses os.Logger under the hood.
 public struct Logger {
     private let logger: os.Logger
+    private let label: String
 
     public init(category: String, label: String) {
         self.logger = os.Logger(subsystem: label, category: category)
+        self.label = label
     }
 
     public func log(_ message: String, level: LogLevel) {
         switch level {
             case .trace:
-                logger.trace("[trace] \(message)")
+                logger.trace("[\(label)] [trace] \(message)")
             case .debug:
-                logger.debug("[debug] \(message)")
+                logger.debug("[\(label)] [debug] \(message)")
             case .info:
-                logger.info("[info] \(message)")
+                logger.info("[\(label)] [info] \(message)")
             case .notice:
-                logger.notice("[notice] \(message)")
+                logger.notice("[\(label)] [notice] \(message)")
             case .warning:
-                logger.warning("[warning] \(message)")
+                logger.warning("[\(label)] [warning] \(message)")
             case .error:
-                logger.error("[error] \(message)")
+                logger.error("[\(label)] [error] \(message)")
             case .critical:
-                logger.critical("[critical] \(message)")
+                logger.critical("[\(label)] [critical] \(message)")
         }
     }
 

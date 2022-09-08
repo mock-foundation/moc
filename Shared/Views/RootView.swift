@@ -348,7 +348,7 @@ struct RootView: View {
         }
         #if os(macOS)
         .frame(minWidth: folderLayout == .vertical ? 400 : 380)
-        .background(SplitViewAccessor(sideCollapsed: $viewModel.isChatListVisible))
+        .isSidebarCollapsed($viewModel.isChatListVisible)
         #elseif os(iOS)
         .safeAreaInset(edge: .bottom) {
             tabBar

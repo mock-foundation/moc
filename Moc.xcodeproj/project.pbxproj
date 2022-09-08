@@ -116,7 +116,6 @@
 		439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4312863C5BA00339375 /* LoginView+2FACode.swift */; };
 		439E0E27287EE06900013A0F /* AboutCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E0E24287EDEE700013A0F /* AboutCommand.swift */; };
 		439F35EF28736E9800EE1ED7 /* MessageView+Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F35EE28736E9800EE1ED7 /* MessageView+Reply.swift */; };
-		43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */; platformFilters = (macos, ); };
 		43A0AF7F2864DFA500C0A8EF /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7E2864DFA500C0A8EF /* Shake.swift */; };
 		43A0AF812865173B00C0A8EF /* AsyncTdVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF802865173B00C0A8EF /* AsyncTdVideoPlayer.swift */; };
 		43A0AF832865183300C0A8EF /* MessageView+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF822865183300C0A8EF /* MessageView+Video.swift */; };
@@ -138,6 +137,7 @@
 		43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C0F49F285A69AA009F2419 /* FolderLayout.swift */; };
 		43C227C728C73E9900AE237C /* FormattedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227C628C73E9900AE237C /* FormattedTextView.swift */; };
 		43C227CB28CA344E00AE237C /* ConnectionState+Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227CA28CA344E00AE237C /* ConnectionState+Title.swift */; };
+		43C227CD28CA4F5800AE237C /* View+IntrospectNSSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227CC28CA4F5800AE237C /* View+IntrospectNSSplitView.swift */; platformFilters = (macos, ); };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
@@ -269,7 +269,6 @@
 		439BA4312863C5BA00339375 /* LoginView+2FACode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+2FACode.swift"; sourceTree = "<group>"; };
 		439E0E24287EDEE700013A0F /* AboutCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCommand.swift; sourceTree = "<group>"; };
 		439F35EE28736E9800EE1ED7 /* MessageView+Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Reply.swift"; sourceTree = "<group>"; };
-		43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewAccessor.swift; sourceTree = "<group>"; };
 		43A0AF7E2864DFA500C0A8EF /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		43A0AF802865173B00C0A8EF /* AsyncTdVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTdVideoPlayer.swift; sourceTree = "<group>"; };
 		43A0AF822865183300C0A8EF /* MessageView+Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Video.swift"; sourceTree = "<group>"; };
@@ -289,6 +288,7 @@
 		43C0F49F285A69AA009F2419 /* FolderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLayout.swift; sourceTree = "<group>"; };
 		43C227C628C73E9900AE237C /* FormattedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedTextView.swift; sourceTree = "<group>"; };
 		43C227CA28CA344E00AE237C /* ConnectionState+Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionState+Title.swift"; sourceTree = "<group>"; };
+		43C227CC28CA4F5800AE237C /* View+IntrospectNSSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+IntrospectNSSplitView.swift"; sourceTree = "<group>"; };
 		43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+FastStartSlowStop.swift"; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
@@ -606,7 +606,7 @@
 				43807D6227E213350056A3D3 /* SettingsContent.swift */,
 				43807D6B27E213350056A3D3 /* LottieView.swift */,
 				43807D7227E213350056A3D3 /* SearchField.swift */,
-				43A0AF7A2864A33800C0A8EF /* SplitViewAccessor.swift */,
+				43C227CC28CA4F5800AE237C /* View+IntrospectNSSplitView.swift */,
 				434A07162869003200A2BBA5 /* AVPlayerViewWrapper.swift */,
 				43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */,
 			);
@@ -952,6 +952,7 @@
 				4309BCF6283D6E6A00F43170 /* View+If.swift in Sources */,
 				43807DA027E213350056A3D3 /* AccountsPrefViewModel.swift in Sources */,
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
+				43C227CD28CA4F5800AE237C /* View+IntrospectNSSplitView.swift in Sources */,
 				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,
 				433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */,
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
@@ -975,7 +976,6 @@
 				43807D9727E213350056A3D3 /* ChatItem.swift in Sources */,
 				43B1029D288336E0009FCF53 /* ChatType+IsGroup.swift in Sources */,
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
-				43A0AF7B2864A33800C0A8EF /* SplitViewAccessor.swift in Sources */,
 				4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */,
 				439BA42C2863C4B200339375 /* LoginView+Code.swift in Sources */,
 			);
