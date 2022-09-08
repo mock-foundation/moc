@@ -39,7 +39,6 @@ class ChatViewModel: ObservableObject {
 
     @Published var chatID: Int64 = 0
     @Published var chatTitle = ""
-    @Published var chatMemberCount: Int?
     @Published var chatPhoto: File?
     @Published var isChannel = false
     
@@ -185,13 +184,14 @@ class ChatViewModel: ObservableObject {
         
         logger.debug("Chunked message history, length: \(messageHistory.count)")
 
-        // TODO: Finish reimplementing this
         
         DispatchQueue.main.async {
-            self.objectWillChange.send()
             self.chatPhoto = chat.photo?.small
-            self.chatMemberCount = nil
-            self.isChannel = false
+            switch chat.type {
+                case let .supergroup(info):
+                    self.isChannel = info.isChannel
+                default: self.isChannel = false
+            }
             self.messages = messageHistory
             self.scrollToEnd()
         }
