@@ -144,6 +144,7 @@ struct RootView: View {
     ) -> some View {
         Button {
             viewModel.openChatList = chatList
+            selectedTab = .chat
         } label: {
             FolderItem(
                 name: name,
@@ -152,6 +153,22 @@ struct RootView: View {
                 horizontal: horizontal)
             .background(viewModel.openChatList == chatList
                         ? Color("SelectedColor") : Color.clear)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        #if os(iOS)
+        .hoverEffect(viewModel.openChatList == chatList ? .lift : .highlight)
+        #endif
+    }
+    
+    private func makeTabSwitcherItem(icon: String, tab: Tab) -> some View {
+        Button {
+            selectedTab = tab
+            openedChat = nil
+            viewModel.openChatList = nil
+        } label: {
+            FolderItem(icon: Image(systemName: icon))
+            .background(selectedTab == tab ? Color("SelectedColor") : Color.clear)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         }
         .buttonStyle(.plain)
@@ -182,33 +199,14 @@ struct RootView: View {
     private var filterBar: some View {
         ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
             Group {
-                switch selectedTab {
-                    case .chat:
-                        if folderLayout == .vertical {
-                            VStack {
-                                makeFolders(horizontal: false)
-                            }
-                        } else {
-                            HStack {
-                                makeFolders(horizontal: true)
-                            }
-                        }
-                    case .contacts:
-                        FolderItem(name: "Nearby chats", icon: Image(systemName: "map"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItem(name: "Invite", icon: Image(systemName: "person.badge.plus"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    case .calls:
-                        FolderItem(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.green, .primary))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItem(name: "Outgoing", icon: Image(systemName: "phone.arrow.up.right"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItem(name: "Missed", icon: Image(systemName: "phone.arrow.down.left")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.red, .primary))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                if folderLayout == .vertical {
+                    VStack {
+                        makeFolders(horizontal: false)
+                    }
+                } else {
+                    HStack {
+                        makeFolders(horizontal: true)
+                    }
                 }
             }
             .frame(alignment: .center)
@@ -243,10 +241,8 @@ struct RootView: View {
         VStack {
             Divider()
                 .frame(width: 40)
-            FolderItem(icon: Image(systemName: "phone.and.waveform"))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            FolderItem(icon: Image(systemName: "person.2"))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            makeTabSwitcherItem(icon: "phone.and.waveform", tab: .calls)
+            makeTabSwitcherItem(icon: "person.2", tab: .contacts)
         }
     }
     

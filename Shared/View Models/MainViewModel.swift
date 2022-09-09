@@ -56,6 +56,8 @@ class MainViewModel: ObservableObject {
                 return chats(from: .archive)
             case .folder(let id):
                 return chats(from: .filter(.init(chatFilterId: id)))
+            case .none:
+                return []
         }
     }
     
@@ -82,26 +84,28 @@ class MainViewModel: ObservableObject {
     @Published var allChats: OrderedSet<Chat> = []
     @Published var chatPositions: [Int64: [ChatPosition]] = [:]
     
-    @Published var openChatList: Storage.ChatList = .main {
+    @Published var openChatList: Storage.ChatList? = .main {
         didSet {
-            logger.trace("openChatList: \(openChatList)")
-            if openChatList != .archive {
-                openChatListBuffer = openChatList
-            }
-            Task {
-                switch openChatList {
-                    case .main:
-                        _ = try await TdApi.shared.loadChats(
-                            chatList: .main,
-                            limit: 30)
-                    case .archive:
-                        _ = try await TdApi.shared.loadChats(
-                            chatList: .archive,
-                            limit: 30)
-                    case .folder(let id):
-                        _ = try await TdApi.shared.loadChats(
-                            chatList: .filter(.init(chatFilterId: id)),
-                            limit: 30)
+            if let openChatList {
+                logger.trace("openChatList: \(openChatList)")
+                if openChatList != .archive {
+                    openChatListBuffer = openChatList
+                }
+                Task {
+                    switch openChatList {
+                        case .main:
+                            _ = try await TdApi.shared.loadChats(
+                                chatList: .main,
+                                limit: 30)
+                        case .archive:
+                            _ = try await TdApi.shared.loadChats(
+                                chatList: .archive,
+                                limit: 30)
+                        case .folder(let id):
+                            _ = try await TdApi.shared.loadChats(
+                                chatList: .filter(.init(chatFilterId: id)),
+                                limit: 30)
+                    }
                 }
             }
         }
