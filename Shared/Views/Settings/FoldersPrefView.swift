@@ -116,10 +116,10 @@ struct FoldersPrefView: View {
     
     private var developerFolderList: some View {
         Table(viewModel.folders) {
-            TableColumn("Icon")  { folder in
+            TableColumn("Icon") { folder in
                 Image(tdIcon: folder.iconName)
             }
-            .width(40)
+            .width(min: 20, ideal: 40, max: 70)
             TableColumn("Title", value: \.title)
             TableColumn("ID") { folder in
                 Text("\(folder.id)")
