@@ -113,13 +113,24 @@ struct RootView: View {
             }
             #endif
             ToolbarItem(placement: chatListToolbarPlacement) {
-                Spacer()
+                if folderLayout == .horizontal {
+                    Spacer()
+                }
             }
-            ToolbarItemGroup(placement: chatListToolbarPlacement) {
+            ToolbarItem(placement: chatListToolbarPlacement) {
                 if viewModel.isChatListVisible {
                     Toggle(isOn: $viewModel.isArchiveOpen) {
                         Image(systemName: viewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                     }
+                }
+            }
+            ToolbarItem(placement: chatListToolbarPlacement) {
+                if folderLayout == .vertical {
+                    Spacer()
+                }
+            }
+            ToolbarItem(placement: chatListToolbarPlacement) {
+                if viewModel.isChatListVisible {
                     Button {
                         logger.info("Pressed add chat")
                     } label: {
@@ -351,12 +362,14 @@ struct RootView: View {
         HStack {
             if folderLayout == .vertical {
                 filterBar
+                    .transition(.move(edge: .leading))
                 chats
             } else {
                 chats
                     .safeAreaInset(edge: .top) {
                         if !viewModel.isArchiveOpen {
                             filterBar
+                                .transition(.move(edge: .top))
                                 #if os(macOS)
                                 .padding(.horizontal)
                                 #endif
@@ -372,6 +385,7 @@ struct RootView: View {
             tabBar
         }
         #endif
+        .animation(.fastStartSlowStop(), value: folderLayout)
         .overlay(alignment: .bottom) {
             if isConnectionStateShown {
                 connectionState
