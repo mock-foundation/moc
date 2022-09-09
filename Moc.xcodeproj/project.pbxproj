@@ -138,6 +138,7 @@
 		43C227C728C73E9900AE237C /* FormattedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227C628C73E9900AE237C /* FormattedTextView.swift */; };
 		43C227CB28CA344E00AE237C /* ConnectionState+Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227CA28CA344E00AE237C /* ConnectionState+Title.swift */; };
 		43C227CD28CA4F5800AE237C /* View+IntrospectNSSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227CC28CA4F5800AE237C /* View+IntrospectNSSplitView.swift */; platformFilters = (macos, ); };
+		43C227D128CB097A00AE237C /* View+Faded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227D028CB097A00AE237C /* View+Faded.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
@@ -289,6 +290,7 @@
 		43C227C628C73E9900AE237C /* FormattedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedTextView.swift; sourceTree = "<group>"; };
 		43C227CA28CA344E00AE237C /* ConnectionState+Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionState+Title.swift"; sourceTree = "<group>"; };
 		43C227CC28CA4F5800AE237C /* View+IntrospectNSSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+IntrospectNSSplitView.swift"; sourceTree = "<group>"; };
+		43C227D028CB097A00AE237C /* View+Faded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Faded.swift"; sourceTree = "<group>"; };
 		43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+FastStartSlowStop.swift"; sourceTree = "<group>"; };
 		43CA7FC9283E3988006E7AC9 /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
 		43EC18D92856207C00FCAD43 /* libSystem.B.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.B.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/usr/lib/libSystem.B.tbd; sourceTree = DEVELOPER_DIR; };
@@ -400,6 +402,7 @@
 				435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */,
 				43051C8B287791D0003C5CE2 /* CornerRectangle.swift */,
 				438B2284285E558F000D65C8 /* ProfilePlaceholderView.swift */,
+				43C227D028CB097A00AE237C /* View+Faded.swift */,
 				43C227C628C73E9900AE237C /* FormattedTextView.swift */,
 			);
 			path = Common;
@@ -936,6 +939,7 @@
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
 				43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */,
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
+				43C227D128CB097A00AE237C /* View+Faded.swift in Sources */,
 				43051C9228779363003C5CE2 /* ChatView+Inspector.swift in Sources */,
 				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
 				439E0E27287EE06900013A0F /* AboutCommand.swift in Sources */,

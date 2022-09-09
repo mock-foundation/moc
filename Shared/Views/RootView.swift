@@ -25,6 +25,7 @@ struct RootView: View {
     @State private var searchText = ""
     @State private var connectionStateColor = Color.clear
     @State private var isConnectionStateShown = true
+    @State private var filterBarAtTheTop = true
     @Default(.folderLayout) private var folderLayout
     
     #if os(iOS)
@@ -209,10 +210,15 @@ struct RootView: View {
     @ViewBuilder
     private var filterBar: some View {
         ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
-            Group {
+            ZStack {
                 if folderLayout == .vertical {
                     VStack {
                         makeFolders(horizontal: false)
+                    }
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: ScrollOffsetPreferenceKey.self,
+                            value: Int(proxy.frame(in: .named("filterBarScroll")).minY))
                     }
                 } else {
                     HStack {
@@ -231,9 +237,25 @@ struct RootView: View {
                 #endif
             }
         }
+        .coordinateSpace(name: "filterBarScroll")
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+            // Additional checks are there to not trigger UI update
+            // a heck amount of times when scrolling, which causes
+            // huge lags
+            if value == 0 {
+                if filterBarAtTheTop == false {
+                    filterBarAtTheTop = true
+                }
+            } else {
+                if filterBarAtTheTop == true {
+                    filterBarAtTheTop = false
+                }
+            }
+        }
         .if(folderLayout == .vertical) { view in
             view
                 .frame(width: viewModel.sidebarSize == .small ? 75 : 90)
+                .faded(top: !filterBarAtTheTop, bottom: true)
                 .safeAreaInset(edge: .bottom) {
                     tabSwitcher
                         .padding(.bottom, 4)
@@ -359,22 +381,20 @@ struct RootView: View {
     }
     
     private var sidebar: some View {
-        HStack {
-            if folderLayout == .vertical {
+        VStack {
+            if !viewModel.isArchiveOpen && folderLayout == .horizontal {
                 filterBar
-                    .transition(.move(edge: .leading))
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    #if os(macOS)
+                    .padding(.horizontal)
+                    #endif
+            }
+            HStack {
+                if folderLayout == .vertical {
+                    filterBar
+                        .transition(.move(edge: .leading))
+                }
                 chats
-            } else {
-                chats
-                    .safeAreaInset(edge: .top) {
-                        if !viewModel.isArchiveOpen {
-                            filterBar
-                                .transition(.move(edge: .top))
-                                #if os(macOS)
-                                .padding(.horizontal)
-                                #endif
-                        }
-                    }
             }
         }
         #if os(macOS)
