@@ -470,7 +470,7 @@ struct RootView: View {
                 Text("Open a chat or start a new one!")
                     .font(.largeTitle)
                     .foregroundStyle(Color.secondary)
-                Text("Pick any chat on the left sidebar, and have fun chatting!")
+                Text("Pick any chat in the chat list, and have fun!")
                     .foregroundStyle(Color.secondary)
             }
         }
