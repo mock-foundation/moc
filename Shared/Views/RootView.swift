@@ -42,23 +42,31 @@ struct RootView: View {
         case calls
     }
     
+    private func openChat(with id: Int64, postNotification: Bool = true) async throws {
+        try await openChat(try await TdApi.shared.getChat(chatId: id))
+    }
+    
+    private func openChat(_ instance: Chat, postNotification: Bool = true) async throws {
+        if postNotification {
+            SystemUtils.post(notification: .openChatWithInstance, with: instance)
+        }
+        try await TdApi.shared.openChat(chatId: instance.id)
+        if let openedChat {
+            try await TdApi.shared.closeChat(chatId: openedChat.id)
+        }
+        DispatchQueue.main.async {
+            openedChat = instance
+        }
+    }
+    
     private var chatList: some View {
         ScrollView {
             LazyVStack {
                 ForEach(viewModel.chatList) { chat in
                     Button {
                         Task {
-                            do {
-                                SystemUtils.post(notification: .openChatWithInstance, with: chat)
-                                _ = try await TdApi.shared.openChat(chatId: chat.id)
-                                if let openedChat {
-                                    _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
-                                }
-                            } catch {
-                                logger.error("Error in \(error.localizedDescription)")
-                            }
+                            try await openChat(chat)
                         }
-                        openedChat = chat
                     } label: {
                         ChatItem(chat: chat)
                             .frame(height: viewModel.sidebarSize.chatItemHeight)
@@ -68,6 +76,20 @@ struct RootView: View {
                             .environment(\.isChatListItemSelected, openedChat == chat)
                     }
                     .buttonStyle(.plain)
+                }
+            }
+            .onReceive(SystemUtils.ncPublisher(for: .openChatWithId)) { notification in
+                guard let chatId = notification.object as? Int64 else { return }
+                
+                Task {
+                    try await openChat(with: chatId, postNotification: false)
+                }
+            }
+            .onReceive(SystemUtils.ncPublisher(for: .openChatWithInstance)) { notification in
+                guard let instance = notification.object as? Chat else { return }
+                
+                Task {
+                    try await openChat(instance, postNotification: false)
                 }
             }
             .if(folderLayout == .vertical) {
@@ -242,7 +264,7 @@ struct RootView: View {
             // Additional checks are there to not trigger UI update
             // a heck amount of times when scrolling, which causes
             // huge lags
-            if value == 0 {
+            if value >= 0 {
                 if filterBarAtTheTop == false {
                     filterBarAtTheTop = true
                 }

@@ -34,6 +34,7 @@ struct AppCommands: Commands {
             Button {
                 Task {
                     let me = try await TdApi.shared.getMe()
+                    print(type(of: me.id))
                     SystemUtils.post(notification: .openChatWithId, with: me.id)
                 }
             } label: {
@@ -60,18 +61,21 @@ struct AppCommands: Commands {
                 }
             }
             Divider()
-            Button(action: {
+            Button {
                 Analytics.trackEvent("Opened \"Telegram Tips\" channel from the menubar")
-            }, label: {
+                print(type(of: -1001224624669))
+                SystemUtils.post(notification: .openChatWithId, with: -1001224624669)
+            } label: {
                 Image(systemName: "text.book.closed")
                 Text("Telegram Tips")
-            })
-            Button(action: {
+            }
+            Button {
                 Analytics.trackEvent("Opened \"Moc Updates\" channel from the menubar")
-            }, label: {
+                SystemUtils.post(notification: .openChatWithId, with: -1001734933131)
+            } label: {
                 Image(systemName: "newspaper")
                 Text("Moc Updates")
-            })
+            }
             Divider()
         }
     }

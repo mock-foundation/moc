@@ -19,6 +19,7 @@ struct FoldersPrefView: View {
     @StateObject private var viewModel = FoldersPrefViewModel()
     
     @Default(.folderLayout) var folderLayout
+    @Default(.showDeveloperInfo) var showDeveloperInfo
 
     fileprivate func makeFolderManipulationView(_ mode: FolderManipulationMode) -> some View {
         VStack {
@@ -73,7 +74,7 @@ struct FoldersPrefView: View {
         }
     }
     
-    private var folderList: some View {
+    private var normalFolderList: some View {
         List(viewModel.folders) { folder in
             Label { Text(folder.title) } icon: {
                 Image(tdIcon: folder.iconName)
@@ -109,6 +110,30 @@ struct FoldersPrefView: View {
                 } label: {
                     Text("Delete")
                 }
+            }
+        }
+    }
+    
+    private var developerFolderList: some View {
+        Table(viewModel.folders) {
+            TableColumn("Icon")  { folder in
+                Image(tdIcon: folder.iconName)
+            }
+            .width(40)
+            TableColumn("Title", value: \.title)
+            TableColumn("ID") { folder in
+                Text("\(folder.id)")
+            }
+            .width(40)
+        }
+    }
+    
+    private var folderList: some View {
+        Group {
+            if showDeveloperInfo {
+                developerFolderList
+            } else {
+                normalFolderList
             }
         }
         .frame(minHeight: 150)

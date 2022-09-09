@@ -42,7 +42,7 @@ class ChatViewModel: ObservableObject {
     @Published var chatPhoto: File?
     @Published var isChannel = false
     
-    var subscribers: [AnyCancellable] = []
+    var subscribers = Set<AnyCancellable>()
     var logger = Logs.Logger(category: "UI", label: "ChatViewModel")
     var inputMessageSubject = CurrentValueSubject<String, Never>("")
         
@@ -60,7 +60,9 @@ class ChatViewModel: ObservableObject {
             .store(in: &subscribers)
         SystemUtils.ncPublisher(for: .openChatWithId)
             .sink { notification in
+                self.logger.debug("Got openChatWithId notification")
                 guard let chatId = notification.object as? Int64 else { return }
+                self.logger.debug("Got chat ID from notification")
                                 
                 Task {
                     try await self.update(chat: try await TdApi.shared.getChat(chatId: chatId))
@@ -69,8 +71,10 @@ class ChatViewModel: ObservableObject {
             .store(in: &subscribers)
         SystemUtils.ncPublisher(for: .openChatWithInstance)
             .sink { notification in
+                self.logger.debug("Got openChatWithInstance notification")
                 guard let chat = notification.object as? Chat else { return }
-                
+                self.logger.debug("Got Chat objected")
+
                 Task {
                     try await self.update(chat: chat)
                 }
