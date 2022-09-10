@@ -17,6 +17,7 @@ private enum FolderManipulationMode {
 
 struct FoldersPrefView: View {
     @StateObject private var viewModel = FoldersPrefViewModel()
+    @State private var selectedFolders = Set<ChatFilterInfo.ID>()
     
     @Default(.folderLayout) var folderLayout
     @Default(.showDeveloperInfo) var showDeveloperInfo
@@ -115,7 +116,7 @@ struct FoldersPrefView: View {
     }
     
     private var developerFolderList: some View {
-        Table(viewModel.folders) {
+        Table(viewModel.folders, selection: $selectedFolders) {
             TableColumn("Icon") { folder in
                 Image(tdIcon: folder.iconName)
             }
