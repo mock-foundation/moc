@@ -17,8 +17,10 @@ private enum FolderManipulationMode {
 
 struct FoldersPrefView: View {
     @StateObject private var viewModel = FoldersPrefViewModel()
+    @State private var selectedFolders = Set<ChatFilterInfo.ID>()
     
     @Default(.folderLayout) var folderLayout
+    @Default(.showDeveloperInfo) var showDeveloperInfo
 
     fileprivate func makeFolderManipulationView(_ mode: FolderManipulationMode) -> some View {
         VStack {
@@ -73,9 +75,30 @@ struct FoldersPrefView: View {
         }
     }
     
+//    private var developerFolderList: some View {
+//        Table(viewModel.folders, selection: $selectedFolders) {
+//            TableColumn("Icon") { folder in
+//                Image(tdIcon: folder.iconName)
+//            }
+//            .width(min: 20, ideal: 40, max: 70)
+//            TableColumn("Title", value: \.title)
+//            TableColumn("ID") { folder in
+//                Text("\(folder.id)")
+//            }
+//            .width(40)
+//        }
+//    }
+    
     private var folderList: some View {
         List(viewModel.folders) { folder in
-            Label { Text(folder.title) } icon: {
+            Label {
+                if showDeveloperInfo {
+                    Text("\(folder.title) (ID: \(folder.id))")
+                        .textSelection(.enabled)
+                } else {
+                    Text(folder.title)
+                }
+            } icon: {
                 Image(tdIcon: folder.iconName)
             }
             .font(.title2)

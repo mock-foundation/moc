@@ -18,9 +18,7 @@ extension View {
 struct IsSidebarCollapsed: ViewModifier {
     @Binding var isSidebarCollapsed: Bool
     @State private var observer: Any?
-    
-    private let logger = Logger(category: "UI", label: "IsSidebarCollapsedModifier")
-    
+        
     init(_ isSidebarCollapsed: Binding<Bool>) {
         self._isSidebarCollapsed = isSidebarCollapsed
     }
@@ -33,13 +31,10 @@ struct IsSidebarCollapsed: ViewModifier {
                     from: introspectionView)
             },
             customize: { (splitView: NSSplitView) in
-                logger.debug("Found NSSplitView")
                 let controller = splitView.delegate as? NSSplitViewController
                 if let sideBar = controller?.splitViewItems.first {
-                    logger.debug("Found sidebar")
                     observer = sideBar.observe(\.isCollapsed, options: [.new]) { _, change in
                         if let value = change.newValue {
-                            logger.debug("New value: \(value)")
                             self.$isSidebarCollapsed.wrappedValue = !value
                         }
                     }

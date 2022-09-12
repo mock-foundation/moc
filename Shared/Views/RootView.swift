@@ -25,6 +25,7 @@ struct RootView: View {
     @State private var searchText = ""
     @State private var connectionStateColor = Color.clear
     @State private var isConnectionStateShown = true
+    @State private var filterBarAtTheTop = true
     @Default(.folderLayout) private var folderLayout
     
     #if os(iOS)
@@ -41,23 +42,29 @@ struct RootView: View {
         case calls
     }
     
+    private func openChat(with id: Int64, postNotification: Bool = true) async throws {
+        try await openChat(try await TdApi.shared.getChat(chatId: id), postNotification: postNotification)
+    }
+    
+    private func openChat(_ instance: Chat, postNotification: Bool = true) async throws {
+        if postNotification {
+            SystemUtils.post(notification: .openChatWithInstance, with: instance)
+        }
+        try await TdApi.shared.openChat(chatId: instance.id)
+        if let openedChat {
+            try await TdApi.shared.closeChat(chatId: openedChat.id)
+        }
+        openedChat = instance
+    }
+    
     private var chatList: some View {
         ScrollView {
             LazyVStack {
                 ForEach(viewModel.chatList) { chat in
                     Button {
                         Task {
-                            do {
-                                SystemUtils.post(notification: .openChatWithInstance, with: chat)
-                                _ = try await TdApi.shared.openChat(chatId: chat.id)
-                                if let openedChat {
-                                    _ = try await TdApi.shared.closeChat(chatId: openedChat.id)
-                                }
-                            } catch {
-                                logger.error("Error in \(error.localizedDescription)")
-                            }
+                            try await openChat(chat)
                         }
-                        openedChat = chat
                     } label: {
                         ChatItem(chat: chat)
                             .frame(height: viewModel.sidebarSize.chatItemHeight)
@@ -67,6 +74,20 @@ struct RootView: View {
                             .environment(\.isChatListItemSelected, openedChat == chat)
                     }
                     .buttonStyle(.plain)
+                }
+            }
+            .onReceive(SystemUtils.ncPublisher(for: .openChatWithId)) { notification in
+                guard let chatId = notification.object as? Int64 else { return }
+                
+                Task {
+                    try await openChat(with: chatId, postNotification: false)
+                }
+            }
+            .onReceive(SystemUtils.ncPublisher(for: .openChatWithInstance)) { notification in
+                guard let instance = notification.object as? Chat else { return }
+                
+                Task {
+                    try await openChat(instance, postNotification: false)
                 }
             }
             .if(folderLayout == .vertical) {
@@ -93,28 +114,44 @@ struct RootView: View {
         return Group {
             #if os(macOS)
             ToolbarItemGroup(placement: chatListToolbarPlacement) {
-                if #unavailable(macOS 13) {
-                    Button(action: toggleSidebar) {
-                        Label("Toggle chat list", systemImage: "sidebar.left")
+                if folderLayout == .horizontal {
+                    if #unavailable(macOS 13) {
+                        Button(action: toggleSidebar) {
+                            Label("Toggle chat list", systemImage: "sidebar.left")
+                        }
                     }
-                }
-                if viewModel.isChatListVisible {
-                    Picker("", selection: $selectedTab) {
-                        Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
-                        Image(systemName: "phone.and.waveform").tag(Tab.calls)
-                        Image(systemName: "person.2").tag(Tab.contacts)
-                    }.pickerStyle(.segmented)
+                    if viewModel.isChatListVisible {
+                        Picker(selection: $selectedTab) {
+                            Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)
+                            Image(systemName: "phone.and.waveform").tag(Tab.calls)
+                            Image(systemName: "person.2").tag(Tab.contacts)
+                        } label: {
+                            EmptyView()
+                        }
+                        .pickerStyle(.segmented)
+                    }
                 }
             }
             #endif
             ToolbarItem(placement: chatListToolbarPlacement) {
-                Spacer()
+                if folderLayout == .horizontal {
+                    Spacer()
+                }
             }
-            ToolbarItemGroup(placement: chatListToolbarPlacement) {
+            ToolbarItem(placement: chatListToolbarPlacement) {
                 if viewModel.isChatListVisible {
                     Toggle(isOn: $viewModel.isArchiveOpen) {
                         Image(systemName: viewModel.isArchiveOpen ? "archivebox.fill" : "archivebox")
                     }
+                }
+            }
+            ToolbarItem(placement: chatListToolbarPlacement) {
+                if folderLayout == .vertical {
+                    Spacer()
+                }
+            }
+            ToolbarItem(placement: chatListToolbarPlacement) {
+                if viewModel.isChatListVisible {
                     Button {
                         logger.info("Pressed add chat")
                     } label: {
@@ -139,6 +176,7 @@ struct RootView: View {
     ) -> some View {
         Button {
             viewModel.openChatList = chatList
+            selectedTab = .chat
         } label: {
             FolderItem(
                 name: name,
@@ -147,6 +185,22 @@ struct RootView: View {
                 horizontal: horizontal)
             .background(viewModel.openChatList == chatList
                         ? Color("SelectedColor") : Color.clear)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        #if os(iOS)
+        .hoverEffect(viewModel.openChatList == chatList ? .lift : .highlight)
+        #endif
+    }
+    
+    private func makeTabSwitcherItem(icon: String, tab: Tab) -> some View {
+        Button {
+            selectedTab = tab
+            openedChat = nil
+            viewModel.openChatList = nil
+        } label: {
+            FolderItem(icon: Image(systemName: icon))
+            .background(selectedTab == tab ? Color("SelectedColor") : Color.clear)
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         }
         .buttonStyle(.plain)
@@ -176,34 +230,20 @@ struct RootView: View {
     @ViewBuilder
     private var filterBar: some View {
         ScrollView(folderLayout == .vertical ? .vertical : .horizontal, showsIndicators: false) {
-            Group {
-                switch selectedTab {
-                    case .chat:
-                        if folderLayout == .vertical {
-                            VStack {
-                                makeFolders(horizontal: false)
-                            }
-                        } else {
-                            HStack {
-                                makeFolders(horizontal: true)
-                            }
-                        }
-                    case .contacts:
-                        FolderItem(name: "Nearby chats", icon: Image(systemName: "map"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItem(name: "Invite", icon: Image(systemName: "person.badge.plus"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    case .calls:
-                        FolderItem(name: "Ingoing", icon: Image(systemName: "phone.arrow.down.left")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.green, .primary))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItem(name: "Outgoing", icon: Image(systemName: "phone.arrow.up.right"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        FolderItem(name: "Missed", icon: Image(systemName: "phone.arrow.down.left")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.red, .primary))
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            ZStack {
+                if folderLayout == .vertical {
+                    VStack {
+                        makeFolders(horizontal: false)
+                    }
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: ScrollOffsetPreferenceKey.self,
+                            value: Int(proxy.frame(in: .named("filterBarScroll")).minY))
+                    }
+                } else {
+                    HStack {
+                        makeFolders(horizontal: true)
+                    }
                 }
             }
             .frame(alignment: .center)
@@ -217,14 +257,45 @@ struct RootView: View {
                 #endif
             }
         }
-        .if(folderLayout == .vertical) {
-            $0.frame(width: viewModel.sidebarSize == .small ? 75 : 90)
+        .coordinateSpace(name: "filterBarScroll")
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+            // Additional checks are there to not trigger UI update
+            // a heck amount of times when scrolling, which causes
+            // huge lags
+            if value >= 0 {
+                if filterBarAtTheTop == false {
+                    filterBarAtTheTop = true
+                }
+            } else {
+                if filterBarAtTheTop == true {
+                    filterBarAtTheTop = false
+                }
+            }
+        }
+        .if(folderLayout == .vertical) { view in
+            view
+                .frame(width: viewModel.sidebarSize == .small ? 75 : 90)
+                .faded(top: !filterBarAtTheTop, bottom: true)
+                .safeAreaInset(edge: .bottom) {
+                    tabSwitcher
+                        .padding(.bottom, 4)
+                }
         } else: {
             $0
             #if os(iOS)
             .background(.bar, in: Rectangle())
             #endif
             .frame(minWidth: 0, maxWidth: .infinity)
+        }
+    }
+    
+    // Vertical tab switcher
+    private var tabSwitcher: some View {
+        VStack {
+            Divider()
+                .frame(width: 40)
+            makeTabSwitcherItem(icon: "phone.and.waveform", tab: .calls)
+            makeTabSwitcherItem(icon: "person.2", tab: .contacts)
         }
     }
     
@@ -330,20 +401,20 @@ struct RootView: View {
     }
     
     private var sidebar: some View {
-        HStack {
-            if folderLayout == .vertical {
+        VStack {
+            if !viewModel.isArchiveOpen && folderLayout == .horizontal {
                 filterBar
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    #if os(macOS)
+                    .padding(.horizontal)
+                    #endif
+            }
+            HStack {
+                if folderLayout == .vertical {
+                    filterBar
+                        .transition(.move(edge: .leading))
+                }
                 chats
-            } else {
-                chats
-                    .safeAreaInset(edge: .top) {
-                        if !viewModel.isArchiveOpen {
-                            filterBar
-                                #if os(macOS)
-                                .padding(.horizontal)
-                                #endif
-                        }
-                    }
             }
         }
         #if os(macOS)
@@ -354,6 +425,7 @@ struct RootView: View {
             tabBar
         }
         #endif
+        .animation(.fastStartSlowStop(), value: folderLayout)
         .overlay(alignment: .bottom) {
             if isConnectionStateShown {
                 connectionState
@@ -394,8 +466,8 @@ struct RootView: View {
     
     @ViewBuilder
     var content: some View {
-        if openedChat != nil {
-            ChatView()
+        if let openedChat {
+            ChatView(openedChat)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 #if os(iOS)
                 .introspectNavigationController { vc in
@@ -418,7 +490,7 @@ struct RootView: View {
                 Text("Open a chat or start a new one!")
                     .font(.largeTitle)
                     .foregroundStyle(Color.secondary)
-                Text("Pick any chat on the left sidebar, and have fun chatting!")
+                Text("Pick any chat in the chat list, and have fun!")
                     .foregroundStyle(Color.secondary)
             }
         }

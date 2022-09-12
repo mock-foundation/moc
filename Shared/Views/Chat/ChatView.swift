@@ -18,8 +18,13 @@ struct ChatView: View {
     @StateObject var viewModel = ChatViewModel()
     @FocusState var isInputFieldFocused
     @Default(.showDeveloperInfo) var showDeveloperInfo
+    let tempChat: Chat
     
     let logger = Logger(category: "UI", label: "ChatView")
+    
+    init(_ chat: Chat) {
+        self.tempChat = chat
+    }
     
     var chatView: some View {
         ZStack {
@@ -161,16 +166,21 @@ struct ChatView: View {
         .toolbar {
             toolbar
         }
+        .onAppear {
+            Task {
+                try await viewModel.update(chat: tempChat)
+            }
+        }
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
-    init() {
-        Resolver.register { MockChatService() as (any ChatService) }
-    }
-
-    static var previews: some View {
-        ChatView()
-            .frame(width: 800, height: 600)
-    }
-}
+//struct ChatView_Previews: PreviewProvider {
+//    init() {
+//        Resolver.register { MockChatService() as (any ChatService) }
+//    }
+//
+//    static var previews: some View {
+//        ChatView()
+//            .frame(width: 800, height: 600)
+//    }
+//}

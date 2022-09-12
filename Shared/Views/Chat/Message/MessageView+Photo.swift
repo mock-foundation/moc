@@ -13,7 +13,7 @@ extension MessageView {
     // swiftlint:disable function_body_length
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
         ZStack {
-            if let size = info.photo.sizes.getSize(.sBox) {
+            if let size = info.photo.sizes.getSize(.yBox) {
                 AsyncTdImage(
                     id: size.photo.id
                 ) { image in
@@ -33,7 +33,7 @@ extension MessageView {
         }
         .frame(minWidth: 0, maxWidth: 350, minHeight: 0, maxHeight: 200)
         .background {
-            if let size = info.photo.sizes.getSize(.sBox) {
+            if let size = info.photo.sizes.getSize(.yBox) {
                 AsyncTdImage(
                     id: size.photo.id
                 ) { image in

@@ -29,18 +29,33 @@ public class StorageService {
             in: .userDomainMask,
             appropriateFor: nil,
             create: true)
+        
+        if #available(macOS 13, iOS 16, *) {
+            url.append(path: "Moc")
+        } else {
+            url.appendPathComponent("Moc")
+        }
+        
+        try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
         if #available(macOS 13, iOS 16, *) {
             url.append(path: "database.sqlite")
         } else {
             url.appendPathComponent("database.sqlite")
         }
+        
         var dir = ""
         if #available(macOS 13, iOS 16, *) {
             dir = url.path()
         } else {
             dir = url.path
         }
+        if #available(macOS 13.0, *) {
+            dir.replace("%20", with: " ")
+        } else {
+            dir = dir.replacingOccurrences(of: "%20", with: " ")
+        }
+
         logger.debug("Database path: \(dir)")
         dbQueue = try! DatabaseQueue(path: dir)
 

@@ -55,7 +55,7 @@ private extension SidebarSize {
 }
 
 struct FolderItem<Icon: View>: View {
-    let name: String
+    let name: String?
     let icon: Icon
     let unreadCount: Int
     let horizontal: Bool
@@ -66,7 +66,7 @@ struct FolderItem<Icon: View>: View {
     private let selectedColor = Color("FolderItemSelectedColor")
     
     init(
-        name: String,
+        name: String? = nil,
         icon: @autoclosure () -> Icon,
         unreadCount: Int = 0,
         horizontal: Bool = false
@@ -87,14 +87,18 @@ struct FolderItem<Icon: View>: View {
     private var content: some View {
         if horizontal {
             HStack {
-                Label {
-                    Text(name)
-                        .lineLimit(1)
-                        .fixedSize()
-                } icon: {
-                    icon
+                if let name {
+                    Label {
+                        Text(name)
+                            .lineLimit(1)
+                            .fixedSize()
+                    } icon: {
+                        icon
+                    }
+                    .font(sidebarSize.textFont)
+                } else {
+                    icon.font(sidebarSize.textFont)
                 }
-                .font(sidebarSize.textFont)
                 
                 if unreadCount != 0 {
                     counter
@@ -119,7 +123,9 @@ struct FolderItem<Icon: View>: View {
         } else {
             VStack {
                 icon.font(sidebarSize.iconFont)
-                Text(name).font(sidebarSize.textFont)
+                if let name {
+                    Text(name).font(sidebarSize.textFont)
+                }
             }
             .padding(.vertical, 8)
             .onHover { isHovered in
@@ -129,7 +135,9 @@ struct FolderItem<Icon: View>: View {
                     backgroundColor = Color.clear
                 }
             }
-            .frame(width: sidebarSize.itemWidth, height: sidebarSize.itemHeight)
+            .frame(
+                width: sidebarSize.itemWidth,
+                height: name == nil ? sidebarSize.itemHeight - 15 : sidebarSize.itemHeight)
         }
     }
     
