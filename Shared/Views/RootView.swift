@@ -319,15 +319,21 @@ struct RootView: View {
         }
         #if os(macOS)
         .safeAreaInset(edge: .top) {
-            SearchField()
-                .controlSize(.large)
-                .if(folderLayout == .vertical) {
-                    $0.padding(.trailing, 12)
-                } else: {
-                    $0.padding(.horizontal, 12)
-                }
+            if folderLayout == .vertical {
+                searchField
+            }
         }
         #endif
+    }
+    
+    private var searchField: some View {
+        SearchField()
+            .controlSize(.large)
+            .if(folderLayout == .vertical) {
+                $0.padding(.trailing, 12)
+            } else: {
+                $0.padding(.horizontal, 12)
+            }
     }
     
     #if os(iOS)
@@ -403,12 +409,15 @@ struct RootView: View {
     
     private var sidebar: some View {
         VStack {
-            if !viewModel.isArchiveOpen && folderLayout == .horizontal {
-                filterBar
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                    #if os(macOS)
-                    .padding(.horizontal)
-                    #endif
+            if selectedTab == .chat && folderLayout == .horizontal {
+                searchField
+                if !viewModel.isArchiveOpen {
+                    filterBar
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        #if os(macOS)
+                        .padding(.horizontal)
+                        #endif
+                }
             }
             HStack {
                 if folderLayout == .vertical {
