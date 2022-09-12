@@ -8,15 +8,13 @@
 import SwiftUI
 import Introspect
 
+#if os(iOS)
 extension View {
     func sidebarSize(_ size: Double) -> some View {
-        #if os(iOS)
         self.introspectNavigationController { navigationController in
             navigationController.splitViewController?.preferredPrimaryColumnWidthFraction = 1
             navigationController.splitViewController?.maximumPrimaryColumnWidth = size
         }
-        #elseif os(macOS)
-        self
-        #endif
     }
 }
+#endif

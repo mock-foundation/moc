@@ -14,6 +14,7 @@ import Resolver
 import SwiftUI
 import Utilities
 import Logs
+import WhatsNewKit
 
 public extension Resolver {
     static func registerServices() {
@@ -90,6 +91,10 @@ struct MocApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environment(\.whatsNew, WhatsNewEnvironment(
+                    versionStore: whatsNewStore,
+                    whatsNewCollection: whatsNewCollection
+                ))
         }
         .onChange(of: scenePhase) { phase in
             Task {

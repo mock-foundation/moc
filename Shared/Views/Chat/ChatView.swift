@@ -173,14 +173,3 @@ struct ChatView: View {
         }
     }
 }
-
-//struct ChatView_Previews: PreviewProvider {
-//    init() {
-//        Resolver.register { MockChatService() as (any ChatService) }
-//    }
-//
-//    static var previews: some View {
-//        ChatView()
-//            .frame(width: 800, height: 600)
-//    }
-//}

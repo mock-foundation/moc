@@ -14,6 +14,7 @@ import OrderedCollections
 import Storage
 import Introspect
 import Defaults
+import WhatsNewKit
 
 // swiftlint:disable type_body_length file_length
 struct RootView: View {
@@ -531,6 +532,7 @@ struct RootView: View {
         }
         .transition(.scale)
         .animation(.spring(), value: viewModel.showingLoginScreen)
+        .whatsNewSheet()
     }
 }
 
