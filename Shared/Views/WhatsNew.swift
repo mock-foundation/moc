@@ -30,7 +30,10 @@ let whatsNewCollection: WhatsNewCollection = [
                     systemName: "text.and.command.macwindow",
                     foregroundColor: .orange),
                 title: "Chat Shortcuts",
-                subtitle: "Add chats to Chat Shortcuts, and easily access them by using the menubar or even by pressing 􀆔 and the chat index!"),
+                subtitle: """
+                    Add chats to Chat Shortcuts, and easily access them by using \
+                    the menubar or even by pressing 􀆔 and the chat index!
+                    """),
             .init(
                 image: .init(
                     systemName: "laptopcomputer.and.ipad",
