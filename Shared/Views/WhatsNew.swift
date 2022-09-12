@@ -30,7 +30,7 @@ let whatsNewCollection: WhatsNewCollection = [
                     systemName: "text.and.command.macwindow",
                     foregroundColor: .orange),
                 title: "Chat Shortcuts",
-                subtitle: "Moc can now apply styling to text, like bold, italic, or even links!"),
+                subtitle: "Add chats to Chat Shortcuts, and easily access them by using the menubar or even by pressing 􀆔 and the chat index!"),
             .init(
                 image: .init(
                     systemName: "laptopcomputer.and.ipad",
