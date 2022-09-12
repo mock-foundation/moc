@@ -17,13 +17,11 @@ public class TdFoldersPrefService: FoldersPrefService {
         tdApi.client.updateSubject
     }
 
-    public init() {}
+    public init() { }
 
     public func getFilters() async throws -> [ChatFilterInfo] {
         try! StorageService.shared.getRecords(as: Storage.ChatFolder.self, ordered: [Column("order").asc])
-            .map { cached in
-                ChatFilterInfo(from: cached)
-            }
+            .map(ChatFilterInfo.init(from:))
     }
 
     public func getFilter(by id: Int) async throws -> TDLibKit.ChatFilter {

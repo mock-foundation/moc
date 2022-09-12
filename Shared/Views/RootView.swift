@@ -43,7 +43,7 @@ struct RootView: View {
     }
     
     private func openChat(with id: Int64, postNotification: Bool = true) async throws {
-        try await openChat(try await TdApi.shared.getChat(chatId: id))
+        try await openChat(try await TdApi.shared.getChat(chatId: id), postNotification: postNotification)
     }
     
     private func openChat(_ instance: Chat, postNotification: Bool = true) async throws {
@@ -54,9 +54,7 @@ struct RootView: View {
         if let openedChat {
             try await TdApi.shared.closeChat(chatId: openedChat.id)
         }
-        DispatchQueue.main.async {
-            openedChat = instance
-        }
+        openedChat = instance
     }
     
     private var chatList: some View {
@@ -468,8 +466,8 @@ struct RootView: View {
     
     @ViewBuilder
     var content: some View {
-        if openedChat != nil {
-            ChatView()
+        if let openedChat {
+            ChatView(openedChat)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 #if os(iOS)
                 .introspectNavigationController { vc in

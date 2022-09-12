@@ -75,9 +75,30 @@ struct FoldersPrefView: View {
         }
     }
     
-    private var normalFolderList: some View {
+//    private var developerFolderList: some View {
+//        Table(viewModel.folders, selection: $selectedFolders) {
+//            TableColumn("Icon") { folder in
+//                Image(tdIcon: folder.iconName)
+//            }
+//            .width(min: 20, ideal: 40, max: 70)
+//            TableColumn("Title", value: \.title)
+//            TableColumn("ID") { folder in
+//                Text("\(folder.id)")
+//            }
+//            .width(40)
+//        }
+//    }
+    
+    private var folderList: some View {
         List(viewModel.folders) { folder in
-            Label { Text(folder.title) } icon: {
+            Label {
+                if showDeveloperInfo {
+                    Text("\(folder.title) (ID: \(folder.id))")
+                        .textSelection(.enabled)
+                } else {
+                    Text(folder.title)
+                }
+            } icon: {
                 Image(tdIcon: folder.iconName)
             }
             .font(.title2)
@@ -111,30 +132,6 @@ struct FoldersPrefView: View {
                 } label: {
                     Text("Delete")
                 }
-            }
-        }
-    }
-    
-    private var developerFolderList: some View {
-        Table(viewModel.folders, selection: $selectedFolders) {
-            TableColumn("Icon") { folder in
-                Image(tdIcon: folder.iconName)
-            }
-            .width(min: 20, ideal: 40, max: 70)
-            TableColumn("Title", value: \.title)
-            TableColumn("ID") { folder in
-                Text("\(folder.id)")
-            }
-            .width(40)
-        }
-    }
-    
-    private var folderList: some View {
-        Group {
-            if showDeveloperInfo {
-                developerFolderList
-            } else {
-                normalFolderList
             }
         }
         .frame(minHeight: 150)
