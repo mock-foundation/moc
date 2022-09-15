@@ -17,7 +17,10 @@ import UIKit
 #endif
 
 public extension TdApi {
-    static var shared: TdApi = TdApi(client: TdClientImpl(completionQueue: .global()))
+    static let queue = DispatchQueue(
+        label: "TDLib",
+        qos: .userInteractive)
+    static var shared: TdApi = TdApi(client: TdClientImpl(completionQueue: TdApi.queue))
 
     private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
@@ -88,7 +91,7 @@ public extension TdApi {
                                 }
                             case .closed:
                                 TdApi.shared = TdApi(
-                                    client: TdClientImpl(completionQueue: .global())
+                                    client: TdClientImpl(completionQueue: TdApi.queue)
                                 )
                                 TdApi.shared.startTdLibUpdateHandler()
                             default: break

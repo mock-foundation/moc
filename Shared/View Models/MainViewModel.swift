@@ -81,7 +81,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    @Published var allChats: OrderedSet<Chat> = []
+    @Published var allChats = Set<Chat>()
     @Published var chatPositions: [Int64: [ChatPosition]] = [:]
     
     @Published var openChatList: Storage.ChatList? = .main {
@@ -140,7 +140,7 @@ class MainViewModel: ObservableObject {
     init() {
         service.updateSubject
             .receive(on: RunLoop.main)
-            .sink { _ in } receiveValue: { [self] update in
+            .sink { [self] update in
                 switch update {
                     case let .chatPosition(info):
                         updateChatPosition(info)
@@ -271,8 +271,12 @@ class MainViewModel: ObservableObject {
     }
     
     func updateNewChat(_ update: UpdateNewChat) {
-        _ = withAnimation(.fastStartSlowStop()) {
-            allChats.updateOrAppend(update.chat)
+        withAnimation(.fastStartSlowStop()) {
+            let index = allChats.firstIndex(where: { $0.id == update.chat.id })
+            if let index {
+                allChats.remove(at: index)
+            }
+            allChats.update(with: update.chat)
         }
     }
     
