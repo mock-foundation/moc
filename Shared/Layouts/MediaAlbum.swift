@@ -80,7 +80,7 @@ struct MediaAlbum: Layout {
         // Arguments from the original function so I
         // don't waste time refactoring that steaming
         // pile of garbage
-        let maxSize = proposal.replacingUnspecifiedDimensions(by: CGSize(width: 256, height: 256))
+        let maxSize = proposal.replacingUnspecifiedDimensions(by: CGSize(width: 256, height: 356))
         let itemSizes = subviews.map { subview in
             subview.sizeThatFits(.unspecified)
         }
