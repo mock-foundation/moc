@@ -11,7 +11,12 @@ import Logs
 import Utilities
 
 struct MessageView: View {
+    @Environment(\.colorSchemeContrast) var colorSchemeContrast
+
     @State var message: [Moc.Message]
+
+    @State var usernameColor: Color?
+    @State var replyUsernameColor: Color?
     
     // Internal state
     
@@ -67,7 +72,9 @@ struct MessageView: View {
                                 replyView
                                 if !mainMessage.isOutgoing && mainMessage.replyToMessage == nil {
                                     Text(mainMessage.sender.name)
-                                        .foregroundColor(Color(fromUserId: message.first!.sender.id))
+                                        .foregroundColor(self.usernameColor?
+                                            .withLuminosity(colorSchemeContrast)
+                                            ?? .white)
                                 }
                                 makeText(for: info.text)
                             }
@@ -133,6 +140,12 @@ struct MessageView: View {
         }
         .if(!mainMessage.isOutgoing) {
             $0.padding(.leading, 6)
+        }
+        .onAppear {
+            Task {
+                let userId = mainMessage.sender.id
+                self.usernameColor = try await Color(from: userId) ?? Color(fromUserId: userId)
+            }
         }
     }
 }
