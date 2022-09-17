@@ -5,12 +5,13 @@
 //  Created by Егор Яковенко on 16.09.2022.
 //
 
-import SwiftUI
 #if os(macOS)
 import AppKit
 #elseif os(iOS)
 import UIKit
 #endif
+import SwiftUI
+import Logs
 
 // swiftlint:disable line_length
 // TODO: Finish this
@@ -25,6 +26,8 @@ import UIKit
 // swiftlint:disable type_body_length file_length
 struct MediaAlbum: Layout {
     typealias AlbumLayout = ([(CGRect, ItemPosition)], CGSize)
+    private let logger = Logger(category: "UI_Layout", label: "MediaAlbum")
+    
     // swiftlint:enable line_length
     func sizeThatFits(
         proposal: ProposedViewSize,
@@ -32,6 +35,7 @@ struct MediaAlbum: Layout {
         cache: inout AlbumLayout?
     ) -> CGSize {
         return getCachedLayout(proposal, subviews, &cache).1
+//        return CGSize(width: CGFloat.infinity, height: CGFloat.infinity)
     }
     
     func placeSubviews(
@@ -41,6 +45,7 @@ struct MediaAlbum: Layout {
         cache: inout AlbumLayout?
     ) {
         let layout = getCachedLayout(proposal, subviews, &cache).0
+//        let layout = cache.0
         
         for (index, item) in layout.enumerated() {
             let subview = subviews[index]
@@ -70,17 +75,20 @@ struct MediaAlbum: Layout {
     }
     
     func makeCache(subviews: Subviews) -> AlbumLayout? {
-        return nil // not enough info to generate a layout
+//        return generateLayout(
+//            proposal: .infinity,
+//            subviews: subviews)
+        return nil
     }
     
     // Please don't kill me for this code, I just got it from TG iOS, it's
     // not documented at all
     // swiftlint:disable cyclomatic_complexity function_body_length
-    func generateLayout(proposal: ProposedViewSize, subviews: Subviews) -> AlbumLayout {
+    private func generateLayout(proposal: ProposedViewSize, subviews: Subviews) -> AlbumLayout {
         // Arguments from the original function so I
         // don't waste time refactoring that steaming
         // pile of garbage
-        let maxSize = proposal.replacingUnspecifiedDimensions(by: CGSize(width: 256, height: 356))
+        let maxSize = proposal.replacingUnspecifiedDimensions(by: CGSize(width: 256, height: 256))
         let itemSizes = subviews.map { subview in
             subview.sizeThatFits(.unspecified)
         }

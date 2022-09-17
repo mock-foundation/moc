@@ -27,108 +27,12 @@ extension MessageView {
                             ForEach(message, id: \.id) { albumMessage in
                                 makeMedia(from: albumMessage.content)
                             }
-                        }
+                        }.frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        switch message.count { // go through all possible cases of media count in an album
-                                // TODO: these grids are shit
-                            case 1:
-                                makeMedia(from: message[0].content)
-                            case 2:
-                                LazyVGrid(columns: [GridItem(), GridItem()]) {
-                                    makeMedia(from: message[0].content)
-                                    makeMedia(from: message[1].content)
-                                }
-                            case 3:
-                                LazyVGrid(columns: [GridItem(), GridItem()]) {
-                                    makeMedia(from: message[0].content)
-                                    VStack {
-                                        makeMedia(from: message[1].content)
-                                        makeMedia(from: message[2].content)
-                                    }
-                                }
-                            case 4:
-                                LazyVGrid(columns: [GridItem(), GridItem()]) {
-                                    ForEach(0..<4) { index in
-                                        makeMedia(from: message[index].content)
-                                    }
-                                }
-                            case 5:
-                                LazyHGrid(rows: [GridItem(), GridItem()]) {
-                                    HStack {
-                                        makeMedia(from: message[0].content)
-                                        makeMedia(from: message[1].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[2].content)
-                                        makeMedia(from: message[3].content)
-                                        makeMedia(from: message[4].content)
-                                    }
-                                }
-                            case 6:
-                                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
-                                    ForEach(0..<6) { index in
-                                        makeMedia(from: message[index].content)
-                                    }
-                                }
-                            case 7:
-                                LazyHGrid(rows: [GridItem(), GridItem(), GridItem()]) {
-                                    HStack {
-                                        makeMedia(from: message[0].content)
-                                        makeMedia(from: message[1].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[2].content)
-                                        makeMedia(from: message[3].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[4].content)
-                                        makeMedia(from: message[5].content)
-                                        makeMedia(from: message[6].content)
-                                    }
-                                }
-                            case 8:
-                                LazyHGrid(rows: [GridItem(), GridItem(), GridItem()]) {
-                                    HStack {
-                                        makeMedia(from: message[0].content)
-                                        makeMedia(from: message[1].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[2].content)
-                                        makeMedia(from: message[3].content)
-                                        makeMedia(from: message[4].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[5].content)
-                                        makeMedia(from: message[6].content)
-                                        makeMedia(from: message[7].content)
-                                    }
-                                }
-                            case 9:
-                                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
-                                    ForEach(0..<9) { index in
-                                        makeMedia(from: message[index].content)
-                                    }
-                                }
-                            case 10:
-                                LazyHGrid(rows: [GridItem(), GridItem(), GridItem()]) {
-                                    HStack {
-                                        makeMedia(from: message[0].content)
-                                        makeMedia(from: message[1].content)
-                                        makeMedia(from: message[2].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[3].content)
-                                        makeMedia(from: message[4].content)
-                                        makeMedia(from: message[5].content)
-                                        makeMedia(from: message[6].content)
-                                    }
-                                    HStack {
-                                        makeMedia(from: message[7].content)
-                                        makeMedia(from: message[8].content)
-                                        makeMedia(from: message[9].content)
-                                    }
-                                }
-                            default: EmptyView()
+                        HStack {
+                            ForEach(message, id: \.id) { message in
+                                makeMedia(from: message.content)
+                            }
                         }
                     }
                 } else {

@@ -19,7 +19,11 @@ extension MessageView {
                 ) { image in
                     image
                         .resizable()
-                        .aspectRatio(contentMode: contentMode)
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .border(Color.pink)
+                        .clipped()
+//                        .aspectRatio(contentMode: contentMode)
                 } placeholder: {
                     Rectangle()
                         .skeleton(with: true)
