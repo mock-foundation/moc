@@ -146,6 +146,9 @@
 		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
 		43F610FE28B01E830098C3BD /* MessageBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
+		DF12907A28D6276700F5F9D7 /* Color+ContrastRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF12907928D6276700F5F9D7 /* Color+ContrastRatio.swift */; };
+		DF12907C28D6276F00F5F9D7 /* CGFloat+Convertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF12907B28D6276F00F5F9D7 /* CGFloat+Convertions.swift */; };
+		DF12907E28D6277600F5F9D7 /* Color+DynamicUserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF12907D28D6277600F5F9D7 /* Color+DynamicUserID.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -303,6 +306,9 @@
 		43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleShape.swift; sourceTree = "<group>"; };
 		43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
+		DF12907928D6276700F5F9D7 /* Color+ContrastRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Color+ContrastRatio.swift"; path = "../../../../Downloads/Color+ContrastRatio.swift"; sourceTree = "<group>"; };
+		DF12907B28D6276F00F5F9D7 /* CGFloat+Convertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGFloat+Convertions.swift"; path = "../../../../Downloads/CGFloat+Convertions.swift"; sourceTree = "<group>"; };
+		DF12907D28D6277600F5F9D7 /* Color+DynamicUserID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Color+DynamicUserID.swift"; path = "../../../../Downloads/Color+DynamicUserID.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +367,9 @@
 				435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */,
 				43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */,
 				43C227CA28CA344E00AE237C /* ConnectionState+Title.swift */,
+				DF12907B28D6276F00F5F9D7 /* CGFloat+Convertions.swift */,
+				DF12907D28D6277600F5F9D7 /* Color+DynamicUserID.swift */,
+				DF12907928D6276700F5F9D7 /* Color+ContrastRatio.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -945,6 +954,7 @@
 				43C0F49A285A58BD009F2419 /* View+SidebarSize.swift in Sources */,
 				43807D9427E213350056A3D3 /* MessageView.swift in Sources */,
 				43807D8E27E213350056A3D3 /* DevicesPrefView.swift in Sources */,
+				DF12907C28D6276F00F5F9D7 /* CGFloat+Convertions.swift in Sources */,
 				43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */,
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
 				43C227D128CB097A00AE237C /* View+Faded.swift in Sources */,
@@ -972,6 +982,7 @@
 				433EDD942860E7CB009D03D5 /* QuickLookPreviewWrapper.swift in Sources */,
 				43B5D7BE28996ED000180E65 /* UpdateManager.swift in Sources */,
 				43807D8227E213350056A3D3 /* ChatType.swift in Sources */,
+				DF12907A28D6276700F5F9D7 /* Color+ContrastRatio.swift in Sources */,
 				43807D9C27E213350056A3D3 /* RootView.swift in Sources */,
 				43051C9B28779AE2003C5CE2 /* ChatViewModel+Updates.swift in Sources */,
 				438B2283285E3098000D65C8 /* BackportedGradient.swift in Sources */,
@@ -990,6 +1001,7 @@
 				439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */,
 				4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */,
 				439BA42C2863C4B200339375 /* LoginView+Code.swift in Sources */,
+				DF12907E28D6277600F5F9D7 /* Color+DynamicUserID.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
