@@ -29,18 +29,48 @@ struct MediaAlbum: Layout {
     func sizeThatFits(
         proposal: ProposedViewSize,
         subviews: Subviews,
-        cache: inout Void
+        cache: inout AlbumLayout?
     ) -> CGSize {
-        .zero
+        return getCachedLayout(proposal, subviews, &cache).1
     }
     
     func placeSubviews(
         in bounds: CGRect,
         proposal: ProposedViewSize,
         subviews: Subviews,
-        cache: inout Void
+        cache: inout AlbumLayout?
     ) {
+        let layout = getCachedLayout(proposal, subviews, &cache).0
         
+        for (index, item) in layout.enumerated() {
+            let subview = subviews[index]
+            
+            let origin = CGPoint(x: bounds.minX + item.0.origin.x, y: bounds.minY + item.0.origin.y)
+            
+            subview.place(
+                at: origin,
+                proposal: ProposedViewSize(
+                    width: item.0.size.width,
+                    height: item.0.size.height))
+        }
+    }
+    
+    func getCachedLayout(
+        _ proposal: ProposedViewSize,
+        _ subviews: Subviews,
+        _ cache: inout AlbumLayout?
+    ) -> AlbumLayout {
+        if let cache {
+            return cache
+        } else {
+            let layout = generateLayout(proposal: proposal, subviews: subviews)
+            cache = layout
+            return layout
+        }
+    }
+    
+    func makeCache(subviews: Subviews) -> AlbumLayout? {
+        return nil // not enough info to generate a layout
     }
     
     // Please don't kill me for this code, I just got it from TG iOS, it's
@@ -395,7 +425,7 @@ struct MediaAlbum: Layout {
     
     private func floorToScreenPixels(_ value: CGFloat) -> CGFloat {
         #if os(iOS)
-        return floor(value * UIScreenScale) / UIScreenScale
+        return floor(value * UIScreen.main.scale) / UIScreen.main.scale
         #elseif os(macOS)
         if let screen = NSScreen.main {
             return floor(value * screen.backingScaleFactor) / screen.backingScaleFactor
