@@ -70,8 +70,10 @@ class ChatInspectorViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.chatPhoto = chat.photo?.big
             self.chatTitle = chat.title
+            self.chatMembers = []
         }
 
+        self.loadedUsers = 0
         try await loadMembers(isInitial: true)
     }
 
@@ -110,7 +112,7 @@ class ChatInspectorViewModel: ObservableObject {
 
                 let supergroupMembers = try await tdApi.getSupergroupMembers(
                     filter: nil,
-                    limit: 20,
+                    limit: 10,
                     offset: loadedUsers,
                     supergroupId: supergroup.supergroupId
                 )
@@ -136,11 +138,7 @@ class ChatInspectorViewModel: ObservableObject {
         }
 
         DispatchQueue.main.async {
-            if isInitial {
-                self.chatMembers = mappedUsers
-            } else {
-                self.chatMembers += mappedUsers
-            }
+            self.chatMembers += mappedUsers
         }
         
         self.loadingUsers = false
