@@ -464,6 +464,7 @@
 				43807D6C27E213350056A3D3 /* Commands */,
 				43807D7427E213350056A3D3 /* SwiftGen */,
 				43807D5027E213350056A3D3 /* MocApp+Injection.swift */,
+				439DE1CE28CF0FC5002CD515 /* WhatsNew.swift */,
 				43807D5127E213350056A3D3 /* Assets.xcassets */,
 				43807D5227E213350056A3D3 /* Preview Assets.xcassets */,
 				43B102942882087C009FCF53 /* Acknowledgments.plist */,
@@ -508,7 +509,6 @@
 				439BA4262863C11400339375 /* Login */,
 				43A0AF7E2864DFA500C0A8EF /* Shake.swift */,
 				434A607F2848AA000086B866 /* ChatPicker.swift */,
-				439DE1CE28CF0FC5002CD515 /* WhatsNew.swift */,
 				43807D7027E213350056A3D3 /* RootView.swift */,
 			);
 			path = Views;
