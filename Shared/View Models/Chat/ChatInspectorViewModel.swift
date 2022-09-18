@@ -77,11 +77,13 @@ class ChatInspectorViewModel: ObservableObject {
 
     func loadMembers(isInitial: Bool = false) async throws {
         guard let chat else { return }
+
         if !loadingUsers {
             self.loadingUsers = true
         } else {
             return
         }
+
         switch chat.type {
             case .basicGroup(let basicGroup):
                 if isInitial {
@@ -92,7 +94,7 @@ class ChatInspectorViewModel: ObservableObject {
                         self.chatMemberCount = self.members.count
                     }
 
-                    try await loadChatMembers()
+                    try await loadChatMembers(isInitial: isInitial)
                 } else {
                     break
                 }
@@ -116,13 +118,13 @@ class ChatInspectorViewModel: ObservableObject {
                 self.members = supergroupMembers.members
                 loadedUsers += self.members.count
 
-                try await loadChatMembers()
+                try await loadChatMembers(isInitial: isInitial)
             default:
                 break
         }
     }
 
-    @MainActor private func loadChatMembers() async throws {
+    private func loadChatMembers(isInitial: Bool = false) async throws {
         let mappedUsers = try await self.members.asyncCompactMap { member in
             switch member.memberId {
                 case .user(let sender):
@@ -132,7 +134,15 @@ class ChatInspectorViewModel: ObservableObject {
                     return nil
             }
         }
-        self.chatMembers += mappedUsers
+
+        DispatchQueue.main.async {
+            if isInitial {
+                self.chatMembers = mappedUsers
+            } else {
+                self.chatMembers += mappedUsers
+            }
+        }
+        
         self.loadingUsers = false
     }
 }

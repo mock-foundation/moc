@@ -203,7 +203,6 @@ struct ChatInspector: View {
         .coordinateSpace(name: "scrollUsers")
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
             let newValue = value - headerHeight
-            print(newValue)
             let range = (500...600)
             if !viewModel.loadingUsers && range.contains(newValue) {
                 Task {
