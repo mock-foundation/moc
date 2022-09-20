@@ -82,55 +82,43 @@ class ChatInspectorViewModel: ObservableObject {
     func loadMembers(isInitial: Bool = false) async throws {
         guard let chat else { return }
         
-//        if !loadingUsers {
-//            self.loadingUsers = true
-//        } else {
-//            return
-//        }
-//
-        do {
-            logger.debug("Chat type: \(chat.type)")
-            switch chat.type {
-                case .basicGroup(let basicGroup):
-                    if isInitial {
-                        let info = try await tdApi.getBasicGroupFullInfo(basicGroupId: basicGroup.basicGroupId)
-                        self.members = info.members
-                        
-                        DispatchQueue.main.async {
-                            self.chatMemberCount = self.members.count
-                        }
-                        
-                        try await loadChatMembers(isInitial: isInitial)
-                    } else {
-                        break
+        logger.debug("Chat type: \(chat.type)")
+        switch chat.type {
+            case .basicGroup(let basicGroup):
+                if isInitial {
+                    let info = try await tdApi.getBasicGroupFullInfo(basicGroupId: basicGroup.basicGroupId)
+                    self.members = info.members
+                    
+                    DispatchQueue.main.async {
+                        self.chatMemberCount = self.members.count
                     }
-                case .supergroup(let supergroup):
-                    if isInitial {
-                        let info = try await tdApi.getSupergroupFullInfo(supergroupId: supergroup.supergroupId)
-                        DispatchQueue.main.async {
-                            self.chatMemberCount = info.memberCount
-                        }
-                    }
-                    
-                    if self.chatMemberCount == loadedUsers { break }
-                    
-                    let supergroupMembers = try await tdApi.getSupergroupMembers(
-                        filter: nil,
-                        limit: 10,
-                        offset: loadedUsers,
-                        supergroupId: supergroup.supergroupId
-                    )
-                    
-                    self.members = supergroupMembers.members
-                    loadedUsers += self.members.count
                     
                     try await loadChatMembers(isInitial: isInitial)
-                default:
+                } else {
                     break
-//                    loadingUsers = false
-            }
-        } catch {
-//            loadingUsers = false
+                }
+            case .supergroup(let supergroup):
+                if isInitial {
+                    let info = try await tdApi.getSupergroupFullInfo(supergroupId: supergroup.supergroupId)
+                    DispatchQueue.main.async {
+                        self.chatMemberCount = info.memberCount
+                    }
+                }
+                
+                if self.chatMemberCount == loadedUsers { break }
+                
+                let supergroupMembers = try await tdApi.getSupergroupMembers(
+                    filter: nil,
+                    limit: 10,
+                    offset: loadedUsers,
+                    supergroupId: supergroup.supergroupId
+                )
+                
+                self.members = supergroupMembers.members
+                loadedUsers += self.members.count
+                
+                try await loadChatMembers(isInitial: isInitial)
+            default: break
         }
     }
 
@@ -154,7 +142,5 @@ class ChatInspectorViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.chatMembers += immutableMappedUsers
         }
-        
-//        self.loadingUsers = false
     }
 }

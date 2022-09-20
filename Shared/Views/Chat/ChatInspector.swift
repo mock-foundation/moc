@@ -169,7 +169,8 @@ struct ChatInspector: View {
             .pickerStyle(.segmented)
             .controlSize(.large)
             .frame(minWidth: 0, idealWidth: nil)
-            .padding(.horizontal, 8)
+            .padding(8)
+            .background(.ultraThinMaterial, in: Rectangle())
         }
     }
 
