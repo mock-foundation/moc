@@ -11,14 +11,15 @@ import Defaults
 
 struct ChatInspector: View {
     let chatId: Int64
+    @State private var headerHeight: Int = 0
     @StateObject private var viewModel: ChatInspectorViewModel
     @Default(.showDeveloperInfo) var showDeveloperInfo
-    
+
     init(id: Int64) {
         self.chatId = id
         self._viewModel = StateObject(wrappedValue: ChatInspectorViewModel(chatId: id))
     }
-    
+
     private func makeInspectorButton(action: @escaping () -> Void, imageName: String, text: String) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
@@ -31,24 +32,37 @@ struct ChatInspector: View {
         .frame(width: 48, height: 48)
         .buttonStyle(.borderless)
     }
-    
-    private func makeUserRow(name: String, status: UserStatus, photo: Image? = nil) -> some View {
+
+    @ViewBuilder private func makeUserRow(for user: User) -> some View {
+        let placeholder = ProfilePlaceholderView(userId: user.id,
+                                                 firstName: user.firstName,
+                                                 lastName: user.lastName,
+                                                 style: .miniature)
         HStack {
-            if photo != nil {
-                photo!
-                    .resizable()
-                    .frame(width: 32, height: 32)
-                    .clipShape(Circle())
-                    .padding(8)
+            Group {
+                if let photo = user.profilePhoto {
+                    AsyncTdImage(id: photo.small.id) { image in
+                        image
+                            .resizable()
+                    } placeholder: {
+                        placeholder
+                    }
+                } else {
+                    placeholder
+                }
             }
+            .frame(width: 32, height: 32)
+            .clipShape(Circle())
+            .padding(8)
+
             VStack(alignment: .leading) {
-                Text(name)
+                Text("\(user.firstName) \(user.lastName)")
                 Text("User status")
             }
             Spacer()
         }
     }
-    
+
     private func makePlaceholder(_ style: PlaceholderStyle) -> some View {
         ProfilePlaceholderView(
             userId: chatId,

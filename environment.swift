@@ -54,7 +54,15 @@ struct EnvironmentScript: ParsableCommand {
         want to make in-app updates working, but again, when just contributing,\
         you should not care about this argument.
         """)
-    var appCenterSecret: String?
+    var macOSAppCenterSecret: String?
+    
+    @Argument(help: """
+        An AppCenter secret. When you are just contributing to the project, \
+        don't care about this thing. You want to supply this value when you \
+        want to make in-app updates working, but again, when just contributing,\
+        you should not care about this argument.
+        """)
+    var iPadOSAppCenterSecret: String?
     
     @Flag(help: "Pass this flag if you want to tear down the environment")
     var teardown: Bool = false
@@ -108,7 +116,8 @@ struct EnvironmentScript: ParsableCommand {
                     withIntermediateDirectories: true)
                 
                 var gybArgs = [String(apiId), String(apiHash)]
-                if let appCenterSecret { gybArgs.append(appCenterSecret) }
+                if let macOSAppCenterSecret { gybArgs.append(macOSAppCenterSecret) }
+                if let iPadOSAppCenterSecret { gybArgs.append(iPadOSAppCenterSecret) }
                 
                 try run(command: "./gyb.sh", with: gybArgs)
                 
@@ -170,7 +179,7 @@ struct EnvironmentScript: ParsableCommand {
         
         if dateTimeComponents.hour! < 5 {
             timeString = "night".blue
-        } else if dateTimeComponents.hour! < 9 {
+        } else if dateTimeComponents.hour! < 10 {
             timeString = "morning".yellow
         } else if dateTimeComponents.hour! < 17 {
             timeString = "day".lightYellow
