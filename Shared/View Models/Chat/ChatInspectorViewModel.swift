@@ -32,7 +32,7 @@ class ChatInspectorViewModel: ObservableObject {
     private var chat: Chat?
 
     var loadedUsers = 0
-    var loadingUsers = false
+//    var loadingUsers = false
 
     @Published var chatPhoto: File?
     @Published var chatTitle = ""
@@ -43,7 +43,9 @@ class ChatInspectorViewModel: ObservableObject {
     init(chatId: Int64) {
         self.chatId = chatId
 
-        Task { try await updateInfo() }
+        Task {
+            try await updateInfo()
+        }
 
         service.updateSubject
             .receive(on: RunLoop.main)
@@ -79,55 +81,61 @@ class ChatInspectorViewModel: ObservableObject {
 
     func loadMembers(isInitial: Bool = false) async throws {
         guard let chat else { return }
-
-        if !loadingUsers {
-            self.loadingUsers = true
-        } else {
-            return
-        }
-
-        switch chat.type {
-            case .basicGroup(let basicGroup):
-                if isInitial {
-                    let info = try await tdApi.getBasicGroupFullInfo(basicGroupId: basicGroup.basicGroupId)
-                    self.members = info.members
-
-                    DispatchQueue.main.async {
-                        self.chatMemberCount = self.members.count
+        
+//        if !loadingUsers {
+//            self.loadingUsers = true
+//        } else {
+//            return
+//        }
+//
+        do {
+            logger.debug("Chat type: \(chat.type)")
+            switch chat.type {
+                case .basicGroup(let basicGroup):
+                    if isInitial {
+                        let info = try await tdApi.getBasicGroupFullInfo(basicGroupId: basicGroup.basicGroupId)
+                        self.members = info.members
+                        
+                        DispatchQueue.main.async {
+                            self.chatMemberCount = self.members.count
+                        }
+                        
+                        try await loadChatMembers(isInitial: isInitial)
+                    } else {
+                        break
                     }
-
+                case .supergroup(let supergroup):
+                    if isInitial {
+                        let info = try await tdApi.getSupergroupFullInfo(supergroupId: supergroup.supergroupId)
+                        DispatchQueue.main.async {
+                            self.chatMemberCount = info.memberCount
+                        }
+                    }
+                    
+                    if self.chatMemberCount == loadedUsers { break }
+                    
+                    let supergroupMembers = try await tdApi.getSupergroupMembers(
+                        filter: nil,
+                        limit: 10,
+                        offset: loadedUsers,
+                        supergroupId: supergroup.supergroupId
+                    )
+                    
+                    self.members = supergroupMembers.members
+                    loadedUsers += self.members.count
+                    
                     try await loadChatMembers(isInitial: isInitial)
-                } else {
+                default:
                     break
-                }
-            case .supergroup(let supergroup):
-                if isInitial {
-                    let info = try await tdApi.getSupergroupFullInfo(supergroupId: supergroup.supergroupId)
-                    DispatchQueue.main.async {
-                        self.chatMemberCount = info.memberCount
-                    }
-                }
-
-                if self.chatMemberCount == loadedUsers { break }
-
-                let supergroupMembers = try await tdApi.getSupergroupMembers(
-                    filter: nil,
-                    limit: 10,
-                    offset: loadedUsers,
-                    supergroupId: supergroup.supergroupId
-                )
-
-                self.members = supergroupMembers.members
-                loadedUsers += self.members.count
-
-                try await loadChatMembers(isInitial: isInitial)
-            default:
-                break
+//                    loadingUsers = false
+            }
+        } catch {
+//            loadingUsers = false
         }
     }
 
     private func loadChatMembers(isInitial: Bool = false) async throws {
-        let mappedUsers = try await self.members.asyncCompactMap { member in
+        var mappedUsers = try await self.members.asyncCompactMap { member in
             switch member.memberId {
                 case .user(let sender):
                     let user = try await tdApi.getUser(userId: sender.userId)
@@ -136,11 +144,17 @@ class ChatInspectorViewModel: ObservableObject {
                     return nil
             }
         }
-
-        DispatchQueue.main.async {
-            self.chatMembers += mappedUsers
+        
+        for user in chatMembers where mappedUsers.contains(where: { $0.id == user.id }) {
+            mappedUsers.removeAll(where: { $0.id == user.id })
         }
         
-        self.loadingUsers = false
+        let immutableMappedUsers = mappedUsers
+
+        DispatchQueue.main.async {
+            self.chatMembers += immutableMappedUsers
+        }
+        
+//        self.loadingUsers = false
     }
 }

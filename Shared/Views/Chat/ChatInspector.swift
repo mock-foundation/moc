@@ -134,7 +134,7 @@ struct ChatInspector: View {
             switch viewModel.selectedInspectorTab {
                 case .users:
                     ZStack {
-                        LazyVStack {
+                        VStack {
                             ForEach(viewModel.chatMembers, id: \.id) { member in
                                 makeUserRow(for: member)
                                     .padding(.horizontal, 8)
@@ -169,13 +169,14 @@ struct ChatInspector: View {
             .pickerStyle(.segmented)
             .controlSize(.large)
             .frame(minWidth: 0, idealWidth: nil)
+            .padding(.horizontal, 8)
         }
     }
 
     var body: some View {
         ScrollViewReader { proxy in
-            List {
-                VStack(spacing: 16) {
+            ScrollView {
+                LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
                     VStack {
                         headerView
                             .id("header")
@@ -206,13 +207,9 @@ struct ChatInspector: View {
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                 let newValue = value - headerHeight
                 let range = (800...950)
-                if !viewModel.loadingUsers && range.contains(newValue) {
+                if range.contains(newValue) {
                     Task {
-                        do {
-                            try await viewModel.loadMembers()
-                        } catch {
-                            viewModel.loadingUsers = false
-                        }
+                        try await viewModel.loadMembers()
                     }
                 }
             }
