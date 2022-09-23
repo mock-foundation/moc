@@ -129,100 +129,71 @@ struct ChatInspector: View {
         .frame(minWidth: 0, idealWidth: nil)
     }
 
-    @ViewBuilder private var sectionsView: some View {
-        Section {
-            switch viewModel.selectedInspectorTab {
-                case .users:
-                    ZStack {
-                        VStack {
-                            ForEach(viewModel.chatMembers, id: \.id) { member in
-                                makeUserRow(for: member)
-                                    .padding(.horizontal, 8)
-                                    .frame(minWidth: 0, idealWidth: nil)
-                            }
-                        }
-                        GeometryReader { proxy in
-                            Color.clear.preference(
-                                key: ScrollOffsetPreferenceKey.self,
-                                value: Int(proxy.frame(in: .named("scrollUsers")).maxY))
-                        }
-                    }
-                case .media:
-                    Text("Media")
-                case .links:
-                    Text("Links")
-                case .files:
-                    Text("Files")
-                case .voice:
-                    Text("Voice")
-            }
-        } header: {
-            Picker(selection: $viewModel.selectedInspectorTab) {
-                Text("Users").tag(ChatInspectorTab.users)
-                Text("Media").tag(ChatInspectorTab.media)
-                Text("Links").tag(ChatInspectorTab.links)
-                Text("Files").tag(ChatInspectorTab.files)
-                Text("Voice").tag(ChatInspectorTab.voice)
-            } label: {
-                EmptyView()
-            }
-            .pickerStyle(.segmented)
-            .controlSize(.large)
-            .frame(minWidth: 0, idealWidth: nil)
-            .padding(8)
-            .background(.ultraThinMaterial, in: Rectangle())
-        }
-    }
-
     var body: some View {
-        ScrollViewReader { proxy in
+        VStack {
+            headerView
+            
+            quickActionsView
+            
             ScrollView {
-                LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
-                    VStack {
-                        headerView
-                            .id("header")
-
-                        quickActionsView
-                            .id("quickActions")
+                ZStack {
+                    switch viewModel.selectedInspectorTab {
+                        case .users:
+                            VStack {
+                                ForEach(viewModel.chatMembers, id: \.id) { member in
+                                    makeUserRow(for: member)
+                                        .padding(.horizontal, 8)
+                                        .frame(minWidth: 0, idealWidth: nil)
+                                }
+                            }
+                        case .media:
+                            Text("Media")
+                        case .links:
+                            Text("Links")
+                        case .files:
+                            Text("Files")
+                        case .voice:
+                            Text("Voice")
                     }
-                    .background {
-                        GeometryReader { geometry in
-                            Color.clear.preference(
-                                key: SizePreferenceKey.self,
-                                value: geometry.size
-                            )
-                        }
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: InspectorScrollOffsetPreferenceKey.self,
+                            value: Int(proxy.frame(in: .named("scrollUsers")).maxY))
                     }
-                    .onPreferenceChange(SizePreferenceKey.self) { size in
-                        if self.headerHeight != 0 {
-                            self.headerHeight = Int(size.height)
-                        }
-                    }
-
-                    sectionsView
-                        .id("sections")
                 }
-                .padding(.top)
             }
             .coordinateSpace(name: "scrollUsers")
-            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                let newValue = value - headerHeight
-                let range = (800...950)
-                if range.contains(newValue) {
+            .onPreferenceChange(InspectorScrollOffsetPreferenceKey.self) { value in
+                let range = (0...550)
+                print(value)
+                if range.contains(value) {
+                    print("Contains value \(value)")
                     Task {
                         try await viewModel.loadMembers()
                     }
                 }
+            }
+            .safeAreaInset(edge: .top) {
+                Picker(selection: $viewModel.selectedInspectorTab) {
+                    Text("Users").tag(ChatInspectorTab.users)
+                    Text("Media").tag(ChatInspectorTab.media)
+                    Text("Links").tag(ChatInspectorTab.links)
+                    Text("Files").tag(ChatInspectorTab.files)
+                    Text("Voice").tag(ChatInspectorTab.voice)
+                } label: {
+                    EmptyView()
+                }
+                .pickerStyle(.segmented)
+                .controlSize(.large)
+                .frame(minWidth: 0, idealWidth: nil)
+                .padding(8)
+                .background(.ultraThinMaterial, in: Rectangle())
             }
             .onChange(of: chatId) { newValue in
                 viewModel.chatId = newValue
                 Task {
                     try await viewModel.updateInfo()
                 }
-                proxy.scrollTo("header", anchor: .top)
-            }
-            .onChange(of: viewModel.selectedInspectorTab) { _ in
-                proxy.scrollTo("sections", anchor: .top)
             }
         }
     }

@@ -30,6 +30,7 @@ class ChatInspectorViewModel: ObservableObject {
     private var tdApi: TdApi = .shared
     private var members = [ChatMember]()
     private var chat: Chat?
+    private var userListUpdateTrigger = PassthroughSubject<Bool, Never>()
 
     var loadedUsers = 0
 //    var loadingUsers = false
@@ -63,6 +64,16 @@ class ChatInspectorViewModel: ObservableObject {
                 }
             }
             .store(in: &subscribers)
+        
+        userListUpdateTrigger
+            .receive(on: RunLoop.main)
+            .throttle(for: 1, scheduler: RunLoop.main, latest: true)
+            .sink { isInitial in
+                Task {
+                    try await self._loadMembers(isInitial: isInitial)
+                }
+            }
+            .store(in: &subscribers)
     }
 
     func updateInfo() async throws {
@@ -78,8 +89,8 @@ class ChatInspectorViewModel: ObservableObject {
         self.loadedUsers = 0
         try await loadMembers(isInitial: true)
     }
-
-    func loadMembers(isInitial: Bool = false) async throws {
+    
+    private func _loadMembers(isInitial: Bool) async throws {
         guard let chat else { return }
         
         logger.debug("Chat type: \(chat.type)")
@@ -120,6 +131,10 @@ class ChatInspectorViewModel: ObservableObject {
                 try await loadChatMembers(isInitial: isInitial)
             default: break
         }
+    }
+    
+    func loadMembers(isInitial: Bool = false) async throws {
+        userListUpdateTrigger.send(isInitial)
     }
 
     private func loadChatMembers(isInitial: Bool = false) async throws {
