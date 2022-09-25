@@ -23,7 +23,7 @@ extension MessageView {
                             }
                         }.frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        HStack {
+                        HStack(spacing: 1) {
                             ForEach(message, id: \.id) { message in
                                 makeMedia(from: message.content)
                             }
