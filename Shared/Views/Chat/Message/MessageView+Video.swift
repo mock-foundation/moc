@@ -10,7 +10,7 @@ import TDLibKit
 
 extension MessageView {
     func makeVideo(from info: MessageVideo) -> some View {
-        AsyncTdFileThumbnail(id: info.video.video.id, contentMode: .fit)
+        AsyncTdFileThumbnail(id: info.video.video.id, contentMode: .fill)
             .overlay {
                 Button {
                     openedMediaFileID = OpenedMediaFile(id: info.video.video.id, isVideo: true)
@@ -34,7 +34,7 @@ extension MessageView {
         makeMessage {
             VStack(spacing: 0) {
                 makeVideo(from: getVideo(from: message.first!.content)!)
-                    .frame(height: 200)
+                    .frame(height: 300)
                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .circular))
                 
                 if !info.caption.text.isEmpty {

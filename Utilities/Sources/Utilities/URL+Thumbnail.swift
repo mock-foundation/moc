@@ -9,12 +9,6 @@ import AVKit
 import SwiftUI
 import UniformTypeIdentifiers
 
-#if os(macOS)
-public typealias PlatformImage = NSImage
-#elseif os(iOS)
-public typealias PlatformImage = UIImage
-#endif
-
 public extension URL {
     /// Generated a thumbnail from a URL.
     var thumbnail: Image {
