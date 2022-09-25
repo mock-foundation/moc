@@ -32,9 +32,9 @@ struct MediaAlbum: Layout {
     func sizeThatFits(
         proposal: ProposedViewSize,
         subviews: Subviews,
-        cache: inout AlbumLayout?
+        cache: inout Void
     ) -> CGSize {
-        return getCachedLayout(proposal, subviews, &cache).1
+        return generateLayout(proposal: proposal, subviews: subviews).1
 //        return CGSize(width: CGFloat.infinity, height: CGFloat.infinity)
     }
     
@@ -42,10 +42,9 @@ struct MediaAlbum: Layout {
         in bounds: CGRect,
         proposal: ProposedViewSize,
         subviews: Subviews,
-        cache: inout AlbumLayout?
+        cache: inout Void
     ) {
-        let layout = getCachedLayout(proposal, subviews, &cache).0
-//        let layout = cache.0
+        let layout = generateLayout(proposal: proposal, subviews: subviews).0
         
         for (index, item) in layout.enumerated() {
             let subview = subviews[index]
@@ -59,28 +58,7 @@ struct MediaAlbum: Layout {
                     height: item.0.size.height))
         }
     }
-    
-    func getCachedLayout(
-        _ proposal: ProposedViewSize,
-        _ subviews: Subviews,
-        _ cache: inout AlbumLayout?
-    ) -> AlbumLayout {
-        if let cache {
-            return cache
-        } else {
-            let layout = generateLayout(proposal: proposal, subviews: subviews)
-            cache = layout
-            return layout
-        }
-    }
-    
-    func makeCache(subviews: Subviews) -> AlbumLayout? {
-//        return generateLayout(
-//            proposal: .infinity,
-//            subviews: subviews)
-        return nil
-    }
-    
+        
     // Please don't kill me for this code, I just got it from TG iOS, it's
     // not documented at all
     // swiftlint:disable cyclomatic_complexity function_body_length
@@ -90,7 +68,8 @@ struct MediaAlbum: Layout {
         // pile of garbage
         let maxSize = proposal.replacingUnspecifiedDimensions(by: CGSize(width: 256, height: 256))
         let itemSizes = subviews.map { subview in
-            subview.sizeThatFits(.unspecified)
+            subview.sizeThatFits(.init(width: 256, height: 256))
+//            subview.sizeThatFits(.unspecified)
         }
         let spacing: CGFloat = 1
         let fillWidth = false
@@ -428,7 +407,13 @@ struct MediaAlbum: Layout {
             dimensions.height = max(dimensions.height, round(itemInfo.layoutFrame.maxY))
         }
         
-        return (itemInfos.map { ($0.layoutFrame, $0.position) }, dimensions)
+        return (itemInfos
+            .map { ($0.layoutFrame, $0.position) }
+            .map { (CGRect(
+                x: $0.0.minX,
+                y: $0.0.minY,
+                width: abs($0.0.width),
+                height: abs($0.0.height)), $0.1) }, dimensions)
     }
     
     private func floorToScreenPixels(_ value: CGFloat) -> CGFloat {
