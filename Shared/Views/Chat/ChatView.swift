@@ -156,7 +156,7 @@ struct ChatView: View {
                 HStack(spacing: 0) {
                     Divider()
                     ChatInspector(id: viewModel.chatID)
-                        .frame(width: 256)
+                        .frame(width: 280)
                 }
                 .transition(.move(edge: .trailing))
             }

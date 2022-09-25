@@ -147,6 +147,9 @@
 		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
 		43F610FE28B01E830098C3BD /* MessageBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
+		43F7D4CF28DA65FF00878BD8 /* Color+ContrastRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4CE28DA65FE00878BD8 /* Color+ContrastRatio.swift */; };
+		43F7D4D128DA661100878BD8 /* Color+DynamicUserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4D028DA661000878BD8 /* Color+DynamicUserID.swift */; };
+		43F7D4D328DA662D00878BD8 /* CGFloat+Convertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4D228DA662D00878BD8 /* CGFloat+Convertions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,6 +307,9 @@
 		43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleShape.swift; sourceTree = "<group>"; };
 		43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
+		43F7D4CE28DA65FE00878BD8 /* Color+ContrastRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+ContrastRatio.swift"; sourceTree = "<group>"; };
+		43F7D4D028DA661000878BD8 /* Color+DynamicUserID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+DynamicUserID.swift"; sourceTree = "<group>"; };
+		43F7D4D228DA662D00878BD8 /* CGFloat+Convertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Convertions.swift"; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -363,6 +369,9 @@
 				435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */,
 				43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */,
 				43C227CA28CA344E00AE237C /* ConnectionState+Title.swift */,
+				43F7D4D228DA662D00878BD8 /* CGFloat+Convertions.swift */,
+				43F7D4D028DA661000878BD8 /* Color+DynamicUserID.swift */,
+				43F7D4CE28DA65FE00878BD8 /* Color+ContrastRatio.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -922,6 +931,7 @@
 				4367071F2861A6CD00587A63 /* QuickLookPreviewWrapper.swift in Sources */,
 				43051C8C287791D0003C5CE2 /* CornerRectangle.swift in Sources */,
 				43C0F4A0285A69AA009F2419 /* FolderLayout.swift in Sources */,
+				43F7D4D128DA661100878BD8 /* Color+DynamicUserID.swift in Sources */,
 				434A60802848AA000086B866 /* ChatPicker.swift in Sources */,
 				434889EE28B798B200EE4455 /* PhoneNumberInfo.swift in Sources */,
 				43A0AF872865197400C0A8EF /* AsyncTdFile.swift in Sources */,
@@ -959,6 +969,7 @@
 				43B1029B28831A8D009FCF53 /* Image+Data.swift in Sources */,
 				439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */,
 				4394C3BB28D47666006828A0 /* MediaAlbum.swift in Sources */,
+				43F7D4D328DA662D00878BD8 /* CGFloat+Convertions.swift in Sources */,
 				43C227D128CB097A00AE237C /* View+Faded.swift in Sources */,
 				43051C9228779363003C5CE2 /* ChatView+Inspector.swift in Sources */,
 				438B227D285DCA88000D65C8 /* AsyncTdImage.swift in Sources */,
@@ -978,6 +989,7 @@
 				4312154F2858E4B6009EFEB5 /* Int+Digits.swift in Sources */,
 				43C227CD28CA4F5800AE237C /* View+IntrospectNSSplitView.swift in Sources */,
 				43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */,
+				43F7D4CF28DA65FF00878BD8 /* Color+ContrastRatio.swift in Sources */,
 				433EDD9A2860EBAA009D03D5 /* AsyncTdQuickLookView.swift in Sources */,
 				4312154D2858C326009EFEB5 /* GenerateQRCode.swift in Sources */,
 				434A07172869003200A2BBA5 /* AVPlayerViewWrapper.swift in Sources */,
