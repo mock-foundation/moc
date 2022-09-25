@@ -65,10 +65,6 @@ with macOS 12 support removed will be available right after a stable release of 
 ![](.github/images/screenshots/dark/main.png)
 ![](.github/images/screenshots/light/about.png)
 ![](.github/images/screenshots/dark/about.png)
-![](.github/images/screenshots/light/folders.png)
-![](.github/images/screenshots/dark/folders.png)
-![](.github/images/screenshots/light/account.png)
-![](.github/images/screenshots/dark/account.png)
 
 # Contributing
 
