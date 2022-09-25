@@ -21,7 +21,8 @@ extension MessageView {
                             ForEach(message, id: \.id) { albumMessage in
                                 makeMedia(from: albumMessage.content)
                             }
-                        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                     } else {
                         HStack(spacing: 1) {
                             ForEach(message, id: \.id) { message in

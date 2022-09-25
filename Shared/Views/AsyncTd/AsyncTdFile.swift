@@ -23,18 +23,21 @@ struct AsyncTdFile<Content: View, Placeholder: View>: View {
     
     @ViewBuilder
     var body: some View {
-        Group {
-            if isDownloaded {
-                if let file = file {
-                    content(file)
+        ZStack {
+            Group {
+                if isDownloaded {
+                    if let file = file {
+                        content(file)
+                    } else {
+                        placeholder()
+                    }
                 } else {
                     placeholder()
                 }
-            } else {
-                placeholder()
             }
+            .transition(.opacity)
+//            .scaledToFill()
         }
-        .transition(.opacity)
         .animation(.easeInOut, value: isDownloaded)
         .animation(.easeInOut, value: file)
         .onReceive(tdApi.client.updateSubject) { update in

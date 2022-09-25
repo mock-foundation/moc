@@ -68,8 +68,7 @@ struct MediaAlbum: Layout {
         // pile of garbage
         let maxSize = proposal.replacingUnspecifiedDimensions(by: CGSize(width: 256, height: 256))
         let itemSizes = subviews.map { subview in
-            subview.sizeThatFits(.init(width: 256, height: 256))
-//            subview.sizeThatFits(.unspecified)
+            subview.sizeThatFits(.unspecified)
         }
         let spacing: CGFloat = 1
         let fillWidth = false

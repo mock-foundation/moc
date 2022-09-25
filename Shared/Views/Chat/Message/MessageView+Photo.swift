@@ -18,12 +18,8 @@ extension MessageView {
                     id: size.photo.id
                 ) { image in
                     image
-                        .resizable()
-                        .scaledToFill()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                        .border(Color.pink)
                         .clipped()
-//                        .aspectRatio(contentMode: contentMode)
                 } placeholder: {
                     Rectangle()
                         .skeleton(with: true)
