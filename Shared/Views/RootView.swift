@@ -58,7 +58,7 @@ struct RootView: View {
         openedChat = instance
     }
     
-    private var chatList: some View {
+    private var chatListView: some View {
         ScrollView {
             LazyVStack {
                 ForEach(viewModel.chatList) { chat in
@@ -163,10 +163,12 @@ struct RootView: View {
         }
     }
     
+    #if os(macOS)
     private func toggleSidebar() {
         NSApp.keyWindow?.firstResponder?.tryToPerform(
             #selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
     }
+    #endif
     
     private func makeFolderItem(
         name: String,
@@ -206,7 +208,7 @@ struct RootView: View {
         }
         .buttonStyle(.plain)
         #if os(iOS)
-        .hoverEffect(viewModel.openChatList == chatList ? .lift : .highlight)
+        .hoverEffect(.lift)
         #endif
     }
     
@@ -305,7 +307,7 @@ struct RootView: View {
             Group {
                 switch selectedTab {
                     case .chat:
-                        chatList
+                        chatListView
                     case .contacts:
                         Text("Contacts")
                     case .calls:

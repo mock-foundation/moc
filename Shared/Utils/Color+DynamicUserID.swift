@@ -65,9 +65,11 @@ extension Color {
             @unknown default:
                 newLuminosity = 0.6
         }
-        
-        let nsColor = NSColor(self)
-        guard let coreColour = CIColor(color: nsColor) else { return self }
+        #if os(macOS)
+        guard let coreColour = CIColor(color: NSColor(self)) else { return self }
+        #elseif os(iOS)
+        let coreColour = CIColor(color: UIColor(self))
+        #endif
         var red = coreColour.red
         var green = coreColour.green
         var blue = coreColour.blue

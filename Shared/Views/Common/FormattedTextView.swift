@@ -39,13 +39,13 @@ struct FormattedTextView: View {
                         
             switch entity.type {
                 case .bold:
-                    if #available(macOS 13.0, *) {
+                    if #available(macOS 13, iOS 16, *) {
                         resultString[range].font = .system(.body, weight: .bold)
                     } else {
                         resultString[range].font = .body.bold()
                     }
                 case .italic:
-                    if #available(macOS 13.0, *) {
+                    if #available(macOS 13, iOS 16, *) {
                         resultString[range].font = .system(.body).italic()
                     } else {
                         resultString[range].font = .body.italic()
@@ -54,17 +54,25 @@ struct FormattedTextView: View {
                 case .url:
                     resultString[range].link = URL(string: rawStringPart)
                     resultString[range].underlineStyle = .single
+                    #if os(macOS)
                     resultString[range].cursor = .pointingHand
+                    #endif
                 case let .textUrl(info):
                     resultString[range].link = URL(string: info.url)
                     resultString[range].underlineStyle = .single
+                    #if os(macOS)
                     resultString[range].cursor = .pointingHand
+                    #endif
                 case .phoneNumber:
                     resultString[range].link = URL(string: "tel:\(rawStringPart)")
+                    #if os(macOS)
                     resultString[range].cursor = .pointingHand
+                    #endif
                 case .emailAddress:
                     resultString[range].link = URL(string: "mailto:\(rawStringPart)")
+                    #if os(macOS)
                     resultString[range].cursor = .pointingHand
+                    #endif
                 default:
                     break
             }

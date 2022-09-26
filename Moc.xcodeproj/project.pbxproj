@@ -144,7 +144,7 @@
 		43C227D128CB097A00AE237C /* View+Faded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227D028CB097A00AE237C /* View+Faded.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
-		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; };
+		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; platformFilters = (macos, ); };
 		43F610FE28B01E830098C3BD /* MessageBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */; };
 		43F7C504287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7C503287DCFB40083E9E9 /* ScrollOffsetPreferenceKey.swift */; };
 		43F7D4CF28DA65FF00878BD8 /* Color+ContrastRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4CE28DA65FE00878BD8 /* Color+ContrastRatio.swift */; };

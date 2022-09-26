@@ -50,7 +50,7 @@ public class StorageService {
         } else {
             dir = url.path
         }
-        if #available(macOS 13.0, *) {
+        if #available(macOS 13, iOS 16, *) {
             dir.replace("%20", with: " ")
         } else {
             dir = dir.replacingOccurrences(of: "%20", with: " ")
