@@ -60,6 +60,16 @@ team will start to remove code for supporting the macOS 12 release, and a new re
 with macOS 12 support removed will be available right after a stable release of macOS
 14.
 
+# Notes on iPadOS support
+
+Support for iPads is currently very experimental and not tested much. 
+Why? Because I don't have a physical device to do so, and my development Mac is too 
+underpowered for running Simulators with good enough performance. But still, support
+for iPadOS is a thing that I ocasionally pay attention to, so yeah
+
+If someone wants to donate me an iPad (lol who is gonna do that), use the Funding list
+in this repo
+
 # Screenshots
 ![](.github/images/screenshots/light/main.png)
 ![](.github/images/screenshots/dark/main.png)
