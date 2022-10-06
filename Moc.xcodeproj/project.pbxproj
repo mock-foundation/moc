@@ -58,6 +58,7 @@
 		4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072A286229B000587A63 /* MessageView+Photo.swift */; };
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
+		4368B44028E303FE001B0D14 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4368B43F28E303FE001B0D14 /* Sparkle */; };
 		4368EC1B289BC22800CAA505 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC1A289BC22800CAA505 /* Lottie */; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
 		4371D154287F059100337533 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371D153287F059100337533 /* AboutView.swift */; };
@@ -107,7 +108,6 @@
 		4394C3BB28D47666006828A0 /* MediaAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4394C3BA28D47666006828A0 /* MediaAlbum.swift */; };
 		4396B1512859E904004109AE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396B1502859E904004109AE /* SettingsContent.swift */; platformFilter = ios; };
 		439A8D642859CC4B00DE69AF /* TabLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439A8D632859CC4B00DE69AF /* TabLabelStyle.swift */; };
-		439B4FB728A9731F00E9ABA9 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 439B4FB628A9731F00E9ABA9 /* Sparkle */; };
 		439BA4252863BBBC00339375 /* ChatListItemSelectedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4242863BBBC00339375 /* ChatListItemSelectedKey.swift */; };
 		439BA4282863C3CC00339375 /* LoginView+Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4272863C3CC00339375 /* LoginView+Welcome.swift */; };
 		439BA42A2863C43000339375 /* LoginView+PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4292863C43000339375 /* LoginView+PhoneNumber.swift */; };
@@ -318,11 +318,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4368B44028E303FE001B0D14 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				43431C7A28A006E6002A72A0 /* Introspect in Frameworks */,
-				439B4FB728A9731F00E9ABA9 /* Sparkle in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -769,9 +769,9 @@
 				43431C7E28A00809002A72A0 /* AppCenterCrashes */,
 				43431C8128A00AC3002A72A0 /* Resolver */,
 				43431C8428A00BAB002A72A0 /* TDLibKit */,
-				439B4FB628A9731F00E9ABA9 /* Sparkle */,
 				43A7CC5728BB82B300C43822 /* Storage */,
 				439DE1CC28CF0F4C002CD515 /* WhatsNewKit */,
+				4368B43F28E303FE001B0D14 /* Sparkle */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -836,8 +836,8 @@
 				43431C7B28A00809002A72A0 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */,
 				43431C8028A00AC3002A72A0 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */,
-				43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				439DE1CB28CF0F4C002CD515 /* XCRemoteSwiftPackageReference "WhatsNewKit" */,
+				4368B43E28E303FE001B0D14 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1184,7 +1184,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "0.2.0 Debug";
+				MARKETING_VERSION = "0.3.0 Debug";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1228,7 +1228,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1366,7 +1366,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "0.2.0 Nightly";
+				MARKETING_VERSION = "0.3.0 Nightly";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1482,20 +1482,20 @@
 				version = "3.0.1-1.8.4-07b7faf6";
 			};
 		};
-		43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+		};
+		4368B43E28E303FE001B0D14 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 		4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
@@ -1605,6 +1605,11 @@
 			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
 		};
+		4368B43F28E303FE001B0D14 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4368B43E28E303FE001B0D14 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		4368EC1A289BC22800CAA505 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */;
@@ -1618,11 +1623,6 @@
 		43807DBB27E214970056A3D3 /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
-		};
-		439B4FB628A9731F00E9ABA9 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 43431C8628A00D34002A72A0 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		439DE1CC28CF0F4C002CD515 /* WhatsNewKit */ = {
 			isa = XCSwiftPackageProductDependency;
