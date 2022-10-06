@@ -19,6 +19,7 @@ struct ChatView: View {
     @FocusState var isInputFieldFocused
     @Default(.showDeveloperInfo) var showDeveloperInfo
     let tempChat: Chat
+    @State var isChatInfoShown = false
     
     let logger = Logger(category: "UI", label: "ChatView")
     

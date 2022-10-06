@@ -128,72 +128,90 @@ struct ChatInspector: View {
         .padding(.vertical)
         .frame(minWidth: 0, idealWidth: nil)
     }
+    
+    var infoTabs: some View {
+        ScrollView {
+            ZStack {
+                switch viewModel.selectedInspectorTab {
+                    case .users:
+                        VStack {
+                            ForEach(viewModel.chatMembers, id: \.id) { member in
+                                makeUserRow(for: member)
+                                    .padding(.horizontal, 8)
+                                    .frame(minWidth: 0, idealWidth: nil)
+                            }
+                        }
+                    case .media:
+                        Text("Media")
+                    case .links:
+                        Text("Links")
+                    case .files:
+                        Text("Files")
+                    case .voice:
+                        Text("Voice")
+                }
+                GeometryReader { proxy in
+                    Color.clear.preference(
+                        key: InspectorScrollOffsetPreferenceKey.self,
+                        value: Int(proxy.frame(in: .named("scrollUsers")).maxY))
+                }
+            }
+        }
+        .coordinateSpace(name: "scrollUsers")
+        .onPreferenceChange(InspectorScrollOffsetPreferenceKey.self) { value in
+            let range = (0...550)
+            print(value)
+            if range.contains(value) {
+                print("Contains value \(value)")
+                Task {
+                    try await viewModel.loadMembers()
+                }
+            }
+        }
+        .safeAreaInset(edge: .top) {
+            Picker(selection: $viewModel.selectedInspectorTab) {
+                Text("Users").tag(ChatInspectorTab.users)
+                Text("Media").tag(ChatInspectorTab.media)
+                Text("Links").tag(ChatInspectorTab.links)
+                Text("Files").tag(ChatInspectorTab.files)
+                Text("Voice").tag(ChatInspectorTab.voice)
+            } label: {
+                EmptyView()
+            }
+            .pickerStyle(.segmented)
+            .controlSize(.large)
+            .frame(minWidth: 0, idealWidth: nil)
+            .padding(8)
+            .background(.ultraThinMaterial, in: Rectangle())
+        }
+        .onChange(of: chatId) { newValue in
+            viewModel.chatId = newValue
+            Task {
+                try await viewModel.updateInfo()
+            }
+        }
+    }
 
     var body: some View {
-        VStack {
-            headerView
-            
-            quickActionsView
-            
-            ScrollView {
-                ZStack {
-                    switch viewModel.selectedInspectorTab {
-                        case .users:
-                            VStack {
-                                ForEach(viewModel.chatMembers, id: \.id) { member in
-                                    makeUserRow(for: member)
-                                        .padding(.horizontal, 8)
-                                        .frame(minWidth: 0, idealWidth: nil)
-                                }
-                            }
-                        case .media:
-                            Text("Media")
-                        case .links:
-                            Text("Links")
-                        case .files:
-                            Text("Files")
-                        case .voice:
-                            Text("Voice")
+        GeometryReader { proxy in
+            if proxy.size.width >= 600 {
+                HStack {
+                    VStack {
+                        headerView
+                        quickActionsView
+                        Spacer()
                     }
-                    GeometryReader { proxy in
-                        Color.clear.preference(
-                            key: InspectorScrollOffsetPreferenceKey.self,
-                            value: Int(proxy.frame(in: .named("scrollUsers")).maxY))
-                    }
+                    infoTabs
                 }
-            }
-            .coordinateSpace(name: "scrollUsers")
-            .onPreferenceChange(InspectorScrollOffsetPreferenceKey.self) { value in
-                let range = (0...550)
-                print(value)
-                if range.contains(value) {
-                    print("Contains value \(value)")
-                    Task {
-                        try await viewModel.loadMembers()
-                    }
+            } else {
+                VStack {
+                    headerView
+                    
+                    quickActionsView
+                    
+                    infoTabs
                 }
-            }
-            .safeAreaInset(edge: .top) {
-                Picker(selection: $viewModel.selectedInspectorTab) {
-                    Text("Users").tag(ChatInspectorTab.users)
-                    Text("Media").tag(ChatInspectorTab.media)
-                    Text("Links").tag(ChatInspectorTab.links)
-                    Text("Files").tag(ChatInspectorTab.files)
-                    Text("Voice").tag(ChatInspectorTab.voice)
-                } label: {
-                    EmptyView()
-                }
-                .pickerStyle(.segmented)
-                .controlSize(.large)
-                .frame(minWidth: 0, idealWidth: nil)
-                .padding(8)
-                .background(.ultraThinMaterial, in: Rectangle())
-            }
-            .onChange(of: chatId) { newValue in
-                viewModel.chatId = newValue
-                Task {
-                    try await viewModel.updateInfo()
-                }
+
             }
         }
     }
