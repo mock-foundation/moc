@@ -172,5 +172,11 @@ struct ChatView: View {
                 try await viewModel.update(chat: tempChat)
             }
         }
+        .onReceive(SystemUtils.ncPublisher(for: .toggleChatInfo)) { _ in
+            isChatInfoShown.toggle()
+        }
+        .onReceive(SystemUtils.ncPublisher(for: .chatInspectorToggle)) { _ in
+            viewModel.isInspectorShown.toggle()
+        }
     }
 }

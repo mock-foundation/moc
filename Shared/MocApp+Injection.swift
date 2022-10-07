@@ -104,6 +104,7 @@ struct MocApp: App {
             #else
             AppCommands()
             #endif
+            ChatCommand()
         }
         
         #if os(macOS)
