@@ -43,7 +43,7 @@ extension ChatView {
                 }
                 .buttonStyle(.plain)
                 // TODO: Replace usage of this keyboardShortcut with a menubar thingy
-                .keyboardShortcut(.init("i"), modifiers: [.command, .shift])
+                .keyboardShortcut("I", modifiers: [.command, .shift])
                 .sheet(isPresented: $isChatInfoShown) {
                     HStack {
                         ChatInspector(id: viewModel.chatID)
@@ -67,7 +67,7 @@ extension ChatView {
                     Image(systemName: "sidebar.right")
                 }
                 // TODO: Replace usage of this keyboardShortcut with a menubar thingy
-                .keyboardShortcut(.init("i"), modifiers: .command)
+                .keyboardShortcut("I", modifiers: .command)
                 Button {
                     print("more")
                 } label: {

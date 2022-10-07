@@ -7,11 +7,12 @@
 
 import SwiftUI
 import Utilities
-import AppCenterAnalytics
 
-struct AboutView: View {
+public struct AboutView: View {
     @Environment(\.openURL) private var openURL
     @State private var areAcknowledgmentsOpened = false
+    
+    public init() { }
     
     var versionString: String {
         SystemUtils.info(key: "CFBundleShortVersionString") as String
@@ -38,7 +39,7 @@ struct AboutView: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             VStack {
                 Image("WelcomeScreenImage")
@@ -57,7 +58,6 @@ struct AboutView: View {
                 HStack {
                     Button {
                         areAcknowledgmentsOpened = true
-                        Analytics.trackEvent("Opened acknowledgments")
                     } label: {
                         Text("Acknowledgments")
                     }
@@ -69,13 +69,6 @@ struct AboutView: View {
                                 Link(
                                     "**Technoblade never dies**",
                                     destination: URL(string: "https://www.curesarcoma.org/technoblade-tribute/")!)
-                                .environment(\.openURL, OpenURLAction { url in
-                                    openURL(url)
-                                    
-                                    Analytics.trackEvent("Opened page for donating to sarcoma research")
-                                    
-                                    return .handled
-                                })
                                 Divider()
                                 ForEach(acknowledgmentList, id: \.self) { list in
                                     Link(list.name, destination: list.url)
@@ -94,9 +87,6 @@ struct AboutView: View {
                     }
                     .background(.ultraThinMaterial)
                     Button {
-                        Analytics.trackEvent(
-                            "Opened GitHub page of Mock Foundation",
-                            withProperties: ["From": "About"])
                         openURL(URL(string: "https://github.com/mock-foundation")!)
                     } label: {
                         Spacer()
