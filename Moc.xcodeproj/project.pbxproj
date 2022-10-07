@@ -1479,7 +1479,7 @@
 			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
 			requirement = {
 				kind = exactVersion;
-				version = "3.0.1-1.8.4-07b7faf6";
+				version = "3.0.2-1.8.4-07b7faf6";
 			};
 		};
 		4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */ = {
