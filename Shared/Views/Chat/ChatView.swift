@@ -177,6 +177,14 @@ struct ChatView: View {
             }
             menubarUpdater.publisher
                 .sink { action in
+                    switch action {
+                        case let .trigger(item):
+                            switch item {
+                                case .toggleChatInfo: isChatInfoShown.toggle()
+                                case .toggleChatInspector: viewModel.isInspectorShown.toggle()
+                            }
+                        default: break
+                    }
                     logger.debug("Received menubar action: \(action)")
                 }
                 .store(in: &subscribers)
