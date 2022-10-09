@@ -9,15 +9,19 @@ import SwiftUI
 import Utilities
 
 public struct ChatCommand: Commands {
-    public init() { }
+    var menubarUpdater: MenubarUpdater
+    
+    public init(menubarUpdater: MenubarUpdater) {
+        self.menubarUpdater = menubarUpdater
+    }
     
     public var body: some Commands {
         CommandMenu("Chat") {
             Button("Toggle chat inspector") {
-                SystemUtils.post(notification: .chatInspectorToggle)
+                menubarUpdater.subject.send(.trigger(.toggleChatInspector))
             }.keyboardShortcut("I", modifiers: .command)
             Button("Open chat info") {
-                SystemUtils.post(notification: .toggleChatInfo)
+                menubarUpdater.subject.send(.trigger(.toggleChatInfo))
             }.keyboardShortcut("I", modifiers: [.command, .shift])
         }
     }

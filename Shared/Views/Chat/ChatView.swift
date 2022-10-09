@@ -13,6 +13,8 @@ import Utilities
 import UniformTypeIdentifiers
 import Logs
 import Defaults
+import Combine
+import MenuBar
 
 struct ChatView: View {
     @StateObject var viewModel = ChatViewModel()
@@ -20,6 +22,8 @@ struct ChatView: View {
     @Default(.showDeveloperInfo) var showDeveloperInfo
     let tempChat: Chat
     @State var isChatInfoShown = false
+    @State var subscribers: [AnyCancellable] = []
+    @Environment(\.menubarUpdater) var menubarUpdater
     
     let logger = Logger(category: "UI", label: "ChatView")
     
@@ -171,6 +175,11 @@ struct ChatView: View {
             Task {
                 try await viewModel.update(chat: tempChat)
             }
+            menubarUpdater.publisher
+                .sink { action in
+                    logger.debug("Received menubar action: \(action)")
+                }
+                .store(in: &subscribers)
         }
         .onReceive(SystemUtils.ncPublisher(for: .toggleChatInfo)) { _ in
             isChatInfoShown.toggle()
