@@ -39,7 +39,6 @@ struct MocApp: App {
     #if os(macOS)
     @StateObject var updateManager = UpdateManager()
     #endif
-    @State var menubarUpdater = MenubarUpdater()
     
     init() {
         Resolver.registerServices()
@@ -90,7 +89,6 @@ struct MocApp: App {
                     versionStore: whatsNewStore,
                     whatsNewCollection: whatsNewCollection
                 ))
-                .environment(\.menubarUpdater, menubarUpdater)
         }
         .onChange(of: scenePhase) { phase in
             Task {
@@ -106,7 +104,8 @@ struct MocApp: App {
             #else
             AppCommands()
             #endif
-            ChatCommand(menubarUpdater: menubarUpdater)
+            ChatCommand()
+            FileCommand()
         }
         
         #if os(macOS)

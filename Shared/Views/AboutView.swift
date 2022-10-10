@@ -30,10 +30,11 @@ public struct AboutView: View {
         let url = Bundle.main.url(forResource: "Acknowledgments", withExtension: "plist")!
         do {
             let data = try Data(contentsOf: url)
-            let result = try PropertyListDecoder().decode([String: String].self, from: data)
-            return result.map { value in
-                Acknowledgment(name: value.key, url: URL(string: value.value)!)
-            }
+            let result = try PropertyListDecoder().decode([Acknowledgment].self, from: data)
+//            return result.map { value in
+//                Acknowledgment(name: value.key, url: URL(string: value.value)!)
+//            }
+            return result
         } catch {
             return []
         }

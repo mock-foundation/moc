@@ -71,39 +71,50 @@ struct ChatInspector: View {
             style: style
         )
     }
-
-    @ViewBuilder private var headerView: some View {
-        if let photo = viewModel.chatPhoto {
-            AsyncTdImage(id: photo.id) { image in
-                image
-                    .resizable()
-                    .interpolation(.medium)
-                    .antialiased(true)
-            } placeholder: {
-                makePlaceholder(.medium)
-            }
-            .frame(width: 86, height: 86)
-            .clipShape(Circle())
-        } else {
-            makePlaceholder(.medium)
-                .frame(width: 86, height: 86)
-                .clipShape(Circle())
+    
+    enum HeaderStyle {
+        case minimal
+        case large
+    }
+    
+    @ViewBuilder
+    private func makeHeaderView(style: HeaderStyle) -> some View {
+        switch style {
+            case .minimal:
+                if let photo = viewModel.chatPhoto {
+                    AsyncTdImage(id: photo.id) { image in
+                        image
+                            .resizable()
+                            .interpolation(.medium)
+                            .antialiased(true)
+                    } placeholder: {
+                        makePlaceholder(.medium)
+                    }
+                    .frame(width: 86, height: 86)
+                    .clipShape(Circle())
+                } else {
+                    makePlaceholder(.medium)
+                        .frame(width: 86, height: 86)
+                        .clipShape(Circle())
+                }
+                VStack {
+                    Text(viewModel.chatTitle)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                        .frame(minWidth: 0, idealWidth: nil)
+                        .multilineTextAlignment(.center)
+                    if showDeveloperInfo {
+                        Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
+                            .textSelection(.enabled)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Text("\(viewModel.chatMemberCount ?? 0) members")
+                    .fontWeight(.medium)
+            case .large:
+                Text("TODO")
         }
-        VStack {
-            Text(viewModel.chatTitle)
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-                .frame(minWidth: 0, idealWidth: nil)
-                .multilineTextAlignment(.center)
-            if showDeveloperInfo {
-                Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
-                    .textSelection(.enabled)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        Text("\(viewModel.chatMemberCount ?? 0) members")
-            .fontWeight(.medium)
     }
 
     @ViewBuilder private var quickActionsView: some View {
@@ -197,15 +208,15 @@ struct ChatInspector: View {
             if proxy.size.width >= 600 {
                 HStack {
                     VStack {
-                        headerView
+                        makeHeaderView(style: .large)
                         quickActionsView
                         Spacer()
-                    }
+                    }.padding(.vertical)
                     infoTabs
                 }
             } else {
                 VStack {
-                    headerView
+                    makeHeaderView(style: .minimal)
                     
                     quickActionsView
                     

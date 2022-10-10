@@ -22,8 +22,6 @@ struct ChatView: View {
     @Default(.showDeveloperInfo) var showDeveloperInfo
     let tempChat: Chat
     @State var isChatInfoShown = false
-    @State var subscribers: [AnyCancellable] = []
-    @Environment(\.menubarUpdater) var menubarUpdater
     
     let logger = Logger(category: "UI", label: "ChatView")
     
@@ -175,25 +173,16 @@ struct ChatView: View {
             Task {
                 try await viewModel.update(chat: tempChat)
             }
-            menubarUpdater.publisher
-                .sink { action in
-                    switch action {
-                        case let .trigger(item):
-                            switch item {
-                                case .toggleChatInfo: isChatInfoShown.toggle()
-                                case .toggleChatInspector: viewModel.isInspectorShown.toggle()
-                            }
-                        default: break
+        }
+        .onReceive(SystemUtils.ncPublisher(for: .menubarCommandUpdate)) {
+            switch $0.object as! MenubarAction {
+                case let .trigger(item):
+                    switch item {
+                        case .toggleChatInfo: isChatInfoShown.toggle()
+                        case .toggleChatInspector: viewModel.isInspectorShown.toggle()
                     }
-                    logger.debug("Received menubar action: \(action)")
-                }
-                .store(in: &subscribers)
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .toggleChatInfo)) { _ in
-            isChatInfoShown.toggle()
-        }
-        .onReceive(SystemUtils.ncPublisher(for: .chatInspectorToggle)) { _ in
-            viewModel.isInspectorShown.toggle()
+                default: break
+            }
         }
     }
 }

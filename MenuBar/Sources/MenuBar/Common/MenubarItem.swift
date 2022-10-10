@@ -8,4 +8,5 @@
 public enum MenubarItem {
     case toggleChatInspector
     case toggleChatInfo
+    case toggleArchive
 }
