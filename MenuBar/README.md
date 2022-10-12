@@ -1,3 +1,4 @@
 # MenuBar
 
-A description of this package.
+This module (or package) is responsible for menubar commands and menubar update
+handling.

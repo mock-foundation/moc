@@ -26,18 +26,15 @@ public struct AboutView: View {
         SystemUtils.info(key: "AboutAppString") as String
     }
     
-    var acknowledgmentList: [Acknowledgment] {
+    var acknowledgments: Acknowledgments {
         let url = Bundle.main.url(forResource: "Acknowledgments", withExtension: "plist")!
-        do {
-            let data = try Data(contentsOf: url)
-            let result = try PropertyListDecoder().decode([Acknowledgment].self, from: data)
-//            return result.map { value in
-//                Acknowledgment(name: value.key, url: URL(string: value.value)!)
-//            }
+//        do {
+            let data = try! Data(contentsOf: url)
+            let result = try! PropertyListDecoder().decode(Acknowledgments.self, from: data)
             return result
-        } catch {
-            return []
-        }
+//        } catch {
+//            return Acknowledgments(people: [], links: [.init(name: "Failed to parse Acknowledgments.plist", url: URL(string: "https://example.com")!)])
+//        }
     }
     
     public var body: some View {
@@ -71,9 +68,16 @@ public struct AboutView: View {
                                     "**Technoblade never dies**",
                                     destination: URL(string: "https://www.curesarcoma.org/technoblade-tribute/")!)
                                 Divider()
-                                ForEach(acknowledgmentList, id: \.self) { list in
-                                    Link(list.name, destination: list.url)
+                                Text("Links").font(.title)
+                                ForEach(acknowledgments.links, id: \.self) { link in
+                                    Link(link.name, destination: link.actuallyAnURL)
                                 }
+                                Text("People").font(.title)
+                                ForEach(acknowledgments.people, id: \.self) {
+                                    $0
+                                    // TODO: Make this UI better
+                                }
+                                
                             }.padding()
                         }
                         .overlay(alignment: .topTrailing) {
