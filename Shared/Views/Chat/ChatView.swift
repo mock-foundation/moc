@@ -180,6 +180,7 @@ struct ChatView: View {
                     switch item {
                         case .toggleChatInfo: isChatInfoShown.toggle()
                         case .toggleChatInspector: viewModel.isInspectorShown.toggle()
+                        default: break
                     }
                 default: break
             }

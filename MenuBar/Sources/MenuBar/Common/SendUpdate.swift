@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  SendUpdate.swift
 //  
 //
 //  Created by Егор Яковенко on 10.10.2022.
