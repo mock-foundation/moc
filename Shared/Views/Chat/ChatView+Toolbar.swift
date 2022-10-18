@@ -43,15 +43,17 @@ extension ChatView {
                 }
                 .buttonStyle(.plain)
                 .sheet(isPresented: $isChatInfoShown) {
-                    HStack {
-                        ChatInspector(id: viewModel.chatID)
-                            .frame(minWidth: 700, minHeight: 500)
-                        Button {
-                            isChatInfoShown = false
-                        } label: {
-                            Image(systemName: "xmark")
-                        }.buttonStyle(.plain)
-                    }
+                    ChatInspector(id: viewModel.chatID)
+                        .frame(minWidth: 700, minHeight: 500)
+                        .overlay(alignment: .topLeading) {
+                            Button {
+                                isChatInfoShown = false
+                            } label: {
+                                Image(systemName: "xmark")
+                            }
+                            .buttonStyle(.plain)
+                            .padding(12)
+                        }
                 }
             }
             
