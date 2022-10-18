@@ -33,7 +33,6 @@ struct AppCommands: Commands {
             Button {
                 Task {
                     let me = try await TdApi.shared.getMe()
-                    print(type(of: me.id))
                     SystemUtils.post(notification: .openChatWithId, with: me.id)
                 }
             } label: {

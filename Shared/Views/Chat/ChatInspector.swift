@@ -92,33 +92,35 @@ struct ChatInspector: View {
             makePlaceholder(.medium)
         }
     }
-    @ViewBuilder
+
     private func makeHeaderView(style: HeaderStyle) -> some View {
-        switch style {
-            case .minimal:
-                headerImage
-                    .frame(width: 86, height: 86)
-                    .clipShape(Circle())
-            case .large:
-                headerImage
-                    .frame(width: 150, height: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        }
         VStack {
-            Text(viewModel.chatTitle)
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-                .frame(minWidth: 0, idealWidth: nil)
-                .multilineTextAlignment(.center)
-            if showDeveloperInfo {
-                Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
-                    .textSelection(.enabled)
-                    .foregroundStyle(.secondary)
+            switch style {
+                case .minimal:
+                    headerImage
+                        .frame(width: 86, height: 86)
+                        .clipShape(Circle())
+                case .large:
+                    headerImage
+                        .frame(width: 150, height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            }
+            VStack(spacing: 0) {
+                Text(viewModel.chatTitle)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                    .frame(minWidth: 0, idealWidth: nil)
+                    .multilineTextAlignment(.center)
+                if showDeveloperInfo {
+                    Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
+                        .textSelection(.enabled)
+                        .foregroundStyle(.secondary)
+                }
+                Text("\(viewModel.chatMemberCount ?? 0) members")
+                    .fontWeight(.medium)
             }
         }
-        Text("\(viewModel.chatMemberCount ?? 0) members")
-            .fontWeight(.medium)
     }
 
     @ViewBuilder private var quickActionsView: some View {
@@ -175,9 +177,7 @@ struct ChatInspector: View {
         .coordinateSpace(name: "scrollUsers")
         .onPreferenceChange(InspectorScrollOffsetPreferenceKey.self) { value in
             let range = (0...550)
-            print(value)
             if range.contains(value) {
-                print("Contains value \(value)")
                 Task {
                     try await viewModel.loadMembers()
                 }

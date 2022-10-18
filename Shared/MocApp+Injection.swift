@@ -65,9 +65,6 @@ struct MocApp: App {
         } else {
             return WindowGroup(id: "about") {
                 AboutView()
-                    .onOpenURL { url in
-                        print(url)
-                    }
             }
             .handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
