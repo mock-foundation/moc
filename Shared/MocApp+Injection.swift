@@ -6,7 +6,6 @@
 //
 
 import AppCenter
-import AppCenterAnalytics
 import AppCenterCrashes
 import Backend
 import CryptoKit
@@ -15,6 +14,7 @@ import SwiftUI
 import Utilities
 import Logs
 import WhatsNewKit
+import MenuBar
 
 public extension Resolver {
     static func registerServices() {
@@ -48,13 +48,7 @@ struct MocApp: App {
             AppCenter.countryCode = try await TdApi.shared.getCountryCode().text
         }
         
-        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [
-            Analytics.self,
-            Crashes.self
-        ])
-        #if !DEBUG
-        Analytics.enabled = true
-        #endif
+        AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [Crashes.self])
     }
     
     #if os(macOS)
@@ -71,9 +65,6 @@ struct MocApp: App {
         } else {
             return WindowGroup(id: "about") {
                 AboutView()
-                    .onOpenURL { url in
-                        print(url)
-                    }
             }
             .handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
         }
@@ -110,6 +101,8 @@ struct MocApp: App {
             #else
             AppCommands()
             #endif
+            ChatCommand()
+            FileCommand()
         }
         
         #if os(macOS)

@@ -9,10 +9,12 @@
 
 import SwiftUI
 
-struct BackportedAboutCommand: Commands {
+public struct BackportedAboutCommand: Commands {
     @Environment(\.openURL) private var openURL
     
-    var body: some Commands {
+    public init() { }
+    
+    public var body: some Commands {
         CommandGroup(replacing: .appInfo) {
             Button {
                 openURL(URL(string: "moc://internal/openAbout")!)
@@ -25,10 +27,12 @@ struct BackportedAboutCommand: Commands {
 }
 
 @available(macOS 13, *)
-struct AboutCommand: Commands {
+public struct AboutCommand: Commands {
     @Environment(\.openWindow) private var openWindow
+    
+    public init() { }
 
-    var body: some Commands {
+    public var body: some Commands {
         CommandGroup(replacing: .appInfo) {
             Button {
                 openWindow(id: "about")

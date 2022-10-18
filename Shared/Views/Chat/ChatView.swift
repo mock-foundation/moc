@@ -13,12 +13,15 @@ import Utilities
 import UniformTypeIdentifiers
 import Logs
 import Defaults
+import Combine
+import MenuBar
 
 struct ChatView: View {
     @StateObject var viewModel = ChatViewModel()
     @FocusState var isInputFieldFocused
     @Default(.showDeveloperInfo) var showDeveloperInfo
     let tempChat: Chat
+    @State var isChatInfoShown = false
     
     let logger = Logger(category: "UI", label: "ChatView")
     
@@ -169,6 +172,17 @@ struct ChatView: View {
         .onAppear {
             Task {
                 try await viewModel.update(chat: tempChat)
+            }
+        }
+        .onReceive(SystemUtils.ncPublisher(for: .menubarCommandUpdate)) {
+            switch $0.object as! MenubarAction {
+                case let .trigger(item):
+                    switch item {
+                        case .toggleChatInfo: isChatInfoShown.toggle()
+                        case .toggleChatInspector: viewModel.isInspectorShown.toggle()
+                        default: break
+                    }
+                default: break
             }
         }
     }

@@ -71,8 +71,14 @@ struct ChatInspector: View {
             style: style
         )
     }
-
-    @ViewBuilder private var headerView: some View {
+    
+    enum HeaderStyle {
+        case minimal
+        case large
+    }
+    
+    @ViewBuilder
+    private var headerImage: some View {
         if let photo = viewModel.chatPhoto {
             AsyncTdImage(id: photo.id) { image in
                 image
@@ -82,28 +88,39 @@ struct ChatInspector: View {
             } placeholder: {
                 makePlaceholder(.medium)
             }
-            .frame(width: 86, height: 86)
-            .clipShape(Circle())
         } else {
             makePlaceholder(.medium)
-                .frame(width: 86, height: 86)
-                .clipShape(Circle())
         }
+    }
+
+    private func makeHeaderView(style: HeaderStyle) -> some View {
         VStack {
-            Text(viewModel.chatTitle)
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-                .frame(minWidth: 0, idealWidth: nil)
-                .multilineTextAlignment(.center)
-            if showDeveloperInfo {
-                Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
-                    .textSelection(.enabled)
-                    .foregroundStyle(.secondary)
+            switch style {
+                case .minimal:
+                    headerImage
+                        .frame(width: 86, height: 86)
+                        .clipShape(Circle())
+                case .large:
+                    headerImage
+                        .frame(width: 150, height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            }
+            VStack(spacing: 0) {
+                Text(viewModel.chatTitle)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                    .frame(minWidth: 0, idealWidth: nil)
+                    .multilineTextAlignment(.center)
+                if showDeveloperInfo {
+                    Text("ID: \(String(chatId).trimmingCharacters(in: .whitespaces))")
+                        .textSelection(.enabled)
+                        .foregroundStyle(.secondary)
+                }
+                Text("\(viewModel.chatMemberCount ?? 0) members")
+                    .fontWeight(.medium)
             }
         }
-        Text("\(viewModel.chatMemberCount ?? 0) members")
-            .fontWeight(.medium)
     }
 
     @ViewBuilder private var quickActionsView: some View {
@@ -125,75 +142,92 @@ struct ChatInspector: View {
             )
             .tint(.red)
         }
-        .padding(.vertical)
+        .padding()
         .frame(minWidth: 0, idealWidth: nil)
+    }
+    
+    var infoTabs: some View {
+        ScrollView {
+            ZStack {
+                switch viewModel.selectedInspectorTab {
+                    case .users:
+                        VStack {
+                            ForEach(viewModel.chatMembers, id: \.id) { member in
+                                makeUserRow(for: member)
+                                    .padding(.horizontal, 8)
+                                    .frame(minWidth: 0, idealWidth: nil)
+                            }
+                        }
+                    case .media:
+                        Text("Media")
+                    case .links:
+                        Text("Links")
+                    case .files:
+                        Text("Files")
+                    case .voice:
+                        Text("Voice")
+                }
+                GeometryReader { proxy in
+                    Color.clear.preference(
+                        key: InspectorScrollOffsetPreferenceKey.self,
+                        value: Int(proxy.frame(in: .named("scrollUsers")).maxY))
+                }
+            }
+        }
+        .coordinateSpace(name: "scrollUsers")
+        .onPreferenceChange(InspectorScrollOffsetPreferenceKey.self) { value in
+            let range = (0...550)
+            if range.contains(value) {
+                Task {
+                    try await viewModel.loadMembers()
+                }
+            }
+        }
+        .safeAreaInset(edge: .top) {
+            Picker(selection: $viewModel.selectedInspectorTab) {
+                Text("Users").tag(ChatInspectorTab.users)
+                Text("Media").tag(ChatInspectorTab.media)
+                Text("Links").tag(ChatInspectorTab.links)
+                Text("Files").tag(ChatInspectorTab.files)
+                Text("Voice").tag(ChatInspectorTab.voice)
+            } label: {
+                EmptyView()
+            }
+            .pickerStyle(.segmented)
+            .controlSize(.large)
+            .frame(minWidth: 0, idealWidth: nil)
+            .padding(8)
+            .background(.ultraThinMaterial, in: Rectangle())
+        }
+        .onChange(of: chatId) { newValue in
+            viewModel.chatId = newValue
+            Task {
+                try await viewModel.updateInfo()
+            }
+        }
     }
 
     var body: some View {
-        VStack {
-            headerView
-            
-            quickActionsView
-            
-            ScrollView {
-                ZStack {
-                    switch viewModel.selectedInspectorTab {
-                        case .users:
-                            VStack {
-                                ForEach(viewModel.chatMembers, id: \.id) { member in
-                                    makeUserRow(for: member)
-                                        .padding(.horizontal, 8)
-                                        .frame(minWidth: 0, idealWidth: nil)
-                                }
-                            }
-                        case .media:
-                            Text("Media")
-                        case .links:
-                            Text("Links")
-                        case .files:
-                            Text("Files")
-                        case .voice:
-                            Text("Voice")
+        GeometryReader { proxy in
+            if proxy.size.width >= 600 {
+                HStack {
+                    VStack {
+                        makeHeaderView(style: .large)
+                            .padding(.top, 12)
+                        quickActionsView
+                        Spacer()
                     }
-                    GeometryReader { proxy in
-                        Color.clear.preference(
-                            key: InspectorScrollOffsetPreferenceKey.self,
-                            value: Int(proxy.frame(in: .named("scrollUsers")).maxY))
-                    }
+                    .padding(.vertical)
+                    infoTabs
                 }
-            }
-            .coordinateSpace(name: "scrollUsers")
-            .onPreferenceChange(InspectorScrollOffsetPreferenceKey.self) { value in
-                let range = (0...550)
-                print(value)
-                if range.contains(value) {
-                    print("Contains value \(value)")
-                    Task {
-                        try await viewModel.loadMembers()
-                    }
+            } else {
+                VStack {
+                    makeHeaderView(style: .minimal)
+                        .padding(.top, 8)
+                    quickActionsView
+                    infoTabs
                 }
-            }
-            .safeAreaInset(edge: .top) {
-                Picker(selection: $viewModel.selectedInspectorTab) {
-                    Text("Users").tag(ChatInspectorTab.users)
-                    Text("Media").tag(ChatInspectorTab.media)
-                    Text("Links").tag(ChatInspectorTab.links)
-                    Text("Files").tag(ChatInspectorTab.files)
-                    Text("Voice").tag(ChatInspectorTab.voice)
-                } label: {
-                    EmptyView()
-                }
-                .pickerStyle(.segmented)
-                .controlSize(.large)
-                .frame(minWidth: 0, idealWidth: nil)
-                .padding(8)
-                .background(.ultraThinMaterial, in: Rectangle())
-            }
-            .onChange(of: chatId) { newValue in
-                viewModel.chatId = newValue
-                Task {
-                    try await viewModel.updateInfo()
-                }
+
             }
         }
     }

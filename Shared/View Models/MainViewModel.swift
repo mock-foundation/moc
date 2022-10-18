@@ -15,6 +15,7 @@ import Backend
 import Storage
 import Network
 import Defaults
+import MenuBar
 
 class MainViewModel: ObservableObject {
     @Injected var service: any MainService
@@ -185,6 +186,18 @@ class MainViewModel: ObservableObject {
             .sink { value in
                 withAnimation(.fastStartSlowStop()) {
                     self.sidebarSize = SidebarSize(rawValue: value.newValue) ?? .medium
+                }
+            }
+            .store(in: &subscribers)
+        SystemUtils.ncPublisher(for: .menubarCommandUpdate)
+            .sink {
+                switch $0.object as! MenubarAction {
+                    case let .toggle(item, value):
+                        switch item {
+                            case .toggleArchive: self.isArchiveOpen = value
+                            default: break
+                        }
+                    default: break
                 }
             }
             .store(in: &subscribers)

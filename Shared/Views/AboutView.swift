@@ -7,11 +7,12 @@
 
 import SwiftUI
 import Utilities
-import AppCenterAnalytics
 
-struct AboutView: View {
+public struct AboutView: View {
     @Environment(\.openURL) private var openURL
     @State private var areAcknowledgmentsOpened = false
+    
+    public init() { }
     
     var versionString: String {
         SystemUtils.info(key: "CFBundleShortVersionString") as String
@@ -25,20 +26,18 @@ struct AboutView: View {
         SystemUtils.info(key: "AboutAppString") as String
     }
     
-    var acknowledgmentList: [Acknowledgment] {
+    var acknowledgments: Acknowledgments {
         let url = Bundle.main.url(forResource: "Acknowledgments", withExtension: "plist")!
-        do {
-            let data = try Data(contentsOf: url)
-            let result = try PropertyListDecoder().decode([String: String].self, from: data)
-            return result.map { value in
-                Acknowledgment(name: value.key, url: URL(string: value.value)!)
-            }
-        } catch {
-            return []
-        }
+//        do {
+            let data = try! Data(contentsOf: url)
+            let result = try! PropertyListDecoder().decode(Acknowledgments.self, from: data)
+            return result
+//        } catch {
+//            return Acknowledgments(people: [], links: [.init(name: "Failed to parse Acknowledgments.plist", url: URL(string: "https://example.com")!)])
+//        }
     }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             VStack {
                 Image("WelcomeScreenImage")
@@ -57,7 +56,6 @@ struct AboutView: View {
                 HStack {
                     Button {
                         areAcknowledgmentsOpened = true
-                        Analytics.trackEvent("Opened acknowledgments")
                     } label: {
                         Text("Acknowledgments")
                     }
@@ -69,17 +67,17 @@ struct AboutView: View {
                                 Link(
                                     "**Technoblade never dies**",
                                     destination: URL(string: "https://www.curesarcoma.org/technoblade-tribute/")!)
-                                .environment(\.openURL, OpenURLAction { url in
-                                    openURL(url)
-                                    
-                                    Analytics.trackEvent("Opened page for donating to sarcoma research")
-                                    
-                                    return .handled
-                                })
                                 Divider()
-                                ForEach(acknowledgmentList, id: \.self) { list in
-                                    Link(list.name, destination: list.url)
+                                Text("Links").font(.title)
+                                ForEach(acknowledgments.links, id: \.self) { link in
+                                    Link(link.name, destination: link.actuallyAnURL)
                                 }
+                                Text("People").font(.title)
+                                ForEach(acknowledgments.people, id: \.self) {
+                                    $0
+                                    // TODO: Make this UI better
+                                }
+                                
                             }.padding()
                         }
                         .overlay(alignment: .topTrailing) {
@@ -94,9 +92,6 @@ struct AboutView: View {
                     }
                     .background(.ultraThinMaterial)
                     Button {
-                        Analytics.trackEvent(
-                            "Opened GitHub page of Mock Foundation",
-                            withProperties: ["From": "About"])
                         openURL(URL(string: "https://github.com/mock-foundation")!)
                     } label: {
                         Spacer()
