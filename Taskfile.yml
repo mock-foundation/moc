@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - xcodebuild -scheme Moc build
+  clean:
+    cmds:
+      - xcodebuild -scheme Moc clean
+  release:all:
+    cmds:
+      - task: release:macOS
+      - task: release:iPadOS
+  release:macOS:
+    cmds:
+      - echo "macOS"
+  release:iPadOS:
+    cmds:
+      - echo "iPadOS"
