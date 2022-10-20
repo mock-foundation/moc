@@ -36,6 +36,12 @@ tasks:
       - task: generate:gyb
       - task: generate:sourcery
   generate:gyb:
+    env:
+      # Default values for macOS Telegram client
+      API_ID: 2834
+      API_HASH: 68875f756c9b437a8b916ca3de215815
+      MACOS_APP_CENTER_SECRET: ""
+      IPADOS_APP_CENTER_SECRET: ""
     cmds:
       - cmd: ./scripts/gyb.sh
         ignore_error: true
