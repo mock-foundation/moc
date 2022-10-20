@@ -13,6 +13,11 @@ tasks:
   release:iPadOS:
     cmds:
       - echo "iPadOS"
+  archive:
+    cmds:
+      - task: archive:macOS
+      - task: archive:iPadOS
+      - task: assemble-ipa
   archive:macOS:
     cmds:
       - xcodebuild -scheme Moc archive -configuration release -sdk macosx -archivePath $ARCHIVE_PATH
@@ -23,7 +28,7 @@ tasks:
         - xcodebuild -scheme Moc archive -configuration release -sdk iphoneos -archivePath $ARCHIVE_PATH
     env:
       ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
-  assembleIpa:
+  assemble-ipa:
     cmds:
         - xcodebuild -exportArchive -archivePath $ARCHIVE_PATH \
           -exportOptionsPlist iPadOS-export-options.plist \
