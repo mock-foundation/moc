@@ -3,16 +3,18 @@ version: '3'
 tasks:
   build: xcodebuild -scheme Moc build
   clean: xcodebuild -scheme Moc clean
-  release:all:
+  release:
     cmds:
       - task: release:macOS
       - task: release:iPadOS
   release:macOS:
     cmds:
-      - echo "macOS"
+      - task: archive:macOS
+      - cmd: cp result/Moc-macOS.xcarchive/Products/Applications/Moc.app result/Moc.app
   release:iPadOS:
     cmds:
-      - echo "iPadOS"
+      - task: archive:iPadOS
+      - task: assemble-ipa
   archive:
     cmds:
       - task: archive:macOS
