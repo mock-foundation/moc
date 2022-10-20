@@ -1,12 +1,8 @@
 version: '3'
 
 tasks:
-  build:
-    cmds:
-      - xcodebuild -scheme Moc build
-  clean:
-    cmds:
-      - xcodebuild -scheme Moc clean
+  build: xcodebuild -scheme Moc build
+  clean: xcodebuild -scheme Moc clean
   release:all:
     cmds:
       - task: release:macOS
@@ -17,3 +13,32 @@ tasks:
   release:iPadOS:
     cmds:
       - echo "iPadOS"
+  archive:macOS:
+    cmds:
+      - xcodebuild -scheme Moc archive -configuration release -sdk macosx -archivePath $ARCHIVE_PATH
+    env:
+      ARCHIVE_PATH: result/Moc-macOS.xcarchive
+  archive:iPadOS:
+    cmds:
+        - xcodebuild -scheme Moc archive -configuration release -sdk iphoneos -archivePath $ARCHIVE_PATH
+    env:
+      ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
+  assembleIpa:
+    cmds:
+        - xcodebuild -exportArchive -archivePath $ARCHIVE_PATH \
+          -exportOptionsPlist iPadOS-export-options.plist \
+          -exportPath $IPA_PATH
+    env:
+      ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
+      IPA_PATH: result/Moc.ipa
+  generate:
+    cmds:
+      - task: generate:gyb
+      - task: generate:sourcery
+  generate:gyb:
+    cmds:
+      - cmd: ./scripts/gyb.sh
+        ignore_error: true
+  generate:sourcery:
+    cmds:
+      - ./scripts/sourcery.sh

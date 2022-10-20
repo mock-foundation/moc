@@ -1,4 +1,4 @@
-cd Utilities/Templates
+cd ../Utilities/Templates
 mkdir ../Sources/Utilities/Generated
 find . -name "*.gyb" |
 while read file; do
