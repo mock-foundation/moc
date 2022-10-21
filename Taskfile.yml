@@ -1,7 +1,13 @@
 version: '3'
 
 tasks:
-  build: xcodebuild -scheme Moc build
+  build:
+    cmds:
+      - task: build:macOS
+      - task: build:iPadOS
+  build:general: xcodebuild -scheme Moc build
+  build:macOS: xcodebuild -scheme Moc -sdk macosx build
+  build:iPadOS: xcodebuild -scheme Moc -sdk iphoneos build
   clean: xcodebuild -scheme Moc clean
   release:
     cmds:
@@ -14,12 +20,12 @@ tasks:
   release:iPadOS:
     cmds:
       - task: archive:iPadOS
-      - task: assemble-ipa
+      - task: package:iPadOS
   archive:
     cmds:
       - task: archive:macOS
       - task: archive:iPadOS
-      - task: assemble-ipa
+      - task: package:iPadOS
   archive:macOS:
     cmds:
       - xcodebuild -scheme Moc archive -configuration release -sdk macosx -archivePath $ARCHIVE_PATH
@@ -30,7 +36,20 @@ tasks:
         - xcodebuild -scheme Moc archive -configuration release -sdk iphoneos -archivePath $ARCHIVE_PATH
     env:
       ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
-  assemble-ipa:
+  package:
+    cmds:
+      - task: package:macOS
+      - task: package:iPadOS
+  package:macOS:
+    cmds:
+      - mkdir dmgsrc
+      - cp $ARCHIVE_PATH/Moc.app dmgsrc
+      - hdiutil create -volname Moc -srcfolder dmgsrc -ov -format UDZO $DMG_PATH
+      - rm -rf dmgsrc
+    env:
+      ARCHIVE_PATH: result/Moc-macOS.xcarchive
+      DMG_PATH: result/Moc.dmg
+  package:iPadOS:
     cmds:
         - xcodebuild -exportArchive -archivePath $ARCHIVE_PATH \
           -exportOptionsPlist iPadOS-export-options.plist \
