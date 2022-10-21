@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Task
-        run: brew install go-task/tap/task
+        run: brew install go-task/tap/go-task
       - name: Set Xcode version
         run: |
           sudo xcode-select -s /Applications/Xcode_14.1.app
