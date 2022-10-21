@@ -38,6 +38,35 @@ tasks:
     env:
       ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
       IPA_PATH: result/Moc.ipa
+  setup:
+    cmds:
+      - task: install-cli-deps
+      - task: generate
+  setup:full:
+    cmds:
+      - task: setup
+      - task: fetch-spm-packages
+      - task: xcode
+  teardown:
+    cmds:
+      - brew uninstall swift-sh
+      - brew uninstall swiftlint
+      - brew uninstall ggoraa/apps/gyb
+      - brew uninstall swiftgen
+      - brew uninstall sourcery
+      - rm -rf Sources/Utilities/Generated
+      - rm -rf Moc/Generated
+  install-cli-deps:
+    cmds:
+      - brew install swift-sh
+      - brew install swiftlint
+      - brew install ggoraa/apps/gyb
+      - brew install swiftgen
+      - brew install sourcery
+  fetch-spm-packages:
+    aliases: [fetch-spm, fspmp]
+    cmds:
+      - xcodebuild -resolvePackageDependencies
   generate:
     cmds:
       - task: generate:gyb
@@ -55,3 +84,7 @@ tasks:
   generate:sourcery:
     cmds:
       - ./scripts/sourcery.sh
+  test:
+    cmds:
+      - echo "To be implemented"
+  xcode: open Moc.xcodeproj
