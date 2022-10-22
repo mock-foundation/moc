@@ -30,6 +30,7 @@ jobs:
               API_ID=${{ secrets.API_ID }}
               API_HASH=${{ secrets.API_HASH }}
           fi
+          rm '/usr/local/bin/swiftlint'
           task setup
       - name: Install the Apple certificate and provisioning profile
         env:
