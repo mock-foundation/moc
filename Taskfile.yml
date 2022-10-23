@@ -8,19 +8,14 @@ tasks:
   build:general: xcodebuild -scheme Moc build
   build:macOS: xcodebuild -scheme Moc -sdk macosx build
   build:iPadOS: xcodebuild -scheme Moc -sdk iphoneos build
-  clean: xcodebuild -scheme Moc clean
   release:
     cmds:
       - task: release:macOS
       - task: release:iPadOS
-  release:macOS:
-    cmds:
-      - task: archive:macOS
-      - cmd: cp result/Moc-macOS.xcarchive/Products/Applications/Moc.app result/Moc.app
-  release:iPadOS:
-    cmds:
-      - task: archive:iPadOS
-      - task: package:iPadOS
+  release:general: xcodebuild -scheme Moc -configuration Release build
+  release:macOS: xcodebuild -scheme Moc -sdk macosx -configuration Release build
+  release:iPadOS: xcodebuild -scheme Moc -sdk iphoneos -configuration Release build
+  clean: xcodebuild -scheme Moc clean
   archive:
     cmds:
       - task: archive:macOS
