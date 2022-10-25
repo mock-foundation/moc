@@ -38,11 +38,11 @@ tasks:
   package:macOS:
     cmds:
       - mkdir dmgsrc
-      - cp $ARCHIVE_PATH/Products/Applications/Moc.app dmgsrc
+      - cp $APP_PATH dmgsrc
       - hdiutil create -volname Moc -srcfolder dmgsrc -ov -format UDZO $DMG_PATH
       - rm -rf dmgsrc
     env:
-      ARCHIVE_PATH: result/Moc-macOS.xcarchive
+      APP_PATH: result/Moc-macOS.xcarchive/Products/Applications/Moc.app
       DMG_PATH: result/Moc.dmg
   package:iPadOS:
     cmds:

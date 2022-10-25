@@ -70,6 +70,8 @@ jobs:
           echo "APP_BUILD_NUMBER=$APP_BUILD_NUMBER" >> $GITHUB_ENV
 
       - name: Make .dmg
+        env:
+          APP_PATH: Moc.app
         run: task package:macOS
 
       - name: Prepare artifact for upload
