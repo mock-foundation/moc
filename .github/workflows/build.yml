@@ -54,12 +54,8 @@ jobs:
           # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
-      - name: Build
-        run: task clean release:macOS
-
-      - name: Move artifact
-        run: |
-          mv ~/Library/Developer/Xcode/DerivedData/Moc-*/Build/Products/Release/Moc.app Moc.app
+      - name: Archive (build)
+        run: task clean archive:macOS
 
       - name: Get Version and Build number
         run: |
