@@ -38,7 +38,7 @@ tasks:
   package:macOS:
     cmds:
       - mkdir dmgsrc
-      - cp $APP_PATH dmgsrc
+      - cp -r $APP_PATH dmgsrc
       - hdiutil create -volname Moc -srcfolder dmgsrc -ov -format UDZO $DMG_PATH
       - rm -rf dmgsrc
     env:
