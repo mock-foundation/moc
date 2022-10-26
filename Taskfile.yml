@@ -1,0 +1,105 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - task: build:macOS
+      - task: build:iPadOS
+  build:general: xcodebuild -scheme Moc build
+  build:macOS: xcodebuild -scheme Moc -sdk macosx build
+  build:iPadOS: xcodebuild -scheme Moc -sdk iphoneos build
+  release:
+    cmds:
+      - task: release:macOS
+      - task: release:iPadOS
+  release:general: xcodebuild -scheme Moc -configuration Release build
+  release:macOS: xcodebuild -scheme Moc -sdk macosx -configuration Release build
+  release:iPadOS: xcodebuild -scheme Moc -sdk iphoneos -configuration Release build
+  clean: xcodebuild -scheme Moc clean
+  archive:
+    cmds:
+      - task: archive:macOS
+      - task: archive:iPadOS
+      - task: package:iPadOS
+  archive:macOS:
+    cmds:
+      - xcodebuild -scheme Moc archive -configuration release -sdk macosx -archivePath $ARCHIVE_PATH
+    env:
+      ARCHIVE_PATH: result/Moc-macOS.xcarchive
+  archive:iPadOS:
+    cmds:
+        - xcodebuild -scheme Moc archive -configuration release -sdk iphoneos -archivePath $ARCHIVE_PATH
+    env:
+      ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
+  package:
+    cmds:
+      - task: package:macOS
+      - task: package:iPadOS
+  package:macOS:
+    cmds:
+      - mkdir -p dmgsrc
+      - cp -r $APP_PATH dmgsrc
+      - mkdir -p result
+      - hdiutil create -volname Moc -srcfolder dmgsrc -ov -format UDZO $DMG_PATH
+      - rm -rf dmgsrc
+    env:
+      APP_PATH: result/Moc-macOS.xcarchive/Products/Applications/Moc.app
+      DMG_PATH: result/Moc.dmg
+  package:iPadOS:
+    cmds:
+        - xcodebuild -exportArchive -archivePath $ARCHIVE_PATH \
+          -exportOptionsPlist iPadOS-export-options.plist \
+          -exportPath $IPA_PATH
+    env:
+      ARCHIVE_PATH: result/Moc-iPadOS.xcarchive
+      IPA_PATH: result/Moc.ipa
+  setup:
+    cmds:
+      - task: install-cli-deps
+      - task: generate
+  setup:full:
+    cmds:
+      - task: setup
+      - task: fetch-spm-packages
+      - task: xcode
+  teardown:
+    cmds:
+      - brew uninstall swift-sh
+      - brew uninstall swiftlint
+      - brew uninstall ggoraa/apps/gyb
+      - brew uninstall swiftgen
+      - brew uninstall sourcery
+      - rm -rf Sources/Utilities/Generated
+      - rm -rf Moc/Generated
+  install-cli-deps:
+    cmds:
+      - brew install swift-sh
+      - brew install swiftlint
+      - brew install ggoraa/apps/gyb
+      - brew install swiftgen
+      - brew install sourcery
+  fetch-spm-packages:
+    aliases: [fetch-spm, fspmp]
+    cmds:
+      - xcodebuild -resolvePackageDependencies
+  generate:
+    cmds:
+      - task: generate:gyb
+      - task: generate:sourcery
+  generate:gyb:
+    env:
+      # Default values for macOS Telegram client
+      API_ID: 2834
+      API_HASH: 68875f756c9b437a8b916ca3de215815
+      MACOS_APP_CENTER_SECRET: ""
+      IPADOS_APP_CENTER_SECRET: ""
+    cmds:
+      - cmd: ./scripts/gyb.sh
+        ignore_error: true
+  generate:sourcery:
+    cmds:
+      - ./scripts/sourcery.sh
+  test:
+    cmds:
+      - echo "To be implemented"
+  xcode: open Moc.xcodeproj
