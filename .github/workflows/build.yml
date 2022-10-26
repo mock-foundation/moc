@@ -72,6 +72,7 @@ jobs:
       - name: Make .dmg
         env:
           APP_PATH: Moc.app
+          DMG_PATH: Moc.dmg
         run: task package:macOS
 
       - name: Prepare artifact for upload
