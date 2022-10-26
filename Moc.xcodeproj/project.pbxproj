@@ -47,6 +47,7 @@
 		43505ECE28BE16FA00E8C5CD /* Color+Additional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43505ECD28BE16FA00E8C5CD /* Color+Additional.swift */; };
 		435C9C0C28A13FB700E5D682 /* CompactChatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0B28A13FB600E5D682 /* CompactChatItemView.swift */; };
 		435C9C0E28A1915F00E5D682 /* Notification.Name+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C9C0D28A1915F00E5D682 /* Notification.Name+Constants.swift */; };
+		435D31CB2909AF5500068295 /* L10n in Frameworks */ = {isa = PBXBuildFile; productRef = 435D31CA2909AF5500068295 /* L10n */; };
 		4360D6E3283FE2BE00D3378F /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E2283FE2BE00D3378F /* Collections */; };
 		4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E4283FE2BE00D3378F /* DequeModule */; };
 		4360D6E7283FE2BE00D3378F /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4360D6E6283FE2BE00D3378F /* OrderedCollections */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -322,6 +323,7 @@
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
 				43431C7A28A006E6002A72A0 /* Introspect in Frameworks */,
+				435D31CB2909AF5500068295 /* L10n in Frameworks */,
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
@@ -749,6 +751,7 @@
 				439DE1CC28CF0F4C002CD515 /* WhatsNewKit */,
 				4368B43F28E303FE001B0D14 /* Sparkle */,
 				43CE3C1628EEDF3600B323B6 /* MenuBar */,
+				435D31CA2909AF5500068295 /* L10n */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -1564,6 +1567,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */;
 			productName = TDLibKit;
+		};
+		435D31CA2909AF5500068295 /* L10n */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = L10n;
 		};
 		4360D6E2283FE2BE00D3378F /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;

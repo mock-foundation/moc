@@ -95,15 +95,15 @@ class MainViewModel: ObservableObject {
                 Task {
                     switch openChatList {
                         case .main:
-                            _ = try await TdApi.shared.loadChats(
+                            try await TdApi.shared.loadChats(
                                 chatList: .main,
                                 limit: 30)
                         case .archive:
-                            _ = try await TdApi.shared.loadChats(
+                            try await TdApi.shared.loadChats(
                                 chatList: .archive,
                                 limit: 30)
                         case .folder(let id):
-                            _ = try await TdApi.shared.loadChats(
+                            try await TdApi.shared.loadChats(
                                 chatList: .filter(.init(chatFilterId: id)),
                                 limit: 30)
                     }
@@ -208,13 +208,13 @@ class MainViewModel: ObservableObject {
                 Task {
                     switch value {
                         case .satisfied:
-                            _ = try await TdApi.shared.setNetworkType(type: .other)
+                            try await TdApi.shared.setNetworkType(type: .other)
                         case .unsatisfied:
-                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
+                            try await TdApi.shared.setNetworkType(type: NetworkType.none)
                         case .requiresConnection:
-                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
+                            try await TdApi.shared.setNetworkType(type: NetworkType.none)
                         @unknown default:
-                            _ = try await TdApi.shared.setNetworkType(type: NetworkType.none)
+                            try await TdApi.shared.setNetworkType(type: NetworkType.none)
                     }
                 }
             }

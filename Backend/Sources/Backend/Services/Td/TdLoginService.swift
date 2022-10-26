@@ -20,11 +20,11 @@ public class TdLoginService: LoginService {
     }
 
     public func resendAuthCode() async throws {
-        _ = try await tdApi.resendAuthenticationCode()
+        try await tdApi.resendAuthenticationCode()
     }
 
     public func checkAuth(phoneNumber: String) async throws {
-        _ = try await tdApi.setAuthenticationPhoneNumber(
+        try await tdApi.setAuthenticationPhoneNumber(
             phoneNumber: phoneNumber,
             settings: nil
         )
@@ -33,11 +33,11 @@ public class TdLoginService: LoginService {
     public init() {}
 
     public func checkAuth(code: String) async throws {
-        _ = try await tdApi.checkAuthenticationCode(code: code)
+        try await tdApi.checkAuthenticationCode(code: code)
     }
 
     public func checkAuth(password: String) async throws {
-        _ = try await tdApi.checkAuthenticationPassword(password: password)
+        try await tdApi.checkAuthenticationPassword(password: password)
     }
     
     public func getCountries() async throws -> [CountryInfo] {
@@ -49,6 +49,6 @@ public class TdLoginService: LoginService {
     }
 
     public func requestQrCodeAuth() async throws {
-        _ = try await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
+        try await tdApi.requestQrCodeAuthentication(otherUserIds: nil)
     }
 }

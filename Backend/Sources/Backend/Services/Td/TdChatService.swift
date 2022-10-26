@@ -111,12 +111,12 @@ public class TdChatService: ChatService {
         if let chatId {
             switch try await getChat(by: chatId).type {
                 case let .private(info):
-                    _ = try await tdApi.toggleMessageSenderIsBlocked(
+                    try await tdApi.toggleMessageSenderIsBlocked(
                         isBlocked: isBlocked,
                         senderId: .user(.init(userId: info.userId))
                     )
                 case let .supergroup(info):
-                    _ = try await tdApi.toggleMessageSenderIsBlocked(
+                    try await tdApi.toggleMessageSenderIsBlocked(
                         isBlocked: isBlocked,
                         senderId: .chat(.init(chatId: info.supergroupId))
                     )

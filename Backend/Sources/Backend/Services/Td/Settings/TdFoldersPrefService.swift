@@ -29,7 +29,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     }
 
     public func reorderFilters(_ folders: [Int]) async throws {
-        _ = try await tdApi.reorderChatFilters(chatFilterIds: folders, mainChatListPosition: 0)
+        try await tdApi.reorderChatFilters(chatFilterIds: folders, mainChatListPosition: 0)
     }
 
     public func createFilter(_ filter: TDLibKit.ChatFilter) async throws {
@@ -37,7 +37,7 @@ public class TdFoldersPrefService: FoldersPrefService {
     }
 
     public func deleteFilter(by id: Int) async throws {
-        _ = try await tdApi.deleteChatFilter(chatFilterId: id)
+        try await tdApi.deleteChatFilter(chatFilterId: id)
     }
 
     public func getRecommended() async throws -> [RecommendedChatFilter] {
