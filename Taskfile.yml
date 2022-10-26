@@ -37,8 +37,9 @@ tasks:
       - task: package:iPadOS
   package:macOS:
     cmds:
-      - mkdir dmgsrc
+      - mkdir -p dmgsrc
       - cp -r $APP_PATH dmgsrc
+      - mkdir -p result
       - hdiutil create -volname Moc -srcfolder dmgsrc -ov -format UDZO $DMG_PATH
       - rm -rf dmgsrc
     env:
