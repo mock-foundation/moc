@@ -84,16 +84,18 @@ If you want to contribute a new feature, please make sure you have read the [pro
 
 ## Step 1 - Clone
 
-Use the command below to clone the repo and its submodules:
+Use the command below to clone the repo:
 
 ```shell
-git clone --recurse-submodules https://github.com/mock-foundation/moc.git 
+git clone https://github.com/mock-foundation/moc.git 
 ```
 
 ## Step 2 - Download right version of Xcode
 
-The development is going with **Xcode 14 beta**. You can download it from
-[Apple Developer](https://developer.apple.com/download/release/).
+The development is going with **Xcode 14**. You can download it from
+[Apple Developer](https://developer.apple.com/download/release/), or using
+**Xcodes** ([app (recommended)](https://github.com/RobotsAndPencils/XcodesApp) or 
+[cli](https://github.com/RobotsAndPencils/xcodes)).
 
 ## Step 3 - Obtain `api_id` and `api_hash`
 
@@ -106,10 +108,10 @@ Be sure that you have [Homebrew](https://brew.sh) installed, because it is used 
 
 Now run these commands:
 ```shell
-brew install swift-sh
-sudo chmod +x environment.swift 
-sudo chmod +x gyb.sh
-./environment.swift <api_id> <api_hash>
+brew install go-task/tap/go-task
+API_ID=<api_id> API_HASH=<api_hash> task setup
 ```
+
+You can execute `task setup:full` if you want to also fetch SPM packages and open Xcode.
 
 **Done!** You have everything set up. You can now build Moc 😁
