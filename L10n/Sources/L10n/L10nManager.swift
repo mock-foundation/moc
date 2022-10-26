@@ -49,4 +49,3 @@ public struct L10nManager {
         ).strings.first ?? LanguagePackString(key: key, value: .deleted)
     }
 }
-

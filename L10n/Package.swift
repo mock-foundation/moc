@@ -19,7 +19,10 @@ let package = Package(
     targets: [
         .target(
             name: "L10n",
-            dependencies: ["L10n-swift"]),
+            dependencies: ["L10n-swift"],
+            resources: [
+                .copy("Localizable.strings")
+            ]),
         .testTarget(
             name: "L10nTests",
             dependencies: ["L10n"]),
