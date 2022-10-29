@@ -35,7 +35,7 @@ public extension TdApi {
             try await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif
         }
-        
+                
         client.run {
             let cache = StorageService.shared
             
@@ -60,7 +60,7 @@ public extension TdApi {
                                         url.appendPathComponent("td")
                                         dir = url.path
                                     }
-                                    _ = try await self.setTdlibParameters(parameters: TdlibParameters(
+                                    try await self.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
                                         apiId: Secret.apiId,
                                         applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
@@ -86,8 +86,8 @@ public extension TdApi {
                                 }
                             case .ready:
                                 Task {
-                                    _ = try await self.loadChats(chatList: .main, limit: 15)
-                                    _ = try await self.loadChats(chatList: .archive, limit: 15)
+                                    try await self.loadChats(chatList: .main, limit: 15)
+                                    try await self.loadChats(chatList: .archive, limit: 15)
                                 }
                             case .closed:
                                 TdApi.shared = TdApi(
@@ -169,11 +169,11 @@ public extension TdApi {
                                                 to: URL(fileURLWithPath: info.destinationPath))
                                         }
                                         TdApi.logger.debug("Conversion with id \(info.generationId.rawValue) is done")
-                                        _ = try await TdApi.shared.finishFileGeneration(
+                                        try await TdApi.shared.finishFileGeneration(
                                             error: nil,
                                             generationId: info.generationId)
                                     } catch {
-                                        _ = try await TdApi.shared.finishFileGeneration(
+                                        try await TdApi.shared.finishFileGeneration(
                                             error: Error(code: 400, message: error.localizedDescription),
                                             generationId: info.generationId)
                                     }
@@ -198,13 +198,13 @@ public extension TdApi {
                                                 options: .atomic)
                                         }
                                         #endif
-                                        _ = try await TdApi.shared.finishFileGeneration(
+                                        try await TdApi.shared.finishFileGeneration(
                                             error: nil,
                                             generationId: info.generationId)
                                         TdApi.logger.debug("File generation with ID \(info.generationId) is done")
                                     } catch {
                                         TdApi.logger.debug("File generation with ID \(info.generationId) failed")
-                                        _ = try await TdApi.shared.finishFileGeneration(
+                                        try await TdApi.shared.finishFileGeneration(
                                             error: Error(code: 400, message: error.localizedDescription),
                                             generationId: info.generationId)
                                     }
@@ -214,10 +214,12 @@ public extension TdApi {
                     default: break
                 }
             } catch {
-                let tdError = error as? TDLibKit.Error
-                guard let tdError else { return }
-                TdApi.logger.error("Code: \(tdError.code), message: \(tdError.message)")
+                TdApi.logger.error(error)
             }
+        }
+        
+        Task {
+            try await self.setOption(name: "localization_target", value: .string(.init(value: "macos")))
         }
     }
 }

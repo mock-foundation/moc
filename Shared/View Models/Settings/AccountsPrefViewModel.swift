@@ -40,7 +40,7 @@ class AccountsPrefViewModel: ObservableObject {
             do {
                 try await service.setFirstLastNames(firstName, lastName)
             } catch let error {
-                logger.error(error.localizedDescription)
+                logger.error(error)
             }
         }
     }

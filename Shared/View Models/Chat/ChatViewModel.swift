@@ -73,7 +73,7 @@ class ChatViewModel: ObservableObject {
             .sink { notification in
                 self.logger.debug("Got openChatWithInstance notification")
                 guard let chat = notification.object as? Chat else { return }
-                self.logger.debug("Got Chat objected")
+                self.logger.debug("Got Chat object")
 
                 Task {
                     try await self.update(chat: chat)
