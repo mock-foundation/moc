@@ -11,26 +11,31 @@ import Backend
 import Combine
 import Logs
 
-public struct L10nManager {
+public class L10nManager {
     public static let shared = L10nManager()
     private let tdApi = TdApi.shared
     private var subscribers: [AnyCancellable] = []
     private var languagePackID = "en"
     private let logger = Logger(category: "Localization", label: "Manager")
     
-    // TODO: Update it so it will accept a language pack, and will set both local and TDLib localization to needed values
-    public var language: String {
-        get {
-            return L10n.shared.language
-        }
-        set {
-            L10n.shared.language = newValue
-            Task {
-                try await TdApi.shared.setOption(
-                    name: "language_pack_id",
-                    value: .string(.init(value: newValue)))
+    init() { }
+        
+    public func setLanguage(from languagePack: LanguagePackInfo) async throws {
+        self.languagePackID = languagePack.id
+        
+        if languagePack.id.count == 2 {
+            L10n.shared.language = languagePack.id
+        } else {
+            if languagePack.baseLanguagePackId.count == 2 {
+                L10n.shared.language = languagePack.baseLanguagePackId
+            } else {
+                L10n.shared.language = "en"
             }
         }
+        
+        try await TdApi.shared.setOption(
+            name: "language_pack_id",
+            value: .string(.init(value: languagePack.id)))
     }
     
     public func getString(
@@ -103,7 +108,7 @@ public struct L10nManager {
                         return pluralized.otherValue
                     }
                 case .deleted:
-                    if languagePackID == "en" { // If a string doesn't exist even in English language pack,
+                    if languagePackID == "en" { // If a string doesn't exist even in English language pack
                         return key
                     } else {
                         return await getTelegramString(by: key, from: "en", arg: arg)
