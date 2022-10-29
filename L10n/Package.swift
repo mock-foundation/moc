@@ -14,12 +14,18 @@ let package = Package(
             targets: ["L10n"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Decybel07/L10n-swift.git", from: "5.10.0")
+        .package(url: "https://github.com/Decybel07/L10n-swift.git", from: "5.10.0"),
+        .package(url: "https://github.com/mock-foundation/tdlibkit", from: "3.0.2-1.8.4-07b7faf6"),
+        .package(path: "../Backend")
     ],
     targets: [
         .target(
             name: "L10n",
-            dependencies: ["L10n-swift"],
+            dependencies: [
+                "L10n-swift",
+                .product(name: "TDLibKit", package: "tdlibkit"),
+                "Backend"
+            ],
             resources: [
                 .copy("Localizable.strings")
             ]),
