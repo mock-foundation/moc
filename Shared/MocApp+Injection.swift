@@ -30,8 +30,6 @@ public extension Resolver {
             .scope(.shared)
         register { TdMainService() as (any MainService) }
             .scope(.shared)
-        register { TdLocalizationService() as (any LocalizationService) }
-            .scope(.shared)
     }
 }
 
