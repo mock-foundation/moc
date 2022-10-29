@@ -18,6 +18,7 @@ public struct L10nManager {
     private var languagePackID = "en"
     private let logger = Logger(category: "Localization", label: "Manager")
     
+    // TODO: Update it so it will accept a language pack, and will set both local and TDLib localization to needed values
     public var language: String {
         get {
             return L10n.shared.language
