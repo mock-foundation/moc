@@ -18,6 +18,20 @@ public struct L10nManager {
     private var languagePackID = "en"
     private let logger = Logger(category: "Localization", label: "Manager")
     
+    public var language: String {
+        get {
+            return L10n.shared.language
+        }
+        set {
+            L10n.shared.language = newValue
+            Task {
+                try await TdApi.shared.setOption(
+                    name: "language_pack_id",
+                    value: .string(.init(value: newValue)))
+            }
+        }
+    }
+    
     public func getString(
         by key: String,
         source: LocalizationSource = .automatic,
