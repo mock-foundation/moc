@@ -41,6 +41,7 @@ public struct L10nManager {
         return key
     }
     
+    // swiftlint:disable cyclomatic_complexity
     func getTelegramString(
         by key: String,
         from languagePackID: String? = nil,
