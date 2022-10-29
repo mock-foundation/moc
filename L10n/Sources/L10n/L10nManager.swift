@@ -39,8 +39,7 @@ public struct L10nManager {
     }
     
     func getLocalizableString(by key: String) -> String {
-        print("WARNING: getLocalizableString(by:) is not implemented")
-        return key
+        return key.l10n()
     }
     
     // swiftlint:disable cyclomatic_complexity
@@ -97,7 +96,6 @@ public struct L10nManager {
             }
         } catch {
             logger.error(error)
-            // TODO: Log error
             return key
         }
     }

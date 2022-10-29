@@ -27,9 +27,6 @@ let package = Package(
                 .product(name: "TDLibKit", package: "tdlibkit"),
                 "Backend",
                 "Logs"
-            ],
-            resources: [
-                .copy("Localizable.strings")
             ]),
         .testTarget(
             name: "L10nTests",
