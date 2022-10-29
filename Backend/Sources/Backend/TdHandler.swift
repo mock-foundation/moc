@@ -214,9 +214,7 @@ public extension TdApi {
                     default: break
                 }
             } catch {
-                let tdError = error as? TDLibKit.Error
-                guard let tdError else { return }
-                TdApi.logger.error("Code: \(tdError.code), message: \(tdError.message)")
+                TdApi.logger.error(error)
             }
         }
         

@@ -136,7 +136,7 @@ struct LoginView: View {
                 self.phoneNumberCodes = countries
                 self.selectedNumberCode = callingCode
                 
-                logger.info("\(try await service.getAuthorizationState())")
+                logger.info(try await service.getAuthorizationState())
                 handleAuthorization(state: try await service.getAuthorizationState())
             }
         }

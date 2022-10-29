@@ -48,8 +48,7 @@ extension ChatViewModel {
                     scrollToEnd()
                 }
             } catch {
-                let tdError = error as! TDLibKit.Error
-                logger.error("Code: \(tdError.code), message: \(tdError.message)")
+                logger.error(error)
             }
         }
     }

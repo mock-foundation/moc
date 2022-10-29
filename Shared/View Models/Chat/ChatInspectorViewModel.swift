@@ -22,7 +22,7 @@ class ChatInspectorViewModel: ObservableObject {
                 do {
                     try await updateInfo()
                 } catch {
-                    logger.error("Got error: \(error)")
+                    logger.error(error)
                 }
             }
         }
