@@ -9,6 +9,7 @@ import SwiftUI
 import Utilities
 import Backend
 import Defaults
+import L10n
 
 extension Foundation.Date {
     var hoursAndMinutes: String {
@@ -174,7 +175,7 @@ struct ChatItem: View {
                                     if !info.caption.text.isEmpty {
                                         Text(info.caption.text)
                                     } else {
-                                        Text("Video")
+                                        L10nText("Chat.List.Video")
                                     }
                                 } icon: {
                                     if let minithumbnail = info.video.minithumbnail {
