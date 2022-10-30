@@ -80,7 +80,11 @@ public class L10nManager {
             
             switch stringValue {
                 case let .ordinary(ordinary):
-                    return String(format: ordinary.value, arg as! CVarArg)
+                    if let arg {
+                        return String(format: ordinary.value, arg as! CVarArg)
+                    } else {
+                        return ordinary.value
+                    }
                 case let .pluralized(pluralized):
                     if let arg {
                         guard let intArg = arg as? Int else { return pluralized.otherValue }
@@ -109,8 +113,10 @@ public class L10nManager {
                     }
                 case .deleted:
                     if languagePackID == "en" { // If a string doesn't exist even in English language pack
+                        logger.debug("String not found in English pack, returning key")
                         return key
                     } else {
+                        logger.debug("String not found in pack \(languagePackID)")
                         return await getTelegramString(by: key, from: "en", arg: arg)
                     }
             }

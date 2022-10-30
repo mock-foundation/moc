@@ -12,7 +12,7 @@ public struct L10nText: View {
     
     @State private var localized: String?
     
-    init(_ key: String) {
+    public init(_ key: String) {
         self.key = key
     }
     

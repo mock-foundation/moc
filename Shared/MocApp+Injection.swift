@@ -15,6 +15,7 @@ import Utilities
 import Logs
 import WhatsNewKit
 import MenuBar
+import L10n
 
 public extension Resolver {
     static func registerServices() {
@@ -46,6 +47,13 @@ struct MocApp: App {
         
         Task {
             AppCenter.countryCode = try await TdApi.shared.getCountryCode().text
+            let languagePackIDOption = try await TdApi.shared.getOption(name: "language_pack_id")
+            
+            if case .string(let optionValueString) = languagePackIDOption {
+                try await L10nManager.shared.setLanguage(
+                    from: try await TdApi.shared.getLanguagePackInfo(
+                        languagePackId: optionValueString.value))
+            }
         }
         
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [Crashes.self])
