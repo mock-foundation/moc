@@ -99,6 +99,12 @@ tasks:
   generate:sourcery:
     cmds:
       - ./scripts/sourcery.sh
+  docs:build:
+    cmds:
+      - xcodebuild docbuild -scheme Moc
+  docs:find-archive:
+    cmds:
+      - find ~/Library/Developer/Xcode/DerivedData/Moc-* -type d -name '*.doccarchive'
   test:
     cmds:
       - echo "To be implemented"
