@@ -18,7 +18,22 @@ public class L10nManager {
     private var languagePackID = "en"
     private let logger = Logger(category: "Localization", label: "Manager")
     
-    init() { }
+    init() {
+        tdApi.client.updateSubject
+            .sink { update in
+                if case let .option(option) = update {
+                    if option.name == "language_pack_id" {
+                        if case let .string(value) = option.value {
+                            Task {
+                                let languagePack = try await self.tdApi.getLanguagePackInfo(languagePackId: value.value)
+                                try await self.setLanguage(from: languagePack)
+                            }
+                        }
+                    }
+                }
+            }
+            .store(in: &subscribers)
+    }
         
     public func setLanguage(from languagePack: LanguagePackInfo) async throws {
         self.languagePackID = languagePack.id

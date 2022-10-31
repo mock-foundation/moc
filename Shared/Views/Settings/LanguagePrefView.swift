@@ -76,6 +76,7 @@ struct LanguagePrefView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .padding()
         }
+        .listStyle(.inset(alternatesRowBackgrounds: true))
         .onAppear {
             updateSubscriber = tdApi.client.updateSubject
                 .sink { update in
