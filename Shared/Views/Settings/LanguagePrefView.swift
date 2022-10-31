@@ -6,15 +6,68 @@
 //
 
 import SwiftUI
+import Backend
+import L10n
+import Combine
 
 struct LanguagePrefView: View {
+    private let tdApi = TdApi.shared
+    @State private var updateSubscriber: AnyCancellable?
+    
+    @State private var languagePacks: [LanguagePackInfo] = []
+    
+    @State private var selectedPackID: String = ""
+    
     var body: some View {
-        Text("Hello, World!")
-    }
-}
-
-struct LanguagePrefView_Previews: PreviewProvider {
-    static var previews: some View {
-        LanguagePrefView()
+        HStack(spacing: 16) {
+            VStack {
+                Text("Language")
+                    .font(.largeTitle)
+                Spacer()
+            }
+            .padding()
+            .frame(width: 300)
+            List(languagePacks, id: \.self) { pack in
+                Button {
+                    Task {
+                        try await L10nManager.shared.setLanguage(from: pack)
+                    }
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(pack.name)
+                            Text(pack.nativeName)
+                        }
+                        Spacer()
+                        if selectedPackID == pack.id {
+                            Image(systemName: "checkmark.circle")
+                        }
+                    }
+                }.buttonStyle(.plain)
+            }
+            .frame(maxWidth: .infinity, minHeight: 400)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .padding()
+        }
+        .onAppear {
+            updateSubscriber = tdApi.client.updateSubject
+                .sink { update in
+                    if case let .option(value) = update {
+                        if value.name == "language_pack_id" {
+                            if case let .string(value) = value.value {
+                                selectedPackID = value.value
+                            }
+                        }
+                    }
+                }
+            Task {
+                languagePacks = try await tdApi.getLocalizationTargetInfo(onlyLocal: false).languagePacks
+                let packID = try await tdApi.getOption(name: "language_pack_id")
+                
+                if case let .string(optionValueString) = packID {
+                    selectedPackID = optionValueString.value
+                }
+            }
+        }
     }
 }

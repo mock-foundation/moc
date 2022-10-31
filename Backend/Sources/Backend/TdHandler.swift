@@ -220,7 +220,6 @@ public extension TdApi {
         
         Task {
             try await self.setOption(name: "localization_target", value: .string(.init(value: "macos")))
-            try await self.setOption(name: "language_pack_id", value: .string(.init(value: "uk")))
         }
     }
 }
