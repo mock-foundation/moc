@@ -175,7 +175,7 @@ struct ChatItem: View {
                                     if !info.caption.text.isEmpty {
                                         Text(info.caption.text)
                                     } else {
-                                        L10nText("Chat.List.Video")
+                                        L10nText("Message.Video")
                                     }
                                 } icon: {
                                     if let minithumbnail = info.video.minithumbnail {

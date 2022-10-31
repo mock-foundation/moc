@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import L10n
 
 struct SettingsContent: View {
     var body: some View {
@@ -36,6 +37,11 @@ struct SettingsContent: View {
                 }
             LanguagePrefView()
                 .tabItem {
+                    Label {
+                        L10nText("Settings.AppLanguage")
+                    } icon: {
+                        Image(systemName: "globe")
+                    }
                     Label("Language", systemImage: "globe")
                 }
             StickersPrefView()

@@ -21,13 +21,39 @@ struct LanguagePrefView: View {
     var body: some View {
         HStack(spacing: 16) {
             VStack {
-                Text("Language")
+                L10nText("Settings.AppLanguage")
                     .font(.largeTitle)
+                Divider()
+                Form {
+                    Toggle(isOn: .constant(true)) {
+                        L10nText("Localization.ShowTranslate")
+                    }
+                }
                 Spacer()
             }
             .padding()
             .frame(width: 300)
             List(languagePacks, id: \.self) { pack in
+                #if os(macOS)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(pack.nativeName)
+                            .font(.headline)
+                        Text(pack.name)
+                            .font(.subheadline)
+                    }
+                    Spacer()
+                    if selectedPackID == pack.id {
+                        Image(systemName: "checkmark.circle")
+                    } else {
+                        Button("Set") {
+                            Task {
+                                try await L10nManager.shared.setLanguage(from: pack)
+                            }
+                        }.padding(2)
+                    }
+                }
+                #elseif os(iOS)
                 Button {
                     Task {
                         try await L10nManager.shared.setLanguage(from: pack)
@@ -44,6 +70,7 @@ struct LanguagePrefView: View {
                         }
                     }
                 }.buttonStyle(.plain)
+                #endif
             }
             .frame(maxWidth: .infinity, minHeight: 400)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -52,6 +79,7 @@ struct LanguagePrefView: View {
         .onAppear {
             updateSubscriber = tdApi.client.updateSubject
                 .sink { update in
+                    
                     if case let .option(value) = update {
                         if value.name == "language_pack_id" {
                             if case let .string(value) = value.value {
