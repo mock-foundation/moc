@@ -8,3 +8,5 @@
 
 "ChatListFolderSettings.LayoutSection" = "ВИД";
 "ChatListFolderSettings.LayoutSection.Note" = "Если у вас слишком много папок, используйте вертикальный вид для более удобного доступа.";
+"Settings.Accounts" = "Аккаунты";
+"Settings.General" = "Общее";

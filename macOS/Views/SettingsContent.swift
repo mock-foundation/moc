@@ -13,7 +13,7 @@ struct SettingsContent: View {
         TabView {
             GeneralPrefView()
                 .tabItem {
-                    Label("General", systemImage: "gear")
+                    Label(l10n: "Settings.General", systemImage: "gear")
                 }
             NotificationsAndSoundsPrefView()
                 .tabItem {
@@ -49,10 +49,10 @@ struct SettingsContent: View {
                 }
             AccountsPrefView()
                 .tabItem {
-                    Label("Accounts", systemImage: "person.circle")
+                    Label(l10n: "Settings.Accounts", systemImage: "person.circle")
                 }
         }
-        .frame(minWidth: 800, idealWidth: 900, maxWidth: 1100, minHeight: 300, maxHeight: 450)
+        .frame(minWidth: 800, idealWidth: 900, maxWidth: 1100, maxHeight: 450)
     }
 }
 
