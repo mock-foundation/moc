@@ -52,7 +52,7 @@ struct SettingsContent: View {
                     Label("Accounts", systemImage: "person.circle")
                 }
         }
-        .frame(width: 900)
+        .frame(minWidth: 800, idealWidth: 900, maxWidth: 1100, minHeight: 300, maxHeight: 450)
     }
 }
 

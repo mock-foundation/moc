@@ -72,7 +72,7 @@ struct LanguagePrefView: View {
                 }.buttonStyle(.plain)
                 #endif
             }
-            .frame(maxWidth: .infinity, minHeight: 400)
+            .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .padding()
         }
