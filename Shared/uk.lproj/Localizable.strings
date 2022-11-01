@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  Moc
+
+  Created by Егор Яковенко on 26.10.2022.
+  
+*/
+
+"ChatListFolderSettings.LayoutSection" = "ВИГЛЯД";
+"ChatListFolderSettings.LayoutSection.Note" = "Якщо у вас дуже багато папок, використовуйте вертикальний вигляд для полегшенного доступу";
