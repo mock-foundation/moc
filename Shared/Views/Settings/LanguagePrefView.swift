@@ -12,10 +12,8 @@ import Combine
 
 struct LanguagePrefView: View {
     private let tdApi = TdApi.shared
-    @State private var updateSubscriber: AnyCancellable?
     
     @State private var languagePacks: [LanguagePackInfo] = []
-    
     @State private var selectedPackID: String = ""
     
     var body: some View {
@@ -77,18 +75,16 @@ struct LanguagePrefView: View {
             .padding()
         }
         .listStyle(.inset(alternatesRowBackgrounds: true))
-        .onAppear {
-            updateSubscriber = tdApi.client.updateSubject
-                .sink { update in
-                    
-                    if case let .option(value) = update {
-                        if value.name == "language_pack_id" {
-                            if case let .string(value) = value.value {
-                                selectedPackID = value.value
-                            }
-                        }
+        .onReceive(tdApi.client.updateSubject) { update in
+            if case let .option(value) = update {
+                if value.name == "language_pack_id" {
+                    if case let .string(value) = value.value {
+                        selectedPackID = value.value
                     }
                 }
+            }
+        }
+        .onAppear {
             Task {
                 languagePacks = try await tdApi.getLocalizationTargetInfo(onlyLocal: false).languagePacks
                 let packID = try await tdApi.getOption(name: "language_pack_id")

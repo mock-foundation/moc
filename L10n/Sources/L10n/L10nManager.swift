@@ -131,7 +131,7 @@ public class L10nManager {
                         logger.debug("String not found in English pack, returning key")
                         return key
                     } else {
-                        logger.debug("String not found in pack \(languagePackID)")
+                        logger.debug("String not found in pack \(String(describing: languagePackID))")
                         return await getTelegramString(by: key, from: "en", arg: arg)
                     }
             }
