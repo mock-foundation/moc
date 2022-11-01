@@ -22,10 +22,6 @@ public struct L10nText: View {
         ZStack {
             if let localized {
                 Text(localized)
-            } else {
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .fill(.gray)
-                    .frame(width: 42, height: 12)
             }
         }
         .onReceive(TdApi.shared.client.updateSubject) { update in

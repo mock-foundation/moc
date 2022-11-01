@@ -11,12 +11,13 @@ import TDLibKit
 import Backend
 import Combine
 import Logs
+import Utilities
 
 public class L10nManager {
     public static let shared = L10nManager()
     private let tdApi = TdApi.shared
     private var subscribers: [AnyCancellable] = []
-    private var languagePackID = "en"
+    public private(set) var languagePackID = ""
     private let logger = Logger(category: "Localization", label: "Manager")
     private let localStrings: [String: String] = {
         if let url = Bundle.main.url(forResource: "Localizable", withExtension: "strings"),
@@ -25,6 +26,8 @@ public class L10nManager {
         }
         return [:]
     }()
+    
+    private var cloudCache: [String: [String: String]] = [:]
     
     init() {
         tdApi.client.updateSubject
@@ -66,6 +69,15 @@ public class L10nManager {
         source: LocalizationSource = .automatic,
         arg: Any? = nil
     ) async -> String {
+        if languagePackID.isEmpty {
+            guard let option = try? await tdApi.getOption(
+                name: "language_pack_id") else { return key }
+            if case let .string(string) = option {
+                guard let pack = try? await tdApi.getLanguagePackInfo(
+                    languagePackId: string.value) else { return key }
+                try? await self.setLanguage(from: pack)
+            }
+        }
         switch source {
             case .strings:
                 return getLocalizableString(by: key)
