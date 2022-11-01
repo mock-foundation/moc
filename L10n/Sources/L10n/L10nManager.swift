@@ -5,6 +5,7 @@
 //  Created by Егор Яковенко on 19.10.2022.
 //
 
+import Foundation
 import L10n_swift
 import TDLibKit
 import Backend
@@ -17,6 +18,13 @@ public class L10nManager {
     private var subscribers: [AnyCancellable] = []
     private var languagePackID = "en"
     private let logger = Logger(category: "Localization", label: "Manager")
+    private let localStrings: [String: String] = {
+        if let url = Bundle.main.url(forResource: "Localizable", withExtension: "strings"),
+           let stringsDict = NSDictionary(contentsOf: url) as? [String: String] {
+           return stringsDict
+        }
+        return [:]
+    }()
     
     init() {
         tdApi.client.updateSubject
@@ -74,7 +82,11 @@ public class L10nManager {
     }
     
     func getLocalizableString(by key: String) -> String {
-        return key.l10n()
+        if localStrings.contains(where: { $0.key == key }) {
+            return key.l10n()
+        } else {
+            return key
+        }
     }
     
     // swiftlint:disable cyclomatic_complexity
