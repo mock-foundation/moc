@@ -34,6 +34,8 @@ public extension TdApi {
             #else
             try await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif
+            try await self.setOption(name: "language_pack_database_path", value: .string(.init(
+                value: Constants.languagePacksDatabaseURL.absoluteString.replacingOccurrences(of: "file://", with: ""))))
         }
                 
         client.run {
