@@ -10,6 +10,7 @@ import Foundation
 public struct Constants {
     public static let unsupportedMessage = "This message is not supported; please update Moc to view it."
     public static let sidebarSizeDefaultsKey = "NSTableViewDefaultSizeMode"
+    public static let languagePacksDatabasePath = "" // TODO: Fill this
     
     // A blank private init so this struct is not possible to instantiate
     private init() { }

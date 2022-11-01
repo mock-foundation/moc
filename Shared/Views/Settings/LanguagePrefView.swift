@@ -44,10 +44,12 @@ struct LanguagePrefView: View {
                     if selectedPackID == pack.id {
                         Image(systemName: "checkmark.circle")
                     } else {
-                        Button("Set") {
+                        Button {
                             Task {
                                 try await L10nManager.shared.setLanguage(from: pack)
                             }
+                        } label: {
+                            L10nText("Common.Select")
                         }.padding(2)
                     }
                 }

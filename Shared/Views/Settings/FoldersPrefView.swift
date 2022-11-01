@@ -109,7 +109,7 @@ struct FoldersPrefView: View {
                     viewModel.showEditFolderSheet = true
                 } label: {
                     Image(systemName: "pencil")
-                    Text("Edit")
+                    L10nText("Common.Edit")
                 }
                 Button(role: .destructive) {
                     viewModel.folderIdToDelete = folder.id
@@ -123,7 +123,7 @@ struct FoldersPrefView: View {
                 Button {
                     viewModel.showEditFolderSheet = true
                 } label: {
-                    Text("Edit")
+                    L10nText("Common.Edit")
                 }
             }
             .swipeActions(edge: .trailing) {
@@ -131,7 +131,7 @@ struct FoldersPrefView: View {
                     viewModel.folderIdToDelete = folder.id
                     viewModel.showDeleteConfirmationAlert = true
                 } label: {
-                    Text("Delete")
+                    L10nText("Common.Delete")
                 }
             }
         }
