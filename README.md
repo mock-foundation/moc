@@ -80,6 +80,8 @@ in this repo
 
 If you want to contribute a new feature, please make sure you have read the [project roadmap](https://www.craft.do/s/rmUOSbIPXTVbCY). This may guide you what are current goals of the project :D
 
+## WARNING: Ensure you have Commit Signing set up, because otherwise your commits will be rejected by GitHub (not even me!).
+
 # Building
 
 ## Step 1 - Clone
