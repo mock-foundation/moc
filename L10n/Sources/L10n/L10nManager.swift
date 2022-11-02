@@ -20,7 +20,7 @@ public class L10nManager {
     public private(set) var languagePackID = ""
     private let logger = Logger(category: "Localization", label: "Manager")
     private let localStrings: [String: String] = {
-        if let url = Bundle.main.url(forResource: "Localizable", withExtension: "strings"),
+        if let url = Bundle.main.url(forResource: "Localizable", withExtension: "strings", subdirectory: "en.lproj"),
            let stringsDict = NSDictionary(contentsOf: url) as? [String: String] {
            return stringsDict
         }
