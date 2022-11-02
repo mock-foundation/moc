@@ -195,6 +195,8 @@
 		4312154A2858C2CF009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154C2858C326009EFEB5 /* GenerateQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateQRCode.swift; sourceTree = "<group>"; };
 		4312154E2858E4B6009EFEB5 /* Int+Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Digits.swift"; sourceTree = "<group>"; };
+		4319B40829113BA000EC1787 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4319B40929113BA300EC1787 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4326851A28FF68FF007DCB00 /* L10n */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = L10n; sourceTree = "<group>"; };
 		4328D4D328C1FAB2009622CF /* ChatInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspector.swift; sourceTree = "<group>"; };
 		4328D4D528C1FCD8009622CF /* ChatInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInspectorViewModel.swift; sourceTree = "<group>"; };
@@ -1024,6 +1026,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				430AC1FD290DB02D0087F8C9 /* en */,
+				4319B40829113BA000EC1787 /* ru */,
+				4319B40929113BA300EC1787 /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1477,7 +1481,7 @@
 			repositoryURL = "https://github.com/mock-foundation/tdlibkit.git";
 			requirement = {
 				kind = exactVersion;
-				version = "3.0.2-1.8.4-07b7faf6";
+				version = "3.1.0-1.8.4-07b7faf6";
 			};
 		};
 		4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */ = {

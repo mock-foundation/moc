@@ -6,52 +6,53 @@
 //
 
 import SwiftUI
+import L10n
 
 struct SettingsContent: View {
     var body: some View {
         TabView {
             GeneralPrefView()
                 .tabItem {
-                    Label("General", systemImage: "gear")
+                    Label(l10n: "Settings.General", systemImage: "gear")
                 }
             NotificationsAndSoundsPrefView()
                 .tabItem {
-                    Label("Notifications and Sounds", systemImage: "bell")
+                    Label(l10n: "Settings.NotificationsAndSounds", systemImage: "bell")
                 }
             PrivacyPrefView()
                 .tabItem {
-                    Label("Privacy", systemImage: "lock")
+                    Label(l10n: "Settings.PrivacySettings", systemImage: "lock")
                 }
             DataAndStoragePrefView()
                 .tabItem {
-                    Label("Data and Storage", systemImage: "externaldrive")
+                    Label(l10n: "Settings.ChatSettings", systemImage: "externaldrive")
                 }
             DevicesPrefView()
                 .tabItem {
-                    Label("Devices", systemImage: "laptopcomputer.and.iphone")
+                    Label(l10n: "Settings.Devices", systemImage: "laptopcomputer.and.iphone")
                 }
             AppearancePrefView()
                 .tabItem {
-                    Label("Appearance", systemImage: "paintbrush")
+                    Label(l10n: "Settings.Appearance", systemImage: "paintbrush")
                 }
             LanguagePrefView()
                 .tabItem {
-                    Label("Language", systemImage: "globe")
+                    Label(l10n: "Settings.AppLanguage", systemImage: "globe")
                 }
             StickersPrefView()
                 .tabItem {
-                    Label("Stickers", systemImage: "rectangle.3.group.bubble.left")
+                    Label(l10n: "ChatSettings.StickersAndReactions", systemImage: "rectangle.3.group.bubble.left")
                 }
             FoldersPrefView()
                 .tabItem {
-                    Label("Folders", systemImage: "folder")
+                    Label(l10n: "Settings.ChatFolders", systemImage: "folder")
                 }
             AccountsPrefView()
                 .tabItem {
-                    Label("Accounts", systemImage: "person.circle")
+                    Label(l10n: "Settings.Accounts", systemImage: "person.circle")
                 }
         }
-        .frame(width: 800)
+        .frame(minWidth: 800, idealWidth: 900, maxWidth: 1100, maxHeight: 450)
     }
 }
 

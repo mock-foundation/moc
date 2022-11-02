@@ -9,6 +9,7 @@ import SwiftUI
 import TDLibKit
 import Defaults
 import Utilities
+import L10n
 
 private enum FolderManipulationMode {
     case edit
@@ -108,21 +109,21 @@ struct FoldersPrefView: View {
                     viewModel.showEditFolderSheet = true
                 } label: {
                     Image(systemName: "pencil")
-                    Text("Edit")
+                    L10nText("Common.Edit")
                 }
                 Button(role: .destructive) {
                     viewModel.folderIdToDelete = folder.id
                     viewModel.showDeleteConfirmationAlert = true
                 } label: {
                     Image(systemName: "trash")
-                    Text("Delete")
+                    L10nText("Common.Delete")
                 }
             }
             .swipeActions(edge: .leading) {
                 Button {
                     viewModel.showEditFolderSheet = true
                 } label: {
-                    Text("Edit")
+                    L10nText("Common.Edit")
                 }
             }
             .swipeActions(edge: .trailing) {
@@ -130,7 +131,7 @@ struct FoldersPrefView: View {
                     viewModel.folderIdToDelete = folder.id
                     viewModel.showDeleteConfirmationAlert = true
                 } label: {
-                    Text("Delete")
+                    L10nText("Common.Delete")
                 }
             }
         }
@@ -196,10 +197,15 @@ struct FoldersPrefView: View {
     var body: some View {
         HStack {
             VStack {
-                Text("Chat folders")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Text("Create folders for different groups of chats and quickly switch between them.")
+                if #available(macOS 13.0, *) {
+                    L10nText("ChatListFolderSettings.Title")
+                        .font(.largeTitle)
+                        .font(.system(.largeTitle, weight: .bold))
+                } else {
+                    L10nText("ChatListFolderSettings.Title")
+                        .font(.largeTitle)
+                }
+                L10nText("ChatListFolderSettings.Info")
                     .padding([.bottom, .horizontal])
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray)
@@ -217,7 +223,7 @@ struct FoldersPrefView: View {
                 }
             }
             List {
-                Section("Recommended") {
+                Section {
                     ForEach(viewModel.recommended, id: \.self) { recommendation in
                         HStack {
                             VStack(alignment: .leading) {
@@ -227,15 +233,19 @@ struct FoldersPrefView: View {
                                     .foregroundColor(.gray)
                             }
                             Spacer()
-                            Button("Add") {
+                            Button {
                                 Task {
                                     try await viewModel.createFolder(from: recommendation.filter)
                                 }
-                            }
+                            } label: {
+                                L10nText("ChatListFolderSettings.AddRecommended")
+                            }.padding(2)
                         }
                     }
+                } header: {
+                    L10nText("ChatListFolderSettings.RecommendedFoldersSection")
                 }
-                Section("Layout") {
+                Section {
                     #if os(macOS)
                     HStack(spacing: 16) {
                         Spacer()
@@ -247,8 +257,10 @@ struct FoldersPrefView: View {
                         folderLayoutSelection
                     }
                     #endif
-                    Text("If there are too much folders, use the vertical layout for easier access.")
+                    L10nText("ChatListFolderSettings.LayoutSection.Note")
                         .font(.footnote)
+                } header: {
+                    L10nText("ChatListFolderSettings.LayoutSection")
                 }
             }
         }.padding()

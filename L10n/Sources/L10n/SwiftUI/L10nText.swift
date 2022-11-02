@@ -6,28 +6,29 @@
 //
 
 import SwiftUI
+import Backend
+import Combine
 
 public struct L10nText: View {
     @State public var key: String
     
-    @State private var localized: String?
-    
+    @State private var localized: String
+        
     public init(_ key: String) {
         self.key = key
+        self.localized = L10nManager.shared.getString(by: key)
     }
     
     public var body: some View {
-        ZStack {
-            if let localized {
-                Text(localized)
-            } else {
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .fill(.gray)
-                    .frame(width: 42, height: 12)
+        Text(localized)
+            .onReceive(TdApi.shared.client.updateSubject) { update in
+                if case let .option(option) = update {
+                    if option.name == "language_pack_id" {
+                        Task {
+                            self.localized = L10nManager.shared.getString(by: key)
+                        }
+                    }
+                }
             }
-        }
-        .task {
-            self.localized = await L10nManager.shared.getString(by: key)
-        }
     }
 }

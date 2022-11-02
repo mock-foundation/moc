@@ -12,17 +12,34 @@ import Logs
 // MARK: Definition
 
 public class StorageService {
-    public static var shared = StorageService()
-
+    public static var cache = StorageService(databaseName: "cache") { migrator in
+        migrator.registerMigration("v1") { db in
+            try db.create(table: "chatFolder") { t in
+                t.column("title", .text).notNull()
+                t.column("id", .integer).notNull().primaryKey(onConflict: .replace, autoincrement: false)
+                t.column("iconName", .text).notNull()
+                t.column("order", .integer).notNull().unique(onConflict: .replace)
+            }
+            
+            try db.create(table: "unreadCounter") { t in
+                t.column("chats", .integer).notNull()
+                t.column("messages", .integer).notNull()
+                t.column("chatList", .text).notNull().primaryKey(onConflict: .replace, autoincrement: false)
+            }
+        }
+    }
+    
     let dbQueue: DatabaseQueue
     var migrator = DatabaseMigrator()
-    let logger = Logger(category: "StorageService", label: "Storage")
+    let logger: Logger
 
-    init() {
+    init(databaseName: String, migrate: (inout DatabaseMigrator) -> Void) {
         #if DEBUG
         // Speed up development by nuking the database when migrations change
         migrator.eraseDatabaseOnSchemaChange = true
         #endif
+        
+        logger = Logger(category: "StorageService", label: databaseName)
         
         var url = try! FileManager.default.url(
             for: .applicationSupportDirectory,
@@ -39,9 +56,9 @@ public class StorageService {
         try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
         if #available(macOS 13, iOS 16, *) {
-            url.append(path: "database.sqlite")
+            url.append(path: "\(databaseName).sqlite")
         } else {
-            url.appendPathComponent("database.sqlite")
+            url.appendPathComponent("\(databaseName).sqlite")
         }
         
         var dir = ""
@@ -59,7 +76,7 @@ public class StorageService {
         logger.debug("Database path: \(dir)")
         dbQueue = try! DatabaseQueue(path: dir)
 
-        registerMigrations()
+        migrate(&migrator)
         try! migrator.migrate(dbQueue)
         logger.notice("Started StorageService")
     }
@@ -180,13 +197,5 @@ public extension StorageService {
         try dbQueue.write { db in
             try modify(record: record, at: key, from: db, transform: transform)
         }
-    }
-}
-
-// MARK: Convenience methods
-
-public extension StorageService {
-    func getChatFolders() throws -> [ChatFolder] {
-        return try getRecords(as: ChatFolder.self, ordered: [Column("order").asc])
     }
 }
