@@ -46,14 +46,11 @@ struct MocApp: App {
         TdApi.shared.startTdLibUpdateHandler()
         
         Task {
+            // Just accessing L10nManager.shared, so it will init
+            _ = L10nManager.shared.languagePackID.isEmpty
+            
             AppCenter.countryCode = try await TdApi.shared.getCountryCode().text
             let languagePackIDOption = try await TdApi.shared.getOption(name: "language_pack_id")
-            
-            if case .string(let optionValueString) = languagePackIDOption {
-                try await L10nManager.shared.setLanguage(
-                    from: try await TdApi.shared.getLanguagePackInfo(
-                        languagePackId: optionValueString.value))
-            }
         }
         
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [Crashes.self])

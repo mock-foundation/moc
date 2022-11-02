@@ -8,6 +8,7 @@
 import SwiftUI
 import Defaults
 import Utilities
+import L10n
 
 extension Int64: Identifiable {
     public var id: Int64 {
@@ -26,25 +27,22 @@ struct GeneralPrefView: View {
         TabView {
             Text("To be implemented")
                 .tabItem {
-                    Text("General")
+                    L10nText("Settings.General.GeneralTab.Name")
                 }
             HStack(spacing: 16) {
                 VStack {
-                    Text("Chat Shortcuts")
+                    L10nText("Settings.General.ChatShortcutsTab.Name")
                         .font(.largeTitle)
-                    Text("Save chats to app's menubar for easy access from any place in Moc.")
+                    L10nText("Settings.General.ChatShortcutsTab.Subtitle")
                     Divider()
                     Form {
                         Section {
+                            // TODO: Localize using Toggle extension
                             Defaults.Toggle("Use \"Saved Messages\" shortcut", key: .useSavedMessagesShortcut)
                         } footer: {
-                            Text("""
-                            If enabled, will use the ⌘0 shortcut. If \
-                            disabled, the ⌘0 shortcut will be used by \
-                            the first shortcut in the list.
-                            """)
-                            .font(.caption)
-                            .fixedSize(horizontal: false, vertical: true)
+                            L10nText("Settings.General.ChatShortcutsTab.SMShortcutToggle.Subtitle")
+                                .font(.caption)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                     Spacer()
@@ -57,12 +55,12 @@ struct GeneralPrefView: View {
                             Image(systemName: "command")
                                 .font(.system(size: 76))
                                 .foregroundColor(.gray)
-                            Text("You have not created any shortcuts :(")
+                            L10nText("Settings.General.ChatShortcutsTab.NoShortcuts.Title")
                                 .font(.title)
                                 .foregroundStyle(Color.secondary)
-                            Text("Click the \"Create\" button down below to create a new one!")
+                            L10nText("Settings.General.ChatShortcutsTab.NoShortcuts.Subtitle")
                                 .foregroundStyle(Color.secondary)
-                            Button("Create") {
+                            Button("Create") { // TODO: Localize with Button extension
                                 isNewChatShortcutSheetOpen = true
                             }
                             .padding()
@@ -82,7 +80,7 @@ struct GeneralPrefView: View {
                                 Button(role: .destructive) {
                                     chatShortcuts.removeAll(where: { $0 == chatId })
                                 } label: {
-                                    Label("Remove", systemImage: "trash")
+                                    Label(l10n: "Common.Delete", systemImage: "trash")
                                 }
                             }
                         }
@@ -145,25 +143,23 @@ struct GeneralPrefView: View {
                 .padding()
             }
             .tabItem {
-                Text("Chat Shortcuts")
+                L10nText("Settings.General.ChatShortcutsTab.Name")
             }
             VStack {
                 Form {
                     Section {
+                        // TODO: Localize using Defaults.Toggle extension
                         Defaults.Toggle("Show developer info", key: .showDeveloperInfo)
                     } footer: {
-                        Text("""
-                    When enabled, Moc will show additional data in the \
-                    chat inspector like the chat/user ID.
-                    """)
-                        .font(.caption)
-                        .fixedSize(horizontal: false, vertical: true)
+                        L10nText("Settings.General.AdvancedTab.ShowDeveloperInfo.Subtitle")
+                            .font(.caption)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 Spacer()
             }
             .tabItem {
-                Text("Advanced")
+                L10nText("Settings.General.AdvancedTab.Name")
             }
         }
         .tabViewStyle(.automatic)

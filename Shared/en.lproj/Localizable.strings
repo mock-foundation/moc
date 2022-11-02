@@ -8,5 +8,16 @@
 
 "ChatListFolderSettings.LayoutSection" = "LAYOUT";
 "ChatListFolderSettings.LayoutSection.Note" = "If there are too much folders, use the vertical layout for easier access.";
+
 "Settings.Accounts" = "Accounts";
 "Settings.General" = "General";
+"Settings.General.GeneralTab.Name" = "General";
+"Settings.General.ChatShortcutsTab.Name" = "Chat Shortcuts";
+"Settings.General.ChatShortcutsTab.Subtitle" = "Save chats to app's menubar for easy access from any place in Moc.";
+"Settings.General.ChatShortcutsTab.SMShortcutToggle.Title" = "Use \"Saved Messages\" shortcut";
+"Settings.General.ChatShortcutsTab.SMShortcutToggle.Subtitle" = "If enabled, will use the ⌘0 shortcut. If disabled, the ⌘0 shortcut will be used by the first shortcut in the list.";
+"Settings.General.ChatShortcutsTab.NoShortcuts.Title" = "You have not created any shortcuts :(";
+"Settings.General.ChatShortcutsTab.NoShortcuts.Subtitle" = "Click the \"Create\" button down below to create a new one!";
+"Settings.General.AdvancedTab.Name" = "Advanced";
+"Settings.General.AdvancedTab.ShowDeveloperInfo.Title" = "Show developer info";
+"Settings.General.AdvancedTab.ShowDeveloperInfo.Subtitle" = "When enabled, Moc will show additional data in the chat inspector like the chat/user ID.";
