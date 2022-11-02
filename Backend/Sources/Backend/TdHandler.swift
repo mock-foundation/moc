@@ -28,18 +28,22 @@ public extension TdApi {
     func startTdLibUpdateHandler() {
         TdApi.logger.debug("Starting handler")
         
-        Task {
+        Task { // TDLib actions before start
             #if DEBUG
             try await self.setLogVerbosityLevel(newVerbosityLevel: 2)
             #else
             try await self.setLogVerbosityLevel(newVerbosityLevel: 0)
             #endif
+            
             try await self.setOption(name: "language_pack_database_path", value: .string(.init(
-                value: Constants.languagePacksDatabaseURL.absoluteString.replacingOccurrences(of: "file://", with: ""))))
+                value: Constants.languagePacksDatabasePath)))
+            try await self.setOption(name: "localization_target", value: .string(.init(value: "ios")))
+            
+            try await fetchLocalization()
         }
                 
         client.run {
-            let cache = StorageService.shared
+            let cache = StorageService.cache
             
             do {
                 let update = try TdApi.decoder.decode(Update.self, from: $0)
@@ -213,15 +217,25 @@ public extension TdApi {
                                 }
                             default: break
                         }
+                    case let .connectionState(update):
+                        if case .ready = update.state {
+                            Task {
+                                try await self.fetchLocalization()
+                            }
+                        }
                     default: break
                 }
             } catch {
                 TdApi.logger.error(error)
             }
         }
-        
-        Task {
-            try await self.setOption(name: "localization_target", value: .string(.init(value: "ios")))
+    }
+    
+    private func fetchLocalization() async throws {
+        let tdLanguagePacks = try await self.getLocalizationTargetInfo(onlyLocal: false).languagePacks
+        for pack in tdLanguagePacks {
+            // Fetch new strings so TDLib will save them in the database
+            _ = try await self.getLanguagePackStrings(keys: nil, languagePackId: pack.id)
         }
     }
 }

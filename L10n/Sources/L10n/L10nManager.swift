@@ -44,6 +44,16 @@ public class L10nManager {
                 }
             }
             .store(in: &subscribers)
+        
+        Task {
+            guard let option = try? await tdApi.getOption(
+                name: "language_pack_id") else { return }
+            if case let .string(string) = option {
+                guard let pack = try? await tdApi.getLanguagePackInfo(
+                    languagePackId: string.value) else { return }
+                try? await self.setLanguage(from: pack)
+            }
+        }
     }
         
     public func setLanguage(from languagePack: LanguagePackInfo) async throws {
@@ -68,25 +78,16 @@ public class L10nManager {
         by key: String,
         source: LocalizationSource = .automatic,
         arg: Any? = nil
-    ) async -> String {
-        if languagePackID.isEmpty {
-            guard let option = try? await tdApi.getOption(
-                name: "language_pack_id") else { return key }
-            if case let .string(string) = option {
-                guard let pack = try? await tdApi.getLanguagePackInfo(
-                    languagePackId: string.value) else { return key }
-                try? await self.setLanguage(from: pack)
-            }
-        }
+    ) -> String {
         switch source {
             case .strings:
                 return getLocalizableString(by: key)
             case .telegram:
-                return await getTelegramString(by: key, arg: arg)
+                return getTelegramString(by: key, arg: arg)
             case .automatic:
                 let localizable = getLocalizableString(by: key)
                 if localizable == key { // If not found
-                    return await getTelegramString(by: key, arg: arg)
+                    return getTelegramString(by: key, arg: arg)
                 } else {
                     return localizable
                 }
@@ -106,18 +107,16 @@ public class L10nManager {
         by key: String,
         from languagePackID: String? = nil,
         arg: Any? = nil
-    ) async -> String {
+    ) -> String {
         do {
-            guard let langString = try await tdApi.getLanguagePackStrings(
-                keys: [key],
-                languagePackId: languagePackID ?? self.languagePackID
-            ).strings.first else {
-                return key
-            }
+            let langString = try tdApi.getLanguagePackString(
+                key: key,
+                languagePackDatabasePath: Constants.languagePacksDatabasePath,
+                languagePackId: languagePackID ?? self.languagePackID,
+                localizationTarget: "ios"
+            )
             
-            guard let stringValue = langString.value else { return key }
-            
-            switch stringValue {
+            switch langString {
                 case let .ordinary(ordinary):
                     if let arg {
                         return String(format: ordinary.value, arg as! CVarArg)
@@ -156,7 +155,7 @@ public class L10nManager {
                         return key
                     } else {
                         logger.debug("String not found in pack \(String(describing: languagePackID))")
-                        return await getTelegramString(by: key, from: "en", arg: arg)
+                        return getTelegramString(by: key, from: "en", arg: arg)
                     }
             }
         } catch {
