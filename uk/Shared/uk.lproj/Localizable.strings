@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  Moc
+
+  Created by Егор Яковенко on 26.10.2022.
+  
+*/
+
+"ChatListFolderSettings.LayoutSection" = "LAYOUT";
+"ChatListFolderSettings.LayoutSection.Note" = "If there are too much folders, use the vertical layout for easier access.";
+"Settings.Accounts" = "Accounts";
+"Settings.General" = "General";
