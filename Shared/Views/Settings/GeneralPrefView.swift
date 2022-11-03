@@ -37,8 +37,7 @@ struct GeneralPrefView: View {
                     Divider()
                     Form {
                         Section {
-                            // TODO: Localize using Toggle extension
-                            Defaults.Toggle("Use \"Saved Messages\" shortcut", key: .useSavedMessagesShortcut)
+                            Defaults.Toggle(l10n: "Settings.General.ChatShortcutsTab.SMShortcutToggle.Title", key: .useSavedMessagesShortcut)
                         } footer: {
                             L10nText("Settings.General.ChatShortcutsTab.SMShortcutToggle.Subtitle")
                                 .font(.caption)
@@ -60,7 +59,7 @@ struct GeneralPrefView: View {
                                 .foregroundStyle(Color.secondary)
                             L10nText("Settings.General.ChatShortcutsTab.NoShortcuts.Subtitle")
                                 .foregroundStyle(Color.secondary)
-                            Button("Create") { // TODO: Localize with Button extension
+                            Button(l10n: "Common.Create") { // TODO: Localize with Button extension
                                 isNewChatShortcutSheetOpen = true
                             }
                             .padding()
@@ -148,8 +147,7 @@ struct GeneralPrefView: View {
             VStack {
                 Form {
                     Section {
-                        // TODO: Localize using Defaults.Toggle extension
-                        Defaults.Toggle("Show developer info", key: .showDeveloperInfo)
+                        Defaults.Toggle(l10n: "Settings.General.AdvancedTab.ShowDeveloperInfo.Title", key: .showDeveloperInfo)
                     } footer: {
                         L10nText("Settings.General.AdvancedTab.ShowDeveloperInfo.Subtitle")
                             .font(.caption)
