@@ -161,21 +161,42 @@ struct AccountsPrefView: View {
             Spacer()
         }
     }
+    
+    private var photoFormItem: some View {
+        HStack {
+            AsyncTdImage(id: photos[0]) { image in
+                image
+                    .resizable()
+                    .frame(width: 32, height: 32)
+                    .clipShape(Circle())
+            } placeholder: { ProgressView() }
+            Button { } label: {
+                Label(l10n: "Common.ChoosePhoto",
+                      systemImage: "square.and.pencil")
+            }
+        }
+    }
+    
+    private var phoneNumberFormItem: some View {
+        HStack {
+            Text(phoneNumber)
+            Button { } label: {
+                Label(l10n: "Common.Edit", systemImage: "square.and.pencil")
+            }
+        }
+    }
 
     private var rightColumnContent: some View {
         Form {
             Section {
-                HStack {
-                    AsyncTdImage(id: photos[0]) { image in
-                        image
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .clipShape(Circle())
-                    } placeholder: { ProgressView() }
-                    Button { } label: {
-                        Label(l10n: "Common.ChoosePhoto",
-                              systemImage: "square.and.pencil")
+                if #available(macOS 13, iOS 16, *) {
+                    LabeledContent {
+                        photoFormItem
+                    } label: {
+                        L10nText("Privacy.ProfilePhoto")
                     }
+                } else {
+                    photoFormItem
                 }
                 TextField("First name", text: $viewModel.firstName)
                     .textFieldStyle(.roundedBorder)
@@ -214,11 +235,14 @@ struct AccountsPrefView: View {
                 L10nText("Settings.About.Help")
                     .foregroundStyle(.secondary)
             }
-            HStack {
-                Text(phoneNumber)
-                Button { } label: {
-                    Label(l10n: "Common.Edit", systemImage: "square.and.pencil")
+            if #available(macOS 13, iOS 16, *) {
+                LabeledContent {
+                    phoneNumberFormItem
+                } label: {
+                    L10nText("PrivacySettings.PhoneNumber")
                 }
+            } else {
+                phoneNumberFormItem
             }
         }
         .frame(minWidth: 300)
