@@ -198,13 +198,13 @@ struct AccountsPrefView: View {
                 } else {
                     photoFormItem
                 }
-                TextField("First name", text: $viewModel.firstName)
+                TextField(l10n: "UserInfo.FirstNamePlaceholder", text: $viewModel.firstName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
                     .onSubmit {
                         viewModel.updateNames()
                     }
-                TextField("Last name", text: $viewModel.lastName)
+                TextField(l10n: "UserInfo.LastNamePlaceholder", text: $viewModel.lastName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 150)
                     .onSubmit {
@@ -214,7 +214,7 @@ struct AccountsPrefView: View {
                 L10nText("EditProfile.NameAndPhotoOrVideoHelp")
                     .foregroundStyle(.secondary)
             }
-            TextField("Username", text: $username)
+            TextField(l10n: "Settings.Username", text: $username)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
                 .onSubmit {
@@ -223,7 +223,7 @@ struct AccountsPrefView: View {
                     }
                 }
             Section {
-                TextField("Bio", text: $bioText)
+                TextField(l10n: "UserInfo.About.Placeholder", text: $bioText)
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         Task {
