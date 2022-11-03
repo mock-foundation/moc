@@ -50,7 +50,6 @@ struct MocApp: App {
             _ = L10nManager.shared.languagePackID.isEmpty
             
             AppCenter.countryCode = try await TdApi.shared.getCountryCode().text
-            let languagePackIDOption = try await TdApi.shared.getOption(name: "language_pack_id")
         }
         
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [Crashes.self])

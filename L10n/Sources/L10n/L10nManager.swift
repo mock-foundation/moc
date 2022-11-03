@@ -30,6 +30,7 @@ public class L10nManager {
     private var cloudCache: [String: [String: String]] = [:]
     
     init() {
+        logger.debug("Initialized L10nManager")
         tdApi.client.updateSubject
             .sink { update in
                 if case let .option(option) = update {

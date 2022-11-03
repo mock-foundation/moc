@@ -37,7 +37,9 @@ struct GeneralPrefView: View {
                     Divider()
                     Form {
                         Section {
-                            Defaults.Toggle(l10n: "Settings.General.ChatShortcutsTab.SMShortcutToggle.Title", key: .useSavedMessagesShortcut)
+                            Defaults.Toggle(
+                                l10n: "Settings.General.ChatShortcutsTab.SMShortcutToggle.Title",
+                                key: .useSavedMessagesShortcut)
                         } footer: {
                             L10nText("Settings.General.ChatShortcutsTab.SMShortcutToggle.Subtitle")
                                 .font(.caption)

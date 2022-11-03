@@ -33,4 +33,5 @@ public struct Constants {
 
 public extension Notification.Name {
     static let scrollToMessage = Notification.Name(rawValue: "ScrollToMessage")
+    static let updateL10nManager = Notification.Name(rawValue: "UpdateL10nManager")
 }

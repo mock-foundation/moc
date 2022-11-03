@@ -12,6 +12,7 @@ import Combine
 import Utilities
 import Logs
 import Resolver
+import L10n
 
 // swiftlint:disable type_body_length
 struct AccountsPrefView: View {
@@ -48,16 +49,16 @@ struct AccountsPrefView: View {
                             .resizable()
                             .scaledToFit()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 256, height: 256)
+                            .frame(width: 316, height: 316)
                             .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
                     } placeholder: {
                         ProgressView()
-                            .frame(width: 256, height: 256)
+                            .frame(width: 316, height: 316)
                     }
                 }
             }
         }
-        .frame(width: 256, height: 256, alignment: .leading)
+        .frame(width: 316, height: 316, alignment: .leading)
     }
 
     private var background: some View {
@@ -68,7 +69,7 @@ struct AccountsPrefView: View {
                     firstName: viewModel.firstName,
                     lastName: viewModel.lastName,
                     style: .large
-                ).frame(width: 256, height: 256)
+                ).frame(width: 316, height: 316)
             } else {
                 if photoLoading {
                     ZStack {
@@ -122,12 +123,12 @@ struct AccountsPrefView: View {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-            .frame(width: 256, height: 256)
+            .frame(width: 316, height: 316)
             .padding()
             // swiftlint:disable multiple_closures_with_trailing_closure
             HStack {
                 Button(action: {}) {
-                    Label("Add account", systemImage: "person.badge.plus")
+                    Label(l10n: "Settings.AddAccount", systemImage: "person.badge.plus")
                 }
                 .controlSize(.large)
                 .buttonStyle(.borderless)
@@ -149,7 +150,7 @@ struct AccountsPrefView: View {
                     }
                 }) {
                     // rectangle.portrait.and.arrow.right
-                    Label("Log out",
+                    Label(l10n: "Settings.Logout",
                           systemImage: "rectangle.portrait.and.arrow.right")
                 }
                 .tint(.red)
@@ -172,26 +173,26 @@ struct AccountsPrefView: View {
                             .clipShape(Circle())
                     } placeholder: { ProgressView() }
                     Button { } label: {
-                        Label("Update profile photo",
+                        Label(l10n: "Common.ChoosePhoto",
                               systemImage: "square.and.pencil")
                     }
                 }
+                TextField("First name", text: $viewModel.firstName)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 150)
+                    .onSubmit {
+                        viewModel.updateNames()
+                    }
+                TextField("Last name", text: $viewModel.lastName)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 150)
+                    .onSubmit {
+                        viewModel.updateNames()
+                    }
             } footer: {
-                Text("Chat photo that will be shown next to your messages.")
+                L10nText("EditProfile.NameAndPhotoOrVideoHelp")
                     .foregroundStyle(.secondary)
             }
-            TextField("First name", text: $viewModel.firstName)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 150)
-                .onSubmit {
-                    viewModel.updateNames()
-                }
-            TextField("Last name", text: $viewModel.lastName)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 150)
-                .onSubmit {
-                    viewModel.updateNames()
-                }
             TextField("Username", text: $username)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 150)
@@ -210,17 +211,17 @@ struct AccountsPrefView: View {
                     }
                     .frame(width: 350)
             } footer: {
-                Text("Any details such as age, occupation or city. Example: 23 y.o designer from San Francisco.")
+                L10nText("Settings.About.Help")
                     .foregroundStyle(.secondary)
             }
             HStack {
                 Text(phoneNumber)
-                Button(action: {}) {
-                    Label("Change", systemImage: "square.and.pencil")
+                Button { } label: {
+                    Label(l10n: "Common.Edit", systemImage: "square.and.pencil")
                 }
             }
         }
-        .frame(width: 450)
+        .frame(minWidth: 300)
         // Text length restrictions
         .onChange(of: username) { _ in
             if username.count > 32 {
@@ -289,7 +290,7 @@ struct AccountsPrefView: View {
         } else {
             HStack {
                 leftColumnContent
-                    .frame(width: 300)
+                    .frame(width: 340)
                     .padding(.bottom)
                 rightColumnContent
                     .padding()
