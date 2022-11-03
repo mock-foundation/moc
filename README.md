@@ -17,6 +17,7 @@ for moderating large communities and personal use.
 [![Build app](https://github.com/mock-foundation/moc/actions/workflows/build.yml/badge.svg)](https://github.com/mock-foundation/moc/actions/workflows/build.yml)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg?style=flat)](https://opensource.org/licenses/)
 [![Github All Releases](https://img.shields.io/github/downloads/mock-foundation/moc/total.svg?style=flat)]() 
+[![Crowdin](https://badges.crowdin.net/moc/localized.svg)](https://crowdin.com/project/moc)
 
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine/)
 
