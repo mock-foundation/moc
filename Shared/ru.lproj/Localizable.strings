@@ -12,5 +12,5 @@
 "Settings.Accounts" = "Аккаунты";
 "Settings.General" = "Общее";
 "Settings.General.GeneralTab.Name" = "Общее";
-"Settings.General.ChatShortcutsTab.Name" = "Chat Shortcuts";
-"Settings.General.AdvancedTab.Name" = "Расширенные";
+"Settings.ChatShortcuts.Name" = "Chat Shortcuts";
+"Settings.General.Advanced.Name" = "Расширенные";

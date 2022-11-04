@@ -31,17 +31,17 @@ struct GeneralPrefView: View {
                 }
             HStack(spacing: 16) {
                 VStack {
-                    L10nText("Settings.General.ChatShortcutsTab.Name")
+                    L10nText("Settings.ChatShortcuts.Name")
                         .font(.largeTitle)
-                    L10nText("Settings.General.ChatShortcutsTab.Subtitle")
+                    L10nText("Settings.ChatShortcuts.Subtitle")
                     Divider()
                     Form {
                         Section {
                             Defaults.Toggle(
-                                l10n: "Settings.General.ChatShortcutsTab.SMShortcutToggle.Title",
+                                l10n: "Settings.SavedMessagesShortcutToggle.Title",
                                 key: .useSavedMessagesShortcut)
                         } footer: {
-                            L10nText("Settings.General.ChatShortcutsTab.SMShortcutToggle.Subtitle")
+                            L10nText("Settings.SavedMessagesShortcutToggle.Subtitle")
                                 .font(.caption)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
@@ -56,10 +56,10 @@ struct GeneralPrefView: View {
                             Image(systemName: "command")
                                 .font(.system(size: 76))
                                 .foregroundColor(.gray)
-                            L10nText("Settings.General.ChatShortcutsTab.NoShortcuts.Title")
+                            L10nText("Settings.ChatShortcuts.NoShortcuts")
                                 .font(.title)
                                 .foregroundStyle(Color.secondary)
-                            L10nText("Settings.General.ChatShortcutsTab.NoShortcuts.Subtitle")
+                            L10nText("Settings.ChatShortcuts.NoShortcuts.Subtitle")
                                 .foregroundStyle(Color.secondary)
                             Button(l10n: "Common.Create") { // TODO: Localize with Button extension
                                 isNewChatShortcutSheetOpen = true
@@ -144,14 +144,14 @@ struct GeneralPrefView: View {
                 .padding()
             }
             .tabItem {
-                L10nText("Settings.General.ChatShortcutsTab.Name")
+                L10nText("Settings.ChatShortcuts.Name")
             }
             VStack {
                 Form {
                     Section {
-                        Defaults.Toggle(l10n: "Settings.General.AdvancedTab.ShowDeveloperInfo.Title", key: .showDeveloperInfo)
+                        Defaults.Toggle(l10n: "Settings.ShowDeveloperInfo", key: .showDeveloperInfo)
                     } footer: {
-                        L10nText("Settings.General.AdvancedTab.ShowDeveloperInfo.Subtitle")
+                        L10nText("Settings.ShowDeveloperInfo.Explanation")
                             .font(.caption)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -159,7 +159,7 @@ struct GeneralPrefView: View {
                 Spacer()
             }
             .tabItem {
-                L10nText("Settings.General.AdvancedTab.Name")
+                L10nText("Settings.General.Advanced.Name")
             }
         }
         .tabViewStyle(.automatic)
