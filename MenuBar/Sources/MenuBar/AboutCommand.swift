@@ -19,7 +19,7 @@ public struct BackportedAboutCommand: Commands {
             Button {
                 openURL(URL(string: "moc://internal/openAbout")!)
             } label: {
-                Image(systemName: "info.circle.fill")
+                Image(systemName: "info.circle")
                 Text("About Moc")
             }
         }
@@ -37,6 +37,7 @@ public struct AboutCommand: Commands {
             Button {
                 openWindow(id: "about")
             } label: {
+                Image(systemName: "info.circle")
                 Text("About Moc")
             }
         }
