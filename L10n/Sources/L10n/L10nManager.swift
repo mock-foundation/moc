@@ -12,6 +12,9 @@ import Backend
 import Combine
 import Logs
 import Utilities
+#if os(macOS)
+import AppKit
+#endif
 
 public class L10nManager {
     public static let shared = L10nManager()

@@ -76,7 +76,9 @@ struct LanguagePrefView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .padding()
         }
+        #if os(macOS)
         .listStyle(.inset(alternatesRowBackgrounds: true))
+        #endif
         .onReceive(tdApi.client.updateSubject) { update in
             if case let .option(value) = update {
                 if value.name == "language_pack_id" {
