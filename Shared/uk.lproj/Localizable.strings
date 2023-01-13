@@ -8,5 +8,11 @@
 
 "ChatListFolderSettings.LayoutSection" = "ВИГЛЯД";
 "ChatListFolderSettings.LayoutSection.Note" = "Якщо у вас дуже багато папок, використовуйте вертикальний вигляд для полегшенного доступу";
+
 "Settings.Accounts" = "Акаунти";
 "Settings.General" = "Загальні";
+"Settings.General.GeneralTab.Name" = "Загальні";
+"Settings.ChatShortcuts.Name" = "Chat Shortcuts";
+"Settings.General.Advanced.Name" = "Розширені";
+
+"Menubar.Chats" = "Чати";

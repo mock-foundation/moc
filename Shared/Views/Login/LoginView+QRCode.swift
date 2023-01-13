@@ -24,7 +24,7 @@ extension LoginView {
                 .resizable()
                 .interpolation(.none)
                 .scaledToFit()
-                .frame(width: 150, height: 150)
+                .frame(width: 250, height: 250)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
             VStack {
                 stepView(number: 1, text: "Open Telegram from your phone")

@@ -105,6 +105,9 @@ tasks:
   docs:find-archive:
     cmds:
       - find ~/Library/Developer/Xcode/DerivedData/Moc-* -type d -name '*.doccarchive'
+  l10n:export:
+    cmds:
+      - xcodebuild -exportLocalizations -project Moc -localizationPath l10nExport
   test:
     cmds:
       - echo "To be implemented"

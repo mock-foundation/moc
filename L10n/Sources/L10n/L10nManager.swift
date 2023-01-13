@@ -12,6 +12,9 @@ import Backend
 import Combine
 import Logs
 import Utilities
+#if os(macOS)
+import AppKit
+#endif
 
 public class L10nManager {
     public static let shared = L10nManager()
@@ -20,7 +23,7 @@ public class L10nManager {
     public private(set) var languagePackID = ""
     private let logger = Logger(category: "Localization", label: "Manager")
     private let localStrings: [String: String] = {
-        if let url = Bundle.main.url(forResource: "Localizable", withExtension: "strings"),
+        if let url = Bundle.main.url(forResource: "Localizable", withExtension: "strings", subdirectory: "en.lproj"),
            let stringsDict = NSDictionary(contentsOf: url) as? [String: String] {
            return stringsDict
         }
@@ -30,6 +33,7 @@ public class L10nManager {
     private var cloudCache: [String: [String: String]] = [:]
     
     init() {
+        logger.debug("Initialized L10nManager")
         tdApi.client.updateSubject
             .sink { update in
                 if case let .option(option) = update {

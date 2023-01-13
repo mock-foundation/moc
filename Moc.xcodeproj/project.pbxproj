@@ -59,7 +59,6 @@
 		4367072B286229B000587A63 /* MessageView+Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072A286229B000587A63 /* MessageView+Photo.swift */; };
 		4367072D28622CD700587A63 /* MessageView+Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072C28622CD700587A63 /* MessageView+Bubble.swift */; };
 		4367072F28622D0400587A63 /* MessageView+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367072E28622D0400587A63 /* MessageView+Message.swift */; };
-		4368B44028E303FE001B0D14 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 4368B43F28E303FE001B0D14 /* Sparkle */; };
 		4368EC1B289BC22800CAA505 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4368EC1A289BC22800CAA505 /* Lottie */; };
 		4371AC172873126A0081776F /* ReplyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4371AC162873126A0081776F /* ReplyMessage.swift */; };
 		437329162869F9A1003C08D8 /* AVPlayerViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437329152869F9A1003C08D8 /* AVPlayerViewWrapper.swift */; platformFilter = ios; };
@@ -322,7 +321,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4368B44028E303FE001B0D14 /* Sparkle in Frameworks */,
 				43807DAB27E2139B0056A3D3 /* AlertToast in Frameworks */,
 				431215542858E50B009EFEB5 /* Numerics in Frameworks */,
 				43A9637B2868C8AD0076F5FD /* SkeletonUI in Frameworks */,
@@ -754,7 +752,6 @@
 				43431C8428A00BAB002A72A0 /* TDLibKit */,
 				43A7CC5728BB82B300C43822 /* Storage */,
 				439DE1CC28CF0F4C002CD515 /* WhatsNewKit */,
-				4368B43F28E303FE001B0D14 /* Sparkle */,
 				43CE3C1628EEDF3600B323B6 /* MenuBar */,
 				435D31CA2909AF5500068295 /* L10n */,
 			);
@@ -824,7 +821,6 @@
 				43431C8028A00AC3002A72A0 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */,
 				439DE1CB28CF0F4C002CD515 /* XCRemoteSwiftPackageReference "WhatsNewKit" */,
-				4368B43E28E303FE001B0D14 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1492,14 +1488,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		4368B43E28E303FE001B0D14 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		4368EC19289BC22800CAA505 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1610,11 +1598,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4360D6E1283FE2BD00D3378F /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
-		};
-		4368B43F28E303FE001B0D14 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4368B43E28E303FE001B0D14 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		4368EC1A289BC22800CAA505 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
