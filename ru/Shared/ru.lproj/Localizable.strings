@@ -8,5 +8,23 @@
 
 "ChatListFolderSettings.LayoutSection" = "LAYOUT";
 "ChatListFolderSettings.LayoutSection.Note" = "If there are too much folders, use the vertical layout for easier access.";
+
 "Settings.Accounts" = "Accounts";
 "Settings.General" = "General";
+"Settings.General.GeneralTab.Name" = "General";
+"Settings.ChatShortcuts.Name" = "Chat Shortcuts";
+"Settings.ChatShortcuts.Subtitle" = "Save chats to app's menubar for easy access from any place in Moc.";
+"Settings.SavedMessagesShortcutToggle.Title" = "Use \"Saved Messages\" shortcut";
+"Settings.SavedMessagesShortcutToggle.Subtitle" = "If enabled, will use the ⌘0 shortcut. If disabled, the ⌘0 shortcut will be used by the first shortcut in the list.";
+"Settings.ChatShortcuts.NoShortcuts" = "You have not created any shortcuts :(";
+"Settings.ChatShortcuts.NoShortcuts.Subtitle" = "Click the \"Create\" button down below to create a new one!";
+"Settings.General.Advanced.Name" = "Advanced";
+"Settings.ShowDeveloperInfo" = "Show developer info";
+"Settings.ShowDeveloperInfo.Explanation" = "When enabled, Moc will show additional data in the chat inspector like the chat/user ID.";
+"Settings.LanguageChangeNote" = "You have changed your language, but please note, that currently Moc can't change localization of the menubar on-the-fly, please restart Moc to fix it.";
+
+"DontShowAgain" = "Don't show again";
+
+"Menubar.Chats" = "Chats";
+"Menubar.AboutMoc" = "About Moc";
+"Menubar.CheckForUpdates" = "Check for updates";
