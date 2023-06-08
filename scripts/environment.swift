@@ -360,3 +360,5 @@ struct EnvironmentScript: ParsableCommand {
 }
 
 EnvironmentScript.main()
+
+// swiftlint:enable all

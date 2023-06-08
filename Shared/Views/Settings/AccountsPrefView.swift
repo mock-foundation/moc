@@ -14,7 +14,7 @@ import Logs
 import Resolver
 import L10n
 
-// swiftlint:disable type_body_length
+// swiftlint:disable:next type_body_length
 struct AccountsPrefView: View {
     @StateObject private var viewModel = AccountsPrefViewModel()
 
@@ -125,7 +125,7 @@ struct AccountsPrefView: View {
             .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
             .frame(width: 316, height: 316)
             .padding()
-            // swiftlint:disable multiple_closures_with_trailing_closure
+            // swiftlint:disable:next multiple_closures_with_trailing_closure
             HStack {
                 Button(action: {}) {
                     Label(l10n: "Settings.AddAccount", systemImage: "person.badge.plus")
@@ -189,14 +189,10 @@ struct AccountsPrefView: View {
     private var rightColumnContent: some View {
         Form {
             Section {
-                if #available(macOS 13, iOS 16, *) {
-                    LabeledContent {
-                        photoFormItem
-                    } label: {
-                        L10nText("Privacy.ProfilePhoto")
-                    }
-                } else {
+                LabeledContent {
                     photoFormItem
+                } label: {
+                    L10nText("Privacy.ProfilePhoto")
                 }
                 TextField(l10n: "UserInfo.FirstNamePlaceholder", text: $viewModel.firstName)
                     .textFieldStyle(.roundedBorder)
@@ -235,14 +231,10 @@ struct AccountsPrefView: View {
                 L10nText("Settings.About.Help")
                     .foregroundStyle(.secondary)
             }
-            if #available(macOS 13, iOS 16, *) {
-                LabeledContent {
-                    phoneNumberFormItem
-                } label: {
-                    L10nText("PrivacySettings.PhoneNumber")
-                }
-            } else {
+            LabeledContent {
                 phoneNumberFormItem
+            } label: {
+                L10nText("PrivacySettings.PhoneNumber")
             }
         }
         .frame(minWidth: 300)

@@ -39,17 +39,9 @@ struct FormattedTextView: View {
                         
             switch entity.type {
                 case .bold:
-                    if #available(macOS 13, iOS 16, *) {
-                        resultString[range].font = .system(.body, weight: .bold)
-                    } else {
-                        resultString[range].font = .body.bold()
-                    }
+                    resultString[range].font = .system(.body, weight: .bold)
                 case .italic:
-                    if #available(macOS 13, iOS 16, *) {
-                        resultString[range].font = .system(.body).italic()
-                    } else {
-                        resultString[range].font = .body.italic()
-                    }
+                    resultString[range].font = .system(.body).italic()
                     // TODO: Fix coloring of links for outgoing messages
                 case .url:
                     resultString[range].link = URL(string: rawStringPart)

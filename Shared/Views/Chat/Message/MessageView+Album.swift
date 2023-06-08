@@ -16,20 +16,12 @@ extension MessageView {
         makeMessage {
             VStack(spacing: 0) {
                 if message.first(where: { $0.content.isGraphic }) != nil {
-                    if #available(macOS 13, iOS 16, *) {
-                        MediaAlbum {
-                            ForEach(message, id: \.id) { albumMessage in
-                                makeMedia(from: albumMessage.content)
-                            }
-                        }
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                    } else {
-                        HStack(spacing: 1) {
-                            ForEach(message, id: \.id) { message in
-                                makeMedia(from: message.content)
-                            }
+                    MediaAlbum {
+                        ForEach(message, id: \.id) { albumMessage in
+                            makeMedia(from: albumMessage.content)
                         }
                     }
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 } else {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(message) { msg in

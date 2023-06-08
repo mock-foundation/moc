@@ -9,24 +9,6 @@
 
 import SwiftUI
 
-public struct BackportedAboutCommand: Commands {
-    @Environment(\.openURL) private var openURL
-    
-    public init() { }
-    
-    public var body: some Commands {
-        CommandGroup(replacing: .appInfo) {
-            Button {
-                openURL(URL(string: "moc://internal/openAbout")!)
-            } label: {
-                Image(systemName: "info.circle")
-                Text("About Moc")
-            }
-        }
-    }
-}
-
-@available(macOS 13, *)
 public struct AboutCommand: Commands {
     @Environment(\.openWindow) private var openWindow
     

@@ -51,7 +51,7 @@ extension Color {
 
     // Source:
     // https://medium.com/trinity-mirror-digital/adjusting-uicolor-luminosity-in-swift-4168e3c4cdf1
-    // swiftlint:disable function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func withLuminosity(_ colorSchemeContrast: ColorSchemeContrast = .standard) -> Color {
         // TODO: calculate newLuminosity
         // depending on the foreground color of a message bubble

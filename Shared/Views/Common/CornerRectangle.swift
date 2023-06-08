@@ -8,7 +8,7 @@
 import SwiftUI
 
 // thx https://stackoverflow.com/a/56763282
-// swiftlint:disable identifier_name
+// swiftlint:disable:next identifier_name
 struct CornerRectangle: Shape {
     var tl: CGFloat = 0.0
     var tr: CGFloat = 0.0

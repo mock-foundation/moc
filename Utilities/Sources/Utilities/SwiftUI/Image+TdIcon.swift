@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension Image {
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity
     init(tdIcon icon: String) {
         switch icon {
             case "All": self.init(systemName: "bubble.left.and.bubble.right")

@@ -29,11 +29,8 @@ struct ProfilePlaceholderView: View {
     }
 
     var body: some View {
-        if #available(macOS 13, iOS 16, *) {
-            content.background(Color(fromUserId: userId).gradient)
-        } else {
-            content.background(Color(fromUserId: userId).backportedGradient)
-        }
+        content
+            .background(Color(fromUserId: userId).gradient)
     }
 }
 

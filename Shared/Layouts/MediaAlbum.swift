@@ -18,12 +18,11 @@ import Logs
 
 /// This layout works (at least it should) and functions the same as in the
 /// Telegram iOS client, just because the layout logic was sto- i mean
-/// borrowed from it's code
+/// borrowed from its code
 ///
 /// Source:
 /// https://github.com/TelegramMessenger/Telegram-iOS/blob/master/submodules/MosaicLayout/Sources/ChatMessageBubbleMosaicLayout.swift
-@available(macOS 13, iOS 16, *)
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable:next type_body_length file_length
 struct MediaAlbum: Layout {
     typealias AlbumLayout = ([(CGRect, ItemPosition)], CGSize)
     private let logger = Logger(category: "UI_Layout", label: "MediaAlbum")
@@ -61,7 +60,7 @@ struct MediaAlbum: Layout {
         
     // Please don't kill me for this code, I just got it from TG iOS, it's
     // not documented at all
-    // swiftlint:disable cyclomatic_complexity function_body_length
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     private func generateLayout(proposal: ProposedViewSize, subviews: Subviews) -> AlbumLayout {
         // Arguments from the original function so I
         // don't waste time refactoring that steaming
@@ -108,6 +107,7 @@ struct MediaAlbum: Layout {
         }
         
         if !forceCalc {
+            // swiftlint:disable line_length
             if itemInfos.count == 2 {
                 if proportions == "ww"
                     && averageAspectRatio > 1.4 * maxAspectRatio
@@ -135,7 +135,6 @@ struct MediaAlbum: Layout {
                     itemInfos[1].layoutFrame = CGRect(x: width + spacing, y: 0.0, width: width, height: height)
                     itemInfos[1].position = [.top, .right, .bottom]
                 } else {
-                    // swiftlint:disable line_length
                     let secondWidth = floor(min(0.5 * (maxSize.width - spacing), round((maxSize.width - spacing) / itemInfos[0].aspectRatio / (1.0 / itemInfos[0].aspectRatio + 1.0 / itemInfos[1].aspectRatio))))
                     let firstWidth = maxSize.width - secondWidth - spacing
                     let height = floor(min(maxSize.height, round(min(firstWidth / itemInfos[0].aspectRatio, secondWidth / itemInfos[1].aspectRatio))))
@@ -428,7 +427,6 @@ struct MediaAlbum: Layout {
     }
 }
 
-@available(macOS 13, iOS 16, *)
 extension MediaAlbum {
     struct ItemPosition: OptionSet {
         public var rawValue: Int32
@@ -463,3 +461,5 @@ extension MediaAlbum {
         let heights: [CGFloat]
     }
 }
+
+// swiftlint:enable line_length

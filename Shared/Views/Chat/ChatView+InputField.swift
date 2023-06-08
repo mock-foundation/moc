@@ -96,28 +96,23 @@ extension ChatView {
                 Image(systemName: "paperclip")
                     .font(.system(size: 16))
                     .frame(height: 28)
-                Group {
-                    if #available(macOS 13, iOS 16, *) {
-                        TextField(
-                            viewModel.isChannel ? "Broadcast..." : "Message...",
-                            text: $viewModel.inputMessage,
-                            axis: .vertical
-                        ).lineLimit(20)
-                    } else {
-                        TextField(viewModel.isChannel ? "Broadcast..." : "Message...", text: $viewModel.inputMessage)
+                TextField(
+                    viewModel.isChannel ? "Broadcast..." : "Message...",
+                    text: $viewModel.inputMessage,
+                    axis: .vertical
+                )
+                    .lineLimit(20)
+                    .textFieldStyle(.plain)
+                    .padding(6)
+                    .onSubmit {
+                        viewModel.sendMessage()
                     }
-                }
-                .textFieldStyle(.plain)
-                .padding(6)
-                .onSubmit {
-                    viewModel.sendMessage()
-                }
-                .focused($isInputFieldFocused)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                        self.isInputFieldFocused = true
+                    .focused($isInputFieldFocused)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                            self.isInputFieldFocused = true
+                        }
                     }
-                }
                 Image(systemName: "face.smiling")
                     .font(.system(size: 16))
                     .frame(height: 28)

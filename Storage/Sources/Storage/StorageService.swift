@@ -47,31 +47,13 @@ public class StorageService {
             appropriateFor: nil,
             create: true)
         
-        if #available(macOS 13, iOS 16, *) {
-            url.append(path: "Moc")
-        } else {
-            url.appendPathComponent("Moc")
-        }
+        url.append(path: "Moc")
         
         try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
-        if #available(macOS 13, iOS 16, *) {
-            url.append(path: "\(databaseName).sqlite")
-        } else {
-            url.appendPathComponent("\(databaseName).sqlite")
-        }
+        url.append(path: "\(databaseName).sqlite")
         
-        var dir = ""
-        if #available(macOS 13, iOS 16, *) {
-            dir = url.path()
-        } else {
-            dir = url.path
-        }
-        if #available(macOS 13, iOS 16, *) {
-            dir.replace("%20", with: " ")
-        } else {
-            dir = dir.replacingOccurrences(of: "%20", with: " ")
-        }
+        let dir = url.path().replacingOccurrences(of: "%20", with: " ")
 
         logger.debug("Database path: \(dir)")
         dbQueue = try! DatabaseQueue(path: dir)
