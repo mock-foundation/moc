@@ -53,7 +53,7 @@ public class StorageService {
 
         url.append(path: "\(databaseName).sqlite")
         
-        var dir = url.path().replace("%20", with: " ")
+        let dir = url.path().replacingOccurrences(of: "%20", with: " ")
 
         logger.debug("Database path: \(dir)")
         dbQueue = try! DatabaseQueue(path: dir)

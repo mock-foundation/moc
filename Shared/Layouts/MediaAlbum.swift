@@ -107,6 +107,7 @@ struct MediaAlbum: Layout {
         }
         
         if !forceCalc {
+            // swiftlint:disable line_length
             if itemInfos.count == 2 {
                 if proportions == "ww"
                     && averageAspectRatio > 1.4 * maxAspectRatio
@@ -134,7 +135,6 @@ struct MediaAlbum: Layout {
                     itemInfos[1].layoutFrame = CGRect(x: width + spacing, y: 0.0, width: width, height: height)
                     itemInfos[1].position = [.top, .right, .bottom]
                 } else {
-                    // swiftlint:disable:next line_length
                     let secondWidth = floor(min(0.5 * (maxSize.width - spacing), round((maxSize.width - spacing) / itemInfos[0].aspectRatio / (1.0 / itemInfos[0].aspectRatio + 1.0 / itemInfos[1].aspectRatio))))
                     let firstWidth = maxSize.width - secondWidth - spacing
                     let height = floor(min(maxSize.height, round(min(firstWidth / itemInfos[0].aspectRatio, secondWidth / itemInfos[1].aspectRatio))))
@@ -462,3 +462,5 @@ extension MediaAlbum {
         let heights: [CGFloat]
     }
 }
+
+// swiftlint:enable line_length
