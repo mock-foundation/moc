@@ -137,19 +137,27 @@ struct ChatView: View {
                 .padding([.horizontal, .bottom])
                 .padding(.top, 12)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+    
     
     var body: some View {
         HStack(spacing: 0) {
-            chatView
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            if viewModel.isInspectorShown {
-                HStack(spacing: 0) {
-                    Divider()
-                    ChatInspector(id: viewModel.chatID)
-                        .frame(width: 280)
+            if #available(macOS 14, iOS 17, *) {
+                chatView
+                    .inspector(isPresented: $viewModel.isInspectorShown) {
+                        ChatInspector(id: viewModel.chatID)
+                    }
+            } else {
+                chatView
+                if viewModel.isInspectorShown {
+                    HStack(spacing: 0) {
+                        Divider()
+                        ChatInspector(id: viewModel.chatID)
+                            .frame(width: 280)
+                    }
+                    .transition(.move(edge: .trailing))
                 }
-                .transition(.move(edge: .trailing))
             }
         }
         .animation(.spring(), value: viewModel.isInspectorShown)
