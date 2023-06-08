@@ -197,14 +197,9 @@ struct FoldersPrefView: View {
     var body: some View {
         HStack {
             VStack {
-                if #available(macOS 13, iOS 16, *) {
-                    L10nText("ChatListFolderSettings.Title")
-                        .font(.largeTitle)
-                        .font(.system(.largeTitle, weight: .bold))
-                } else {
-                    L10nText("ChatListFolderSettings.Title")
-                        .font(.largeTitle)
-                }
+                L10nText("ChatListFolderSettings.Title")
+                    .font(.largeTitle)
+                    .font(.system(.largeTitle, weight: .bold))
                 L10nText("ChatListFolderSettings.Info")
                     .padding([.bottom, .horizontal])
                     .multilineTextAlignment(.center)

@@ -96,7 +96,7 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length
     func update(chat: Chat) async throws {
         service.chatId = chat.id
         DispatchQueue.main.async { [self] in

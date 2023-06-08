@@ -10,7 +10,7 @@ import TDLibKit
 import Foundation
 import Combine
 
-// swiftlint:disable all
+// swiftlint:disable:next all
 public class MockChatService: ChatService {
     public func updateDraft(_ newDraft: TDLibKit.DraftMessage?, threadId: Int64?) async throws { }
     

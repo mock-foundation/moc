@@ -16,7 +16,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.0.0"),
-        .package(url: "https://github.com/mock-foundation/tdlibkit", from: "3.1.0-1.8.4-07b7faf6"),
+        .package(
+            url: "https://github.com/mock-foundation/tdlibkit",
+            revision: "4188caf0a914257f7884ce0b9e4ccc077f7db941"),
         .package(path: "../Utilities"),
         .package(path: "../Storage"),
         .package(path: "../Logs")

@@ -6,7 +6,7 @@ import SwiftUI
 // https://stackoverflow.com/questions/
 // 42355778/how-to-compute-color-contrast-ratio-between-two-uicolor-instances
 extension Color {
-    // swiftlint:disable large_tuple
+    // swiftlint:disable:next large_tuple
     var components: (red: CGFloat, green: CGFloat, blue: CGFloat, opacity: CGFloat) {
         let components = self.cgColor?.components ?? [0, 0, 0, 0]
         return (components[0], components[1], components[2], components[3])

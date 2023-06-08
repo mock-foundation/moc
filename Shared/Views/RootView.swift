@@ -16,7 +16,7 @@ import Introspect
 import Defaults
 import WhatsNewKit
 
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable:next type_body_length file_length
 struct RootView: View {
     private let logger = Logs.Logger(category: "RootView", label: "UI")
 
@@ -101,11 +101,7 @@ struct RootView: View {
     
     private var chatListToolbarPlacement: ToolbarItemPlacement {
         #if os(macOS)
-        if #available(macOS 13, *) {
-            return .automatic
-        } else {
-            return .status
-        }
+        return .automatic
         #elseif os(iOS)
         return .navigationBarLeading
         #endif
@@ -512,24 +508,11 @@ struct RootView: View {
     var body: some View {
         Group {
             if !viewModel.showingLoginScreen {
-                Group {
-                    if #available(macOS 13, iOS 16, *) {
-                        NavigationSplitView {
-                            sidebar
-                        } detail: {
-                            NavigationStack {
-                                content
-                            }
-                        }
-                    } else {
-                        NavigationView {
-                            sidebar
-                                .listStyle(.sidebar)
-                            content
-                        }
-                        #if os(iOS)
-                        .sidebarSize(folderLayout == .vertical ? 400 : 330)
-                        #endif
+                NavigationSplitView {
+                    sidebar
+                } detail: {
+                    NavigationStack {
+                        content
                     }
                 }
                 #if os(iOS)

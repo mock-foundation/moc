@@ -137,7 +137,7 @@ class MainViewModel: ObservableObject {
     private var logger = Logs.Logger(category: "UI", label: "MainViewModel")
     private var nwPathMonitorQueue = DispatchQueue(label: "NWPathMonitorQueue", qos: .utility)
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     init() {
         service.updateSubject
             .receive(on: RunLoop.main)

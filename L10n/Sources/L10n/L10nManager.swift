@@ -106,7 +106,7 @@ public class L10nManager {
         }
     }
     
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity
     func getTelegramString(
         by key: String,
         from languagePackID: String? = nil,

@@ -14,7 +14,7 @@ import TDLibKit
 import Logs
 import UniformTypeIdentifiers
 
-// swiftlint:disable function_body_length
+// swiftlint:disable:next function_body_length
 public class TdChatService: ChatService {
     private var logger = Logs.Logger(category: "Services", label: "TdChatDataSource")
     private var tdApi = TdApi.shared
@@ -221,19 +221,11 @@ public class TdChatService: ChatService {
         ) {
             var size: CGSize?
             let asset = AVURLAsset(url: url)
-            if #available(macOS 13, iOS 16, *) {
-                guard let track = try? await asset.loadTracks(withMediaType: .video).first else {
-                    return messageDocument
-                }
-                let tempSize = track.naturalSize.applying(track.preferredTransform)
-                size = CGSize(width: abs(tempSize.width), height: abs(tempSize.height))
-            } else {
-                guard let track = asset.tracks(withMediaType: .video).first else {
-                    return messageDocument
-                }
-                let tempSize = track.naturalSize.applying(track.preferredTransform)
-                size = CGSize(width: abs(tempSize.width), height: abs(tempSize.height))
+            guard let track = try? await asset.loadTracks(withMediaType: .video).first else {
+                return messageDocument
             }
+            let tempSize = track.naturalSize.applying(track.preferredTransform)
+            size = CGSize(width: abs(tempSize.width), height: abs(tempSize.height))
             
             return .video(InputMessageVideo(
                 addedStickerFileIds: [],

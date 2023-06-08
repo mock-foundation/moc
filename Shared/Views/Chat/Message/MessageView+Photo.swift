@@ -10,7 +10,7 @@ import Backend
 import SkeletonUI
 
 extension MessageView {
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length
     func makePhoto(from info: MessagePhoto, contentMode: ContentMode = .fit) -> some View {
         ZStack {
             if let size = info.photo.sizes.getSize(.yBox) {
@@ -62,15 +62,11 @@ extension MessageView {
         }
         .onDrag {
             if let path = info.photo.sizes.getSize(.dCrop)?.photo.local.path {
-                if #available(macOS 13, iOS 16, *) {
-                    #if os(macOS)
-                    return NSItemProvider(object: NSImage(contentsOfFile: path)!)
-                    #elseif os(iOS)
-                    return NSItemProvider(object: UIImage(contentsOfFile: path)!)
-                    #endif
-                } else {
-                    return NSItemProvider(object: NSURL(fileURLWithPath: path))
-                }
+                #if os(macOS)
+                return NSItemProvider(object: NSImage(contentsOfFile: path)!)
+                #elseif os(iOS)
+                return NSItemProvider(object: UIImage(contentsOfFile: path)!)
+                #endif
             } else {
                 return NSItemProvider() // I think a blank one will work alright
             }

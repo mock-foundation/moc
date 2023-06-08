@@ -8,10 +8,6 @@
 import SwiftUI
 
 extension Color {
-    var backportedGradient: LinearGradient {
-        .linearGradient(colors: [self, self.lighter()], startPoint: .bottom, endPoint: .top)
-    }
-    
     #if os(macOS)
     
     func lighter(by percentage: CGFloat = 30) -> Self {

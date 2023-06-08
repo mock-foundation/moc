@@ -76,30 +76,18 @@ struct ChatView: View {
                 guard !itemProviders.isEmpty else { return false }
                 
                 for itemProvider in itemProviders {
-                    if #available(macOS 13, iOS 16, *) {
-                        _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, _, error) in
-                            guard error == nil else { return }
-                            guard let url = url else { return }
-                            
-                            let fullURL = URL(string: try! String(contentsOf: url))!
-                            
-                            DispatchQueue.main.async {
-                                withAnimation(.spring()) {
-                                    viewModel.inputMedia.removeAll(where: { $0 == fullURL})
-                                    viewModel.inputMedia.append(fullURL)
-                                }
+                    _ = itemProvider.loadFileRepresentation(for: .fileURL) { (url, _, error) in
+                        guard error == nil else { return }
+                        guard let url = url else { return }
+                        
+                        let fullURL = URL(string: try! String(contentsOf: url))!
+                        
+                        DispatchQueue.main.async {
+                            withAnimation(.spring()) {
+                                viewModel.inputMedia.removeAll(where: { $0 == fullURL})
+                                viewModel.inputMedia.append(fullURL)
                             }
                         }
-                    } else {
-                        itemProvider.loadFileRepresentation(
-                            forTypeIdentifier: UTType.fileURL.identifier
-                        ) { url, error in
-                            guard error == nil else { return }
-                            guard let url = url else { return }
-                            
-                            addInputMedia(url: url)
-                        }
-                        logger.debug("All resulting input media: \(viewModel.inputMedia)")
                     }
                 }
                 

@@ -24,7 +24,7 @@ public extension TdApi {
 
     private static let logger = Logs.Logger(category: "TDLib", label: "Updates")
 
-    // swiftlint:disable function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func startTdLibUpdateHandler() {
         TdApi.logger.debug("Starting handler")
         
@@ -58,22 +58,15 @@ public extension TdApi {
                                         in: .userDomainMask,
                                         appropriateFor: nil,
                                         create: true)
-                                    var dir = ""
-                                    if #available(macOS 13, iOS 16, *) {
-                                        url.append(path: "td")
-                                        dir = url.path()
-                                    } else {
-                                        url.appendPathComponent("td")
-                                        dir = url.path
-                                    }
+                                    url.append(path: "td")
                                     try await self.setTdlibParameters(parameters: TdlibParameters(
                                         apiHash: Secret.apiHash,
                                         apiId: Secret.apiId,
                                         applicationVersion: SystemUtils.info(key: "CFBundleShortVersionString"),
-                                        databaseDirectory: dir,
+                                        databaseDirectory: url.path(),
                                         deviceModel: await SystemUtils.getDeviceModel(),
                                         enableStorageOptimizer: true,
-                                        filesDirectory: dir,
+                                        filesDirectory: url.path(),
                                         ignoreFileNames: false,
                                         systemLanguageCode: "en-US",
                                         systemVersion: SystemUtils.osVersionString,
@@ -165,15 +158,9 @@ public extension TdApi {
                                         if FileManager.default.fileExists(atPath: info.destinationPath) {
                                             try FileManager.default.removeItem(atPath: info.destinationPath)
                                         }
-                                        if #available(macOS 13, iOS 16, *) {
-                                            try FileManager.default.copyItem(
-                                                at: URL(filePath: info.originalPath),
-                                                to: URL(filePath: info.destinationPath))
-                                        } else {
-                                            try FileManager.default.copyItem(
-                                                at: URL(fileURLWithPath: info.originalPath),
-                                                to: URL(fileURLWithPath: info.destinationPath))
-                                        }
+                                        try FileManager.default.copyItem(
+                                            at: URL(filePath: info.originalPath),
+                                            to: URL(filePath: info.destinationPath))
                                         TdApi.logger.debug("Conversion with id \(info.generationId.rawValue) is done")
                                         try await TdApi.shared.finishFileGeneration(
                                             error: nil,

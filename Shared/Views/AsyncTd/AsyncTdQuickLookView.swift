@@ -17,21 +17,11 @@ struct AsyncTdQuickLookView: View {
     var body: some View {
         AsyncTdFile(id: id) { file in
             #if os(macOS)
-            if #available(macOS 13, *) {
-                QuickLookView(url: URL(filePath: file.local.path))
-            } else {
-                QuickLookView(url: URL(fileURLWithPath: file.local.path))
-            }
+            QuickLookView(url: URL(filePath: file.local.path))
             #elseif os(iOS)
-            if #available(iOS 16, *) {
-                QuickLookPreviewWrapper(items: .constant([
-                    QuickLookPreviewItem(url: URL(filePath: file.local.path), title: "")
-                ]), index: .constant(0))
-            } else {
-                QuickLookPreviewWrapper(items: .constant([
-                    QuickLookPreviewItem(url: URL(fileURLWithPath: file.local.path), title: "")
-                ]), index: .constant(0))
-            }
+            QuickLookPreviewWrapper(items: .constant([
+                QuickLookPreviewItem(url: URL(filePath: file.local.path), title: "")
+            ]), index: .constant(0))
             #endif
         } placeholder: {
             Rectangle()

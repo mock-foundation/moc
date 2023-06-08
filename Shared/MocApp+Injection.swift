@@ -55,34 +55,6 @@ struct MocApp: App {
         AppCenter.start(withAppSecret: Secret.appCenterSecret, services: [Crashes.self])
     }
     
-    #if os(macOS)
-    var aboutWindow: some Scene {
-        if #available(macOS 13, *) {
-            return WindowGroup(id: "about") {
-                AboutView()
-                    .background(VisualEffectView(material: .popover).ignoresSafeArea())
-            }
-            .defaultPosition(.top)
-            .defaultSize(width: 500, height: 300)
-            .windowResizability(.contentSize)
-            .windowStyle(.hiddenTitleBar)
-        } else {
-            return WindowGroup(id: "about") {
-                AboutView()
-            }
-            .handlesExternalEvents(matching: Set(arrayLiteral: "internal/openAbout"))
-        }
-    }
-    
-    var aboutCommand: some Commands {
-        if #available(macOS 13.0, iOS 16, *) {
-            return AboutCommand()
-        } else {
-            return BackportedAboutCommand()
-        }
-    }
-    #endif
-    
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -100,7 +72,7 @@ struct MocApp: App {
         }
         .commands {
             #if os(macOS)
-            aboutCommand
+            AboutCommand()
             AppCommands(updateManager: updateManager)
             #else
             AppCommands()
@@ -110,7 +82,14 @@ struct MocApp: App {
         }
         
         #if os(macOS)
-        aboutWindow
+        WindowGroup(id: "about") {
+            AboutView()
+                .background(VisualEffectView(material: .popover).ignoresSafeArea())
+        }
+        .defaultPosition(.top)
+        .defaultSize(width: 500, height: 300)
+        .windowResizability(.contentSize)
+        .windowStyle(.hiddenTitleBar)
         
         Settings {
             SettingsContent()
