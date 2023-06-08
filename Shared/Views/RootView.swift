@@ -112,11 +112,6 @@ struct RootView: View {
             #if os(macOS)
             ToolbarItemGroup(placement: chatListToolbarPlacement) {
                 if folderLayout == .horizontal {
-                    if #unavailable(macOS 13) {
-                        Button(action: toggleSidebar) {
-                            Label("Toggle chat list", systemImage: "sidebar.left")
-                        }
-                    }
                     if viewModel.isChatListVisible {
                         Picker(selection: $selectedTab) {
                             Image(systemName: "bubble.left.and.bubble.right").tag(Tab.chat)

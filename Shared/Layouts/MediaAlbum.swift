@@ -427,7 +427,6 @@ struct MediaAlbum: Layout {
     }
 }
 
-@available(macOS 13, iOS 16, *)
 extension MediaAlbum {
     struct ItemPosition: OptionSet {
         public var rawValue: Int32
