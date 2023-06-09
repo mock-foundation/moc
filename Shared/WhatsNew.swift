@@ -10,6 +10,24 @@ import WhatsNewKit
 
 let whatsNewCollection: WhatsNewCollection = [
     WhatsNew(
+        version: "0.3.0",
+        title: "What's New in Moc",
+        features: [
+            .init(
+                image: .init(
+                    systemName: "swift",
+                    foregroundColor: .green),
+                title: "Support for macOS 14 & iPadOS 17",
+                subtitle: "Moc now uses more modern APIs that the system provides! Oh, and macOS 12 with iPadOS 15 are no longer supported")],
+        primaryAction: .init(
+            title: "Get started",
+            backgroundColor: .blue,
+            foregroundColor: .white),
+        secondaryAction: .init(
+            title: "More info on GitHub",
+            foregroundColor: .blue,
+            action: .openURL(URL(string: "https://github.com/mock-foundation/moc/releases/tag/0.3.0")))),
+    WhatsNew(
         version: "0.2.0",
         title: "What's New in Moc",
         features: [

@@ -80,8 +80,8 @@ public class TdChatService: ChatService {
     }
     
     public func sendAlbum(_ urls: [URL], caption: String) async throws -> [Message]? {
-        let messageContents: [InputMessageContent] = await urls.asyncMap { url in
-            return await makeInputMessageContent(for: url, caption: FormattedText(entities: [], text: caption))
+        let messageContents: [InputMessageContent] = await urls.asyncCompactMap { url in
+            return try? await makeInputMessageContent(for: url, caption: FormattedText(entities: [], text: caption))
         }
         
         if let chatId {
@@ -171,7 +171,7 @@ public class TdChatService: ChatService {
     
     public var chatId: Int64?
     
-    private func makeInputMessageContent(for url: URL, caption: FormattedText) async -> InputMessageContent {
+    private func makeInputMessageContent(for url: URL, caption: FormattedText) async throws -> InputMessageContent {
         var path = url.absoluteString
         path = String(path.suffix(from: .init(utf16Offset: 7, in: path))).removingPercentEncoding ?? ""
         
@@ -224,13 +224,13 @@ public class TdChatService: ChatService {
             guard let track = try? await asset.loadTracks(withMediaType: .video).first else {
                 return messageDocument
             }
-            let tempSize = track.naturalSize.applying(track.preferredTransform)
+            let tempSize = try await track.load(.naturalSize).applying(track.load(.preferredTransform))
             size = CGSize(width: abs(tempSize.width), height: abs(tempSize.height))
             
-            return .video(InputMessageVideo(
+            return try await .video(InputMessageVideo(
                 addedStickerFileIds: [],
                 caption: caption,
-                duration: Int(CMTimeGetSeconds(asset.duration)),
+                duration: Int(CMTimeGetSeconds(asset.load(.duration))),
                 height: Int(size!.height),
                 supportsStreaming: true,
                 thumbnail: InputThumbnail(
