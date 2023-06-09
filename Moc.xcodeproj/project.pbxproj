@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -114,7 +114,6 @@
 		439BA42E2863C4DF00339375 /* LoginView+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA42D2863C4DF00339375 /* LoginView+QRCode.swift */; };
 		439BA4302863C57000339375 /* LoginView+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA42F2863C57000339375 /* LoginView+Registration.swift */; };
 		439BA4322863C5BA00339375 /* LoginView+2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439BA4312863C5BA00339375 /* LoginView+2FACode.swift */; };
-		439DE1CD28CF0F4C002CD515 /* WhatsNewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 439DE1CC28CF0F4C002CD515 /* WhatsNewKit */; };
 		439DE1CF28CF0FC5002CD515 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439DE1CE28CF0FC5002CD515 /* WhatsNew.swift */; };
 		439F35EF28736E9800EE1ED7 /* MessageView+Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F35EE28736E9800EE1ED7 /* MessageView+Reply.swift */; };
 		43A0AF7F2864DFA500C0A8EF /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A0AF7E2864DFA500C0A8EF /* Shake.swift */; };
@@ -144,6 +143,7 @@
 		43C227D128CB097A00AE237C /* View+Faded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C227D028CB097A00AE237C /* View+Faded.swift */; };
 		43C29C04287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C29C03287D8D9E00D10AB8 /* Animation+FastStartSlowStop.swift */; };
 		43CE3C1728EEDF3600B323B6 /* MenuBar in Frameworks */ = {isa = PBXBuildFile; productRef = 43CE3C1628EEDF3600B323B6 /* MenuBar */; };
+		43D541A72A33270F00F6D714 /* WhatsNewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43D541A62A33270F00F6D714 /* WhatsNewKit */; };
 		43EC18E22856782F00FCAD43 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EC18E12856782F00FCAD43 /* SearchField.swift */; platformFilter = ios; };
 		43F610FB28AFB8AE0098C3BD /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FA28AFB8AE0098C3BD /* VisualEffectView.swift */; platformFilters = (macos, ); };
 		43F610FE28B01E830098C3BD /* MessageBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F610FD28B01E830098C3BD /* MessageBubbleShape.swift */; };
@@ -330,12 +330,12 @@
 				4360D6E3283FE2BE00D3378F /* Collections in Frameworks */,
 				43C0F49D285A68ED009F2419 /* Defaults in Frameworks */,
 				4360D6E5283FE2BE00D3378F /* DequeModule in Frameworks */,
-				439DE1CD28CF0F4C002CD515 /* WhatsNewKit in Frameworks */,
 				43A7CC5828BB82B300C43822 /* Storage in Frameworks */,
 				4368EC1B289BC22800CAA505 /* Lottie in Frameworks */,
 				434203B8283CB01D003E344C /* Algorithms in Frameworks */,
 				431215562858E50B009EFEB5 /* RealModule in Frameworks */,
 				43A5B09F2A3232D6004FFD07 /* Sparkle in Frameworks */,
+				43D541A72A33270F00F6D714 /* WhatsNewKit in Frameworks */,
 				2D229DD7287606710056A294 /* Networking in Frameworks */,
 				43431C7D28A00809002A72A0 /* AppCenterAnalytics in Frameworks */,
 				43807DBC27E214970056A3D3 /* Backend in Frameworks */,
@@ -753,10 +753,10 @@
 				43431C8128A00AC3002A72A0 /* Resolver */,
 				43431C8428A00BAB002A72A0 /* TDLibKit */,
 				43A7CC5728BB82B300C43822 /* Storage */,
-				439DE1CC28CF0F4C002CD515 /* WhatsNewKit */,
 				43CE3C1628EEDF3600B323B6 /* MenuBar */,
 				435D31CA2909AF5500068295 /* L10n */,
 				43A5B09E2A3232D6004FFD07 /* Sparkle */,
+				43D541A62A33270F00F6D714 /* WhatsNewKit */,
 			);
 			productName = Moc;
 			productReference = 43807CF527E1FCEC0056A3D3 /* Moc.app */;
@@ -823,8 +823,8 @@
 				43431C7B28A00809002A72A0 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */,
 				43431C8028A00AC3002A72A0 /* XCRemoteSwiftPackageReference "Resolver" */,
 				43431C8328A00BAB002A72A0 /* XCRemoteSwiftPackageReference "tdlibkit" */,
-				439DE1CB28CF0F4C002CD515 /* XCRemoteSwiftPackageReference "WhatsNewKit" */,
 				43A5B09D2A3226A6004FFD07 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				43D541A52A33270F00F6D714 /* XCLocalSwiftPackageReference "../WhatsNewKit" */,
 			);
 			productRefGroup = 43807CF627E1FCEC0056A3D3 /* Products */;
 			projectDirPath = "";
@@ -1444,6 +1444,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		43D541A52A33270F00F6D714 /* XCLocalSwiftPackageReference "../WhatsNewKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../WhatsNewKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		431215502858E50B009EFEB5 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1515,14 +1522,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
-			};
-		};
-		439DE1CB28CF0F4C002CD515 /* XCRemoteSwiftPackageReference "WhatsNewKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SvenTiigi/WhatsNewKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
 			};
 		};
 		43A5B09D2A3226A6004FFD07 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -1634,11 +1633,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
 		};
-		439DE1CC28CF0F4C002CD515 /* WhatsNewKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 439DE1CB28CF0F4C002CD515 /* XCRemoteSwiftPackageReference "WhatsNewKit" */;
-			productName = WhatsNewKit;
-		};
 		43A5B09E2A3232D6004FFD07 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 43A5B09D2A3226A6004FFD07 /* XCRemoteSwiftPackageReference "Sparkle" */;
@@ -1661,6 +1655,10 @@
 		43CE3C1628EEDF3600B323B6 /* MenuBar */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MenuBar;
+		};
+		43D541A62A33270F00F6D714 /* WhatsNewKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhatsNewKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
