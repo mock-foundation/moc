@@ -16,10 +16,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Decybel07/L10n-swift.git", from: "5.10.0"),
         .package(url: "https://github.com/mock-foundation/tdlibkit", from: "3.0.2-1.8.4-07b7faf6"),
-        .package(url: "https://github.com/sindresorhus/Defaults.git", from: "6.0.0"),
         .package(path: "../Backend"),
-        .package(path: "../Logs"),
-        .package(path: "../Utilities")
+        .package(path: "../Logs")
     ],
     targets: [
         .target(

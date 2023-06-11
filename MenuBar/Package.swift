@@ -16,8 +16,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/sindresorhus/Defaults.git", from: "6.3.0"),
         .package(path: "../Utilities"),
-        .package(path: "../L10n"),
-        .package(path: "../Backend")
+        .package(path: "../L10n")
     ],
     targets: [
         .target(
