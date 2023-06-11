@@ -151,6 +151,10 @@
 		43F7D4CF28DA65FF00878BD8 /* Color+ContrastRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4CE28DA65FE00878BD8 /* Color+ContrastRatio.swift */; };
 		43F7D4D128DA661100878BD8 /* Color+DynamicUserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4D028DA661000878BD8 /* Color+DynamicUserID.swift */; };
 		43F7D4D328DA662D00878BD8 /* CGFloat+Convertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F7D4D228DA662D00878BD8 /* CGFloat+Convertions.swift */; };
+		DFE9CEEB2A362D9D0027958A /* iPhoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE9CEEA2A362D9D0027958A /* iPhoneApp.swift */; };
+		DFE9CEED2A362D9D0027958A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE9CEEC2A362D9D0027958A /* ContentView.swift */; };
+		DFE9CEEF2A362D9E0027958A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFE9CEEE2A362D9E0027958A /* Assets.xcassets */; };
+		DFE9CEF22A362D9E0027958A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFE9CEF12A362D9E0027958A /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +319,11 @@
 		43F7D4D028DA661000878BD8 /* Color+DynamicUserID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+DynamicUserID.swift"; sourceTree = "<group>"; };
 		43F7D4D228DA662D00878BD8 /* CGFloat+Convertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Convertions.swift"; sourceTree = "<group>"; };
 		43F871B7283E21C700B6C717 /* Logs */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logs; sourceTree = "<group>"; };
+		DFE9CEE82A362D9D0027958A /* iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFE9CEEA2A362D9D0027958A /* iPhoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneApp.swift; sourceTree = "<group>"; };
+		DFE9CEEC2A362D9D0027958A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DFE9CEEE2A362D9E0027958A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DFE9CEF12A362D9E0027958A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,6 +358,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		43807D0327E1FCEF0056A3D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFE9CEE52A362D9D0027958A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -453,6 +469,7 @@
 				43F871B7283E21C700B6C717 /* Logs */,
 				43CA7FC9283E3988006E7AC9 /* Utilities */,
 				43807D0927E1FCEF0056A3D3 /* MocTests */,
+				DFE9CEE92A362D9D0027958A /* iPhone */,
 				43807CF627E1FCEC0056A3D3 /* Products */,
 				43807DBA27E214970056A3D3 /* Frameworks */,
 			);
@@ -463,6 +480,7 @@
 			children = (
 				43807CF527E1FCEC0056A3D3 /* Moc.app */,
 				43807D0627E1FCEF0056A3D3 /* MocTests.xctest */,
+				DFE9CEE82A362D9D0027958A /* iPhone.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -715,6 +733,17 @@
 			path = Keys;
 			sourceTree = "<group>";
 		};
+		DFE9CEE92A362D9D0027958A /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				DFE9CEEA2A362D9D0027958A /* iPhoneApp.swift */,
+				DFE9CEEC2A362D9D0027958A /* ContentView.swift */,
+				DFE9CEEE2A362D9E0027958A /* Assets.xcassets */,
+				DFE9CEF12A362D9E0027958A /* Preview Assets.xcassets */,
+			);
+			path = iPhone;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -780,6 +809,23 @@
 			productReference = 43807D0627E1FCEF0056A3D3 /* MocTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DFE9CEE72A362D9D0027958A /* iPhone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFE9CEF62A362D9E0027958A /* Build configuration list for PBXNativeTarget "iPhone" */;
+			buildPhases = (
+				DFE9CEE42A362D9D0027958A /* Sources */,
+				DFE9CEE52A362D9D0027958A /* Frameworks */,
+				DFE9CEE62A362D9D0027958A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iPhone;
+			productName = iPhone;
+			productReference = DFE9CEE82A362D9D0027958A /* iPhone.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -787,7 +833,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					43807CF427E1FCEC0056A3D3 = {
@@ -797,6 +843,9 @@
 					43807D0527E1FCEF0056A3D3 = {
 						CreatedOnToolsVersion = 13.3;
 						TestTargetID = 43807CF427E1FCEC0056A3D3;
+					};
+					DFE9CEE72A362D9D0027958A = {
+						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
@@ -831,6 +880,7 @@
 			projectRoot = "";
 			targets = (
 				43807CF427E1FCEC0056A3D3 /* Moc */,
+				DFE9CEE72A362D9D0027958A /* iPhone */,
 				43807D0527E1FCEF0056A3D3 /* MocTests */,
 			);
 		};
@@ -852,6 +902,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFE9CEE62A362D9D0027958A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFE9CEF22A362D9E0027958A /* Preview Assets.xcassets in Resources */,
+				DFE9CEEF2A362D9E0027958A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1008,6 +1067,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				43807D0B27E1FCEF0056A3D3 /* MocTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFE9CEE42A362D9D0027958A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFE9CEED2A362D9D0027958A /* ContentView.swift in Sources */,
+				DFE9CEEB2A362D9D0027958A /* iPhoneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,6 +1477,126 @@
 			};
 			name = Nightly;
 		};
+		DFE9CEF32A362D9E0027958A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"iPhone/\"";
+				DEVELOPMENT_TEAM = 7Z2WHPKU8W;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc.iPhone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		DFE9CEF42A362D9E0027958A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"iPhone/\"";
+				DEVELOPMENT_TEAM = 7Z2WHPKU8W;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc.iPhone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DFE9CEF52A362D9E0027958A /* Nightly */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"iPhone/\"";
+				DEVELOPMENT_TEAM = 7Z2WHPKU8W;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Moc;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.mock-foundation.moc.iPhone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Nightly;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1438,6 +1626,16 @@
 				43807D1E27E1FCEF0056A3D3 /* Debug */,
 				43807D1F27E1FCEF0056A3D3 /* Release */,
 				43BB1D2E28A4E21400C9C661 /* Nightly */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DFE9CEF62A362D9E0027958A /* Build configuration list for PBXNativeTarget "iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFE9CEF32A362D9E0027958A /* Debug */,
+				DFE9CEF42A362D9E0027958A /* Release */,
+				DFE9CEF52A362D9E0027958A /* Nightly */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
